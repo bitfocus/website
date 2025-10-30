@@ -43,7 +43,7 @@ const config: Config = {
         docs: {
           id: "default",
           path: "user-guide",
-          routeBasePath: "/user-guide",
+          routeBasePath: "/docs",
           sidebarPath: "./sidebars.ts",
           editUrl: "https://github.com/bitfocus/companion/tree/main/docs/",
           // Versioning configuration - DISABLED for now
