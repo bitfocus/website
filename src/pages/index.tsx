@@ -1,15 +1,12 @@
 import type { ReactNode } from "react";
-import clsx from "clsx";
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 
-import styles from "./index.module.css";
 import landingStyles from "./landing.module.css";
 
 function HeroSection() {
-  const { siteConfig } = useDocusaurusContext();
   return (
     <section className={landingStyles.heroSection}>
       <div style={{ textAlign: "center", marginBottom: "2rem" }}>
@@ -72,7 +69,7 @@ function HeroSection() {
           <br />
           <span style={{ fontSize: "0.75rem" }}>Win / Mac / Linux</span>
         </Link>
-        <Link className={landingStyles.secondaryButton} to="/user-guide/intro">
+        <Link className={landingStyles.secondaryButton} to="/user-guide/">
           User Guide
         </Link>
         <Link
