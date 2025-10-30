@@ -42,8 +42,8 @@ const config: Config = {
       {
         docs: {
           id: "default",
-          path: "user-guide",
-          routeBasePath: "/docs",
+          path: "docs", // Must be docs to match the companion repository for links to work :(
+          routeBasePath: "/user-guide",
           sidebarPath: "./sidebars.ts",
           editUrl: "https://github.com/bitfocus/companion/tree/main/docs/",
           // Versioning configuration - DISABLED for now
