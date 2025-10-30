@@ -89,12 +89,12 @@ const config: Config = {
         //   dropdownActiveClassDisabled: true,
         // },
         {
-          href: "https://user.bitfocus.io/download",
+          href: "https://bfoc.us/djzdpq4g9g",
           label: "Download",
           position: "right",
         },
         {
-          href: "https://github.com/bitfocus/companion",
+          href: "https://bfoc.us/4orxauukeg",
           label: "GitHub",
           position: "right",
         },
@@ -117,15 +117,15 @@ const config: Config = {
           items: [
             {
               label: "Slack",
-              href: "https://bfoc.us/ke7e9dqgaz",
+              href: "https://bfoc.us/bea2b02q12",
             },
             {
               label: "Facebook Group",
-              href: "https://www.facebook.com/groups/companion/",
+              href: "https://bfoc.us/nr4da457op",
             },
             {
               label: "Donate",
-              href: "https://bfoc.us/ccfbf8wm2x",
+              href: "https://bfoc.us/42jn7eku7p",
             },
           ],
         },

@@ -56,7 +56,7 @@ function HeroSection() {
       >
         <Link
           className={landingStyles.primaryButton}
-          href="https://user.bitfocus.io/download"
+          href="https://bfoc.us/djzdpq4g9g"
           target="_blank"
           style={{
             position: "relative",
@@ -74,7 +74,7 @@ function HeroSection() {
         </Link>
         <Link
           className={landingStyles.secondaryButton}
-          href="https://opencollective.com/companion/donate"
+          href="https://bfoc.us/42jn7eku7p"
           target="_blank"
         >
           Donate
@@ -269,7 +269,7 @@ function GitHubSection() {
   return (
     <section className={landingStyles.githubSection}>
       <div className={landingStyles.sectionContainer}>
-        <Link href="https://github.com/bitfocus/companion" target="_blank">
+        <Link href="https://bfoc.us/4orxauukeg" target="_blank">
           <img
             alt="github"
             src="img/github_logo.png"
