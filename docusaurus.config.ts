@@ -131,6 +131,10 @@ const config: Config = {
               label: "User Guide",
               to: "/user-guide/",
             },
+            {
+              label: "For Developers",
+              to: "/for-developers/",
+            },
           ],
         },
         {
