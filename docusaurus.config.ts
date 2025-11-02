@@ -44,7 +44,7 @@ const config: Config = {
           id: "default",
           path: "docs", // Must be docs to match the companion repository for links to work :(
           routeBasePath: "/user-guide",
-          sidebarPath: "./sidebars.ts",
+          sidebarPath: "./sidebars/user-guide.ts",
           editUrl: "https://github.com/bitfocus/companion/tree/main/docs/",
           // Versioning configuration - DISABLED for now
           disableVersioning: true,
@@ -63,6 +63,19 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
+  plugins: [
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "for-developers",
+        path: "for-developers",
+        routeBasePath: "for-developers",
+        sidebarPath: "./sidebars/for-developers.ts",
+        // disableVersioning: true,
+        editUrl: "https://github.com/bitfocus/website/tree/main/",
+      },
+    ],
+  ],
 
   themeConfig: {
     // Replace with your project's social card
@@ -79,9 +92,16 @@ const config: Config = {
       items: [
         {
           type: "docSidebar",
-          sidebarId: "tutorialSidebar",
+          sidebarId: "defaultSidebar",
           position: "left",
           label: "User Guide",
+        },
+        {
+          type: "docSidebar",
+          sidebarId: "developersSidebar",
+          docsPluginId: "for-developers",
+          position: "left",
+          label: "For Developers",
         },
         // Version dropdown - disabled until versioning is needed
         // {
