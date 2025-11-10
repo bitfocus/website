@@ -157,12 +157,13 @@ function BenefitsSection() {
       <div className={landingStyles.sectionContainer}>
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+            display: "flex",
+            flexWrap: "wrap",
             gap: "2.5rem",
+            justifyContent: "center",
           }}
         >
-          <div style={{ textAlign: "center" }}>
+          <div style={{ textAlign: "center", flex: "1 1 300px", maxWidth: "400px" }}>
             <div style={{ marginBottom: "1rem" }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -194,7 +195,7 @@ function BenefitsSection() {
               You're very welcome to help us by contributing or donating!
             </p>
           </div>
-          <div style={{ textAlign: "center" }}>
+          <div style={{ textAlign: "center", flex: "1 1 300px", maxWidth: "400px" }}>
             <div style={{ marginBottom: "1rem" }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -226,7 +227,7 @@ function BenefitsSection() {
               someone using Companion for something. We're very proud of that.
             </p>
           </div>
-          <div style={{ textAlign: "center" }}>
+          <div style={{ textAlign: "center", flex: "1 1 300px", maxWidth: "400px" }}>
             <div style={{ marginBottom: "1rem" }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
