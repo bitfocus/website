@@ -18,6 +18,8 @@ yarn start
 
 This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
+Warning: Do **NOT** edit the files inside of user-guide directly. These are directly synced from the main branch of companion, and should be edited there instead.
+
 ## Build
 
 ```bash
