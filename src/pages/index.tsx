@@ -44,36 +44,25 @@ function HeroSection() {
         fingertips.
       </p>
 
-      <div
-        className={landingStyles.heroButtons}
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "0.5rem",
-          maxWidth: "64rem",
-          margin: "0 auto",
-        }}
-      >
+      <div className={landingStyles.heroButtons}>
         <Link
-          className={landingStyles.primaryButton}
+          className={`${landingStyles.primaryButton} ${landingStyles.heroButton}`}
           href="https://bfoc.us/djzdpq4g9g"
           target="_blank"
-          style={{
-            position: "relative",
-            paddingTop: "0.25rem",
-            paddingBottom: "0.25rem",
-            lineHeight: "1.25",
-          }}
         >
-          Download
-          <br />
-          <span style={{ fontSize: "0.75rem" }}>Win / Mac / Linux</span>
+          <span>Download</span>
+          <span className={landingStyles.buttonSubtitle}>
+            Win / Mac / Linux
+          </span>
         </Link>
-        <Link className={landingStyles.secondaryButton} to="/user-guide/">
+        <Link
+          className={`${landingStyles.secondaryButton} ${landingStyles.heroButton}`}
+          to="/user-guide/"
+        >
           User Guide
         </Link>
         <Link
-          className={landingStyles.secondaryButton}
+          className={`${landingStyles.secondaryButton} ${landingStyles.heroButton}`}
           href="https://bfoc.us/42jn7eku7p"
           target="_blank"
         >
@@ -163,7 +152,13 @@ function BenefitsSection() {
             justifyContent: "center",
           }}
         >
-          <div style={{ textAlign: "center", flex: "1 1 300px", maxWidth: "400px" }}>
+          <div
+            style={{
+              textAlign: "center",
+              flex: "1 1 300px",
+              maxWidth: "400px",
+            }}
+          >
             <div style={{ marginBottom: "1rem" }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -195,7 +190,13 @@ function BenefitsSection() {
               You're very welcome to help us by contributing or donating!
             </p>
           </div>
-          <div style={{ textAlign: "center", flex: "1 1 300px", maxWidth: "400px" }}>
+          <div
+            style={{
+              textAlign: "center",
+              flex: "1 1 300px",
+              maxWidth: "400px",
+            }}
+          >
             <div style={{ marginBottom: "1rem" }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -227,7 +228,13 @@ function BenefitsSection() {
               someone using Companion for something. We're very proud of that.
             </p>
           </div>
-          <div style={{ textAlign: "center", flex: "1 1 300px", maxWidth: "400px" }}>
+          <div
+            style={{
+              textAlign: "center",
+              flex: "1 1 300px",
+              maxWidth: "400px",
+            }}
+          >
             <div style={{ marginBottom: "1rem" }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

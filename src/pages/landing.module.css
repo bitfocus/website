@@ -47,10 +47,24 @@
   flex-wrap: wrap;
 }
 
+/* Hero button sizing when in a row */
+.heroButton {
+  flex: 1 1 200px;
+  min-width: 200px;
+  max-width: 300px;
+}
+
 .primaryButton {
   background-color: #2563eb;
   color: white;
   padding: 0.75rem 1.5rem;
+  /* stack label + subtitle vertically */
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.125rem;
+  line-height: 1;
   border-radius: 0.375rem;
   text-decoration: none;
   font-weight: 500;
@@ -68,6 +82,10 @@
   background-color: #f3f4f6;
   color: #374151;
   padding: 0.75rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
   border-radius: 0.375rem;
   text-decoration: none;
   font-weight: 500;
@@ -239,6 +257,14 @@
   overflow: hidden;
 }
 
+/* small subtitle inside buttons */
+.buttonSubtitle {
+  font-size: 0.75rem;
+  opacity: 0.95;
+  display: block;
+  margin-top: 0.125rem;
+}
+
 [data-theme='dark'] .featuresVideoContainer {
   background: #1f2937;
 }
@@ -276,6 +302,14 @@
     width: 100%;
     max-width: 300px;
     text-align: center;
+  }
+
+  /* ensure stacked buttons don't inherit a horizontal flex-basis as height */
+  .heroButton {
+    flex: 0 1 auto;
+    width: 100%;
+    min-width: 0;
+    max-width: 300px;
   }
   
   .featuresGrid {
