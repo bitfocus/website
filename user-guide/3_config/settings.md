@@ -1,6 +1,7 @@
 ---
 title: Settings
 sidebar_position: 5
+description: Configure overall settings, protocols, and security.
 ---
 
 In the Settings tab, you can configure Companion settings.
@@ -24,7 +25,7 @@ The **Installation Name** is used to define the name this installation of Compan
 
 ## Surfaces
 
-More details on supported surfaces are available in the chapter on [Surfaces](#7_surfaces.md).
+More details on supported surfaces are available in the chapter on [Surfaces](../7_surfaces/index.md).
 
 - **Watch for new USB Devices**
   Companion can watch for newly connected USB Surfaces if this is enabled.
@@ -145,6 +146,8 @@ _If enabled, Companion will listen for Artnet messages, allowing for external de
   The starting channel on the universe Companion listens to.
 
 ## Backups
+
+TODO - write this page
 
 ## Advanced
 

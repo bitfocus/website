@@ -1,6 +1,7 @@
 ---
 title: Creating buttons
 sidebar_position: 1
+description: Create buttons using presets or manual styling and configuration.
 ---
 
 There are two ways of setting up buttons
@@ -29,7 +30,11 @@ _Here is an example of presets made for an ATEM ME1 program_
 Drag the preset buttons onto a page's button when in the Button Layout view.
 Keep in mind you may still need to configure the preset after adding it to a button.
 
-_**Note:** you can't add new presets as a user, they are all pre-made in code._
+:::note
+You can't add new presets as a user, they are all pre-made by the module developer.
+
+If you think additional presets may be helpful, you can request them on the module's GitHub Issues page.
+:::
 
 ## Manually defining
 
@@ -58,7 +63,7 @@ There are several ways you can make your button stand out, including:
 
 There are also some behaviour options:
 
-- Change whether to use auto progression when multiple steps are defined [Steps](#header-steps).
+- Change whether to use auto progression when multiple steps are defined [Steps](./creating.md).
 - Enable rotary actions for this button, to support the dials on a Stream Deck + (or similar).
 
 ![Button config](images/button-config.png?raw=true 'Button config')
@@ -75,7 +80,7 @@ A live preview of the button will be shown on the top right corner. Button infor
 
 Add actions to the button from the **Add Press/on action** drop-down menu.
 
-You can add multiple actions and set delay times for each action. Delay times are in milliseconds. 1000ms = 1 second.
+You can add multiple actions and use the **internal: Wait** Action to delay when certain things happen. Delay times are in milliseconds. 1000ms = 1 second.
 
 You can hide the topbar with the dropdown. This can be configured globally in the settings, or overridden per button.
 
@@ -84,6 +89,6 @@ _Same 72x72px image, but with and without the topbar_
 
 ### Adding a PNG
 
-Make a 72x58px PNG image or use a 72x72px PNG, but it will get cropped to fit 72x58px by the topbar. Unless you disable the bar in the settings tab. See the [Settings](#header-5-settings) section below.
+Make a 72x58px PNG image or use a 72x72px PNG, but it will get cropped to fit 72x58px by the topbar. Unless you disable the bar in the settings tab. See the [Settings](../settings.md#buttons) section below.
 
 Click the red **Browse** button and choose the PNG file you want to use. The picture will appear on the top right preview of the button. Text can be applied over the image.

@@ -1,6 +1,7 @@
 ---
 title: Functions
 sidebar_position: 2
+description: Complete reference of expression functions.
 ---
 
 There are various supported functions, and we are willing to add more. Let us know if you think something is missing.
@@ -100,7 +101,9 @@ substr() extracts characters from indexStart up to but not including indexEnd. F
 - If indexEnd &lt; 0, the index is counted from the end of the string.
 - If indexEnd &lt;= indexStart after normalizing negative values, an empty string is returned.
 
-Tip: If you don't want the behaviour of negative numbers, you can use `max(0, index)` to limit the value to never be below 0.
+:::tip
+If you don't want the behaviour of negative numbers, you can use `max(0, index)` to limit the value to never be below 0.
+:::
 
 **split(str, separator)**
 
@@ -162,11 +165,21 @@ Decode a string from the requested format ('hex','base64'). If `enc` is missing,
 
 eg `decode("436f6d70616e696f6e","hex")` gives `"Companion"`
 
-**parseVariables(string)**
+**parseVariables(string, ?undefinedValue)**
 
 In some cases you may need nested variable evaluation (for example `$(custom:$(custom:b))`). The expression parser does not support that nested variable syntax directly. To evaluate nested variables inside an expression, pass the string to `parseVariables`, which will interpret string-variable and template syntax.
 
+Optionally, you can provide the value to substitute in when a variable is `undefined`. This should be a string.
+
 eg `parseVariables('$(custom:$(custom:b))')`
+
+**getVariable(string) or getVariable(string, string)**
+
+Dynamically fetch a variable value.
+
+Note: when possible, prefer using the `$(internal:time_hms)` syntax, as it allows for Companion to statically detect the usage and auto-rename the reference when needed.
+
+eg `getVariable('internal:time_hms')` or `getVariable('internal', 'time_hms')`
 
 ### Bool operations
 
