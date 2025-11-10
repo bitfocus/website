@@ -42,7 +42,7 @@ const config: Config = {
       {
         docs: {
           id: "default",
-          path: "user-guide", // Must be docs to match the companion repository for links to work
+          path: "user-guide", // Must match the companion repository for links to work
           routeBasePath: "/user-guide",
           sidebarPath: "./sidebars/user-guide.ts",
           editUrl: "https://github.com/bitfocus/companion/tree/main/docs/",
