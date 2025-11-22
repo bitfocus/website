@@ -1,6 +1,7 @@
 import { themes as prismThemes } from "prism-react-renderer";
 import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
+import type { Options as DocsPluginOptions } from "@docusaurus/plugin-content-docs";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -72,9 +73,23 @@ const config: Config = {
         path: "whats-new",
         routeBasePath: "whats-new",
         sidebarPath: "./sidebars/whats-new.ts",
+        // Custom sidebar generator: filter out docs that set `hide_from_sidebar` in front matter.
+        sidebarItemsGenerator: async (props) => {
+          const filteredDocs = props.docs.filter(
+            (d) => !d.frontMatter?.hide_from_sidebar
+          );
+          return props.defaultSidebarItemsGenerator({
+            ...props,
+            docs: filteredDocs,
+          });
+        },
+
         // disableVersioning: true,
-        editUrl: "https://github.com/bitfocus/website/tree/main/",
-      },
+        editUrl: (url) => {
+          if (url.docPath === "index.md") return null;
+          return `https://github.com/bitfocus/companion/tree/main/docs/user-guide/9_whatsnew/${url.docPath}`;
+        },
+      } satisfies DocsPluginOptions,
     ],
     [
       "@docusaurus/plugin-content-docs",
@@ -85,7 +100,7 @@ const config: Config = {
         sidebarPath: "./sidebars/for-developers.ts",
         // disableVersioning: true,
         editUrl: "https://github.com/bitfocus/website/tree/main/",
-      },
+      } satisfies DocsPluginOptions,
     ],
   ],
 
