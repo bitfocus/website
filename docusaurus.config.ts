@@ -55,6 +55,7 @@ const config: Config = {
           //     path: "beta",
           //   },
           // },
+          exclude: ["9_whatsnew/**", "whats-new/**"],
         },
         blog: false, // Disable blog
         theme: {
@@ -64,6 +65,17 @@ const config: Config = {
     ],
   ],
   plugins: [
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "whats-new",
+        path: "whats-new",
+        routeBasePath: "whats-new",
+        sidebarPath: "./sidebars/whats-new.ts",
+        // disableVersioning: true,
+        editUrl: "https://github.com/bitfocus/website/tree/main/",
+      },
+    ],
     [
       "@docusaurus/plugin-content-docs",
       {
@@ -118,6 +130,13 @@ const config: Config = {
         },
         {
           type: "docSidebar",
+          sidebarId: "defaultSidebar",
+          docsPluginId: "whats-new",
+          position: "left",
+          label: "What's New",
+        },
+        {
+          type: "docSidebar",
           sidebarId: "developersSidebar",
           docsPluginId: "for-developers",
           position: "left",
@@ -150,6 +169,10 @@ const config: Config = {
             {
               label: "User Guide",
               to: "/user-guide/",
+            },
+            {
+              label: "What's New",
+              to: "/whats-new/",
             },
             {
               label: "For Developers",
