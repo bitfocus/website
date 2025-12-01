@@ -8,7 +8,7 @@ This tab allows you to configure your Stream Decks and other **Surfaces**.
 
 If any of your Stream Decks are not showing up, press the **Rescan USB** button. You can avoid needing to do this by enabling **Watch for new USB Devices** on the settings page.
 
-![Surfaces](images/surfaces.png?raw=true 'Surfaces')
+![Surfaces](images/surfaces.png?raw=true "Surfaces")
 
 Here you can see all your current surfaces, both local and connected over Satellite, as well as any available emulators.
 
@@ -46,20 +46,8 @@ You can create your groups and program the system ahead of time, then later add 
 
 Companion supports a few different network protocols for attaching remote surfaces.
 
-![Discovery](images/surface-discover.png?raw=true 'Discovery')
+![Discovery](images/surface-discover.png?raw=true "Discovery")
 
 Any surfaces discovered on your network via mdns will be listed here. For each, a short wizard is provided to help connect it to Companion.
 
 If you do not want this discovery, you can disable it in the settings.
-
-## Page Permissions
-
-Starting with v4.2, individual surfaces or surface-groups provide the option to restrict which pages a device -- or devices in a group -- may access. For example:
-
-![Restrict Pages Setting](images/restrict_pages.png?raw=true 'Restrict Pages Setting')
-
-This allows you to distribute a single site configuration but with access to particular pages defined by a person's role. Each device or group can then be limited to just one or a few pages relevant to their role.
-
-:::tip
-Next/Previous page-change actions -- including the standard page buttons, custom actions, and swiping (for surfaces that support it) -- will follow the order selected here. If you want to change the order, simply delete items from the list and re-select them in the order you prefer.
-:::

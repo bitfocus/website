@@ -165,21 +165,11 @@ Decode a string from the requested format ('hex','base64'). If `enc` is missing,
 
 eg `decode("436f6d70616e696f6e","hex")` gives `"Companion"`
 
-**parseVariables(string, ?undefinedValue)**
+**parseVariables(string)**
 
 In some cases you may need nested variable evaluation (for example `$(custom:$(custom:b))`). The expression parser does not support that nested variable syntax directly. To evaluate nested variables inside an expression, pass the string to `parseVariables`, which will interpret string-variable and template syntax.
 
-Optionally, you can provide the value to substitute in when a variable is `undefined`. This should be a string.
-
 eg `parseVariables('$(custom:$(custom:b))')`
-
-**getVariable(string) or getVariable(string, string)**
-
-Dynamically fetch a variable value.
-
-Note: when possible, prefer using the `$(internal:time_hms)` syntax, as it allows for Companion to statically detect the usage and auto-rename the reference when needed.
-
-eg `getVariable('internal:time_hms')` or `getVariable('internal', 'time_hms')`
 
 ### Bool operations
 
@@ -258,34 +248,32 @@ You can do the reverse of this with `secondsToTimestamp(str)`
 
 **secondsToTimestamp(seconds, format)**
 
-Convert a number of seconds into a timestamp of format 'n:HH:mm:ss'.
+Convert a number of seconds into a timestamp of format 'HH:mm:ss'.
+
+Note: If the value is less than 0, it will report 0. There is no limit to the number of hours shown, it will display values greater than 24.
 
 By supplying the format parameter, you can choose which components will be included in the output string.
 
 The following components are allowed:
 
-- `n` - minus sign
-- `dd` - days
-- `HH` / `hh` - 12 hour / 24 hours
+- `HH` / `hh` - hours
 - `mm` - minutes
 - `ss` - seconds
-- `a` - AM/PM decorator
 
 **msToTimestamp(milliseconds, format)**
 
-Convert a number of milliseconds into a timestamp of format 'n:HH:mm:ss.SSS'.
+Convert a number of milliseconds into a timestamp of format 'HH:mm:ss.SSS'.
+
+Note: If the value is less than 0, it will report 0. There is no limit to the number of hours shown, it will display values greater than 24.
 
 By supplying the format parameter, you can choose which components will be included in the output string.
 
 The following components are allowed:
 
-- `n` - minus sign
-- `dd` - days
-- `HH` / `hh` - 12 hour / 24 hours
+- `HH` / `hh` - hours
 - `mm` - minutes
 - `ss` - seconds
-- `S` / `SS` / `SSS` - milliseconds, in varying levels of accuracy
-- `a` - AM/PM decorator
+- `.S` / `.SS` / `.SSS` - milliseconds, in varying levels of accuracy. Must be at the end of the string
 
 **timeOffset(timestamp, offset, 12hour)**
 
