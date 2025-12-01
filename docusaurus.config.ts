@@ -5,6 +5,8 @@ import type { Options as DocsPluginOptions } from "@docusaurus/plugin-content-do
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
+import versions from "./versions.json" assert { type: "json" };
+
 const config: Config = {
   title: "Bitfocus Companion",
   tagline: "User Guide and Documentation",
@@ -48,14 +50,18 @@ const config: Config = {
           sidebarPath: "./sidebars/user-guide.ts",
           editUrl: "https://github.com/bitfocus/companion/tree/main/docs/",
           // Versioning configuration - DISABLED for now
-          disableVersioning: true,
-          // lastVersion: "beta",
-          // versions: {
-          //   beta: {
-          //     label: "Beta",
-          //     path: "beta",
-          //   },
-          // },
+          // disableVersioning: true,
+          // lastVersion: "current",
+          versions: {
+            current: { label: "Beta", path: "beta" },
+            ...Object.fromEntries(
+              versions.map((v) => [v, { label: v, path: v }])
+            ),
+            //   beta: {
+            //     label: "Beta",
+            //     path: "beta",
+            //   },
+          },
           exclude: ["9_whatsnew/**", "whats-new/**"],
         },
         blog: false, // Disable blog
@@ -157,12 +163,12 @@ const config: Config = {
           position: "left",
           label: "For Developers",
         },
-        // Version dropdown - disabled until versioning is needed
-        // {
-        //   type: "docsVersionDropdown",
-        //   position: "right",
-        //   dropdownActiveClassDisabled: true,
-        // },
+        {
+          type: "docsVersionDropdown",
+          position: "right",
+          dropdownActiveClassDisabled: true,
+          showOnlyForPath: "/user-guide/", // Custom to control visibility
+        },
         {
           href: "https://bfoc.us/djzdpq4g9g",
           label: "Download",
@@ -183,7 +189,7 @@ const config: Config = {
           items: [
             {
               label: "User Guide",
-              to: "/user-guide/",
+              to: `/user-guide/${versions[versions.length - 1]}`,
             },
             {
               label: "What's New",
