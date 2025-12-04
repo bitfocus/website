@@ -34,7 +34,7 @@ Inside of this folder should be one or more folders that use the following layou
 - Make sure **Enable Developer Modules** is switched on. You can now close the window
 - Click on "Launch GUI" to open the Admin interface. In the connections list you should find the connection provided by the developer module. If the developer module is using the same internal ID as a module that is distributed with Companion, be sure to choose the "dev" version in the configuration.  
   If you don't see the developers module, please check the log and switch on debug, maybe the module has crashed.
-- You can replace a developers module or parts of it on the harddrive while Companion is running. Companion will detect the change and restart only that module without affecting other modules.
+- You can replace a developers module or files within it while Companion is running. Companion will detect the change and restart only that module without affecting other modules.
 
 :::note
 

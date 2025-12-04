@@ -4,7 +4,7 @@ sidebar_label: Satellite API
 sidebar_position: 90
 ---
 
-It is possible to remotely connect a 'streamdeck' to companion so that it appears as its own device and follows the paging model. This is different to how the OSC/TCP/UDP servers operate.
+It is possible to remotely connect a 'Stream Deck' to companion so that it appears as its own device and follows the paging model. This is different to how the OSC/TCP/UDP servers operate.
 
 This page documents the protocol. The intention is to only ever add non-breaking functionality to this API, and to keep this document updated with new functionality as it is added.
 
@@ -40,7 +40,7 @@ You must call this at an interval, we recommend every 2 seconds, this is to ensu
 
 #### Adding a satellite device
 `ADD-DEVICE DEVICEID=00000 PRODUCT_NAME="Satellite Streamdeck"`
-* `DEVICEID` should be a unique identifier for the hardware device. such as a serialnumber, or mac address. This should be in the format `streamdeck:12345` to both ensure there arent collisions between device types, and make the id a bit more meaningful.
+* `DEVICEID` should be a unique identifier for the hardware device. such as a serial number, or mac address. This should be in the format `streamdeck:12345` to both ensure there aren't collisions between device types, and make the id a bit more meaningful.
 * `PRODUCT_NAME` is the name of the product to show in the Surfaces table in the UI
 
 Optional parameters:
@@ -124,7 +124,7 @@ Optional parameters:
 * `COLOR` hex or css encoded 8bit RGB color for the key background. This is only sent for devices which were added where `COLORS` was true
 * `TEXTCOLOR` hex or css encoded 8bit RGB color for the key text. This is only sent for devices which were added where `COLORS` was true (added in v1.6)
 * `TEXT` base64 encoded text as should be displayed on the key. This is only sent for devices which were added where `TEXT` was true
-* `FONT_SIZE` numeric size that should be used when displaying the text on the key. This is only sent for devices which were added where `TEXT_SYLE` was true (added in v1.4.0)
+* `FONT_SIZE` numeric size that should be used when displaying the text on the key. This is only sent for devices which were added where `TEXT_STYLE` was true (added in v1.4.0)
 
 Note: expect more parameters to be added to this message over time. Some could increase the frequency of the message being received.
 
@@ -146,7 +146,7 @@ This can be received when output variables are defined as part of `ADD-DEVICE`.
 * `VALUE` the value of the variable, base64 encoded. The encoding is so that special characters and newlines don't have to be escaped, avoiding a wide range of easy to trigger bugs.
 
 #### Locked state update (Since v1.8.0)
-This can be received when `PINCODE_LOCK` was specified when addign the device
+This can be received when `PINCODE_LOCK` was specified when adding the device
 
 `LOCKED-STATE DEVICEID=00000 LOCKED=true CHARACTER_COUNT=0`
 * `DEVICEID` the unique identifier used to add the device
