@@ -1,9 +1,8 @@
 ---
-title: Sattelite API
-sidebar_label: Sattelite API 
-sidebar_position: 100
+title: Satellite API
+sidebar_label: Satellite API 
+sidebar_position: 90
 ---
-_NOTE: this should probably be deleted and put in User Guide instead (there's already a page)_
 
 It is possible to remotely connect a 'streamdeck' to companion so that it appears as its own device and follows the paging model. This is different to how the OSC/TCP/UDP servers operate.
 
