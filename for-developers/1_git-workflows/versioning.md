@@ -2,11 +2,12 @@
 title: Versioning Rules
 sidebar_label: Versioning Rules
 sidebar_position: 3
+description: How we handle versioning for Companion
 ---
 
 ## Versioning
 
-This page describes how we handle versioning at Companion. It will provide information to users how to understand version numbers and information on developers how to generate version numbers.
+This page describes how we handle versioning for Companion. It will provide information to users how to understand version numbers and information on developers how to generate version numbers.
 
 The main goal of our versioning scheme is to make sure that it is easy for the users of the different parts of Companion to estimate whether different versions are compatible to each other and which impact a different version may have.
 

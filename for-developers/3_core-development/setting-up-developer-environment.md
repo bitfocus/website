@@ -2,10 +2,13 @@
 title: Setting up a Developer Environment
 sidebar_label: Initial Setup 
 sidebar_position: 1
+description: Setting up a Developer Environment
 ---
 
+:::tip
 If you only wish to develop modules, you can refer to the [Module Development Pages](../category/companion-modules) for a simpler and more minimal setup.  
 The following will also work for developing modules, if you prefer the more manual route
+:::
 
 ## Platform notes
 

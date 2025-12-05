@@ -2,6 +2,7 @@
 title: Building Companion Binaries
 sidebar_label: Building Companion 
 sidebar_position: 2
+description: Sharing your modified Companion with others
 ---
 
 

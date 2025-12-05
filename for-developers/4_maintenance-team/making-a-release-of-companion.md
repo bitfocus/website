@@ -2,6 +2,7 @@
 title: Making a Companion Release
 sidebar_label: Making a Companion Release 
 sidebar_position: 1
+description: Steps to make a new release
 ---
 
 This is the release procedure for Companion, not for modules. You probably don't want this file.
