@@ -2,7 +2,7 @@
 
 This is the documentation website for [Bitfocus Companion](https://github.com/bitfocus/companion), built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
 
-The documentation is available at `/user-guide` with a landing page
+The markdown in this repository is a mix of markdown which resides only here, and a few sections which are synced from other repositories. This syncing allows us to write the Companion documentation as part of Companion (and easily distribute it with Companion), while also allowing us to use it to build this website.
 
 ## Installation
 
@@ -34,14 +34,6 @@ This happens automatically on pushes to the main branch
 
 ## Versioning
 
-This documentation site supports versioning To create a new version:
+This user-guide portion of this is versioned. Each version is synced from a different branch of the main companion repository, and should be edited there. Check the link at the bottom of each page to find out where it resides.
 
-```bash
-yarn docusaurus docs:version <version-name>
-```
-
-This will:
-
-- Copy the current docs to `versioned_docs/version-<version-name>/`
-- Create a versioned sidebar at `versioned_sidebars/version-<version-name>-sidebars.json`
-- Update `versions.json` with the new version
+Versions are created as part of the release process of Companion.

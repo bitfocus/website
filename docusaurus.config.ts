@@ -48,7 +48,6 @@ const config: Config = {
           path: "user-guide", // Must match the companion repository for links to work
           routeBasePath: "/user-guide",
           sidebarPath: "./sidebars/user-guide.ts",
-          editUrl: "https://github.com/bitfocus/companion/tree/main/docs/",
           // Versioning configuration - DISABLED for now
           // disableVersioning: true,
           // lastVersion: "current",
@@ -63,6 +62,17 @@ const config: Config = {
             //   },
           },
           exclude: ["9_whatsnew/**", "whats-new/**"],
+
+          editUrl: (url) => {
+            if (url.version === "v4.1") return null; // Not editable, as it was manually imported
+
+            const branch =
+              url.version === "current"
+                ? "main"
+                : `stable-${url.version.slice(1)}`;
+
+            return `https://github.com/bitfocus/companion/tree/${branch}/docs/user-guide/${url.docPath}`;
+          },
         },
         blog: false, // Disable blog
         theme: {
