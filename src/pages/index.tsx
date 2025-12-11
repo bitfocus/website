@@ -179,7 +179,7 @@ function BenefitsSection() {
               style={{
                 fontSize: "0.875rem",
                 fontWeight: 500,
-                color: "#111827",
+                color: "var(--ifm-heading-color)",
                 marginBottom: "0.5rem",
               }}
             >
@@ -217,7 +217,7 @@ function BenefitsSection() {
               style={{
                 fontSize: "0.875rem",
                 fontWeight: 500,
-                color: "#111827",
+                color: "var(--ifm-heading-color)",
                 marginBottom: "0.5rem",
               }}
             >
@@ -255,7 +255,7 @@ function BenefitsSection() {
               style={{
                 fontSize: "0.875rem",
                 fontWeight: 500,
-                color: "#111827",
+                color: "var(--ifm-heading-color)",
                 marginBottom: "0.5rem",
               }}
             >
