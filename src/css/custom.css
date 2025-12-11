@@ -61,3 +61,6 @@
 .text-gray-50 { color: #f9fafb; }
 .text-gray-500 { color: #6b7280; }
 
+h2 ~:not(h1, h2) {
+	margin-left: 2rem;
+}
