@@ -9,7 +9,7 @@ Starting with Companion 3.0 you can develop, test and use your own module code w
 
 ## Module folder structure
 
-The structure is setup so that you can load multiple modules at the same time.  A module folder is specified as described below.
+The structure is setup so that you can load multiple modules at the same time. A module folder is specified as described below.
 Inside of this folder should be one or more folders that use the following layouts, with each folder corresponding to a different module.
 
 1. A git clone of a module from github  
@@ -18,7 +18,7 @@ Inside of this folder should be one or more folders that use the following layou
    This is a folder that contains a `companion/manifest.json`, `companion/HELP.md`, `package.json`, `main.js` (or another name), and possibly a few other files.
    No extra work is needed for this to be loaded
 
-##  Set up a developer folder
+## Set up a developer folder
 
 - Create a folder on your machine where you will put these custom modules.
 - Check the section above on how to structure this folder
@@ -38,10 +38,10 @@ Inside of this folder should be one or more folders that use the following layou
 
 :::note
 
-The development folder is the one that contains all your module folders, not a module folder itself! 
+The development folder is the one that contains all your module folders, not a module folder itself!
 
 For example, if your module repo is in a folder called _module1_ and it's in a folder called _mydev_, i.e.
- _mydev/module1_,
+_mydev/module1_,
 the **Developer Module Path** is _**mydev**_ and not _mydev/module1_.
 
 :::
@@ -59,3 +59,10 @@ the **Developer Module Path** is _**mydev**_ and not _mydev/module1_.
 - If you are running Companion from source in development mode, there is a folder `module-local-dev` inside the repository that gets read for your modules.
 - It follows the same rules for structuring as above.
 - Any changes made to the contents of the folder will cause the affected modules to be reloaded. You can force them to reload by disabling and re-enabling a connection.
+
+- You can also use the command-line argument `--extra-module-path` to specify the dev folder.
+- Alternatively, you can set the environment variable `COMPANION_DEV_MODULES` to the dev folder. For your convenience, you can put the following in `.env` in your companion source folder:
+
+```
+COMPANION_DEV_MODULES=<dev modules path>
+```

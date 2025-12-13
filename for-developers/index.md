@@ -1,7 +1,8 @@
 ---
 title: Information For Developers
-sidebar_label: For Developers Intro
+sidebar_label: Intro for Developers
 sidebar_position: 0
+description: Overview of the developer documentation
 ---
 
 These pages provide information for people who would like to contribute to the Bitfocus Companion Open-Source Project.
