@@ -8,7 +8,7 @@ This tab allows you to configure your Stream Decks and other **Surfaces**.
 
 If any of your Stream Decks are not showing up, press the **Rescan USB** button. You can avoid needing to do this by enabling **Watch for new USB Devices** on the settings page.
 
-![Surfaces](images/surfaces.png?raw=true "Surfaces")
+![Surfaces](images/surfaces.png?raw=true 'Surfaces')
 
 Here you can see all your current surfaces, both local and connected over Satellite, as well as any available emulators.
 
@@ -46,7 +46,7 @@ You can create your groups and program the system ahead of time, then later add 
 
 Companion supports a few different network protocols for attaching remote surfaces.
 
-![Discovery](images/surface-discover.png?raw=true "Discovery")
+![Discovery](images/surface-discover.png?raw=true 'Discovery')
 
 Any surfaces discovered on your network via mdns will be listed here. For each, a short wizard is provided to help connect it to Companion.
 
