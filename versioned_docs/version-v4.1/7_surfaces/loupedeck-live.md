@@ -11,6 +11,6 @@ Enable support for it in Companion's settings and rescan for USB devices.
 
 The layout closely matches the device. Touching and swiping on the tall touch strips is mapped to user-defined custom variables. Values vary from 0 to 256.
 
-![Loupedeck Live template](images/loupedeck-live.png?raw=true "Loupedeck Live template")
+![Loupedeck Live template](images/loupedeck-live.png?raw=true 'Loupedeck Live template')
 
 [Loupedeck Live template](assets/loupedeck-live-template.companionconfig)
