@@ -49,7 +49,7 @@ note: if your wine config gets corrupted, delete `~/.wine`.
 The very end of ‘yarn dist’ (signing) creates symlinks. By default, Windows restricts symlink creation, so you have two options when building Companion in Windows:
 
 1. Run `yarn dist` in a shell with Administrator privileges.
-2. Set a local policy in the “Local Security Policy” editor: Security Settings > User Rights Assignment, to allow yourself to create symlinks:
+2. Set a local policy in the “Local Security Policy” editor: Security Settings > Local Policies > User Rights Assignment: Create symbolic links, to allow yourself to create symlinks:
 
    ![image](images/set-symlink-permission.png)
 
