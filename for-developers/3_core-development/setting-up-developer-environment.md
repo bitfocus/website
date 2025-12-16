@@ -23,6 +23,10 @@ We strongly recommend using the [fnm](https://github.com/Schniz/fnm#installation
 If you want to run in Linux Subsystem for Windows (aka WSL), please follow the [WSL Instructions page](setting-up-WSL.md) and then follow the instructions, below, in the [Linux section, below](#installing-fnm-on-linux-and-macos).
 :::
 
+:::tip
+If PowerShell complains about unsigned apps, go to Settings, search for "developer settings" and enable "Change execution policy to allow local PowerShell scripts to run without signing" or in a PowerShell with elevated permisions run: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
+:::
+
 If you are new to code development on Windows, the built-in `winget` command is probably the simplest way to install fnm. (Other popular package managers such as Chocolatey and Scoop work similarly.)
 
 In Powershell (admin mode) type:
