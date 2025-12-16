@@ -24,7 +24,7 @@ If you want to run in Linux Subsystem for Windows (aka WSL), please follow the [
 :::
 
 :::tip
-If PowerShell complains about unsigned apps, go to Settings, search for "developer settings" and enable "Change execution policy to allow local PowerShell scripts to run without signing" or in a PowerShell with elevated permisions run: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
+If PowerShell complains about unsigned apps, go to Settings, search for "developer settings" and enable "Change execution policy to allow local PowerShell scripts to run without signing" or in a PowerShell with elevated permissions run: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
 :::
 
 If you are new to code development on Windows, the built-in `winget` command is probably the simplest way to install fnm. (Other popular package managers such as Chocolatey and Scoop work similarly.)
