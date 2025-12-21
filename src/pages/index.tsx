@@ -77,14 +77,15 @@ function FeaturesAndVideoSection() {
 								lineHeight: '1.5',
 							}}
 						>
-							<li>Button designer - Either with colored text or upload your own images</li>
-							<li>Feedback - Devices can give feedback to buttons to display state</li>
+							<li>Button designer - Customise each button with colored text, background images and more</li>
+							<li>Feedback - Change the display of each button based on device state</li>
 							<li>Stacked actions - Run multiple actions from the same button</li>
-							<li>Delayed actions - Set delay time individually for each action</li>
-							<li>Multi device - Have multiple stream decks connected at once</li>
-							<li>Web admin - Configure the system from any browser in the network</li>
-							<li>Web buttons - Virtual web buttons for mobile/tablet/browser</li>
-							<li>Latching - Separate actions for key down and up, and ability to latch/toggle</li>
+							<li>Action logic - Run actions conditionally, or with delays</li>
+							<li>Duration groups - Execute different behaviour based on how long a button is pressed</li>
+							<li>Multi surface - Have multiple stream decks or other surfaces connected at once</li>
+							<li>Satellite api - Connect stream decks or other surfaces remotely</li>
+							<li>Web admin - All configuration is done in your browser, and can be done over your network</li>
+							<li>Web buttons - Use your tablet or phone as an easy alternative for a stream deck</li>
 							<li>Streamdeck Plugin - Use companion buttons in the native stream deck application</li>
 						</ul>
 					</div>
