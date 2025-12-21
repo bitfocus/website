@@ -192,7 +192,7 @@ const config: Config = {
 					items: [
 						{
 							label: 'User Guide',
-							to: `/user-guide/${versions[versions.length - 1]}`,
+							to: `/user-guide/${versions[0]}`,
 						},
 						{
 							label: "What's New",
