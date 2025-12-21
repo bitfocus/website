@@ -12,6 +12,7 @@ You can download the Badge here: [https://bitfocus.io/companion-badge.png](https
 When integrating the badge on your website(s), you are free to host the image yourself or to link the image on our server, but keep in mind if you link the image on our server we'll know how often your site has been visited ;-)
 
 Use this html to show the badge:
+
 ```
 <a href="https://bitfocus.io/companion/?ref=wiki" target="_new"><img alt="Controllable by Companion" src="https://bitfocus.io/companion-badge.png?ref=wiki"></a>
 ```
@@ -21,7 +22,7 @@ You can scale the image to fit in your website, as long as it is still readable,
 
 You are not allowed to:
 
-- use this Badge without advertising a product which is controllable by Companion
+- use this Badge without advertising a product which is controllable by Companion without a custom module
 - alter the appearance of this badge
 - hyperlink the badge to any other than the given site
 - hyperlink the badge to bitfocus.io with redirectors or link shortening services
