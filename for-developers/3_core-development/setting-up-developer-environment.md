@@ -92,7 +92,7 @@ corepack enable
 :::warning
 
 Do not install yarn directly. Instead, let corepack ensure that the right version is installed
-when you run [`yarn install`](development-flow#install-the-dependencies). If you have already installed
+when you run [`yarn install`](development-flow#every-time-install-the-dependencies). If you have already installed
 yarn globally and are having problems, consider removing the global install.
 
 :::

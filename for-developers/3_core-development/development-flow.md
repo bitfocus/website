@@ -31,7 +31,7 @@ See topics below for running the launcher and docs in development mode.
 ### Getting Started: Cloning
 
 :::important[Windows Note]
-Be sure to [setup git line-endings behavior](setting-up-developer-environment#4-install-and-setup-git) **before** cloning!
+Be sure to [setup git line-endings behavior](setting-up-developer-environment#3-install-and-setup-git) **before** cloning!
 :::
 
 Using your git client, you can clone Companion. To do it from a command line interface, change to the directory you want to contain the repo (the repo will be added as a subdirectoy) then:
