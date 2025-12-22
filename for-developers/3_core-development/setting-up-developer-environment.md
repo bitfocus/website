@@ -89,13 +89,15 @@ corepack enable
 
 (Note: `corepack enable` may not be needed in Windows if using PowerShell with the setup described above.)
 
-## 3. (Do not) Install yarn
+:::warning
 
-You should not install yarn directly. Instead, let corepack ensure that the right version is installed
+Do not install yarn directly. Instead, let corepack ensure that the right version is installed
 when you run [`yarn install`](development-flow#install-the-dependencies). If you have already installed
 yarn globally and are having problems, consider removing the global install.
 
-## 4. Install and setup git
+:::
+
+## 3. Install and setup git
 
 See the [instructions for installing Git here](../1_git-workflows/installing-git.md).
 
@@ -111,13 +113,13 @@ git config set --global core.eol lf
 
 :::
 
-## 5. Enabling USB access on Linux Systems
+## 4. Enabling USB access on Linux Systems
 
 If you are using linux, you should follow the dependencies and udev rules steps as described in the README included in the release builds https://github.com/bitfocus/companion/tree/main/assets/linux.
 
 For WSL, follow the [WSL setup instructions](setting-up-WSL.md) instead.
 
-## 6. Editing Code / Integrated Development Environment (IDE)
+## 5. Editing Code / Integrated Development Environment (IDE)
 
 To edit the source code or write new code you can use any text editor you like, but there are many editors which are made especially for developing computer code or even better especially for JavaScript.
 If you have no prior experience, we recommend the [Visual Studio Code](https://code.visualstudio.com/) editor (VS Code).
