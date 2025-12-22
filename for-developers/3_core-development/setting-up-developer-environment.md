@@ -1,144 +1,133 @@
 ---
 title: Setting up a Developer Environment
-sidebar_label: Initial Setup 
+sidebar_label: Initial Setup
 sidebar_position: 1
 description: Setting up a Developer Environment
 ---
 
+import UserGuideLink from '@site/src/UserGuideLink';
+
 :::tip
-If you only wish to develop modules, you can refer to the [Module Development Pages](../2_module-development/index.md) for a simpler and more minimal setup.  
-The following will also work for developing modules, if you prefer the more manual route
+The procedure described here is recommended for both core development and module development.
+For module development you may be able to skip step 5, below, "Enabling USB on Unix". Instead
+simply install Companion according to the instructions in the <UserGuideLink to="getting-started/Installation">getting started guide</UserGuideLink>.
 :::
 
-## Platform notes
+## 1. Install Node.js manager (fnm)
 
-### Installing WSL
+We strongly recommend using the [fnm](https://github.com/Schniz/fnm#installation) version manager to allow for easily updating and switching between Node.js versions. If you choose to install Node.js without fnm, you will still need to ensure you a running the right Node.js versions as Companion evolves.
 
-Many AV users work on Windows. Setting up a development environment is a bit harder then on OSX or Linux. The key is to install Linux side-by-side on Windows.
+### Installing fnm on Windows
 
-First install Windows Subsystem for Linux version 2 (WSL2),   
-WSL is included with Windows but needs to be activated. Follow [Microsoft’s installation instructions](https://learn.microsoft.com/en-us/windows/wsl/setup/environment). 
+:::note
+If you want to run in Linux Subsystem for Windows (aka WSL), please follow the [WSL Instructions page](setting-up-WSL.md) and then follow the instructions, below, in the [Linux section, below](#installing-fnm-on-linux-and-macos).
+:::
 
-Basically, open a command or powershell window and type  
-~~~  
-   wsl --install  
-~~~  
-After this completes, reboot your computer and WSL will automatically install the latest LTS version of Ubuntu. (24.04 at this time of writing).  Once this is done continue through Microsoft’s instructions, especially  
-    `sudo apt update && sudo apt upgrade`, 
-as well as the instructions to:	
- - Set up Windows terminal,  
- - Set up VS Code, and   
- - Set up Git.
+:::tip
+If PowerShell complains about unsigned apps, go to Settings, search for "developer settings" and enable "Change execution policy to allow local PowerShell scripts to run without signing" or in a PowerShell with elevated permissions run: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
+:::
 
-If you develop with Visual Studio Code, which we currently recommend, then you can do remote developing. That means VSC is running on Windows but it opens a connection to the virtual machine and actually you edit the files directly on the WSL machine. VSC also has an integrated terminal so you can work on the WSLOS. For that you should install the extension [WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) and follow [Microsoft’s instructions here](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-vscode). You will see the connection info on the bottom left of each window and you can connect there or by the command palette. You can debug using breakpoints etc. either by starting automatic debugging from the terminal or by attaching to the running node.js process (which should be the first one in the list when you type ctrl-shift-P and “Debug: Attach to Node Process”.
+If you are new to code development on Windows, the built-in `winget` command is probably the simplest way to install fnm. (Other popular package managers such as Chocolatey and Scoop work similarly.)
 
-You will need to install all the prerequisite tools on the WSL machine just like you would do on Linux, as described in the sections below.
+In Powershell (admin mode) type:
 
-When you are running Companion from a VSC terminal, VSC will know the network ports and create automatic port forwards for you. That means although Companion runs on the virtual machine, you'll be able to access the admin page from your Windows host by accessing localhost or 127.0.0.1 and the used port.  
-That makes it quite convenient but you always have to remember that Companion runs on a virtual machine inside of your computer and that virtual machine has a different IP-address. When you want to access the API of software running on your Windows host, you can't use 127.0.0.1 like you would without WSL. 127.0.0.1 is the localhost of the WSL. WSL sets up a virtual network interface for you and to access your host OS, you have to use 172.28.96.1. If you want to verify this use the command `ip route` in your Linux shell.
+```powershell
+winget install Schniz.fnm
+```
 
-If you want to use USB-devices in WSL, it gets complicated because WSL doesn't have built-in USB passthrough features. The solution is USB over IP software. That means you capture the USB packets at the host, transmit it to the virtual machine and then inject it to the USB system there. Here is how it's done:
+Once it has loaded, configure PowerShell as described in the fnm GitHub repo. Briefly you need to add a line to the end of the powershell startup script (aka profile). The following opens the profile file in a text editor
 
-- On Windows install the [USB-IP driver](https://github.com/dorssel/usbipd-win/releases)  
-- Optional but highly recommended install a GUI to control the USB connections: [WSL USB Manager](https://gitlab.com/alelec/wsl-usb-gui/-/releases)  
-- Make sure your WSL kernel is at least version 5.15.150.1 (released Mar 2024) (`uname -a`). If not, update your kernel.  
-- Linux distributions need extra rules to make USB devices accessible to users:
-- Copy the following code into a bash shell (terminal) to create the rules file:
-~~~
-sudo cat <<EOF |sudo tee /etc/udev/rules.d/50-companion-WSL.rules
-SUBSYSTEM=="usb|hidraw", GROUP="plugdev", MODE:="0666"
-EOF
+```powershell
+if (-not (Test-Path $profile)) { New-Item $profile -Force }
+Invoke-Item $profile
+```
 
-~~~
-- Now reboot the Computer (It may be sufficient to type: `sudo udevadm control --reload-rules`.)
-- Open the WSL USB Manager in Windows
-- Attach your USB device. You should see it popping up in the top pane of the manager.  
-- Check the "bound" checkbox next to your USB device (usbip will now remember this permission; you won't have to do it again.) 
-- Select the USB device by clicking on it and then press the "Attach" button. The device should now move from the top pane to the forwarded devices pane.  
-- Optional: on the linux shell use `lsusb` to check if you find your device and remember the bus and device number.  
-- Optional: In the linux shell use `cat /dev/bus/usb/001/003` to check if you have access to the device. Replace the numbers (/001/003) with the bus number and the device number that you have found with lsusb  
-- *Note: most Companions USB surfaces are handled as HID devices. WSL presents the HID interface through a separate “device” than shown by* `lsusb` *Instead when an HID device is added via the usb-ip driver, it will set up* `/dev/hidraw#` where # is an integer starting from 1. If permissions are incorrectly set, Companion will output an error message in the terminal. *You can also test it directly, as above.*  
+...put the following line at the end of the file:
 
-### Using homebrew on macos
+```powershell
+fnm env --use-on-cd --corepack-enabled --version-file-strategy=recursive --shell powershell | Out-String | Invoke-Expression
+```
 
-On macos, the typically way to install git and other tools is with [Homebrew](https://brew.sh/)
+### Installing fnm on Linux and MacOS
 
-## The process
+Use the following script (see [fnm instructions in GitHub](https://github.com/Schniz/fnm?tab=readme-ov-file#installation))
 
-### 1) Install node.js
+```bash
+curl -fsSL https://fnm.vercel.app/install | bash
+```
 
-There are many ways of doing this. We recommend using a version manager, to allow for easily updating and switching between versions.
-
-In the past, we recommended using `n`, but that requires a version node.js to be installed first.  
-Our recommendation is to use [fnm](https://github.com/Schniz/fnm#installation) It is fast and cross-platform. (If a dependency is missing, use `sudo apt install` to add it.) You are free to install any other way you wish, but you will need to figure out the correct commands or ensure you have the right version at each point.
-
-Once you have installed fnm execute the following in a terminal, to install node.js v22 and make it be the default.
+:::note
+The install script requires unzip to be installed on your system. If it isn't, install it by typing:
 
 ```
+sudo apt install unzip
+```
+
+:::
+
+**upgrading fnm**:
+
+on MacOS upgrade fnm using Homebrew: `brew upgrade fnm` (you can also install using manually using Homebrew)
+
+on other Linux systems upgrade using:
+
+```bash
+curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
+```
+
+## 2. Install Node.js using fnm
+
+Once you have installed fnm, execute the following in a terminal/PowerShell.
+To install Node.js v22 (the version required for Core Companion development at the time of writing) and make it the default.
+
+```bash
 fnm install 22
 fnm use 22
 fnm default 22
 corepack enable
-yarn init -2
 ```
 
-> When using Git Bash on windows, you can get into trouble with line endings (Windows uses CRLF while Linux uses LF). `git config core.autocrlf true` converts this for you
+(Note: `corepack enable` may not be needed in Windows if using PowerShell with the setup described above.)
 
-### 2) Other tools
+:::warning
 
-To edit the source code or write new code you can use any text editor you like, but there are many editors which are made especially for developing computer code or even better especially for JavaScript.
-If you have no idea you should try the [Visual Studio Code](https://code.visualstudio.com/) editor.
+Do not install yarn directly. Instead, let corepack ensure that the right version is installed
+when you run [`yarn install`](development-flow#install-the-dependencies). If you have already installed
+yarn globally and are having problems, consider removing the global install.
 
-You will also need to install [git](https://git-scm.com/), which is what we use to manage, upload and download the source code with [GitHub](https://github.com/bitfocus). On macos this is available from homebrew.  
-If you have never used git or github before, have a read of our [Git crashcourse](https://github.com/bitfocus/companion-module-base/wiki/Git-crashcourse).
+:::
 
-For a simple windowing editor, you can try gedit. Install it with `sudo apt install gedit`
+## 3. Install and setup git
 
-TODO - we should recommend a free git gui tool  (_Perhaps SmartGit?_)
+See the [instructions for installing Git here](../1_git-workflows/installing-git.md).
 
-### 2a) Linux dependencies
+:::important[Windows Note]
+As per [the windows note here](../1_git-workflows/installing-git.md#configure-git):
+
+In order for `git clone` to give you `lf` endings, this default needs to be overridden _**before you clone the companion repository**_. In a git bash window type:
+
+```bash
+git config set --global core.autocrlf false
+git config set --global core.eol lf
+```
+
+:::
+
+## 4. Enabling USB access on Linux Systems
 
 If you are using linux, you should follow the dependencies and udev rules steps as described in the README included in the release builds https://github.com/bitfocus/companion/tree/main/assets/linux.
 
-For WSL, only follow the dependencies portion, since you already installed the udev rules, above.
+For WSL, follow the [WSL setup instructions](setting-up-WSL.md) instead.
 
-You may also need to install python, which on Ubuntu can be achieved with: `sudo apt install python`
+## 5. Editing Code / Integrated Development Environment (IDE)
 
-### 3) Companion preparation and development
+To edit the source code or write new code you can use any text editor you like, but there are many editors which are made especially for developing computer code or even better especially for JavaScript.
+If you have no prior experience, we recommend the [Visual Studio Code](https://code.visualstudio.com/) editor (VS Code).
 
-Using your git client, you can clone Companion.
+:::tip
+We recommend installing the _ESLint_, _prettier_ and _typos_ plugins for VS Code.
+:::
 
-Once you have done this, in a terminal (the console window inside vscode is perfect for this) run  `yarn install` to prepare your clone for being run. You will need to do this every time you update your clone as we are often updating dependencies or changing the webui code.
-
-You can now run Companion with `yarn dev`
-
-By default this will serve the prebuilt version of the webui, which will not update as you make changes. If you wish to run the webui in development mode in a second terminal window/tab run`yarn dev:webui` (or `yarn dist:webui` to just compile it). This will launch the development version of the webui on a different port, typically [http://localhost:5173](http://localhost:5173)
-***Important: you still need to run `yarn dev` separately for this to work***
-
-- #### debugging the webui in Visual Studio Code: 
-   The webui is written in a combination of CSS/Sass (*.scss) and [React](https://react.dev/learn) (*.tsx). You can debug the React code in VS Code
-   by following [Microsoft's instructions to set up a *launch.json* file](https://code.visualstudio.com/docs/nodejs/reactjs-tutorial#_debugging-react) with the following adjustments:
-   - if using Chrome as your browser, select "Launch Chrome" from the menu or make sure the file shows: `"type": "chrome"` instead of `"type": "msedge",` and adjust `"name:"` as well 
-   - Set the port number: `"url": "http://localhost:5173/"` (you can add a specific page to the URL, if desired, for fast access to that page).
-   - Add the subfolder: `"webRoot": "${workspaceFolder}/webui/src"`
-   - The entry should in *launch.json* should be similar to this (if using Chrome)
-   ~~~
-   {
-        "version": "0.2.0",
-        "configurations": [
-            {
-                "type": "chrome",
-                "request": "launch",
-                "name": "Launch Companion Webui (in Chrome)",
-                "url": "http://localhost:5173/",
-                "webRoot": "${workspaceFolder}/webui/src"
-            }
-        ]
-    }
-    ~~~
-    - After starting `yarn dev:webui` (and `yarn dev`, as above), press **F5** to launch a web browser and start debugging. You can set breakpoints, explore the stack and current state, etc., in the usual way.
-	- Note that breakpoints will generally cause timeouts in the webui. If you need to debug timing-critical features, you may have to insert logging entries into the code instead.
-
-The instructions above will run the 'headless' version of Companion, without the red launcher window. If you want to run with that, you can cd into the `launcher` folder and run `yarn dev`. On WSL this may require additional dependencies to be installed.
-
-TODO: How to compile a distribution for Windows from WSL (note that links and packages mentioned in the Wiki “Build for Another Device” are broken)
+:::note[Linux Note]
+If you want a simple windowing text-editor in Linux, you can try gedit. Install it with `sudo apt install gedit`
+:::
