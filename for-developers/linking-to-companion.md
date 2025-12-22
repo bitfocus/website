@@ -22,7 +22,7 @@ You can scale the image to fit in your website, as long as it is still readable,
 
 You are not allowed to:
 
-- use this Badge without advertising a product which is controllable by Companion
+- use this Badge without advertising a product which is controllable by Companion without a custom module
 - alter the appearance of this badge
 - hyperlink the badge to any other than the given site
 - hyperlink the badge to bitfocus.io with redirectors or link shortening services

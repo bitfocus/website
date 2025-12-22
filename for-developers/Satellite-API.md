@@ -8,6 +8,18 @@ It is possible to remotely connect a 'Stream Deck' to companion so that it appea
 
 This page documents the protocol. The intention is to only ever add non-breaking functionality to this API, and to keep this document updated with new functionality as it is added.
 
+## Companion version support
+
+This lists what versions of Companion introduced support for each API version.
+
+| API Version | Companion Versions |
+| ----------- | ------------------ |
+| 1.4         | v3.0+              |
+| 1.5         | v3.2+              |
+| 1.7         | v3.4+              |
+| 1.8         | v4.0+              |
+| 1.9         | v4.2+              |
+
 ## API Spec
 
 The server by default runs on port TCP 16622, but this will become configurable in the future. You should make sure to support alternate ports to allow for future compatibility as well as firewalls or router port forwarding.  
@@ -21,7 +33,7 @@ Note: You can send boolean values can as both true/false and 0/1, you will alway
 
 Upon connection you will receive `BEGIN CompanionVersion=2.2.0-d9008309-3449 ApiVersion=1.0.0` stating the build of companion you are connected to. The `CompanionVersion` field should not be relied on to be meaningful to your application, but can be presented as information to the user, or to aid debugging. You should use the `ApiVersion` field to check compatibility with companion. The number followers [semver](https://semver.org/) for versioning. We hope to keep breaking changes to a minimum, and will do so only when necessary.
 
-### Messages to send
+## Messages to send
 
 Upon receiving an unknown command, the server will respond with the format `ERROR MESSAGE="Unknown command: SOMETHING"`  
 Known commands will get either a success or error response like the following:
@@ -30,19 +42,19 @@ Known commands will get either a success or error response like the following:
 - `COMMAND-NAME OK\n`
 - `COMMAND-NAME OK ARG1=arg1\n`
 
-#### Close connection
+### Close connection
 
 `QUIT`
 Close the connection, removing all registered devices
 
-#### Ping/pong
+### Ping/pong
 
 `PING payload`
 Check the server is alive, with an arbitrary payload
 Responds with `PONG payload`  
 You must call this at an interval, we recommend every 2 seconds, this is to ensure the connection does't get closed from being idle.
 
-#### Adding a satellite device
+### Adding a satellite device
 
 `ADD-DEVICE DEVICEID=00000 PRODUCT_NAME="Satellite Streamdeck"`
 
@@ -76,13 +88,13 @@ Optional parameters:
   ```
 - `PINCODE_LOCK` - (added in v1.8.0) you can set to indicate that you will handle display of the pincode locked state. set to `FULL` to indicate that you will handle display and input or to `PARTIAL` to indicate that you will handle display and the user will not be able to input a pincode. (Partial mode has no difference in behaviour currently, but we will utilise it in the future)
 
-#### Removing a satellite device
+### Removing a satellite device
 
 `REMOVE-DEVICE DEVICEID=00000`
 
 - `DEVICEID` the unique identifier used to add the device
 
-#### Pressing a key
+### Pressing a key
 
 `KEY-PRESS DEVICEID=00000 KEY=0 PRESSED=true`
 
@@ -90,7 +102,7 @@ Optional parameters:
 - `KEY` number of the key which is pressed/released. Since v1.6 this can be either a legacy key number or the local row/column starting at top left with `0/0` and counting up towards bottom/right
 - `PRESSED` true/false whether the key is pressed
 
-#### Rotating an encoder (Since v1.3.0)
+### Rotating an encoder (Since v1.3.0)
 
 Note: there is a checkbox to enable this per bank inside Companion, allowing users to define the actions to execute
 
@@ -100,7 +112,7 @@ Note: there is a checkbox to enable this per bank inside Companion, allowing use
 - `KEY` number of the key/encoder which is rotated. Since v1.6 this can be either a legacy key number or the local row/column starting at top left with `0/0` and counting up towards bottom/right
 - `DIRECTION` direction of the rotation. 1 for right, -1 for left
 
-#### Updating a variable (Since v1.7.0)
+### Updating a variable (Since v1.7.0)
 
 This can be used when input variables are defined as part of `ADD-DEVICE`.
 
@@ -110,7 +122,7 @@ This can be used when input variables are defined as part of `ADD-DEVICE`.
 - `VARIABLE` the id of the variable being updated
 - `VALUE` the value of the variable, base64 encoded. The encoding is so that special characters and newlines don't have to be escaped, avoiding a wide range of easy to trigger bugs.
 
-#### Pincode key press (Since v1.8.0)
+### Pincode key press (Since v1.8.0)
 
 When handling the pincode locked state yourself, report a pincode key was pressed
 
@@ -121,17 +133,17 @@ When handling the pincode locked state yourself, report a pincode key was presse
 
 Note: depending on your surface, this may not translate directly to a button press.
 
-### Messages to receive
+## Messages to receive
 
 No responses are expected to these unless stated below, and to do so will result in an error.
 
-#### Ping/pong
+### Ping/pong
 
 `PING payload`
 The server is checking you are still alive, with an arbitrary payload
 You must respond with `PONG payload`
 
-#### State change for key
+### State change for key
 
 `KEY-STATE DEVICEID=00000 KEY=0 BITMAP=abcabcabc COLOR=#00ff00`
 
@@ -149,20 +161,20 @@ Optional parameters:
 
 Note: expect more parameters to be added to this message over time. Some could increase the frequency of the message being received.
 
-#### Reset all keys to black
+### Reset all keys to black
 
 `KEYS-CLEAR DEVICEID=00000`
 
 - `DEVICEID` the unique identifier of the device
 
-#### Change brightness
+### Change brightness
 
 `BRIGHTNESS DEVICEID=00000 VALUE=100`
 
 - `DEVICEID` the unique identifier of the device
 - `VALUE` brightness number in range 0-100
 
-#### Update of a variable (Since v1.7.0)
+### Update of a variable (Since v1.7.0)
 
 This can be received when output variables are defined as part of `ADD-DEVICE`.
 
@@ -172,7 +184,7 @@ This can be received when output variables are defined as part of `ADD-DEVICE`.
 - `VARIABLE` the id of the variable being updated
 - `VALUE` the value of the variable, base64 encoded. The encoding is so that special characters and newlines don't have to be escaped, avoiding a wide range of easy to trigger bugs.
 
-#### Locked state update (Since v1.8.0)
+### Locked state update (Since v1.8.0)
 
 This can be received when `PINCODE_LOCK` was specified when adding the device
 

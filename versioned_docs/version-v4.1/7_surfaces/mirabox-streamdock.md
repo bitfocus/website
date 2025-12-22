@@ -28,4 +28,4 @@ To use the rotary encoders for a specific button, enable the `Enable Rotary Acti
 
 The LCD strip also supports a swipe gesture. Swipe events are mapped to the rotary actions of the fifth button in the third row.
 
-![Stream Dock N4 mapping](images/mirabox-streamdock.png?raw=true "Stream Dock N4 mapping")
+![Stream Dock N4 mapping](images/mirabox-streamdock.png?raw=true 'Stream Dock N4 mapping')
