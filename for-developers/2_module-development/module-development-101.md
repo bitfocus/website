@@ -39,11 +39,11 @@ These other pages will help explain some of the functionality that the module ex
 
 TO-DO: Add links
 
-- [Module Configuration]()
-- [Actions]()
-- [Feedbacks]()
-- [Presets]()
-- [Variables]()
+- [Module Configuration]
+- [Actions]
+- [Feedbacks]
+- [Presets]
+- [Variables]
 
 ## What makes up a module
 
@@ -75,11 +75,11 @@ Most (so far all) modules do want to provide some interaction with the user. The
 
 TO-DO: Add links
 
-- [Module Configuration]()
-- [Actions]()
-- [Feedbacks]()
-- [Presets]()
-- [Variables]()
+- [Module Configuration]
+- [Actions]
+- [Feedbacks]
+- [Presets]
+- [Variables]
 
 ### Printing to log
 
@@ -95,9 +95,9 @@ And if you want it in the log in the web interface, see [the log method](https:/
 ## Sharing your code
 
 TODO: Fix links:
-Once your module is tested and you are ready to release it publicly, please follow the guide for [releasing your module](Releasing-your-module).
+Once your module is tested and you are ready to release it publicly, please follow the guide for [releasing your module].
 
-If your module it not intended for public release, or you want to share it locally for testing, you can also read the guide on [packaging your module](Module-packaging).
+If your module it not intended for public release, or you want to share it locally for testing, you can also read the guide on [packaging your module].
 
 ## Testing
 
