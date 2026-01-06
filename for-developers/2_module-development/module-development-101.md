@@ -37,17 +37,17 @@ In your IDE of choice (we recommend [VS Code](https://code.visualstudio.com/)), 
 Now have a look around and see what you can figure our from the code.
 These other pages will help explain some of the functionality that the module exposes to users:
 
-TO-DO: Add links
+TO-DO: Update links
 
-- [Module Configuration]
-- [Actions]
-- [Feedbacks]
-- [Presets]
-- [Variables]
+- [Module Configuration](https://github.com/bitfocus/companion-module-base/wiki/Module-development-101)
+- [Actions](https://github.com/bitfocus/companion-module-base/wiki/Actions)
+- [Feedbacks](https://github.com/bitfocus/companion-module-base/wiki/Feedbacks)
+- [Presets](https://github.com/bitfocus/companion-module-base/wiki/Presets)
+- [Variables](https://github.com/bitfocus/companion-module-base/wiki/Variables)
 
 ## What makes up a module
 
-There are a few files that make up every module. To get an overview of what these are, please see [[File Structure]].
+There are a few files that make up every module. To get an overview of what these are, please see [File Structure](https://github.com/bitfocus/companion-module-base/wiki/File-Structure).
 
 ## The Module source code
 
@@ -62,7 +62,7 @@ There are various tasks to do to get a working module, which can be divided in s
 
 ### Base module implementation
 
-When your module is started, first the `constructor` will be called, followed by your [[upgrade scripts]] and then the `init` method.  
+When your module is started, first the `constructor` will be called, followed by your [upgrade scripts](https://github.com/bitfocus/companion-module-base/wiki/Upgrade-scripts) and then the `init` method.  
 Your constructor should only do some minimal class setup. It does not have access to your instance config, so cannot be used to start doing things.
 
 Inside of the `init` method you should initiate the connection to your device (but dont await it!) and get everything working ready for actions and feedbacks to start being used.
@@ -73,13 +73,13 @@ When the module gets deleted or disabled the `destroy` function is called. here 
 
 Most (so far all) modules do want to provide some interaction with the user. The possible items are stored in json objects. This splits up in several categories.
 
-TO-DO: Add links
+TO-DO: Update links
 
-- [Module Configuration]
-- [Actions]
-- [Feedbacks]
-- [Presets]
-- [Variables]
+- [Module Configuration](https://github.com/bitfocus/companion-module-base/wiki/Module-development-101)
+- [Actions](https://github.com/bitfocus/companion-module-base/wiki/Actions)
+- [Feedbacks](https://github.com/bitfocus/companion-module-base/wiki/Feedbacks)
+- [Presets](https://github.com/bitfocus/companion-module-base/wiki/Presets)
+- [Variables](https://github.com/bitfocus/companion-module-base/wiki/Variables)
 
 ### Printing to log
 

@@ -55,4 +55,10 @@ You are now ready to start developing your module.
 You should notice that whenever you save a file inside your `companion-module-dev` folder, companion will restart itself.  
 If it does not, or you are having issues getting your module to load in then please reach out on slack and we will be happy to assist you in getting started.
 
-Next: [Module development 101](./module-development-101.md)
+## Further Reading
+
+- [Module development 101](./module-development-101.md)
+- [Creating a module](https://github.com/bitfocus/companion-module-base/wiki/Creating-a-module)
+- [Actions](https://github.com/bitfocus/companion-module-base/wiki/Actions)
+- [Feedbacks](https://github.com/bitfocus/companion-module-base/wiki/Feedbacks)
+- [Variables](https://github.com/bitfocus/companion-module-base/wiki/Variables)
