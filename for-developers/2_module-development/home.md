@@ -16,9 +16,15 @@ This page discusses additional setup needed in order to develop or contribute to
 
 ## Install Companion
 
-You can develop modules against any standard release or beta build of Companion! (To develop modules in a core-Companion development process, see the instruction for [headless development](./local-modules#headless-development))
+You can develop modules against any standard release or beta build of Companion. (To develop modules in a core-Companion development process, see the instruction for [headless development](./local-modules#headless-development))
 
 Download and install a recent version from [the website](https://bitfocus.io/user/downloads)
+
+:::tip
+Starting with Companion v4.0, the module release cycle has been separated from the Companion release cycle: The timing of module version releases are determined by the module developer independently of the Companion releases.
+
+We therefore recommend developing your module using the current stable version to ensure that users will be able to use your module right away instead of having to wait until the current beta is released.
+:::
 
 ## Set up Companion for Module Development
 
@@ -28,7 +34,9 @@ Follow the instructions in [Setting up a Development Folder](./local-modules.md)
 - Once you have the companion launcher open, click the cog in the top right. In versions prior to v4.1 this will reveal a 'Developer modules path' field. Starting in v4.1 it will open up a settings window in which you can set the path. Set it to the `companion-module-dev` folder you created earlier.
 
 :::tip
-Companion will load any modules it finds in subfolders of that folder and will restart itself whenever a file inside that folder is changed.
+Companion will load any modules it finds in subfolders of that folder.
+
+When files inside those folders is changed, Companion will automatically restart any connections using that module.
 :::
 
 ## Clone the module

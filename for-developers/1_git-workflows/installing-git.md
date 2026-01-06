@@ -9,9 +9,9 @@ If you have never used git or github before, have a read of our [Git crashcourse
 
 ## Install Git
 
-Install git from [their website](https://git-scm.com/install/). (MacOS users can use homebrew.)
+Install git following the instructions on [their website](https://git-scm.com/install/).
 
-:::::tip
+
 Consider installing a graphical front-end to git: it can greatly simplify your git workflow. The following three popular options run on Windows, Mac and Linux. Many other GUI options are listed on [the git website](https://git-scm.com/tools/guis).
 
 :::note
@@ -26,7 +26,6 @@ You do not have to limit yourself to a single tool: because of the way Git works
 
 - [**GitHub Desktop**](https://github.com/apps/desktop) works well in simple cases and integrates well with GitHub.
 
-:::::
 
 ## Configure Git
 

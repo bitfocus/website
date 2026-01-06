@@ -32,7 +32,7 @@ In a shell inside the new folder, you should run the following:
 
 1. `yarn` This will install any dependencies needed by the module.
 
-In your IDE of choice, you should start by editing the name of the module to match what yours is called. The search feature is really helpful for this!
+In your IDE of choice (we recommend [VS Code](https://code.visualstudio.com/)), you should start by editing the name of the module to match what yours is called. The search feature is really helpful for this!
 
 Now have a look around and see what you can figure our from the code.
 These other pages will help explain some of the functionality that the module exposes to users:
@@ -65,7 +65,7 @@ There are various tasks to do to get a working module, which can be divided in s
 When your module is started, first the `constructor` will be called, followed by your [[upgrade scripts]] and then the `init` method.  
 Your constructor should only do some minimal class setup. It does not have access to your instance config, so cannot be used to start doing things.
 
-Inside of the `init` method you should setup the connection to your device and get everything working ready for actions and feedbacks to start being used.
+Inside of the `init` method you should initiate the connection to your device (but dont await it!) and get everything working ready for actions and feedbacks to start being used.
 
 When the module gets deleted or disabled the `destroy` function is called. here you should clean-up whatever you don't need anymore. Make sure to not leave timers running, as that can cause performance problems in companion as the leaked timers start piling up!
 
@@ -86,7 +86,7 @@ TO-DO: Add links
 While developing you might want to print some info or variables to the console or the in companion log.
 The below commands will help you do just that:
 
-For printing to console, if you launch through terminal:
+For printing to the module debug log:
 
 - `console.log('your data/message');`
 
@@ -103,6 +103,6 @@ If your module it not intended for public release, or you want to share it local
 
 In any case, your module should be tested throughout at different stages of its life.  
 You should check the compatibility to the Companion core, especially to different versions of the configuration fields. Some users may not have used Companion in a long time and their configuration file might look different than what you expect.  
-And last but not least you should check **all** your actions with **all** the options and feedbacks and whatever with the real device (as much as possible). Most bugs we find are typos, which would have easily been detected be complete testing. Also please don't rely on simulations where possible, often the real device reacts differently than the simulator.
+And last but not least you should check **all** your actions with **all** the options and feedbacks and whatever with the real device (as much as possible). Most bugs we find are typos, which would have easily been detected by complete testing. Also please don't rely solely on simulations where possible, often the real device reacts slightly differently than the simulator.
 
 Questions? Reach out on [SLACK](https://bfoc.us/uu1kmq6qs4)! :)

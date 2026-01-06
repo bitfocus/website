@@ -27,7 +27,7 @@ If you want to run in Linux Subsystem for Windows (aka WSL), please follow the [
 :::
 
 :::tip
-If PowerShell complains about unsigned apps, go to Settings, search for "developer settings" and enable "Change execution policy to allow local PowerShell scripts to run without signing" or in a PowerShell with elevated permissions run: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
+If PowerShell complains about unsigned apps, go to Settings, search for "developer settings" and enable "Change execution policy to allow local PowerShell scripts to run without signing". Alternatively, in a PowerShell with elevated permissions run: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
 :::
 
 If you are new to code development on Windows, the built-in `winget` command is probably the simplest way to install fnm. (Other popular package managers such as Chocolatey and Scoop work similarly.)
@@ -95,7 +95,7 @@ corepack enable
 :::note
 Some older modules uses node v18 instead of v22, but are encouraged to update to v22. Sometimes updating the node version can introduce new bugs, but staying on older versions makes development harder as tools drop support for those versions. At some point, Companion will require modules to be node v22 (or perhaps a newer version).
 
-With fnm you can install both v18 and v22 and let yarn determine the correct version to use based on package.json.
+With fnm you can install both v18 and v22 and quickly switch between versions as needed. fnm can be setup to do this automatically with the `--use-on-cd` switch (as recommended in the [Windows section](#installing-fnm-on-windows) above), or you can switch it manually with a command like `fnm use 22`. See the [fnm config](https://github.com/Schniz/fnm/blob/master/docs/configuration.md) docs for more information on `--use-on-cd` and the related `--resolve-engines` options.
 :::
 
 :::warning
