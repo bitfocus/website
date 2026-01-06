@@ -94,10 +94,9 @@ And if you want it in the log in the web interface, see [the log method](https:/
 
 ## Sharing your code
 
-TODO: Fix links:
-Once your module is tested and you are ready to release it publicly, please follow the guide for [releasing your module].
+Once your module is tested and you are ready to release it publicly, please follow the guide for [releasing your module](https://github.com/bitfocus/companion-module-base/wiki/Releasing-your-module).
 
-If your module it not intended for public release, or you want to share it locally for testing, you can also read the guide on [packaging your module].
+If your module it not intended for public release, or you want to share it locally for testing, you can also read the guide on [packaging your module](https://github.com/bitfocus/companion-module-base/wiki/Module-packaging).
 
 ## Testing
 
