@@ -1,14 +1,17 @@
 ---
 title: Setting up a Developer Environment
-sidebar_label: Initial Setup
+sidebar_label: Setup the Developer Tools
 sidebar_position: 1
 description: Setting up a Developer Environment
 ---
 
 import UserGuideLink from '@site/src/UserGuideLink';
 
-:::tip
-The procedure described here is recommended for both core development and module development.
+Companion is written in Javascript/Typescript and uses the [Node.js](https://nodejs.org/en/) runtime. In addition, all parts of Companion are organized and tracked using [Git](../1_git-workflows/installing-git.md). Here we will provide instructions for installing the development tools you will need for contributing to Companion, whether as a module or a part of core Companion.
+
+Companion, Javascript and Node.js are platform independent, so you can develop on Windows, macOS or Linux and the code you write will be able to run on all three platforms.
+
+:::note
 For module development you may be able to skip step 5, below, "Enabling USB on Unix". Instead
 simply install Companion according to the instructions in the <UserGuideLink to="getting-started/Installation">getting started guide</UserGuideLink>.
 :::
@@ -88,6 +91,12 @@ corepack enable
 ```
 
 (Note: `corepack enable` may not be needed in Windows if using PowerShell with the setup described above.)
+
+:::note
+Some older modules uses node v18 instead of v22, but are encouraged to update to v22. Sometimes updating the node version can introduce new bugs, but staying on older versions makes development harder as tools drop support for those versions. At some point, Companion will require modules to be node v22 (or perhaps a newer version).
+
+With fnm you can install both v18 and v22 and let yarn determine the correct version to use based on package.json.
+:::
 
 :::warning
 
