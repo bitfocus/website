@@ -69,7 +69,7 @@ You may want/need to exclude these folders from backup apps too.
 
 ### Updating: Fetch or Pull
 
-Keep the up-to-date by fetching (`git fetch`) or pulling (`git pull`). See our pages [Git Crash Course](../1_git-workflows/git-crashcourse.md) and [GitHub Workflow](../1_git-workflows/github-workflow.md) if you need an introduction or refresher on these topics.
+Keep the up-to-date by fetching (`git fetch`) or pulling (`git pull`). See our pages [Git Crash Course](../git-workflows/git-crashcourse.md) and [GitHub Workflow](../git-workflows/github-workflow.md) if you need an introduction or refresher on these topics.
 
 :::tip
 Consider using a graphical front-end such as SmartGit, or even the GitGUI program included with git, to visualize and simplify the process.
@@ -103,7 +103,7 @@ COMPANION_DEV_MODULES=<dev modules path>
 
 (Replace "\<dev modules path>" with the actual path.)
 
-See [Setting a Dev Folder](../2_module-development/local-modules.md) for further details and options.
+See [Setting a Dev Folder](../module-development/local-modules.md) for further details and options.
 :::
 
 ## Working with the (front-end) UI code

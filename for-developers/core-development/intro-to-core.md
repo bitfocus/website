@@ -5,7 +5,7 @@ sidebar_position: 1
 description: Setting up a Developer Environment
 ---
 
-Before you start developing you must [install the necessary tools](../setting-up-developer-environment.md) and familiarize yourself with [contributing to Companion with Git](../1_git-workflows/github-workflow.md).
+Before you start developing you must [install the necessary tools](../setting-up-developer-environment.md) and familiarize yourself with [contributing to Companion with Git](../git-workflows/github-workflow.md).
 
 Once you have mastered these basics, continue on to the next page: [Developing Core Companion](./development-flow.md).
 
