@@ -5,7 +5,7 @@ sidebar_position: 10
 description: The basic workflows for developing core companion code.
 ---
 
-Once you've [configured your development environment](setting-up-developer-environment.md), the following steps will get you started. The first section is for seasoned experts. For the rest of us, read on, and most importantly remember that help is only a Slack message away...
+Once you've [configured your development environment](../setting-up-developer-environment.md), the following steps will get you started. The first section is for seasoned experts. For the rest of us, read on, and most importantly remember that help is only a Slack message away...
 
 ## TL;DR
 
@@ -31,7 +31,7 @@ See topics below for running the launcher and docs in development mode.
 ### Getting Started: Cloning
 
 :::important[Windows Note]
-Be sure to [setup git line-endings behavior](setting-up-developer-environment#3-install-and-setup-git) **before** cloning!
+Be sure to [setup git line-endings behavior](../setting-up-developer-environment.md#3-install-and-setup-git) **before** cloning!
 :::
 
 Using your git client, you can clone Companion. To do it from a command line interface, change to the directory you want to contain the repo (the repo will be added as a subdirectoy) then:
@@ -54,7 +54,7 @@ When you first install and each time you update your local repository you must r
 yarn install
 ```
 
-If this fails immediately after the clone, you probably did not enable corepack. Check our instructions on [Setting up your Developer Environment](setting-up-developer-environment.md).
+If this fails immediately after the clone, you probably did not enable corepack. Check our instructions on [Setting up your Developer Environment](../setting-up-developer-environment.md).
 
 Note that you may have to manually rebuild the webui front-end after each update:
 

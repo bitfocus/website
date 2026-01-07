@@ -1,7 +1,7 @@
 ---
 title: Setting up the Development Folder
 sidebar_label: Setting a Dev Folder
-sidebar_position: 1
+sidebar_position: 2
 description: How to load modules during module development.
 ---
 

@@ -1,14 +1,17 @@
 ---
 title: Setting up a Developer Environment
-sidebar_label: Initial Setup
-sidebar_position: 1
+sidebar_label: Setup the Developer Tools
+sidebar_position: 0.1
 description: Setting up a Developer Environment
 ---
 
 import UserGuideLink from '@site/src/UserGuideLink';
 
-:::tip
-The procedure described here is recommended for both core development and module development.
+Companion is written in Javascript/Typescript and uses the [Node.js](https://nodejs.org/en/) runtime. In addition, all parts of Companion are organized and tracked using [Git](./1_git-workflows/installing-git.md). Here we will provide instructions for installing the development tools you will need for contributing to Companion, whether as a module or a part of core Companion.
+
+Companion, Javascript and Node.js are platform independent, so you can develop on Windows, macOS or Linux and the code you write will be able to run on all three platforms.
+
+:::note
 For module development you may be able to skip step 5, below, "Enabling USB on Unix". Instead
 simply install Companion according to the instructions in the <UserGuideLink to="getting-started/Installation">getting started guide</UserGuideLink>.
 :::
@@ -24,7 +27,7 @@ If you want to run in Linux Subsystem for Windows (aka WSL), please follow the [
 :::
 
 :::tip
-If PowerShell complains about unsigned apps, go to Settings, search for "developer settings" and enable "Change execution policy to allow local PowerShell scripts to run without signing" or in a PowerShell with elevated permissions run: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
+If PowerShell complains about unsigned apps, go to Settings, search for "developer settings" and enable "Change execution policy to allow local PowerShell scripts to run without signing". Alternatively, in a PowerShell with elevated permissions run: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
 :::
 
 If you are new to code development on Windows, the built-in `winget` command is probably the simplest way to install fnm. (Other popular package managers such as Chocolatey and Scoop work similarly.)
@@ -89,20 +92,26 @@ corepack enable
 
 (Note: `corepack enable` may not be needed in Windows if using PowerShell with the setup described above.)
 
+:::note
+Some older modules uses node v18 instead of v22, but are encouraged to update to v22. Sometimes updating the node version can introduce new bugs, but staying on older versions makes development harder as tools drop support for those versions. At some point, Companion will require modules to be node v22 (or perhaps a newer version).
+
+With fnm you can install both v18 and v22 and quickly switch between versions as needed. fnm can be setup to do this automatically with the `--use-on-cd` switch (as recommended in the [Windows section](#installing-fnm-on-windows) above), or you can switch it manually with a command like `fnm use 22`. See the [fnm config](https://github.com/Schniz/fnm/blob/master/docs/configuration.md) docs for more information on `--use-on-cd` and the related `--resolve-engines` options.
+:::
+
 :::warning
 
 Do not install yarn directly. Instead, let corepack ensure that the right version is installed
-when you run [`yarn install`](development-flow#every-time-install-the-dependencies). If you have already installed
+when you run `yarn install`. If you have already installed
 yarn globally and are having problems, consider removing the global install.
 
 :::
 
 ## 3. Install and setup git
 
-See the [instructions for installing Git here](../1_git-workflows/installing-git.md).
+See the [instructions for installing Git here](./1_git-workflows/installing-git.md).
 
 :::important[Windows Note]
-As per [the windows note here](../1_git-workflows/installing-git.md#configure-git):
+As per [the windows note here](./1_git-workflows/installing-git.md#configure-git):
 
 In order for `git clone` to give you `lf` endings, this default needs to be overridden _**before you clone the companion repository**_. In a git bash window type:
 
