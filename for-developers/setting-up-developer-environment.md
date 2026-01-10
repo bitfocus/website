@@ -7,7 +7,7 @@ description: Setting up a Developer Environment
 
 import UserGuideLink from '@site/src/UserGuideLink';
 
-Companion is written in Javascript/Typescript and uses the [Node.js](https://nodejs.org/en/) runtime. In addition, all parts of Companion are organized and tracked using [Git](./1_git-workflows/installing-git.md). Here we will provide instructions for installing the development tools you will need for contributing to Companion, whether as a module or a part of core Companion.
+Companion is written in Javascript/Typescript and uses the [Node.js](https://nodejs.org/en/) runtime. In addition, all parts of Companion are organized and tracked using [Git](./git-workflows/installing-git.md). Here we will provide instructions for installing the development tools you will need for contributing to Companion, whether as a module or a part of core Companion.
 
 Companion, Javascript and Node.js are platform independent, so you can develop on Windows, macOS or Linux and the code you write will be able to run on all three platforms.
 
@@ -108,10 +108,10 @@ yarn globally and are having problems, consider removing the global install.
 
 ## 3. Install and setup git
 
-See the [instructions for installing Git here](./1_git-workflows/installing-git.md).
+See the [instructions for installing Git here](./git-workflows/installing-git.md).
 
 :::important[Windows Note]
-As per [the windows note here](./1_git-workflows/installing-git.md#configure-git):
+As per [the windows note here](./git-workflows/installing-git.md#configure-git):
 
 In order for `git clone` to give you `lf` endings, this default needs to be overridden _**before you clone the companion repository**_. In a git bash window type:
 
