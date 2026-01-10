@@ -111,6 +111,45 @@ const config: Config = {
 				editUrl: 'https://github.com/bitfocus/website/tree/main/',
 			} satisfies DocsPluginOptions,
 		],
+		(context, options) => {
+			// plugin-umami
+			const isProd = process.env.NODE_ENV === 'production' && process.env.CI
+
+			return {
+				name: 'plugin-umami',
+				async contentLoaded({ actions }) {
+					actions.setGlobalData(options)
+				},
+				injectHtmlTags() {
+					if (!isProd) {
+						return {}
+					}
+
+					return {
+						headTags: [
+							{
+								tagName: 'link',
+								attributes: {
+									rel: 'preconnect',
+									href: `https://analytics.companion.free`,
+								},
+							},
+							{
+								tagName: 'script',
+								attributes: {
+									async: true,
+									defer: true,
+									src: 'https://analytics.companion.free/script.js',
+									'data-website-id': 'ab6f6d6e-2f8e-430c-893f-16c394264fdb', // TODO - should this be a github secret, so that it can be used to enable/disable this blob?
+									'data-domains': 'companion.free', // Limit to only run on the public deployed site
+									'data-do-not-track': 'true', // Respect Do Not Track settings
+								},
+							},
+						],
+					}
+				},
+			}
+		},
 	],
 
 	themeConfig: {
