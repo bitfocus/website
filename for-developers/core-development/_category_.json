@@ -1,5 +1,6 @@
 {
-	"label": "Companion Modules",
+	"label": "Core Companion",
+	"position": 4,
 	"link": {
 		"type": "generated-index"
 	}

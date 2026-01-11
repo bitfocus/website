@@ -10,7 +10,7 @@ This section describes what you need to know and do to make a beautiful module t
 
 ## Prerequisites
 
-Before you start, make sure you have [Installed the Development Tools](../setting-up-developer-environment.md) and familiarized yourself with [Git Workflows](../1_git-workflows/git-crashcourse.md).
+Before you start, make sure you have [Installed the Development Tools](../setting-up-developer-environment.md) and familiarized yourself with [Git Workflows](../git-workflows/git-crashcourse.md).
 
 This page discusses additional setup needed in order to develop or contribute to Companion modules.
 
