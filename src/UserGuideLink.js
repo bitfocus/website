@@ -21,7 +21,8 @@ function UserGuideLink({ children, to, ...props }) {
 	return (
 		<BrowserOnly
 			fallback={
-				<Link {...props} to={buildVersionUrl('/user-guide/beta', to)}>
+				// This seems to break if using a real url, so just use '#' as a placeholder for now
+				<Link {...props} to={'#'}>
 					{children}
 				</Link>
 			}
