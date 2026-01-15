@@ -5,6 +5,7 @@ import Layout from '@theme/Layout'
 import Heading from '@theme/Heading'
 
 import landingStyles from './landing.module.css'
+import UserGuideLink from '../UserGuideLink'
 
 function HeroSection() {
 	return (
@@ -43,9 +44,9 @@ function HeroSection() {
 					<span>Download</span>
 					<span className={landingStyles.buttonSubtitle}>Win / Mac / Linux</span>
 				</Link>
-				<Link className={`${landingStyles.secondaryButton} ${landingStyles.heroButton}`} to="/user-guide/">
+				<UserGuideLink className={`${landingStyles.secondaryButton} ${landingStyles.heroButton}`} to="./">
 					User Guide
-				</Link>
+				</UserGuideLink>
 				<Link
 					className={`${landingStyles.secondaryButton} ${landingStyles.heroButton}`}
 					href="https://bfoc.us/42jn7eku7p"

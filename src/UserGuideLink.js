@@ -11,7 +11,7 @@ import BrowserOnly from '@docusaurus/BrowserOnly'
  * @param children - the elements between <UserGuideLink to=''> and </UserGuideLink>
  * @returns a React <Link> component
  */
-function UserGuideLink({ children, to }) {
+function UserGuideLink({ children, to, ...props }) {
 	return (
 		<BrowserOnly fallback={<span>{children}</span>}>
 			{() => {
@@ -22,7 +22,11 @@ function UserGuideLink({ children, to }) {
 				const basepath = new URL(versionPath, window.location.origin)
 				const latestDocUrl = new URL(to, basepath).href
 
-				return <Link to={latestDocUrl}>{children}</Link>
+				return (
+					<Link {...props} to={latestDocUrl}>
+						{children}
+					</Link>
+				)
 			}}
 		</BrowserOnly>
 	)
