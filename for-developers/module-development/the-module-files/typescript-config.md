@@ -8,6 +8,7 @@ description: Configuring the module to work with TypeScript.
 The [recommended templates](./file-structure.md) provide typescript config presets that you can use. These are configured for what we believe to be best practise, but they can be configured to be too strict for some.
 
 You could put something like this in tsconfig.json
+
 ```json
 {
 	"extends": "@companion-module/tools/tsconfig/node18/recommended",

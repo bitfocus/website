@@ -103,7 +103,7 @@ You are free to override any rules you wish in your `.eslintrc.cjs`, these steps
 
 :::tip
 
- You can set it up so that git runs the linter when you make a commit, so you can be sure that only good code is committed. (I believe this is done in the latest templates?) Take a look at xxxxx for an example of how to setup husky & lint-staged to achieve this.
+You can set it up so that git runs the linter when you make a commit, so you can be sure that only good code is committed. (I believe this is done in the latest templates?) Take a look at xxxxx for an example of how to setup husky & lint-staged to achieve this.
 
 :::
 

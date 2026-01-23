@@ -12,10 +12,11 @@ The following is the basic workflow for contributing to Companion (and many othe
 The examples below use the core Companion repo, bitfocus/companion, for specificity. If you are contributing to a module, substitute the module's repository name for bitfocus/companion. (For example, bitfocus/companion-module-generic-http.)
 
 :::tip
+
 1. A GUI front-end such as SmartGit, GitGUI, can greatly simplify the overall process. See the tip under [Installing Git](installing-git#install-git) for our recommendations.
 
 2. The instructions on this page describe how to contribute to repositories for which you don't have write permission, which is typically the case when you're contributing to an existing repository. Eventually you may get write-access, for example if you become the maintainer of a Companion module, in which case the flow can be simplified...but it's still good practice to develop new features on a new branch.
-:::
+   :::
 
 :::note[Expert Note]
 The following outline names the bitfocus remote "origin" and your remote fork "personal". This seems much clearer than the convention of naming the bitfocus repo "upstream" and your remote fork "origin" (which it is not!). The convention recommended here eliminates a step and also ensures that your pulls come from the Bitfocus repo. Many thanks to Brian Teeman for this and other suggestions.

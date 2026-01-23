@@ -5,8 +5,8 @@ sidebar_position: 6
 description: Unit testing advice.
 ---
 
-Unit testing of modules is not very common. 
- 
+Unit testing of modules is not very common.
+
 We find it quite hard to test most modules as to do so requires mocking-up the device connection.
 
 If you have any suggestions on mocks, tooling or examples we should provide to make this easier, we are open to suggestions!
