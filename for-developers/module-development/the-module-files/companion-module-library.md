@@ -31,9 +31,9 @@ We expect every module to use the build script provided from this, the rest is o
 
 The version of this library determines the versions of Companion your module can be run with. See the [GitHub README file](https://github.com/bitfocus/companion-module-base#readme) for the compatibility table.
 
-The idea is that a module written for Companion 3.0 will be using 1.4.3 (or earlier, back to 1.0.0 is supported) of this library. And a module writen for Companion 3.1 will be using 1.5 of this library. The module written for Companion 3.0 will also run in Companion 3.1, but the module written for Companion 3.1 will not work with Companion 3.0.
+The idea is that a module written for Companion 3.0 will be using 1.4.3 (or earlier, back to 1.0.0 is supported) of this library. And a module written for Companion 3.1 will be using 1.5 of this library. The module written for Companion 3.0 will also run in Companion 3.1, but the module written for Companion 3.1 will not work with Companion 3.0.
 
-We recommend targetting the previous stable release of Companion. This will allow users who have not yet updated Companion to use the latest version of your module. Of course, you may wish to use newer versions if there are features that your module will benefit from.
+We recommend targeting the previous stable release of Companion. This will allow users who have not yet updated Companion to use the latest version of your module. Of course, you may wish to use newer versions if there are features that your module will benefit from.
 
 ### @companion-module/tools
 
@@ -49,4 +49,4 @@ This was the main issue that was blocking our ability to support adding newer ve
 
 Everything that modules need to access Companion is now located inside of `@companion-module/base`. Some things have not been made available, as they were determined to not be appropriate and alternatives will be recommended to the few module authors who utilised them.
 
-Another benefit of this separation is that it allows us to better isolate modules from being tied to specific versions of Companion. The `@companion-module/base` acts as a stable barrier between the two. It has intentionally been kept separate from the rest of the Companion code, so that changes made here get an extra level of scrutiny, as we want to guarantee backwards compatability as much as possible. For example, in Companion version 2.x changes made to the module api occasionally required fixes to be applied to multiple modules. By having this barrier, we hope to avoid such problems for as long as possible.
+Another benefit of this separation is that it allows us to better isolate modules from being tied to specific versions of Companion. The `@companion-module/base` acts as a stable barrier between the two. It has intentionally been kept separate from the rest of the Companion code, so that changes made here get an extra level of scrutiny, as we want to guarantee backwards compatibility as much as possible. For example, in Companion version 2.x changes made to the module api occasionally required fixes to be applied to multiple modules. By having this barrier, we hope to avoid such problems for as long as possible.
