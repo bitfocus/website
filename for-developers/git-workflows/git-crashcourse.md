@@ -16,7 +16,8 @@ Companion is open source—anyone can view and modify the code. While you're fre
 1. A GUI front-end such as SmartGit, GitGUI, can greatly simplify the overall process. See the tip under [Installing Git](installing-git#install-git) for our recommendations.
 
 2. The instructions on this page describe how to contribute to repositories for which you don't have write permission, which is typically the case when you're contributing to an existing repository. Eventually you may get write-access, for example if you become the maintainer of a Companion module, in which case the flow can be simplified...but it's still good practice to develop new features on a new branch.
-   :::
+
+:::
 
 ## The Fork and Clone Workflow
 
