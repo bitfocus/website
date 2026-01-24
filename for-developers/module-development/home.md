@@ -30,19 +30,19 @@ We therefore recommend developing your module using the current stable version t
 
 Follow the instructions in [Setting up a Development Folder](./local-modules.md) to create the folders and to setup Companion for module development. Briefly:
 
-- Create a `companion-module-dev` folder somewhere on your computer. You can call it whatever you like.
-- Once you have the companion launcher open, click the cog in the top right. In versions prior to v4.1 this will reveal a 'Developer modules path' field. Starting in v4.1 it will open up a settings window in which you can set the path. Set it to the `companion-module-dev` folder you created earlier.
+- Create a modules development folder somewhere on your computer. You can call it whatever you like.
+- Once you have the companion launcher open, click the cog in the top right. In versions prior to v4.1 this will reveal a 'Developer modules path' field. Starting in v4.1 it will open up a settings window in which you can set the path. Set it to the development folder.
 
 :::tip
-Companion will load any modules it finds in subfolders of that folder.
+Companion will load any modules it finds in _subfolders_ of the modules development folder.
 
-When files inside those folders is changed, Companion will automatically restart any connections using that module.
+When files inside those folders are changed, Companion will automatically restart any connections using that module.
 :::
 
 ## Clone the module
 
 - If you are working on an existing module, clone it inside this folder using your preferred git tool.
-- If you are making a new module, then clone the template module, available in [TypeScript](https://github.com/bitfocus/companion-module-template-ts) or [Javascript](https://github.com/bitfocus/companion-module-template-js), to an appropriately named folder inside of `companion-module-dev`. If you are starting a new module we encourage you to use Typescript but acknowledge that it isn't for everyone, so fully support Javascript too!
+- If you are making a new module, then clone the template module, available in [TypeScript](https://github.com/bitfocus/companion-module-template-ts) or [Javascript](https://github.com/bitfocus/companion-module-template-js), to an appropriately named folder inside of the module development folder. If you are starting a new module we encourage you to use Typescript but acknowledge that it isn't for everyone, so fully support Javascript too!
 
 :::note
 Starting with v4.0, note that **your new dev module will show up in the Connections page** but not in the Modules page, since it is not yet part of the official set of Companion modules.
@@ -50,15 +50,16 @@ Starting with v4.0, note that **your new dev module will show up in the Connecti
 
 ## Start working on your module
 
-You are now ready to start developing your module.
+You are now ready to start developing your module. Check out the information in the [The Module Files](the-module-files/file-structure.md) section to understand the file structure, then proceed to [Module development 101](./module-development-101.md).
 
-You should notice that whenever you save a file inside your `companion-module-dev` folder, companion will restart itself.  
-If it does not, or you are having issues getting your module to load in then please reach out on slack and we will be happy to assist you in getting started.
+You should notice that whenever you save a file inside your module development folder, companion will restart itself.
+
+If it does not, or you are having issues getting your module to load in then please reach out on [Slack](https://bfoc.us/ke7e9dqgaz) and we will be happy to assist you in getting started.
 
 ## Further Reading
 
+- [The Module Files](the-module-files/file-structure.md)
 - [Module development 101](./module-development-101.md)
-- [Creating a module](https://github.com/bitfocus/companion-module-base/wiki/Creating-a-module)
 - [Actions](https://github.com/bitfocus/companion-module-base/wiki/Actions)
 - [Feedbacks](https://github.com/bitfocus/companion-module-base/wiki/Feedbacks)
 - [Variables](https://github.com/bitfocus/companion-module-base/wiki/Variables)

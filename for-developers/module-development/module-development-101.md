@@ -1,7 +1,7 @@
 ---
 title: Module Development 101
 sidebar_label: Module Development 101
-sidebar_position: 2
+sidebar_position: 4
 description: The essential overview of Companion module development.
 ---
 
@@ -39,7 +39,7 @@ These other pages will help explain some of the functionality that the module ex
 
 TO-DO: Update links
 
-- [Module Configuration](https://github.com/bitfocus/companion-module-base/wiki/Module-development-101)
+- [Module Configuration](the-module-files/file-structure.md)
 - [Actions](https://github.com/bitfocus/companion-module-base/wiki/Actions)
 - [Feedbacks](https://github.com/bitfocus/companion-module-base/wiki/Feedbacks)
 - [Presets](https://github.com/bitfocus/companion-module-base/wiki/Presets)
@@ -47,7 +47,7 @@ TO-DO: Update links
 
 ## What makes up a module
 
-There are a few files that make up every module. To get an overview of what these are, please see [File Structure](https://github.com/bitfocus/companion-module-base/wiki/File-Structure).
+There are a few files that make up every module. To get an overview of what these are, please see [File Structure](the-module-files/file-structure).
 
 ## The Module source code
 
@@ -75,7 +75,7 @@ Most (so far all) modules do want to provide some interaction with the user. The
 
 TO-DO: Update links
 
-- [Module Configuration](https://github.com/bitfocus/companion-module-base/wiki/Module-development-101)
+- [Module Configuration](the-module-files/file-structure.md)
 - [Actions](https://github.com/bitfocus/companion-module-base/wiki/Actions)
 - [Feedbacks](https://github.com/bitfocus/companion-module-base/wiki/Feedbacks)
 - [Presets](https://github.com/bitfocus/companion-module-base/wiki/Presets)
