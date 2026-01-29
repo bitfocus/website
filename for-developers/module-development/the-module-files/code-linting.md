@@ -155,6 +155,6 @@ If you are upgrading your config from v1.x, you will need to reconfigure eslint,
 
 You can follow the steps for [#setup], with the following extra steps:
 
-Removing any existing `.eslintrc.json` or `.eslintrc.cjs`, you may want to port any custom configration across to the new config file
+Removing any existing `.eslintrc.json` or `.eslintrc.cjs`, you may want to port any custom configuration across to the new config file
 
 That should be it!
