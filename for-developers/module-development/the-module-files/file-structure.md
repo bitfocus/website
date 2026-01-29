@@ -48,7 +48,7 @@ The essential repository structure is:
 
 A structured 'Help' document that Companion users will see when clicking on the module help icon in the Connections page.
 
-Describe the module's capabilities and how to configure their instance.
+Describe the module's capabilities and anything else they might need to know to use the module.
 
 Format the contents using [markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
 
@@ -74,7 +74,7 @@ This is a standard Git file that lists files and folders to be excluded from Git
 
 ### LICENSE
 
-Companion is an MIT licensed project. All modules released with the project must also be MIT.
+Companion is an MIT licensed project. We recommend modules released with the project are also MIT, and are open to other licenses being used if there is a good reason for it.
 
 In the future it might be possible to use different licenses for modules, but that is not yet certain.
 

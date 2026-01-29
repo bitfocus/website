@@ -7,11 +7,11 @@ description: Configuring the module to work with TypeScript.
 
 The [recommended templates](./file-structure.md) provide typescript config presets that you can use. These are configured for what we believe to be best practise, but they can be configured to be too strict for some.
 
-You could put something like this in tsconfig.json
+A typical tsconfig looks like:
 
 ```json
 {
-	"extends": "@companion-module/tools/tsconfig/node18/recommended",
+	"extends": "@companion-module/tools/tsconfig/node22/recommended",
 	"include": ["src/**/*.ts"],
 	"exclude": ["node_modules/**", "src/**/*spec.ts", "src/**/__tests__/*", "src/**/__mocks__/*"],
 	"compilerOptions": {

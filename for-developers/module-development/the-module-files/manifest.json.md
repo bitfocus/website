@@ -9,7 +9,7 @@ Starting with Companion 3.0, Companion looks at the `companion/manifest.json` fi
 
 You can see the auto-generated documentation for this file as a typescript interface [here](https://bitfocus.github.io/companion-module-base/interfaces/ModuleManifest.html).
 
-Tip: At any point you can validate your `manifest.json` by running `yarn companion-module-check` (assuming you've started with the [recommended template files](./file-structure.md)).
+Tip: At any point you can validate your `manifest.json` by running `yarn companion-module-check`.
 
 ### Format
 
@@ -38,7 +38,7 @@ A full manifest definition is:
 	],
 	"legacyIds": [],
 	"runtime": {
-		"type": "node18",
+		"type": "node22",
 		"api": "nodejs-ipc",
 		"apiVersion": "0.0.0",
 		"entrypoint": "../dist/index.js"

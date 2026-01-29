@@ -7,10 +7,15 @@ description: Explanation of the companion module library.
 
 Nodejs often makes new releases. In the major version jumps, these can include some breaking changes which could impact your module, so we don't want to do that without you being aware of it.
 
-Since Companion version 3.0, we've required modules to be compatible with Node.JS v18. Starting with @companion-module/base v1.11, Node.JS v22 has been supported. ~~In future releases we intend to allow modules to choose the version (to allow for a gradual conversion process), but this is not in place yet. Once it is possible, you can refer to this page to go through the steps to update.~~ TODO ??
+Since Companion version 3.0, we've required modules to be compatible with Node.JS v18. Starting with @companion-module/base v1.11, Node.JS v22 has been supported.
 
 When developing your module, you need to have a similar version of nodejs installed, for when you run `yarn`. Companion v4 supports both v18 and v22 for modules, but may provide a different minor version than you have used.
-~~But when companion runs your module, it will do so with a version of nodejs that has been bundled into the application. We are looking into making it possible for module authors to use this version of nodejs instead of needing to install it themselves.~~ TODO ??
+
+:::note
+
+Whenever Companion runs your module, it will do so with the version of nodejs that we distribute, not the one you have installed yourself.
+
+:::
 
 If you are using a node version manager, you can install an updated nodejs to your system, by doing something like `fnm install 18` and `fnm use 18`. See [our instructions here](../../setting-up-developer-environment.md).
 
@@ -20,7 +25,7 @@ Companion knows what version of nodejs your module is compatible with by looking
 
 Make sure that your version of the `@companion-module/base` dependency is appropriate for the version of Companion too. A table of compatibility is listed in [the readme](https://github.com/bitfocus/companion-module-base#supported-versions-of-this-library)
 
-If you are using TypeScript, you should update your preset to have sensible `target` and `lib` values. If you are using a preset from `@companion-module/base`, then check for one designed for the same version of nodejs.
+If you are using TypeScript, you should update your preset to have sensible `target` and `lib` values. The config presets in `@companion-module/tools`, have versions for each supported version of nodejs to make this easier for you.
 
 If your module has an `engines` field in the package.json, make sure that has a sensible value.
 
