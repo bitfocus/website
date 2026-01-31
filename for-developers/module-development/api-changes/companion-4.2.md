@@ -1,0 +1,31 @@
+---
+title: Companion 4.2 (API 1.14)
+sidebar_position: -42
+description: Config layout changes
+---
+
+### Config layout changes
+
+The connection config panel allowed modules to customise the layout of input fields. This was not possible elsewhere in Companion, and is not consistent with elsewhere within the panel where fields are in the simplified layout.
+
+As of @companion-module/base v1.14, modules will now be presented in this consistent layout. Modules using older versions of the api will not be affected, until they update.
+
+It is our hope that this new layout will not cause significant issues, if you have any problems or really dislike it, you can temporarily opt out of the new layout by in your module constructor by doing:
+
+```js
+this.instanceOptions.disableNewConfigLayout = true
+```
+
+:::warning
+
+This is a temporary opt out, in a few releases time it will be removed.
+
+:::
+
+Let us know if there is extra configurability that you need, we are open to restoring any needed functionality that is lost.
+
+See the [PR](https://github.com/bitfocus/companion/pull/3569) for more examples on the impact.
+
+### Developer Experience
+
+To improve the developer experience, when looking at each process in task manager or activity monitor, each process will not be labelled with the label of the connection.
