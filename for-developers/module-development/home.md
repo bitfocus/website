@@ -53,7 +53,7 @@ With over 700 published modules, you may find a module already written for you d
 
 1. Rename your module's directory _companion-module-mymanufacturer-myproduct_, replacing _mymanufacturer-myproduct_ with appropriate names. Try to think of what is most appropriate for your device: Are there other similar devices by the manufacturer that use the same protocol that the module could support later on? If so try and name it to more easily allow for that.
 
-2. In at least _package.json_, _companion/manifest.json_ and _companion/HELP.md_, edit the name and description of the module to match what yours is called. The search feature in your IDE is really helpful to find all of the places the name shows up! See the [Module Configurtion section](./module-config/file-structure.md) and especially the [documentation for the manifest.json file](./module-config/manifest.json.md) for further details.
+2. In at least _package.json_, _companion/manifest.json_ and _companion/HELP.md_, edit the name and description of the module to match what yours is called. The search feature in your IDE is really helpful to find all of the places the name shows up! See the [Module Configuration section](./module-config/file-structure.md) and especially the [documentation for the manifest.json file](./module-config/manifest.json.md) for further details.
 
 3. Please see [Module Configuration](./module-config/file-structure.md) and the other pages in that section for more details and more options on starting your own module.
 

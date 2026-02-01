@@ -11,7 +11,7 @@ The general lifecycle of a module starts when you create a local repository as d
 
 ## What makes up a module?
 
-There are a few files that make up every module. Please familiarize yourself with the basic structure described in our pages on [Module Configuration](the-module-files/file-structure).  In particular, _package.json_, 
+There are a few files that make up every module. Please familiarize yourself with the basic structure described in our pages on [Module Configuration](module-config/file-structure).  In particular, _package.json_, 
 [_companion/manifest.json_](./module-config/manifest.json.md) and _companion/HELP.md_ define the identity of the module. Once these are defined, you will spend most of your time crafting the module source code.
 
 ## The module source code
@@ -38,7 +38,7 @@ Your module provides interaction with the user by defining user-configurations, 
 
 TODO: Update links
 
-- [Module Configuration](the-module-files/file-structure.md)
+- [Module Configuration](module-config/file-structure.md)
 - [Actions](https://github.com/bitfocus/companion-module-base/wiki/Actions)
 - [Feedbacks](https://github.com/bitfocus/companion-module-base/wiki/Feedbacks)
 - [Presets](https://github.com/bitfocus/companion-module-base/wiki/Presets)
