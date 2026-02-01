@@ -1,7 +1,7 @@
 ---
 title: Setting Up WSL for the Developer Environment
-sidebar_label: '- WSL Setup Notes'
-sidebar_position: 0.2
+sidebar_label: '└─ WSL Setup Notes'
+sidebar_position: 1.1
 description: How to set up Windows System for Linux (WSL) for Companion development
 ---
 

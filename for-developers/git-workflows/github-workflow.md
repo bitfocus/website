@@ -50,7 +50,7 @@ Back on the [Companion GitHub page](https://github.com/bitfocus/companion) or th
 
 Your local repository will need two "know" two remote (GitHub) repos -- one for keeping in sync with Bitfocus and the other for writing your code changes. We suggest naming this second one "personal" for clarity -- it is your personal fork of companion _on GitHub_:
 
-On the GitHub page for your new fork, copy the HTTPS link to your fork using the green <span style={{background: "#00CC00", borderRadius: "5px"}}> **&lt;&gt;Code** </span> button. Then paste it on a line starting with `it remote add personal`. It should look like this (for core Companion):
+On the GitHub page for your new fork, copy the HTTPS link to your fork using the green <span style={{background: "#00CC00", borderRadius: "5px", fontSize: "0.8em", padding: "0.5em"}}> **&lt;&gt; Code &#x25BC;** </span> button. Then paste it on a line starting with `it remote add personal`. It should look like this (for core Companion):
 
 ```bash
 git remote add personal https://github.com/<your username>/companion.git

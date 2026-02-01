@@ -7,7 +7,7 @@ description: Explanation of the companion module library.
 
 Since Companion version 3.0, we have used `@companion-module/base` and `@companion-module/tools` libraries as part of the module API.
 
-The libraries are available on [npm](https://www.npmjs.com/) and are installed automatically when you run `yarn install` (assuming you've configured your package.json correctly or are using the [recommended templates](./file-structure.md)).
+The libraries are available on [npm](https://www.npmjs.com/) and are installed automatically when you run `yarn install`.
 
 ## What is the purpose of each?
 

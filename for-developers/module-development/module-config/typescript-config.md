@@ -1,13 +1,20 @@
 ---
 title: 'TypeScript Config with tsconfig.json'
-sidebar_label: 'TypeScript Config file'
+sidebar_label: 'TypeScript Config'
 sidebar_position: 5
 description: Configuring the module to work with TypeScript.
 ---
 
-The [recommended templates](./file-structure.md) provide typescript config presets that you can use. These are configured for what we believe to be best practise, but they can be configured to be too strict for some.
+:::important
 
-A typical tsconfig looks like:
+This is an advanced topic. If you use the [recommended templates](./file-structure.md), a default typescript
+config file is included and you will generally not want to change it.
+
+:::
+
+The [recommended templates](./file-structure.md) provide typescript config presets in _tsconfig.json_ that we believe to be best practise, but they can be configured to be too strict for some, or may need to be modified if you change the name of the source or destination directories.
+
+A typical _tsconfig.json_ file looks like:
 
 ```json
 {
@@ -33,7 +40,7 @@ Our TypeScript template splits it into two files:
 	"include": ["src/**/*.ts"],
 	"exclude": ["node_modules/**"],
 	"compilerOptions": {
-		"types": ["node" /* , "jest" ] // uncomment this if using jest */]
+		"types": ["node"	]
 	}
 }
 ```
