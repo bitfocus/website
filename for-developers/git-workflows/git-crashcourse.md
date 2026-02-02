@@ -11,6 +11,14 @@ For first-time Git and GitHub users, contributing to open source can feel overwh
 
 Companion is open source—anyone can view and modify the code. While you're free to customize it for your own use, maintaining software quality requires coordination. Git and GitHub are the tools we use to make this possible: GitHub hosts the source code and metadata, while Git manages version control and transfers code between repositories.
 
+:::tip
+
+1. A GUI front-end such as SmartGit, GitGUI, can greatly simplify the overall process. See the tip under [Installing Git](installing-git#install-git) for our recommendations.
+
+2. The instructions on this page describe how to contribute to repositories for which you don't have write permission, which is typically the case when you're contributing to an existing repository. Eventually you may get write-access, for example if you become the maintainer of a Companion module, in which case the flow can be simplified...but it's still good practice to develop new features on a new branch.
+
+:::
+
 ## The Fork and Clone Workflow
 
 ### Why You Can't Edit Directly

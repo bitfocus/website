@@ -1,7 +1,7 @@
 ---
 title: Setting up a Developer Environment
 sidebar_label: Setup the Developer Tools
-sidebar_position: 0.1
+sidebar_position: 1
 description: Setting up a Developer Environment
 ---
 

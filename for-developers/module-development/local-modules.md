@@ -1,8 +1,8 @@
 ---
 title: Setting up the Development Folder
-sidebar_label: Setting a Dev Folder
+sidebar_label: '└─ Setting up a Dev Folder'
 sidebar_position: 2
-description: How to load modules during module development.
+description: How to load modules in Companion during module development.
 ---
 
 Starting with Companion 3.0 you can develop, test and use your own module code without the need for the Core Companion development environment. Here is how you do it.
@@ -34,7 +34,7 @@ Inside of this folder should be one or more folders that use the following layou
 - Make sure **Enable Developer Modules** is switched on. You can now close the window
 - Click on "Launch GUI" to open the Admin interface. In the connections list you should find the connection provided by the developer module. If the developer module is using the same internal ID as a module that is distributed with Companion, be sure to choose the "dev" version in the configuration.  
   If you don't see the developers module, please check the log and switch on debug, maybe the module has crashed.
-- You can replace a developers module or files within it while Companion is running. Companion will detect the change and restart only that module without affecting other modules.
+- You can replace a developers module or files within it while Companion is running. Companion will detect the change and restart only that module without affecting other modules. You can also force a module to reload by disabling and re-enabling a connection.
 
 :::note
 
@@ -56,13 +56,11 @@ the **Developer Module Path** is _**mydev**_ and not _mydev/module1_.
 
 ## Headless development
 
-- If you are running Companion from source in development mode, there is a folder `module-local-dev` inside the repository that gets read for your modules.
-- It follows the same rules for structuring as above.
-- Any changes made to the contents of the folder will cause the affected modules to be reloaded. You can force them to reload by disabling and re-enabling a connection.
-
+- If you are running Companion from source in development mode, there is a folder `module-local-dev` inside the repository that gets read for your modules. It follows the same rules for structuring as above.
 - You can also use the command-line argument `--extra-module-path` to specify the dev folder.
 - Alternatively, you can set the environment variable `COMPANION_DEV_MODULES` to the dev folder. For your convenience, you can put the following in `.env` in your companion source folder:
 
 ```
 COMPANION_DEV_MODULES=<dev modules path>
 ```
+
