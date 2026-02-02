@@ -3,14 +3,15 @@ title: Companion 3.1 (API 1.5)
 sidebar_position: -31
 ---
 
-1.5.1 (2023-10-02)
-Bug Fixes
+### Feedback invert
 
-    use sequential ids in ipcWrapper, to ensure nanoid doesn't drain the system entropy pool (5b5c32c)
+Boolean feedbacks now automatically get an 'inverted' property added by Companion.
 
-1.5.0 (2023-08-27)
+:::tip
 
-Requires Companion 3.1 or later
-Features
+If you already have an option performing a similar job, we recommend using an upgrade script to move its value into our field and remove the option.  
+Alternatively, you can opt out of our field, but be aware that users may have already set values that you should try to preserve
 
-    boolean feedback invert (#59) (aa28207)
+:::
+
+If we detect that your feedback already has an invert field, we will hide and disable ours, but this doesn't find every field

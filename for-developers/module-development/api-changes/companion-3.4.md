@@ -3,16 +3,24 @@ title: Companion 3.4 (API 1.10)
 sidebar_position: -34
 ---
 
-1.10.0 (2024-08-24)
-Features
+### Presets
 
-    support additional imageBuffer properties (2c96af2)
-    support multiple bonjourQueries per query input field #87 (64772ae)
+Presets can now define a `headline` value for each action, feedback and step, to be used as the user editable label for the action/feedback/step.
 
-1.9.0 (2024-07-28)
-Features
+### Bonjour queries
 
-    add delay property to CompanionRecordedAction with warning about lack of predictability (82d964c)
-    allow presets to define action/feedback headlines (b717953)
-    allow presets to define step names (6732a7a)
-    propogate recorded action delay (d067603)
+Inside your `companion/manifest.json`, each bonjour query defined can now be an array of queries, allowing two queries to be merged and used for one config field.
+
+### Feedback Image Buffers
+
+The `imageBuffer` property from advanced feedbacks can now be in more formats.
+
+To do this, there is a [new `imageBufferEncoding` property](https://bitfocus.github.io/companion-module-base/interfaces/CompanionImageBufferEncoding.html). This allows you to specify how the colors are packed in your buffer.
+
+Additionally, the `imageBufferPosition` property has gained [a new `drawScale` property](https://bitfocus.github.io/companion-module-base/interfaces/CompanionImageBufferPosition.html#drawscale). This can be used to scale how the buffer is drawn, allowing to either match the higher resolution we now draw at, or to avoid scaling a buffer yourself.
+
+:::tip
+
+Make sure to not use really large buffers, as that will become a bottleneck for your module.
+
+:::

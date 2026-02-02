@@ -3,20 +3,30 @@ title: Companion 3.3 (API 1.8)
 sidebar_position: -33
 ---
 
-1.8.1 (2024-07-03)
-Bug Fixes
+### Text presets
 
-    require at least one product to be defined in manifest.schema.json (#82) (7816348)
+A new 'text' preset type has been added, to allow you to put some headings and blocks of text into the presets panel.
 
-1.8.0 (2024-04-26)
-Features
+These will also split the presets into chunks around them, allowing you to organise presets better.
 
-    indicate support for location based variables (4473e9b)
-    shared udp listener bitfocus/companion#2399 (#72) (75774b0)
-    Text preset type (#80) (34c03db)
+### Local variables support
 
-Bug Fixes
+:::tip
 
-    ipc-wrapper failed when receiving a non-error failure (fe87955)
-    Record the missing-error-handler timers and clear them on helper destroy() (#79) (5142a62)
-    rename 'locationBased' to 'local' variables (71e5b33)
+Newer versions of the API, replace this with newer ways of achieving the same result. Only follow this if you can't update to those
+
+:::
+
+Companion has added a few variables under the `$(this:XX)` naming. (Since this release, user defined `$(local:XX)` also exist, which need the same support)
+
+Due to the way the `parseVariablesInString` method works, Companion often doesn't know what button a string is being parsed for, so can't support variables scoped to a single button.
+
+In order to support these, in your action/feedback callback, there is a second `context` parameter which holds an alternate `parseVariablesInString` implementation. This implementation is specific to that callback, so Companion knows what control it belongs to, and can handle the variables.  
+Additionally, you can indicate that you are doing this and support these variables by setting the `useVariables` property to an object like `{ local: true }` to indicate this support. This allows us to show a hint to the user about this support, and suggest them whilst they type.
+
+### Shared UDP Listener
+
+A few devices have been found which are not cooperative when it comes to control, and expect to send all messages to a hardcoded UDP port.  
+This makes it hard to support these, as by default only one connection can listen on a port at a time.
+
+To help with this, Companion offers some Shared UDP listener utils, where Companion will open and manage the port for you, and you can simply receive all messages sent to it.
