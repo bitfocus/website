@@ -5,11 +5,7 @@ sidebar_position: 1
 description: Introduction to the file structure of a Companion module repository
 ---
 
-When creating a new module, we strongly recommend using our
-
-- [TypeScript module template](https://github.com/bitfocus/companion-module-template-ts)
-
-as this will incorporate the latest module features and improvements. For those who prefer Javascript, we also have a [JavaScript template](https://github.com/bitfocus/companion-module-template). To get an idea of how a completed module looks, search for an existing module that may provide services similar to your equipment, or refer to reference modules such as [homeassistant-server](https://github.com/bitfocus/companion-module-homeassistant-server) (TypeScript) and [generic-osc](https://github.com/bitfocus/companion-module-generic-osc) (JavaScript).
+When creating a new module, we strongly recommend using our **[TypeScript module template](https://github.com/bitfocus/companion-module-template-ts)** as this will incorporate the latest module features and improvements. For those who prefer Javascript, we also have a [JavaScript template](https://github.com/bitfocus/companion-module-template). To get an idea of how a completed module looks, search for an existing module that may provide services similar to your equipment, or refer to reference modules such as [homeassistant-server](https://github.com/bitfocus/companion-module-homeassistant-server) (TypeScript) and [generic-osc](https://github.com/bitfocus/companion-module-generic-osc) (JavaScript).
 
 Below are the minimum files necessary to create a control module for Companion (aka Connection). You can add subfolders and other support files as needed.
 
@@ -93,7 +89,7 @@ Consult the Companion team if you wish to incorporate a dependency that does not
 
 ### package.json
 
-This is a standard node.js file to tell it about your project. It is required to be able to install dependencies to your module such as [@companion-module/base and  and @companion-module/tools](../module-lifecycle/companion-module-library.md).
+This is a standard node.js file to tell it about your project. It is required to be able to install dependencies to your module such as [@companion-module/base and and @companion-module/tools](../module-lifecycle/companion-module-library.md).
 
 ### README.md
 
@@ -116,4 +112,3 @@ These files are all included in the templates recommended above and are discusse
 - Look through the optional files mentioned above
 - Familiarize yourself with the [Companion Module Library](../module-lifecycle/companion-module-library.md) concept
 - Read through our introduction to module development: [Module Development 101](../module-development-101.md)
-

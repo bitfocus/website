@@ -17,7 +17,7 @@ Whenever Companion runs your module, it will do so with the version of nodejs th
 
 :::
 
-If you are using a node version manager, you can install an updated nodejs to your system, by doing something like `fnm install 18` and `fnm use 18`. See [our instructions here](../../setting-up-developer-environment.md).
+If you are using a node version manager, you can install an updated nodejs to your system, by doing something like `fnm install 22` and `fnm use 22`. See [our instructions here](../../setting-up-developer-environment.md).
 
 ### Changing your module's version of nodejs
 

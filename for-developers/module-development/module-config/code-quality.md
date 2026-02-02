@@ -5,7 +5,7 @@ sidebar_position: 4
 description: Using prettier and a linter to prevent common bugs.
 ---
 
-We recommend using [eslint](https://eslint.org/) and [prettier](https://prettier.io/) to improve the readability and uniformity of your code and to prevent easily-overlooked coding errors. The two tools work together to enforces the formatting and coding rules.  If you are using an IDE such as VS Code, we recommend installing the prettier plugin. In that plugin you can also enable 'format on save' to automate some of the formatting.
+We recommend using [eslint](https://eslint.org/) and [prettier](https://prettier.io/) to improve the readability and uniformity of your code and to prevent easily-overlooked coding errors. The two tools work together to enforces the formatting and coding rules. If you are using an IDE such as VS Code, we recommend installing the prettier plugin. In that plugin you can also enable 'format on save' to automate some of the formatting.
 
 :::important
 
@@ -14,9 +14,10 @@ Our [recommended templates](./file-structure.md) come with eslint and prettier c
 :::
 
 ## Installation
+
 If you are _not_ using the [recommended templates](./file-structure.md), you can configure your module for prettier and eslint as follows:
 
-1. Run `yarn add -D eslint prettier` in the root folder of your repo to install it as a dev dependency.
+1. Run `yarn add --dev eslint prettier` in the root folder of your repo to install it as a dev dependency.
 2. If you are using TypeScript you will also need to `yarn add --dev typescript-eslint`.
 3. Add the line `"prettier": "@companion-module/tools/.prettierrc.json",` to your _package.json_ file.
 4. Add the `scripts` block in your `package.json` to include:
