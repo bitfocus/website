@@ -111,6 +111,17 @@ const config: Config = {
 				editUrl: 'https://github.com/bitfocus/website/tree/main/',
 			} satisfies DocsPluginOptions,
 		],
+		[
+			'@docusaurus/plugin-content-docs',
+			{
+				id: 'satellite',
+				path: 'satellite',
+				routeBasePath: 'satellite',
+				sidebarPath: './sidebars/satellite.ts',
+				// disableVersioning: true,
+				editUrl: 'https://github.com/bitfocus/website/tree/main/',
+			} satisfies DocsPluginOptions,
+		],
 		(context, options) => {
 			// plugin-umami
 			const isProd = process.env.NODE_ENV === 'production' && process.env.CI
@@ -200,6 +211,13 @@ const config: Config = {
 				},
 				{
 					type: 'docSidebar',
+					sidebarId: 'satelliteSidebar',
+					docsPluginId: 'satellite',
+					position: 'left',
+					label: 'Satellite',
+				},
+				{
+					type: 'docSidebar',
 					sidebarId: 'developersSidebar',
 					docsPluginId: 'for-developers',
 					position: 'left',
@@ -236,6 +254,10 @@ const config: Config = {
 						{
 							label: "What's New",
 							to: '/whats-new/',
+						},
+						{
+							label: 'Satellite',
+							to: '/satellite/',
 						},
 						{
 							label: 'For Developers',
