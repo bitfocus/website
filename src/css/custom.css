@@ -40,9 +40,14 @@
 
 /* Navbar (the top bar, not the sidebar) link styles */
 .navbar__link {
-	border-radius: 0.5rem 0.5rem 0 0;
+	border-radius: 0.5rem;
 	text-align: center;
 	position: relative;
+
+	&.navbar__link--active {
+		/* Make active links have rounded top corners only */
+		border-radius: 0.5rem 0.5rem 0 0;
+	}
 }
 
 @media screen and (max-width: 1177px) {
