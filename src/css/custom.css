@@ -16,11 +16,10 @@
 	--ifm-code-font-size: 95%;
 	--docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 
-	--ifm-navbar-background-color: #d50215;
+	--companion-navbar-bg: #d50215;
+	--ifm-navbar-background-color: var(--companion-navbar-bg);
 	--ifm-navbar-link-color: #ffffff;
 	--ifm-navbar-link-hover-color: #ffffff;
-
-	--ifm-menu-color: #ffffff;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -34,28 +33,69 @@
 	--ifm-color-primary-lightest: #f89aa7;
 
 	--docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+	--ifm-navbar-link-hover-bg: #ffffff;
+	--ifm-navbar-link-color: #ffffff;
+	--ifm-navbar-link-hover-color: #ffffff;
 }
 
-/* Navbar active link styles */
+/* Navbar (the top bar, not the sidebar) link styles */
+.navbar__link {
+	border-radius: 0.5rem;
+	text-align: center;
+	position: relative;
+
+	&.navbar__link--active {
+		/* Make active links have rounded top corners only */
+		border-radius: 0.5rem 0.5rem 0 0;
+	}
+}
+
+@media screen and (max-width: 1177px) {
+	.navbar__link {
+		margin-top: 0em;
+		margin-bottom: 0em;
+		padding-top: 0em;
+		padding-bottom: 0em;
+	}
+}
+
+/* Navbar (the top bar, not the sidebar) link active styles: make it look a bit like a tab */
 .navbar__link--active {
-	color: #ffffff !important;
-	background-color: rgba(255, 255, 255, 0.1);
-	border-radius: 0.25rem;
-}
-
-.navbar__link--active:hover {
 	color: #ffffff !important;
 	background-color: rgba(255, 255, 255, 0.2);
 }
 
 [data-theme='dark'] .navbar__link--active {
 	color: #ffffff !important;
-	background-color: rgba(255, 255, 255, 0.15);
+	background-color: rgba(255, 255, 255, 0.25);
 }
 
-[data-theme='dark'] .navbar__link--active:hover {
+@media screen and (min-width: 1178px) {
+	.navbar__link--active::before {
+		content: '';
+		position: absolute;
+		left: 0px;
+		top: 100%;
+		width: 100%;
+		height: 38%;
+		background-color: rgba(255, 255, 255, 0.2);
+		/*border-bottom-right-radius: 50% 70%;*/
+	}
+
+	[data-theme='dark'] .navbar__link--active::before {
+		background-color: rgba(255, 255, 255, 0.25);
+	}
+}
+
+/* Navbar (the top bar, not the sidebar) hover link styles - active or not */
+.navbar__link:hover {
 	color: #ffffff !important;
-	background-color: rgba(255, 255, 255, 0.25);
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='dark'] .navbar__link:hover {
+	color: #ffffff !important;
+	background-color: rgba(255, 255, 255, 0.15);
 }
 
 .text-gray-50 {
@@ -69,7 +109,42 @@ h2 ~ :not(h1, h2) {
 	margin-left: 2rem;
 }
 
-.navbar-sidebar .clean-btn,
-.navbar__toggle.clean-btn {
-	color: rgb(227, 227, 227);
+/* when window is very narrow the "pull-down" sidebar's class is .navbar-sidebar
+   when the window is wider the permanent sidebar class is .theme-doc-sidebar-menu
+ */
+.navbar-sidebar {
+	--ifm-navbar-background-color: #fff;
+}
+
+[data-theme='dark'] .navbar-sidebar {
+	--ifm-navbar-background-color: #1b1b1d;
+}
+
+/* the top of the narrow-win sidebar is red regardless of theme */
+.navbar-sidebar__brand {
+	background-color: var(--companion-navbar-bg);
+}
+
+/* Make the dark/light mode button stand out better.
+   Unfortunately, it doesn't have a non-serialized classname, so do it by elimination  */
+.clean-btn:not(:hover):not(.navbar-sidebar__close):not(.navbar__toggle) {
+	background-color: rgba(255, 255, 255, 0.75);
+}
+
+[data-theme='dark'] .clean-btn:not(:hover):not(.navbar-sidebar__close):not(.navbar__toggle) {
+	background-color: rgba(0, 0, 0, 0.25);
+}
+
+/* make groups stand out better */
+.menu__list-item-collapsible {
+	border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+/* with all of the above, default is black in light mode and grey in dark mode for some reason; neither look great */
+.navbar__toggle {
+	color: white;
+}
+
+.navbar__toggle:hover {
+	color: rgba(255, 255, 255, 0.75);
 }
