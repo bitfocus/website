@@ -3,13 +3,13 @@ title: Companion 3.3 (API 1.8)
 sidebar_position: -33
 ---
 
-### Text presets
+### Text preset type for organizing presets with headings {#text-presets}
 
 A new 'text' preset type has been added, to allow you to put some headings and blocks of text into the presets panel.
 
 These will also split the presets into chunks around them, allowing you to organise presets better.
 
-### Local variables support
+### Support for button-scoped local variables {#local-variables}
 
 :::tip
 
@@ -24,7 +24,7 @@ Due to the way the `parseVariablesInString` method works, Companion often doesn'
 In order to support these, in your action/feedback callback, there is a second `context` parameter which holds an alternate `parseVariablesInString` implementation. This implementation is specific to that callback, so Companion knows what control it belongs to, and can handle the variables.  
 Additionally, you can indicate that you are doing this and support these variables by setting the `useVariables` property to an object like `{ local: true }` to indicate this support. This allows us to show a hint to the user about this support, and suggest them whilst they type.
 
-### Shared UDP Listener
+### Shared UDP port listener for devices with hardcoded ports {#shared-udp}
 
 A few devices have been found which are not cooperative when it comes to control, and expect to send all messages to a hardcoded UDP port.  
 This makes it hard to support these, as by default only one connection can listen on a port at a time.

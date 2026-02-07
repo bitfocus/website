@@ -4,7 +4,7 @@ sidebar_position: -40
 description: Module permissions & isVisibleExpression
 ---
 
-### Permissions
+### Module permissions for enhanced security {#permissions}
 
 As of @companion-module/base v1.12, modules will be run with the nodejs permissions model enabled. This will allow us to inform users about the requirements of modules.
 
@@ -30,7 +30,7 @@ We would recommend planning for this in your module implementation.
 
 :::
 
-### isVisible as expressions
+### Expression syntax support for `isVisible` on option fields {#isvisible-expressions}
 
 The `isVisible` functions that can be defined on option fields can now be written in the companion expression syntax through a new `isVisibleExpression` property.
 
@@ -40,11 +40,11 @@ We advise all uses to be updated to the new syntax, the old syntax is now deprec
 
 :::
 
-### Bonjour query port
+### Port-based filtering for Bonjour queries {#bonjour-port}
 
 Bonjour queries in the module manifest can now specify a filter based on port number.
 
-### New utility methods
+### New utility methods for escape character handling {#utility-methods}
 
 - parseEscapeCharacters
 - substituteEscapeCharacters

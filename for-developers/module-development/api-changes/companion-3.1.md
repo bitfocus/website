@@ -3,7 +3,7 @@ title: Companion 3.1 (API 1.5)
 sidebar_position: -31
 ---
 
-### Feedback invert
+### Automatic invert property for boolean feedbacks {#feedback-invert}
 
 Boolean feedbacks now automatically get an 'inverted' property added by Companion.
 

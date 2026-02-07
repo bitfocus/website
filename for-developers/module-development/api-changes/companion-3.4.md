@@ -3,15 +3,15 @@ title: Companion 3.4 (API 1.10)
 sidebar_position: -34
 ---
 
-### Presets
+### Custom headlines for preset actions, feedbacks and steps {#preset-headlines}
 
 Presets can now define a `headline` value for each action, feedback and step, to be used as the user editable label for the action/feedback/step.
 
-### Bonjour queries
+### Array support for merging multiple Bonjour queries {#bonjour-arrays}
 
 Inside your `companion/manifest.json`, each bonjour query defined can now be an array of queries, allowing two queries to be merged and used for one config field.
 
-### Feedback Image Buffers
+### Extended format support for feedback image buffers {#image-buffers}
 
 The `imageBuffer` property from advanced feedbacks can now be in more formats.
 
