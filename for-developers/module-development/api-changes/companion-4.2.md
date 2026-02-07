@@ -1,10 +1,10 @@
 ---
 title: Companion 4.2 (API 1.14)
 sidebar_position: -42
-description: Config layout changes
+description: Config layout changes, Connection processes now include the label
 ---
 
-### Config layout changes
+### Automated layout for Config parameters {#config-layout}
 
 The connection config panel allowed modules to customise the layout of input fields. This was not possible elsewhere in Companion, and is not consistent with elsewhere within the panel where fields are in the simplified layout.
 
@@ -26,6 +26,6 @@ Let us know if there is extra configurability that you need, we are open to rest
 
 See the [PR](https://github.com/bitfocus/companion/pull/3569) for more examples on the impact.
 
-### Developer Experience
+### Connection processes now include the label (name) of the connection {#connection-process-name}
 
-To improve the developer experience, when looking at each process in task manager or activity monitor, each process will not be labelled with the label of the connection.
+To improve the developer experience, when looking at each process in task manager or activity monitor, each process is now labelled with the label of the connection.

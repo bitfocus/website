@@ -2,6 +2,7 @@
 	"label": "API Changelog",
 	"position": 99,
 	"link": {
-		"type": "generated-index"
+		"type": "doc",
+		"id": "index"
 	}
 }
