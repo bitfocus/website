@@ -1,0 +1,17 @@
+---
+title: Companion 3.1 (API 1.5)
+sidebar_position: -31
+---
+
+### Automatic invert property for boolean feedbacks {#feedback-invert}
+
+Boolean feedbacks now automatically get an 'inverted' property added by Companion.
+
+:::tip
+
+If you already have an option performing a similar job, we recommend using an upgrade script to move its value into our field and remove the option.  
+Alternatively, you can opt out of our field, but be aware that users may have already set values that you should try to preserve
+
+:::
+
+If we detect that your feedback already has an invert field, we will hide and disable ours, but this doesn't find every field

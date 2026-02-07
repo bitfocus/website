@@ -2,6 +2,7 @@ import { themes as prismThemes } from 'prism-react-renderer'
 import type { Config } from '@docusaurus/types'
 import type * as Preset from '@docusaurus/preset-classic'
 import type { Options as DocsPluginOptions } from '@docusaurus/plugin-content-docs'
+import autoTocPlugin from './src/remark/autoTocPlugin.mjs'
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -107,6 +108,7 @@ const config: Config = {
 				path: 'for-developers',
 				routeBasePath: 'for-developers',
 				sidebarPath: './sidebars/for-developers.ts',
+				beforeDefaultRemarkPlugins: [autoTocPlugin],
 				// disableVersioning: true,
 				editUrl: 'https://github.com/bitfocus/website/tree/main/',
 			} satisfies DocsPluginOptions,

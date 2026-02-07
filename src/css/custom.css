@@ -148,3 +148,14 @@ h2 ~ :not(h1, h2) {
 .navbar__toggle:hover {
 	color: rgba(255, 255, 255, 0.75);
 }
+
+/* Auto-generated TOC heading links should be white, not red */
+.auto-toc-heading a {
+	color: var(--ifm-heading-color);
+	text-decoration: none;
+}
+
+.auto-toc-heading a:hover {
+	color: var(--ifm-heading-color);
+	text-decoration: underline;
+}
