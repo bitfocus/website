@@ -1,4 +1,4 @@
-name: Check spelling
+name: Lint & Spell Check
 on: [push, pull_request]
 
 permissions:
@@ -17,3 +17,22 @@ jobs:
           persist-credentials: false
       - name: Spell Check Repo
         uses: crate-ci/typos@v1
+
+  prettier:
+    name: Prettier Format Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Install Dependencies
+        run: yarn install --immutable
+      - name: Check Formatting with Prettier
+        run: yarn format:check

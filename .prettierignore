@@ -5,3 +5,4 @@ package.json
 
 /.docusaurus/
 /_typos.toml
+/.mypy_cache/
