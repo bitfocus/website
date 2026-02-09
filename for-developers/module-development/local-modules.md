@@ -63,4 +63,3 @@ the **Developer Module Path** is _**mydev**_ and not _mydev/module1_.
 ```
 COMPANION_DEV_MODULES=<dev modules path>
 ```
-

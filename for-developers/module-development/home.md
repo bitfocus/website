@@ -7,7 +7,7 @@ description: Developer environment setup specific to module development.
 
 So, you want to develop a module for Companion? Welcome!
 
-Companion uses plug-ins to expand its capabilities, we call these plug-ins "modules". For every device you can control with Companion there is a "module" that manages the connection. This page describes how to set up your computer for developing Companion modules. Subsequent pages will provide details on the contents   of the module and its lifecycle.
+Companion uses plug-ins to expand its capabilities, we call these plug-ins "modules". For every device you can control with Companion there is a "module" that manages the connection. This page describes how to set up your computer for developing Companion modules. Subsequent pages will provide details on the contents of the module and its lifecycle.
 
 ## Prerequisites
 
@@ -65,7 +65,7 @@ In a shell inside the new folder, run the following:
 
 :::tip
 
-If you are using an IDE such as [VS Code](https://code.visualstudio.com/), make the clone your current project (i.e., open the repository folder), then open a terminal (shell) inside the IDE to ensure you are running  yarn in the correct folder.
+If you are using an IDE such as [VS Code](https://code.visualstudio.com/), make the clone your current project (i.e., open the repository folder), then open a terminal (shell) inside the IDE to ensure you are running yarn in the correct folder.
 
 :::
 
