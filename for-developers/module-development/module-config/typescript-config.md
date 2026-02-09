@@ -40,7 +40,7 @@ Our TypeScript template splits it into two files:
 	"include": ["src/**/*.ts"],
 	"exclude": ["node_modules/**"],
 	"compilerOptions": {
-		"types": ["node"	]
+		"types": ["node"]
 	}
 }
 ```
