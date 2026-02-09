@@ -1,0 +1,58 @@
+---
+title: Companion 4.1 (API 1.13)
+sidebar_position: -41
+---
+
+### Variables in `textinput` fields are now automatically parsed {#variable-parsing}
+
+You no longer need to call `parseVariablesInString` in most circumstances. Any `textinput` field with `useVariables` defined will automatically have variables parsed before the action/feedback is called.
+
+Any `parseVariablesInString` calls you are doing on these fields is now a no-op and can be removed.
+
+:::note
+
+If you are parsing any non textinput fields, these will not be auto-parsed.
+
+:::
+
+:::tip
+
+This is groundwork to better allow us to handle expressions for you, expect more to change around this in future releases.
+
+:::
+
+### Value-type feedbacks (support for local variables) {#value-feedbacks}
+
+As part of the new local variables support in Companion, you can now define `value` feedbacks. These are similar to `boolean` feedbacks, but you can return any type of value.
+
+Within Companion, the user is able to store the value you provide into a local variable. They can also do this with `boolean` feedbacks, but `boolean` feedbacks can also be used directly in styling a button, a `value` feedback cannot
+
+### `options:` improvements: new `description` field; multiline `textinput` field; "infinity" bounds for `number` fields {#new-options}
+
+Every field can now specify a `description`. This is intended to be a some hint to the user that should always be visible, and gets shown below the input field.
+
+The `textinput` field type can now request to be multiline. This will provide a single string, with `\n` characters where the user added a line break
+
+The `number` field type can opt to show the defined min or max values as infinity. This is common behaviour for audio mixers, where they treat some low value such as -90 as -infinity
+
+### `secret-text` field-type for Configs {#secrets}
+
+There is a new `secret-text` field type available to the connection config panel.
+
+This is intended to allow for us to better track what config values are secret and might want to be omitted from some exports.
+
+These get provided to your module as another parameter to the `init` and `configUpdated` methods.
+
+:::tip
+
+Make sure to not mix them, or it defeats the purpose of them being separate
+
+:::
+
+### subscribe/unsubscribe: More flexibility for Action/ less for feedbacks {#subscribe}
+
+Actions can opt out of their unsubscribe method being called when the options change.
+
+They can also specify which options should not trigger a call to subscribe/unsubscribe, allowing you to filter out noisey/excessive calls.
+
+Feedback subscrube/unsubscribe callbacks are no longer called for every options change, as this happens every time the options or a variable inside the options changes.
