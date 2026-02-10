@@ -80,11 +80,11 @@
 	text-align: center; /* keep labels horizontally centered when they become two lines */
 	line-height: 1; /* keep labels compact when words wrap to two lines */
 	padding-top: 0.65em; /* make up for the reduced line-height */
-	padding-bottom: 0.85em; /* needed for symmetry to match the right-side container */
-	/* Make page-tab links with rounded top corners only so it visually "fuses" with the page */
+	padding-bottom: 0.85rem; /* combined with margin-bottom, establish the space below the text */
+	/* Extend the button beyond the bottom of the header */
+	margin-bottom: -1.5rem; /* move the button down to create the tab-like effect */
+	/* Make page-tab links with rounded top corners, but square bottom corners so it visually "fuses" with the page */
 	border-radius: 0.5rem 0.5rem 0 0;
-	/* Extend the button beyond the bottom of the header (when text is on one line) */
-	margin-bottom: -1.5em; /* counteract button-size effects of the border-bottom */
 }
 
 .theme-layout-navbar-left .navbar__link--active {
@@ -136,7 +136,7 @@
 
 /* when the window is narrow, the right-header icons are in the pull-down sidebar */
 .navbar-sidebar__items {
-	/* fontawesome-* classes are added in the item definitions in docusaurus.config.ts  */
+	/* fontawesome-* classes were added in the item definitions in docusaurus.config.ts  */
 	.fontawesome-container {
 		display: flex;
 		align-items: center;
@@ -174,7 +174,7 @@
 	background-color: var(--companion-navbar-bg);
 }
 
-/* For the drop-down sidebar when the window is narrow */
+/* Close-icon for the drop-down sidebar when the window is narrow */
 .navbar-sidebar__close {
 	padding: 0.5em;
 	border-radius: 0.5em;
