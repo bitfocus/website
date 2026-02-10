@@ -115,7 +115,7 @@
 
 /* The next two rules adjust spacing for the download, github and light/dark buttons.
    The first is for the light/dark button when it is grouped with the other two, so only needs to work on the full navbar. */
-.theme-layout-navbar-right .clean-btn:not(:hover) {
+.theme-layout-navbar-right .clean-btn {
 	margin: 0 0.25em;
 }
 
@@ -123,11 +123,33 @@
 	padding: 0.25em;
 	border-radius: 0.5rem;
 
+	/* fontawesome-* classes are added in the item definitions in docusaurus.config.ts  */
 	.fontawesome {
-		/* we could have used svg as the selector, but this is probably better */
 		height: 2rem;
 		width: auto;
 		display: block; /* Helps remove extra spacing below the SVG */
+	}
+	.fontawesome-text {
+		display: none;
+	}
+}
+
+/* when the window is narrow, the right-header icons are in the pull-down sidebar */
+.navbar-sidebar__items {
+	/* fontawesome-* classes are added in the item definitions in docusaurus.config.ts  */
+	.fontawesome-container {
+		display: flex;
+		align-items: center;
+
+		.fontawesome {
+			height: 1.5em;
+			width: auto;
+		}
+
+		.fontawesome-text {
+			line-height: 1;
+			padding-left: 0.5em;
+		}
 	}
 }
 
