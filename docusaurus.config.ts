@@ -199,12 +199,6 @@ const config: Config = {
 			},
 			items: [
 				{
-					to: '/',
-					label: 'Home',
-					position: 'left',
-					activeBaseRegex: '^/$', // otherwise it would be active for all routes
-				},
-				{
 					type: 'docSidebar',
 					sidebarId: 'defaultSidebar',
 					position: 'left',
@@ -230,6 +224,12 @@ const config: Config = {
 					docsPluginId: 'for-developers',
 					position: 'left',
 					label: 'For Developers',
+				},
+				{
+					to: '/',
+					label: 'About',
+					position: 'left',
+					activeBaseRegex: '^/$', // otherwise it would be active for all routes
 				},
 				{
 					type: 'docsVersionDropdown',
