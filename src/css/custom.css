@@ -73,7 +73,7 @@
    */
 .theme-layout-navbar-left .navbar__link {
 	--vertical-padding: 0.5rem; /* make up for the reduced line-height */
-	--margin-bottom: calc( -1 * var(--ifm-navbar-height) / 2); /* move the button down to create the tab-like effect */
+	--margin-bottom: calc(-1 * var(--ifm-navbar-height) / 2); /* move the button down to create the tab-like effect */
 	text-align: center; /* keep labels horizontally centered when they become two lines */
 	line-height: 1; /* keep labels compact when words wrap to two lines (in case we remove nowrap later, below) */
 	padding-top: var(--vertical-padding);
