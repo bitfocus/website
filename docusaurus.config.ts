@@ -6,7 +6,7 @@ import autoTocPlugin from './src/remark/autoTocPlugin.mjs'
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
-import versions from './versions.json' assert { type: 'json' }
+import versions from './versions.json' with { type: 'json' }
 
 const config: Config = {
 	title: 'Bitfocus Companion',
