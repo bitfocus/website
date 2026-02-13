@@ -154,7 +154,7 @@
 		.fontawesome {
 			height: 1.5em;
 			width: auto;
-			/*" display: block" not needed here — flex container eliminates the inline spacing below the SVG */
+			/* "display: block" not needed here — flex container eliminates the inline spacing below the SVG */
 		}
 
 		.fontawesome-text {
