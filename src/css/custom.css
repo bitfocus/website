@@ -72,8 +72,7 @@
         Since we're clipping the left-container, the bottom-border needn't be precise -- as long as it's big enough.
    note 3: ":not(:last-child)" is to prevent tab-highlighting in the app-packaged docs, where there are no tabs.
    */
-.theme-layout-navbar-left .navbar__link,
-.theme-layout-navbar-left .navbar__brand:not(:last-child) {
+.theme-layout-navbar-left .navbar__link {
 	--vertical-padding: 0.5rem; /* make up for the reduced line-height */
 	--margin-bottom: calc(-1 * var(--ifm-navbar-height) / 2); /* move the button down to create the tab-like effect */
 	text-align: center; /* keep labels horizontally centered when they become two lines */
@@ -89,16 +88,8 @@
 	border-radius: 0.5rem 0.5rem 0 0;
 }
 
-.theme-layout-navbar-left .navbar__brand:not(:last-child) {
-	--vertical-padding: 0.1rem;
-	padding-left: 0.25rem;
-	padding-right: 0.25rem;
-	margin-right: 0.5rem; /* split the default 1rem with the padding 0.25 on each side */
-}
-
 /* Make the active link look a like a page-tab (like a browser tab or VS Code editor tabs) */
-.theme-layout-navbar-left .navbar__link--active,
-.theme-layout-navbar-left:not(:has(> .navbar__link--active)) > .navbar__brand:not(:last-child) {
+.theme-layout-navbar-left .navbar__link--active {
 	color: var(--companion-active-tab-color);
 	background-color: var(--companion-active-tab-bg);
 	/* Give the tab a glow  */
@@ -114,9 +105,12 @@
 	*/
 .navbar__item.navbar__link:hover:not(.navbar__link--active),
 .navbar-sidebar__brand:hover,
-.navbar__brand:hover:not(:last-child),
 .navbar__toggle:hover {
 	background-color: rgb(255 255 255 / 20%);
+}
+
+.navbar__brand:hover {
+	opacity: 90%;
 }
 
 /* Make the dark/light mode button stand out better.
