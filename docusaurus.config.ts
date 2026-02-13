@@ -226,12 +226,6 @@ const config: Config = {
 					label: 'For Developers',
 				},
 				{
-					to: '/',
-					label: 'About',
-					position: 'left',
-					activeBaseRegex: '^/$', // otherwise it would be active for all routes
-				},
-				{
 					type: 'docsVersionDropdown',
 					position: 'right',
 					dropdownActiveClassDisabled: true,

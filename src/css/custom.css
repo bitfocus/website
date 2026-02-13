@@ -19,8 +19,8 @@
 	--companion-navbar-bg: #d50215;
 	--ifm-navbar-height: 3.25rem; /* default is 3.75 */
 	--ifm-navbar-background-color: var(--companion-navbar-bg);
-	--ifm-navbar-link-color: #ffffff;
-	--ifm-navbar-link-hover-color: #ffffff;
+	--ifm-navbar-link-color: white;
+	--ifm-navbar-link-hover-color: white;
 
 	--companion-active-tab-color: var(--ifm-font-color-base);
 	--companion-active-tab-bg: white;
@@ -41,8 +41,8 @@
 	--ifm-color-primary-lightest: #f89aa7;
 
 	--docusaurus-highlighted-code-line-bg: rgb(0 0 0 / 30%);
-	--ifm-navbar-link-color: #ffffff;
-	--ifm-navbar-link-hover-color: #ffffff;
+	--ifm-navbar-link-color: white;
+	--ifm-navbar-link-hover-color: white;
 
 	--companion-active-tab-color: var(--ifm-font-color-base); /* for the pseudo-tab links in the top navbar */
 	--companion-active-tab-bg: var(--ifm-background-color); /* #1b1b1d */
@@ -67,7 +67,7 @@
 }
 
 /* Navbar (the top bar, not the sidebar) link styles 
-   note: `overflow: hidden;` can causes weird text-wrapping when text wraps, and unnecessarily clips button text with nowrap;
+   note: `overflow: hidden;` can cause weird text-wrapping (if wrapping is enabled). It clips button text when wrapping is disabled.
    Note: The margin-bottom/border-bottom adjustment here is made large to make the tabs touch the bottom of the header bar
         Since we're clipping the left-container, the bottom-border needn't be precise -- as long as it's big enough.
    */
@@ -100,8 +100,15 @@
 	*/
 .navbar__item.navbar__link:hover:not(.navbar__link--active),
 .navbar-sidebar__brand:hover,
+.navbar__brand:hover,
 .navbar__toggle:hover {
 	background-color: rgb(255 255 255 / 20%);
+}
+
+.navbar__brand {
+	padding: 0.25rem;
+	margin-right: 0.5rem; /* split the default 1rem with the padding 0.25 on each side */
+	border-radius: 0.5rem;
 }
 
 /* Make the dark/light mode button stand out better.
