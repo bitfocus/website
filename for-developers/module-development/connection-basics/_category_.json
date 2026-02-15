@@ -1,0 +1,11 @@
+{
+	"label": "Connection Module: Basics",
+	"position": 15,
+	"link": {
+		"type": "doc",
+		"id": "index"
+	},
+	"customProps": {
+		"description": "The basic functions and objects needed to program a connection module."
+	}
+}

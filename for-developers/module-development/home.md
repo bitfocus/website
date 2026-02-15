@@ -1,5 +1,5 @@
 ---
-title: Module Development Setup
+title: Getting Started with Modules
 sidebar_label: Getting Started with Modules
 sidebar_position: 1
 description: Developer environment setup specific to module development.
