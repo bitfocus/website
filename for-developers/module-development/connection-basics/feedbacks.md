@@ -15,7 +15,9 @@ API calls: `setFeedbackDefinitions()` and `checkFeedbacks()`
 
 Your module can define the list of feedbacks it supports by making a call to [`this.setFeedbackDefinitions({ ...some feedbacks here... })`](https://bitfocus.github.io/companion-module-base/classes/InstanceBase.html#setfeedbackdefinitions). You will need to do this as part of your `init()` method, but can also call it at any other time if you wish to update the list of feedbacks exposed.
 
-Note: Please try not to do it too often, as updating the list has a cost. If you are calling it multiple times in a short span of time, consider if it would be possible to batch the calls so it is only done once.
+:::warning
+Please try not to call this method too often, as updating the list has a cost. If you are calling it multiple times in a short span of time, consider if it would be possible to batch the calls so it is only done once.
+:::
 
 You should tell Companion to call the callback for your feedback whenever the result is expected to change by calling `this.checkFeedbacks('your-feedback-id', 'another-feedback')`. You can do this even more granularly if making use of the [subscribe & unsubscribe flow](../connection-advanced/subscribe-unsubscribe-flow.md)
 

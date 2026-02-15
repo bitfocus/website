@@ -11,7 +11,9 @@ This section explains how to define variables and change update their values.
 
 Your module can define the list of variables it exposes by making a call to `this.setVariableDefinitions({ ...some variables here... })`. You will need to do this as part of your `init()` method, but can also call it at any other time if you wish to update the list of variables exposed.
 
-Note: Please try not to do it too often, as updating the list has a cost. If you are calling it multiple times in a short span of time, consider if it would be possible to batch the calls so it is only done once.
+:::warning
+Please try not to call this method too often, as updating the list has a cost. If you are calling it multiple times in a short span of time, consider if it would be possible to batch the calls so it is only done once.
+:::
 
 The boilerplate has a file `variables.js` which is where your variables should be defined. It is not required to use this structure, but it keeps it more readable than having it all in one file.
 

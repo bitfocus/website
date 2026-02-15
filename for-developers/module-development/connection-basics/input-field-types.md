@@ -74,5 +74,4 @@ It is possible that there are some new field types not linked to in the list abo
 - [Feedbacks](./feedbacks.md)
 - [User-config](./user-configuration.md)
 - [Bonjour Device Discovery](../connection-advanced/bonjour-device-discovery.md)
-- Input Field Secret _TODO: write an advanced page for this? or add to user-config?_
 - [Custom Variables](../connection-advanced/setting-custom-variables.md)

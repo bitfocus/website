@@ -1,4 +1,6 @@
-> This is an experimental idea, that may be removed without notice
+:::danger
+This is an experimental idea, that may be removed without notice
+:::
 
 Sometimes, an action can produce a bit of data that the user may want to do something with. In these cases, it doesn't make sense to write it to a variable from your module, as another action on the same button could overwrite it too soon.
 
