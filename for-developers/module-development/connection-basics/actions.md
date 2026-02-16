@@ -9,9 +9,7 @@ Actions are the heart of many modules: they define what will happen when a user 
 
 This section explains how to define actions, provide options to the user, and respond when the user invokes the action.
 
-## Control flow (API calls)
-
-API calls: `setActionDefinitions()`
+## API call: `setActionDefinitions()`
 
 Your module defines the list of actions it supports by making a call to [`this.setActionDefinitions({ ...some actions here... })`](https://bitfocus.github.io/companion-module-base/classes/InstanceBase.html#setactiondefinitions). You will need to do this as part of your `init()` method, but can also call it at any other time if you wish to update the list of actions exposed.
 
