@@ -53,9 +53,9 @@ With over 700 published modules, you may find a module already written for you d
 
 1. Rename your module's directory _companion-module-mymanufacturer-myproduct_, replacing _mymanufacturer-myproduct_ with appropriate names. Try to think of what is most appropriate for your device: Are there other similar devices by the manufacturer that use the same protocol that the module could support later on? If so try and name it to more easily allow for that.
 
-2. In at least _package.json_, _companion/manifest.json_ and _companion/HELP.md_, edit the name and description of the module to match what yours is called. The search feature in your IDE is really helpful to find all of the places the name shows up! See the [Module Configuration section](./module-config/file-structure.md) and especially the [documentation for the manifest.json file](./module-config/manifest.json.md) for further details.
+2. In at least _package.json_, _companion/manifest.json_ and _companion/HELP.md_, edit the name and description of the module to match what yours is called. The search feature in your IDE is really helpful to find all of the places the name shows up! See the [Module Configuration section](./module-setup/file-structure.md) and especially the [documentation for the manifest.json file](./module-setup/manifest.json.md) for further details.
 
-3. Please see [Module Configuration](./module-config/file-structure.md) and the other pages in that section for more details and more options on starting your own module.
+3. Please see [Module Configuration](./module-setup/file-structure.md) and the other pages in that section for more details and more options on starting your own module.
 
 ## Install the dependencies
 
@@ -73,7 +73,7 @@ If you are using an IDE such as [VS Code](https://code.visualstudio.com/), make 
 
 You are now ready to start developing your module. Here are our suggested next steps:
 
-- Familiarize yourself with the [Module Configuration](module-config/file-structure.md) to understand the general file structure and configuration options, especially if working on a new module.
+- Familiarize yourself with the [Module Configuration](module-setup/file-structure.md) to understand the general file structure and configuration options, especially if working on a new module.
 - Read [Module development 101](./module-development-101.md) for an overview of the development lifecycle.
 - Review the recommended [GitHub Workflow](../git-workflows/github-workflow.md) to learn best practices for new features to your codebase.
 

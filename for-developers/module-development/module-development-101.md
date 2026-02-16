@@ -15,18 +15,18 @@ If you are creating a new module, then the very first thing you'll want to do is
 
 ## Configure the module
 
-There are a few files that make up every module. Please familiarize yourself with the basic structure described in our pages on [Module Configuration](module-config/file-structure). In particular, _package.json_,
-[_companion/manifest.json_](./module-config/manifest.json.md) and _companion/HELP.md_ define the identity of the module. Once these are defined, you will spend most of your time crafting the module source code.
+There are a few files that make up every module. Please familiarize yourself with the basic structure described in our pages on [Module Configuration](module-setup/file-structure). In particular, _package.json_,
+[_companion/manifest.json_](./module-setup/manifest.json.md) and _companion/HELP.md_ define the identity of the module. Once these are defined, you will spend most of your time crafting the module source code.
 
 ## Program the module
 
-While you can handle all your module's code in one big file, we strongly recommend splitting it across several files as illustrated [here](./module-config/file-structure#file-structure).
+While you can handle all your module's code in one big file, we strongly recommend splitting it across several files as illustrated [here](./module-setup/file-structure#file-structure).
 
 To understand what is needed in a module it helps to understand how the code is used. Your module is presented to Companion as a class that extends the module base class. A user can add one or more _instances_ of your module to their Companion site. When Companion starts up, it initializes each instance of the module by starting a new process and passing configuration information, as described next.
 
 ### The module class and entrypoint (Module base class, configs)
 
-In the [typical module structure](./module-config/file-structure#file-structure), the entrypoint and module class are defined in _src/main.ts_. When your module is started, first the `constructor` of your module's class will be called, followed by your [upgrade scripts](https://github.com/bitfocus/companion-module-base/wiki/Upgrade-scripts) and then the `init` method.
+In the [typical module structure](./module-setup/file-structure#file-structure), the entrypoint and module class are defined in _src/main.ts_. When your module is started, first the `constructor` of your module's class will be called, followed by your [upgrade scripts](https://github.com/bitfocus/companion-module-base/wiki/Upgrade-scripts) and then the `init` method.
 
 Your constructor should only do some minimal class setup. It does not have access to the configuration information, so it should not be used to start doing things. Instead...
 
@@ -42,7 +42,7 @@ Your module provides interaction with the user by defining user-configurations, 
 
 TODO: Update links
 
-- [Module Configuration](module-config/file-structure.md)
+- [Module Configuration](module-setup/file-structure.md)
 - [Actions](https://github.com/bitfocus/companion-module-base/wiki/Actions)
 - [Feedbacks](https://github.com/bitfocus/companion-module-base/wiki/Feedbacks)
 - [Presets](https://github.com/bitfocus/companion-module-base/wiki/Presets)

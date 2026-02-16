@@ -6,6 +6,6 @@
 		"id": "index"
 	},
 	"customProps": {
-		"description": "The files and file structure necessary to create a module repository."
+		"description": "The files and file structure necessary to create and configure a module repository."
 	}
 }
