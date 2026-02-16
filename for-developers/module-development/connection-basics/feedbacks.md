@@ -17,7 +17,11 @@ Your module defines the list of feedbacks it supports by making a call to [`this
 Please try not to call this method too often, as updating the list has a cost. If you are calling it multiple times in a short span of time, consider if it would be possible to batch the calls so it is only done once.
 :::
 
-## API calls: `checkFeedbacks()` & `checkFeedbacksById()`
+## API calls: `checkFeedbacks(...)`, `checkAllFeedbacks()` & `checkFeedbacksById(...)`
+
+:::note
+Starting with [API 2.0](../api-changes/v2.0.md), it is no longer possible to call `checkFeedbacks()` without any arguments. When you need to call this, you should instead use `checkAllFeedbacks()`
+:::
 
 You should tell Companion to re-run the callback of your feedbacks whenever the result is expected to change by calling `this.checkFeedbacks('your-feedback-id', 'another-feedback')`.
 
