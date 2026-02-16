@@ -5,41 +5,61 @@ sidebar_position: 17
 description: Module feedback definition details.
 ---
 
-Feedbacks are the way of dynamically changing the style of buttons in companion.
+Feedbacks allow Companion to reflect device state, using that state for button styles, setting variables, or triggering other behaviour.
 
-This section explains how to provide the possible feedbacks and their options to the user.
+This section explains how to define feedbacks, provide options to the user, and implement the behaviour of the feedback.
 
-## Control flow (API calls)
+## API call: `setFeedbackDefinitions()`
 
-API calls: `setFeedbackDefinitions()` and `checkFeedbacks()`
-
-Your module can define the list of feedbacks it supports by making a call to [`this.setFeedbackDefinitions({ ...some feedbacks here... })`](https://bitfocus.github.io/companion-module-base/classes/InstanceBase.html#setfeedbackdefinitions). You will need to do this as part of your `init()` method, but can also call it at any other time if you wish to update the list of feedbacks exposed.
+Your module defines the list of feedbacks it supports by making a call to [`this.setFeedbackDefinitions({ ...some feedbacks here... })`](https://bitfocus.github.io/companion-module-base/classes/InstanceBase.html#setfeedbackdefinitions). You will need to do this as part of your `init()` method, but can also call it at any other time if you wish to update the list of feedbacks exposed.
 
 :::warning
 Please try not to call this method too often, as updating the list has a cost. If you are calling it multiple times in a short span of time, consider if it would be possible to batch the calls so it is only done once.
 :::
 
-You should tell Companion to call the callback for your feedback whenever the result is expected to change by calling `this.checkFeedbacks('your-feedback-id', 'another-feedback')`. You can do this even more granularly if making use of the [subscribe & unsubscribe flow](../connection-advanced/subscribe-unsubscribe-flow.md)
+## API calls: `checkFeedbacks()` & `checkFeedbacksById()`
 
-The [TypeScript module template](https://github.com/bitfocus/companion-module-template-ts) includes a file `src/feedbacks.ts` which is where your feedbacks should be defined. It is not required to use this structure, but it keeps it more readable than having everything in one file. More complex modules will likely want to split the actions definitions into even more files/folders.
+You should tell Companion to re-run the callback of your feedbacks whenever the result is expected to change by calling `this.checkFeedbacks('your-feedback-id', 'another-feedback')`.
+
+:::tip
+For modules with many options on feedbacks, you may want to make use of the [subscription flow](#subscribe--unsubscribe-flow) and `this.checkFeedbacksById('abc', 'def')`, to trigger smaller and more controlled invalidations.
+:::
 
 ## Feedback types
 
-Companion supports three types of [Feedback definitions](https://bitfocus.github.io/companion-module-base/interfaces/CompanionFeedbackDefinitionBase.html):
+Companion currently supports three types of [Feedback definitions](https://bitfocus.github.io/companion-module-base/interfaces/CompanionFeedbackDefinitionBase.html):
 
-- [**boolean**](https://bitfocus.github.io/companion-module-base/interfaces/CompanionFeedbackBooleanEvent.html): this is generally the preferred type, as it is the most flexible for end-users.
-- [**advanced**](https://bitfocus.github.io/companion-module-base/interfaces/CompanionFeedbackAdvancedEvent.html): used for special cases, it provides a fixed response that is not user-configurable.
-- [**value**](https://bitfocus.github.io/companion-module-base/interfaces/CompanionValueFeedbackDefinition.html): used to initialize local variables, it returns a JSON object, array or primitive instead of a simple boolean. (Introduced in Companion v4.1/Module-base v1.13.)
+### Boolean feedbacks
 
-Writing boolean feedbacks should be preferred whenever possible. They give the user more control over how their buttons are styled, and allows for using the boolean values elsewhere, such as in triggers.
+This is the recommended feedback type, in which the callback returns a simple `true` or `false` value.
 
-Advanced feedbacks can still be useful, to return dynamic values derived from the device state. For example, displaying a png.
+Inside Companion, users can use these in triggers, as part of feedback logic and to apply style changes of their choice to buttons.
 
-Prior to Companion 2.2, it was only possible to write the `advanced` type of feedbacks, so many modules are still using those.
+### Value feedbacks
 
-It is possible to [Migrate legacy to boolean feedbacks](../connection-advanced/migrating-legacy-to-boolean-feedbacks.md).
+This is a newer addition since [API 1.13](../api-changes/v1.13.md) (Companion 4.1).
+
+The user can use this feedback to store a value into a local variable. This allows you to define subscription style lazy loading of values that the user wants to use.
+
+These can return any JSON object, array, or primtive value.
+
+### Advanced feedbacks
+
+These are no longer recommended in most cases.
+
+This type of feedback returns a portion of button style properties that override the user defined style of the button.
+
+Commonly, you will have some options on the feedback to let the user choose the background and text colour values to return when true. However this is often too rigid and does not give the user the customisation abilities they desire.
+
+They can also be used to return image pixel buffers, to show some custom content, although this is no longer recommended
+
+:::tip
+In older versions of Companion, these were the only available type of feedback. We recommend that older modules should [update their feedbacks to boolean feedbacks](../connection-advanced/migrating-legacy-to-boolean-feedbacks.md) whenever possible.
+:::
 
 ## Feedback definitions
+
+The [TypeScript module template](https://github.com/bitfocus/companion-module-template-ts) includes a file `src/feedbacks.ts` which is where your feedbacks should be defined. It is not required to use this structure, but it keeps it more readable than having everything in one file. More complex modules will likely want to split the actions definitions into even more files/folders.
 
 All the feedbacks are passed in a single javascript object, like
 
@@ -60,8 +80,8 @@ The minimum boolean feedback definition is as follows:
   defaultStyle: {
     // The default style change for a boolean feedback
     // The user will be able to customise these values as well as the fields that will be changed
-    bgcolor: combineRgb(255, 0, 0),
-    color: combineRgb(0, 0, 0),
+    bgcolor: 0xff0000, // or combineRgb(255, 0, 0)
+    color: 0x000000, // or combineRgb(0, 0, 0)
   },
   // options is how the user can choose the condition the feedback activates for
   options: [{
@@ -72,50 +92,47 @@ The minimum boolean feedback definition is as follows:
   }],
   callback: (feedback) => {
     // This callback will be called whenever companion wants to check if this feedback is 'active' and should affect the button style
-    if (self.some_device_state.source == feedback.options.source) {
-      return true
-    } else {
-      return false
-    }
+    return self.some_device_state.source == feedback.options.source
   }
 }
 ```
 
-The function on callback is what gets executed when the feedback is invoked.
-You can see a description of the `feedback` object passed into the callback by following the links in the documentation linked in the [previous section](#feedback-types). Make sure to not use any of the deprecated properties, they may be removed without warning!
+### Feedback execution (callback)
 
-As of `@companion-module/base#v1.1.0`, feedback callbacks can now be async or return a promise.
+The callback function is called when the feedback is executed, either shortly after the module calls `this.checkFeedbacks()`, or after the feedback options are changed.
 
-There are more properties available in feedback definitions, which are described in full in the documentationlinked in the [previous section](#feedback-types).
+It is called with 2 parameters:
 
-Importantly, the `options` property of the feedback definition is an array of input types, as defined [here](./input-field-types.md)
+- `feedback` - an object containing the options the feedback is executed with, along with some extra identifiers that can be useful
+- `context` - since API 1.1. This contains some useful methods tied to the execution of the feedback
 
-As of `@companion-module/base#v1.1.0` (Companion 3), there is now a second parameter to each of `callback`, `subscribe`, `unsubscribe` and `learn`. This contains some utility methods that you may need. The full definition of this type is [here](https://bitfocus.github.io/companion-module-base/types/CompanionFeedbackContext.html). See the section below on [Using variables](#using-variables) for more details.
+It is safe for your callback to throw an error, Companion will catch and log the error for you and treat the feedback result as falsey.
 
-#### Inverting boolean feedbacks
+The expected values you can return from this depend on the [type of the feedback](#feedback-types).
 
-Since Companion 3.1 (API v?), Companion provides builtin support for 'inverting' feedbacks. This is done for boolean feedbacks without any changes needed in the modules. Since `@companion-module/base#v1.5.0` it is possible to disable this behaviour for each feedback, and to access these inversion values in [upgrade scripts](./upgrade-scripts.md).  
-You can disable this behaviour by setting `showInvert: false` on a feedback. When changing this, you will need to update the definition and presets yourself, you must make sure to add an upgrade script too to avoid breaking existing configs.  
-A helper function (`CreateUseBuiltinInvertForFeedbacksUpgradeScript`) is provided to generate an upgrade script for your module to convert an existing invert checkbox to the builtin system. It expects a parameter describe the feedbacks to process, and the name of the invert checkbox being replaced:
+#### Synchronous and asynchronous execution
 
-```
-CreateUseBuiltinInvertForFeedbacksUpgradeScript({
-  myfeedback: 'invert',
-  another: 'inverted',
-})
-```
+Starting with API v1.1, feedback callbacks can be async or return a promise if you need.
 
-### Using variables
+You should not be performing any network requests here, but it can be neccessary when generating an images or using other native code.
 
-:::note
-
-As of [`@companion-module/base#v1.13`](../api-changes/companion-4.1.md) (Companion 4.1), variables in textinput fields are now automatically parsed.
-
+:::tip
+You must make sure to use a sensible timeout on any async execution, or your feedback can get stuck showing a stale value.
 :::
 
-As of `@companion-module/base#v1.1.0`, it is now possible to use `parseVariablesInString` in feedbacks.
+#### Using variables
 
-This is achieved with the `parseVariablesInString` on the context parameter of the feedback callback. This method is provided so that Companion can track what variables your feedback used during the execution of the `callback`, which lets it be rechecked when those variables change. If you use `parseVariablesInString` off the `InstanceBase` class instead, your feedback will **not** be rechecked when variables change.
+Since API v1.1, it has been possible to use variables in feedback callbacks. This makes your feedbacks much more powerful as it lets the user build more complex interactions and systems.
+
+:::note
+As of [API v1.13](../api-changes/v1.13.md) (Companion 4.1), variables in textinput fields are now automatically parsed.
+
+As of [API v2.0](../api-changes/v2.0.md) (Companion 4.3), modules are unable to parse variables themselves, Companion does it for you based on the fields describing of the options.
+:::
+
+Between API v1.1 and API v.14, a `context` object is passed as the second argument in the `callback`, `subscribe`, `unsubscribe` and `learn` callbacks.
+
+The `context` object in these versions includes a special version of the `parseVariablesInString()` method that allows Companion to track what which variables are referenced by each feedback, so that they can be re-executed whenever the parsed variables changed.
 
 ```js
 {
@@ -140,6 +157,187 @@ This is achieved with the `parseVariablesInString` on the context parameter of t
 }
 ```
 
+#### Inverting boolean feedbacks
+
+Since [API v1.5](../api-changes/v1.5.md) (Companion 3.1), Companion provides builtin support for 'inverting' the value of boolean feedbacks. This is done automatically for any boolean feedbacks your module exposes.
+
+If you wish to influence the auto-detection behaviour, you can do so by setting `showInvert: false` on a feedback. If this is an existing feedback, make sure to update any existing usages in an [upgrade scripts](./upgrade-scripts.md), to preserve existing behaviour for users.
+
+If your feedback alrady provides a field to match a true or false state, we strongly advise removing it and replacing existing usage with the builtin invert property.  
+A helper function (`CreateUseBuiltinInvertForFeedbacksUpgradeScript`) is provided to generate an upgrade script for your module to convert an existing invert checkbox to the builtin system. It expects a parameter describe the feedbacks to process, and the name of the invert checkbox being replaced:
+
+```js
+CreateUseBuiltinInvertForFeedbacksUpgradeScript({
+	myfeedback: 'invert',
+	another: 'inverted',
+})
+```
+
+### Additional properties
+
+There are more properties available, which are described in full in [the autogenerated Feedbacks documentation on GitHub](https://bitfocus.github.io/companion-module-base/interfaces/CompanionFeedbackDefinition.html)
+
+The `options` property of the feedback definition is an array of input types, as defined [here](./input-field-types.md)
+
+For boolean feedbacks a `defaultStyle` should be defined. This will give the feedback some default style overrides when the user adds the feedback to a button
+
+### UI Presentation
+
+The Companion UI will sort your feedbacks by name when presenting them in a list. You can add a longer description line of text with the `description` property.
+
+Since [API 2.0](../api-changes/v2.0.md), you can customise the sort order of the feedbacks by setting the `sortName` property on an action definition. When this is set, it will be used instead of the `name` when sorting the action definitions alphabetically.
+
+### Subscribe & unsubscribe flow
+
+Sometimes you will want to only load state from the device when it is needed by a feedback. This is common for devices which have thousands of properties, or if loading and maintining a bit of data has a cost, such as requiring polling to fetch.
+
+This flow changed in [API 2.0](../api-changes/v2.0.md), any existing feedbacks will need migrating to the new flow.
+
+#### Since API 2.0
+
+On the feedback definition, it is possible to register an additional callbacks to be informed about the feedbacks.
+
+```js
+const feedbacks = {}
+feedbacks['check_source'] = {
+    name: 'Test feedback',
+    options: [{
+        type: 'number',
+        label: 'Source'
+        id: 'source',
+        default: 1
+    }],
+    callback: (feedback) => {
+        ...
+    },
+    unsubscribe: (feedback) => {
+        ...
+    }
+}
+```
+
+Whenever a feedback is added to a button, the callback will be called.
+Whenever a feedback is removed from a button, unsubscribe will be called.
+Whenever the options of an feedback on a button is changed, only the callback will be called
+
+With this, if you need to do any data loading, you should dispatch but not await this inside the callback, and trigger a reevaluation of the feedback (using either `this.checkFeedbacks()` or `this.checkFeedbacksById()`).
+
+:::tip
+To help you decide if you need to perform any data loading, in each call to the `callback` you can now access the options provided to the previous call with `feedback.previousOptions`.
+With this you can check whether the options affecting the data loading have changed, and skip the loading process when it is not needed.
+:::
+
+It is also possible to force the callbacks for all your feedbacks to be re-executed, by calling `this.checkFeedbacks()` or `this.unsubscribeFeedbacks()`. Both functions accept `feedbackIds` parameters, to only run on a certain feedback type (eg `this.unsubscribeFeedbacks('set_source', 'set_source2')`).
+It is common to call `this.checkFeedbacks()` once the connection to the device has been established, to help ensure all the required data gets loaded.
+
+Often, you will want to track the specific id of feedbacks which are relying on specific data subscriptions from your device, which can then be used with `this.checkFeedbacksById()` to allow rechecking a very targetted group of feedbacks
+
+#### In API 1.15 and earlier
+
+On the feedback definition, it is possible to register some additional callbacks to be informed about the feedbacks.
+
+```js
+const feedbacks = {}
+feedbacks['check_source'] = {
+    name: 'Test feedback',
+    options: [{
+        type: 'number',
+        label: 'Source'
+        id: 'source',
+        default: 1
+    }],
+    callback: (feedback) => {
+        ...
+    },
+    subscribe: (feedback) => {
+        ...
+    },
+    unsubscribe: (feedback) => {
+        ...
+    }
+}
+```
+
+Whenever a feedback is added to a button, subscribe will be called.
+Whenever a feedback is removed from a button, unsubscribe will be called.
+Whenever the options of an feedback on a button is changed, unsubscribe will be called, followed by subscribe, then the callback.
+
+If the referenced variables change, the callback will be called without any calls to unsubscribe or subscribe.
+
+:::warning
+There was a behaviour change in [API 1.13](../api-changes/v1.13.md). With all variables now being parsed by Companion when building the `options`, it no longer made sense to call unsubscribe and subscribe on every options change, so they will only be called when adding or removing the feedback
+:::
+
+It is also possible to force either unsubscribe or subscribe to be called for every feedback, by calling `this.subscribeFeedbacks()` or `this.unsubscribeFeedbacks()`. Both functions accept `feedbackIds` parameters, to only run on a certain feedback type (eg `this.unsubscribeFeedbacks('set_source', 'set_source2')`).
+When using these callbacks, it is common to call `this.subscribeFeedbacks()` once the connection to the device has been established, to help ensure all the required data gets loaded.
+
+### Learn option values
+
+Some feedbacks have many options that users may wish to configure on the device and 'capture' into a feedback in Companion.
+Implementing the [learn option values](../connection-advanced/learn-action-feedback-values.md) flow will allow them to achieve that
+
+## Typescript typings
+
+:::tip
+This was introduced in [API v2.0](../api-changes/v2.0.md), prior to this any strong typings had to be managed yourself
+:::
+
+As part of the `InstanceTypes` generic argument passed to `InstanceBase`, an `feedbacks` property must be defined.
+By default this is `Record<string, CompanionFeedbackSchema<CompanionOptionValues>>` which means it is loosely typed.
+
+To enable strong typings, you can define a type such as:
+
+```ts
+export type FeedbacksSchema = {
+	route: {
+		type: 'boolean'
+		options: {
+			source: number
+			destination: number
+		}
+	}
+}
+
+export interface MyTypes {
+	feedbacks: FeedbacksSchema
+}
+```
+
+This will tell the InstanceBase that there should be one type of feedback which is called `route` with an options object as described.
+
+```ts
+const act: CompanionFeedbackDefinition<FeedbacksSchema['route']['options']> = {
+	name: 'My First Feedback',
+	options: [
+		{
+			id: 'source',
+			type: 'number',
+			label: 'Test',
+			default: 5,
+			min: 0,
+			max: 100,
+		},
+		{
+			id: 'destination',
+			type: 'number',
+			label: 'Test',
+			default: 5,
+			min: 0,
+			max: 100,
+		},
+	],
+	callback: async (event) => {
+		console.log('Hello world!', event.options.source, event.options.destination)
+	},
+}
+```
+
+:::tip
+We can't enforce that the options array matches these types, you will have to do that yourself.
+:::
+
+These types will also propagate into [presets](./presets.md)
+
 ## Further Reading
 
 - [Input-field Types (Options)](./input-field-types.md)
@@ -147,10 +345,3 @@ This is achieved with the `parseVariablesInString` on the context parameter of t
 - [Upgrade scripts](./upgrade-scripts.md)
 - [Autogenerated docs for the module `InstanceBase` class](https://bitfocus.github.io/companion-module-base/classes/InstanceBase.html)
 - [Autogenerated docs for the module feedback types/definitions](https://bitfocus.github.io/companion-module-base/types/CompanionFeedbackDefinition.html)
-- [Autogenerated docs for the module feedback context](https://bitfocus.github.io/companion-module-base/types/CompanionFeedbackContext.html) _TODO the linked page doesn't say much?_
-
-Feedbacks also support the following advanced features:
-
-- [subscribe & unsubscribe flow](../connection-advanced/subscribe-unsubscribe-flow.md)
-- [learn option values](../connection-advanced/learn-action-feedback-values.md)
-- [result to custom variable](../connection-advanced/setting-custom-variables.md)
