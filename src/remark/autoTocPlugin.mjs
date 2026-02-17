@@ -103,7 +103,7 @@ export default function autoTocPlugin() {
 				const { frontmatter, body } = parseFrontmatter(content)
 				return {
 					slug: f.replace(/\.md$/, ''),
-					title: frontmatter.sidebar_label || frontmatter.title || f.replace(/\.md$/, ''),
+					title: frontmatter.sidebar_label?.replace('└─', '') || frontmatter.title || f.replace(/\.md$/, ''),
 					sidebarPosition: parseInt(frontmatter.sidebar_position || '0', 10),
 					headings: extractHeadings(body),
 					files: [],

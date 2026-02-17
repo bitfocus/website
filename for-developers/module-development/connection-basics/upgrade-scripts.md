@@ -5,31 +5,52 @@ sidebar_position: 21
 description: Module upgrade script details.
 ---
 
-Over time you will add new functionality to your module. Sometimes, this can involve changing how existing actions or feedbacks are implemented.  
-A common example is changing a on/off option to be an on/off/toggle option.
+Over time you will add new functionality to your module. Sometimes, this can involve changing how existing actions or feedbacks are implemented. For example, by changing a on/off option to be an on/off/toggle option (i.e. 3 choices instead of just 2 choices).
 
-When this happens, existing usages of the action or feedback will become broken. The job of the upgrade script is to fix up the actions and feedbacks to handle the changes.
+When this happens, existing usages of the action or feedback may become broken. The job of the upgrade script is to fix up the actions and feedbacks the the user has already added to their site to handle the changes.
+
+## Upgrade scripts and the module entrypoint
+
+The main entrypoint for modules, as described in the [overview page](./overview.md) is the call `runEntrypoint(ModuleInstance, UpgradeScripts)` that you typically place at the top-level of _src/main.ts_ (if you're using the [recommended file structure](../module-setup/file-structure.md)). When Companion loads the "main" file, this function will pass to Companion you module class and a list of upgrade scripts, as will be described here.
 
 Each upgrade script will only get run once for each action and feedback, but it is good practise to write the scripts so that they can be executed multiple times. This will help you when testing your script, or if jumping between versions of companion.
 
-### Adding a script
+The [TypeScript module template](https://github.com/bitfocus/companion-module-template-ts) includes a separate file:
+`src/upgrades.ts`, which is where your upgrades should be defined. It is not required to use this structure, but it keeps it more readable than having everything in one file. More complex modules will likely want to split the actions definitions into even more files/folders.
 
-It is recommended to put them in an `upgrades.js` file, and to import them into `index.js` with the following:
+The upgrades.ts file can export a single variable that contains an array of scripts, to be described next.
 
+```ts
+// upgrades.ts
+
+export const upgradeScripts = [
+	// add your scripts here
+]
 ```
-const upgradeScripts = require('./upgrades')
+
+```ts
+// main.ts
+
+import { MyModuleConfig } from './config'
+import { upgradeScripts } from './upgrades'
+
+class MyModuleClass extends InstanceBase<MyModuleConfig> {
+	...
+}
+
+runEntrypoint(MyModuleClass, upgradeScripts)
 ```
 
-The second parameter to the `runEntrypoint()` method in your `index.js` is an array of upgrade scripts. So it should be added there
+## Writing an upgrade script
 
-### Writing the script
-
-It is intentional that the script is a method that is unrelated to your Instance class. They previously were part of the class, but that limited when they could be run and could lead to unpredictable behaviour that depended on the current state of the class.
+The script should be defined outside your InstanceBase class. They previously were part of the class, but that limited when they could be run and could lead to unpredictable behaviour that depended on the current state of the class.
 
 A minimal example of a script is:
 
-```js
-module.exports = {
+_TODO this could use some updating for typescript... also the format of defining an object rather than a function seems different to me..._
+
+```ts
+const upgradeScript1 = {
 	example_conversion: function (context, props) {
 		const result = {
 			updatedConfig: null,
@@ -48,38 +69,52 @@ module.exports = {
 
 The script gets fed the bits of data you may need to do the upgrades.
 
-#### context
+### context
 
 This is a collection of methods that may be useful for your script. There aren't currently any, some will be added here later on
 
-#### props
+### props
 
-This is all the data that needs upgrading. It contains a few properties
+This is all the data that needs upgrading, i.e. the entities in the user's database. It contains a few properties
 
-##### config
+#### props.config
 
 Sometimes, the config of your module may be provided here, in case it needs upgrading.
 
 You can change anything you like here. To save the change, set the new value as `updatedConfig` in the result.
 
-_Warning_: Often this value will be null. Make sure you don't throw an error when that happens!
+:::warning
 
-##### actions
+Often this value will be null. Make sure you don't throw an error when that happens!
+
+:::
+
+#### props.actions
 
 This is an array of the actions that may need upgrading to the new version.
 
-Note: This may not be all of the actions that exist. Sometimes it will be called with actions that have been imported from a page from an older version of companion
+Note: This may not be all of the actions that exist, but it is all the actions that may need upgrading. Sometimes it will be called with actions that have been imported in a page from an older version of companion
 
 Any changed actions should be added to the `updatedActions` array in the result.
 
-##### feedbacks
+#### props.feedbacks
 
 This is an array of the feedbacks that may need upgrading to the new version.
 
-Note: This may not be all of the actions that exist. Sometimes it will be called with actions that have been imported from a page from an older version of companion
+Note: This may not be all of the feedbacks that exist. Sometimes it will be called with feedbacks that have been imported in a page from an older version of companion
 
 Any changed feedbacks should be added to the `updatedFeedbacks` array in the result.
 
-##### return result
+### return result
 
 This tells Companion what had changed in your script. Anything changes made to actions or feedbacks not listed in the result object will be discarded.
+
+## Further Reading
+
+- [Autogenerated docs for the module `InstanceBase` class](https://bitfocus.github.io/companion-module-base/classes/InstanceBase.html)
+- [API Overview](./overview.md)
+- [User-configuration management](./user-configuration.md)
+- [Actions](./actions.md)
+- [Feedbacks](./feedbacks.md)
+- [Variables](./variables.md)
+- [Presets](./presets.md)

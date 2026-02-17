@@ -1,16 +1,23 @@
-## Why
+---
+title: Migrating Legacy Feedbacks to Boolean Feedbacks
+sidebar_label: Migrating to Boolean Feedbacks
+sidebar_position: 10
+description: How to set up migrate legacy feedbacks to boolean feedbacks.
+---
 
-Most feedbacks should now be defined as 'boolean' feedbacks. The idea is to gradually convert them across over time, as they give the user more flexibility and will end up with a more consistent interface.
+## Why update your feedbacks?
 
-Previously, it was up to the module author to decide what properties a feedback should change. This means that most feedbacks are only able to change both the background and text colour. But what if the user wants to change a png, or the text? They could ask for that to be possible, but that would likely require the module author to duplicate the feedback with different style options.
+Since Companion v3, most feedbacks are best defined as 'boolean' feedbacks, as they give the user more flexibility and will end up with a more consistent interface.
+
+Previously, it was up to the module author to decide what properties a feedback should change. This tended to limit feedbacks to changing the background and text colour. But what if the user wants to change a png, or the text? They could ask for that to be possible, but that would likely require the module author to duplicate the feedback with different style options.
 
 With boolean feedbacks, the module author simply has to make the feedback be a true or false value, and the user can decide what style properties that should change.
 
-A benefit of this, is that these boolean feedbacks can be used as conditions in the trigges system. We hope to allow for more complex behaviours with these feedbacks, but before that is worth doing we need more modules to be utilising the new type of feedback
+A side-benefit of using boolean feedbacks is that they can be used as conditions in the trigges system.
 
-## Steps
+## Steps to migrate to boolean feedbacks
 
-The process to migrate feedbacks across does involve a bit of work, but it is pretty straightforward.
+The process may involve a bit of work, but it is pretty straightforward.
 
 ### 1. Update feedback definitions
 
@@ -135,7 +142,7 @@ To:
 }
 ```
 
-### 4. Add an upgrade script
+### 3. Add an upgrade script
 
 Users will have feedbacks assigned to buttons already, and these will all need updating to the new format. A helper has been added to help with self.
 
@@ -164,7 +171,7 @@ CreateConvertToBooleanFeedbackUpgradeScript({
 })
 ```
 
-### 5. Test it
+### 4. Test it
 
 Make sure to test it all thoroughly, then you are done!
 
@@ -172,5 +179,5 @@ Feel free to ask on slack if you have any questions, or anything here doesn't ma
 
 ### Further Reading
 
-- [Upgrade Scripts](Upgrade-scripts)
-- [Feedbacks](Feedbacks)
+- [Upgrade Scripts](../connection-basics//upgrade-scripts.md)
+- [Feedbacks](../connection-basics/feedbacks.md)

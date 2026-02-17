@@ -5,11 +5,16 @@ sidebar_position: 10
 description: Module method overview.
 ---
 
-The main entrypoint for modules is the call `runEntrypoint(ModuleInstance, UpgradeScripts)` that you typically place at the top-level of _src/main.ts_ (if you're using the [recommended file structure](../module-setup/file-structure.md)). However, the
-module/Companion API is primarily defined in the generic class `InstanceBase<>`, which is provided by `@companion-module/base`. Your module's custom code will instantiate that class and define/override the base class's methods as describe here.
+With the notable exception of the module entrypoint function, The module/Companion API is primarily defined in the generic class `InstanceBase<>`, which is provided by `@companion-module/base`. Your module's custom code will instantiate and extend that class to fill out the base class's methods as describe here.
 
-There are a few core methods that get called by Companion during the life of your module; other methods are called by you to
-tell Companion how to interact with the end-users.
+The API can be divided into (1) the entrypoint (2) methods that get called by Companion during the life of your module (3) other methods are called by you to tell Companion how to interact with the end-users and (4) various helper classes and functions that are not part of `InstanceBase<>`.
+
+## Module entrypoint
+
+The main entrypoint for modules is the call `runEntrypoint(ModuleInstance, UpgradeScripts)` that you typically place at the top-level of _src/main.ts_ (if you're using the [recommended file structure](../module-setup/file-structure.md)).
+
+When Companion loads the "main" file, this function will pass to Companion you module class (see the next section) and a list of upgrade
+scripts (see the [upgrade-scripts page](./upgrade-scripts.md)).
 
 ## Define the module class
 

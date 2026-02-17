@@ -1,3 +1,10 @@
+---
+title: Bonjour Device Discovery
+sidebar_label: Bonjour Device Discovery
+sidebar_position: 2
+description: How to set up Bonjour Device Discovery in the user configuration.
+---
+
 Bonjour is a standardised method of device discovery, utilising MDNS.
 
 Starting with v3.2, Companion allows you to easily discover devices using the Bonjour protocol, thus helping users with configuration.
@@ -30,7 +37,7 @@ and in your `companion/manifest.json`:
 These two structures are linked by the common id, in the future this will allow us to automate device discovery further.
 
 In the UI, this field will look like:  
-![image](https://github.com/bitfocus/companion-module-base/assets/1327476/a67b2201-648c-48bb-b0d2-00f3ad2e7db2)
+![image](../images/bonjour.png)
 
 The 'Manual' option is always shown, and must be handled to allow users to manually specify an address for environments where Bonjour does not work.  
 This can be achieved with further config fields such as:
@@ -55,8 +62,7 @@ This can be achieved with further config fields such as:
 },
 ```
 
-Note the presence of the `isVisible` function, to control the visibility of the fields depending on whether a bonjour discovered device has been selected.  
-In this example, it is using an empty 'static-text' field, to keep the layout consistent.
+Note the presence of the `isVisible` function, to control the visibility of the fields depending on whether a bonjour discovered device has been selected. In this example, it is using an empty 'static-text' field, to keep the layout consistent.
 
 In your module code, the `bonjour_host` will have a value such as `10.0.0.1:8000` or null.
 

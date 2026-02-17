@@ -45,7 +45,7 @@ This is a newer addition since [API 1.13](../api-changes/v1.13.md) (Companion 4.
 
 The user can use this feedback to store a value into a local variable. This allows you to define subscription style lazy loading of values that the user wants to use.
 
-These can return any JSON object, array, or primtive value.
+These can return any JSON object, array, or primitive value.
 
 ### Advanced feedbacks
 
@@ -118,7 +118,7 @@ The expected values you can return from this depend on the [type of the feedback
 
 Starting with API v1.1, feedback callbacks can be async or return a promise if you need.
 
-You should not be performing any network requests here, but it can be neccessary when generating an images or using other native code.
+You should not be performing any network requests here, but it can be necessary when generating an images or using other native code.
 
 :::tip
 You must make sure to use a sensible timeout on any async execution, or your feedback can get stuck showing a stale value.
@@ -167,7 +167,7 @@ Since [API v1.5](../api-changes/v1.5.md) (Companion 3.1), Companion provides bui
 
 If you wish to influence the auto-detection behaviour, you can do so by setting `showInvert: false` on a feedback. If this is an existing feedback, make sure to update any existing usages in an [upgrade scripts](./upgrade-scripts.md), to preserve existing behaviour for users.
 
-If your feedback alrady provides a field to match a true or false state, we strongly advise removing it and replacing existing usage with the builtin invert property.  
+If your feedback already provides a field to match a true or false state, we strongly advise removing it and replacing existing usage with the builtin invert property.  
 A helper function (`CreateUseBuiltinInvertForFeedbacksUpgradeScript`) is provided to generate an upgrade script for your module to convert an existing invert checkbox to the builtin system. It expects a parameter describe the feedbacks to process, and the name of the invert checkbox being replaced:
 
 ```js
@@ -234,7 +234,7 @@ With this you can check whether the options affecting the data loading have chan
 It is also possible to force the callbacks for all your feedbacks to be re-executed, by calling `this.checkFeedbacks()` or `this.unsubscribeFeedbacks()`. Both functions accept `feedbackIds` parameters, to only run on a certain feedback type (eg `this.unsubscribeFeedbacks('set_source', 'set_source2')`).
 It is common to call `this.checkFeedbacks()` once the connection to the device has been established, to help ensure all the required data gets loaded.
 
-Often, you will want to track the specific id of feedbacks which are relying on specific data subscriptions from your device, which can then be used with `this.checkFeedbacksById()` to allow rechecking a very targetted group of feedbacks
+Often, you will want to track the specific id of feedbacks which are relying on specific data subscriptions from your device, which can then be used with `this.checkFeedbacksById()` to allow rechecking a very targeted group of feedbacks
 
 #### In API 1.15 and earlier
 
