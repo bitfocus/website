@@ -91,7 +91,7 @@ export default function autoTocPlugin() {
 		const auto_toc = vfile.data?.frontMatter?.auto_toc
 		if (!auto_toc) return
 
-		const depth = typeof auto_toc === 'number' ? auto_toc : 3
+		const depth = typeof auto_toc === 'number' ? auto_toc : 3 // max header-level depth
 		const dir = dirname(vfile.path)
 		const vfilename = basename(vfile.path)
 		const files = readdirSync(dir).filter((f) => f.endsWith('.md') && !f.startsWith(vfilename))
@@ -113,11 +113,12 @@ export default function autoTocPlugin() {
 		let pages = getPages(files, dir)
 
 		// TODO: handle directories inside the subdir
+		// compile a list of files inside a subdir:
 		const dirs = subdirs.map((d) => {
 			const subdir = join(dir, d)
 			const raw = readFileSync(join(subdir, '_category_.json'))
 			const frontmatter = JSON.parse(raw)
-			const indexfile = frontmatter.link?.id
+			const indexfile = frontmatter.link?.id ?? 'index' // if link is missing, it appears to default to a doc named index.md, if present.
 			const subfiles = readdirSync(subdir).filter((f) => f.endsWith('.md') && !f.startsWith(indexfile))
 			const subpages = getPages(subfiles, subdir)
 			subpages.sort((a, b) => a.sidebarPosition - b.sidebarPosition)

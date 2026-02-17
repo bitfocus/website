@@ -32,7 +32,7 @@ Some additional rules around this:
 - You must not set the value of any custom variables at times other than the result of an action
 - You must not attempt to discover the custom variables in any way other than the value of this input field.
 
-### Further Reading
+## Further Reading
 
 - [Actions](../connection-basics/actions.md)
 - [Feedbacks](../connection-basics/feedbacks.md)
