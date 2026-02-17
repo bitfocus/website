@@ -5,13 +5,13 @@ sidebar_position: 19
 description: Module variable definition details.
 ---
 
-Modules are able to expose values to the user, which they can use as part of the button text, or as input to some actions. This section explains how to define variables and change update their values.
+Variables are a way for modules to expose values to the user, which can be used as part of the button text, as input to some actions or feedbacks and more. This section explains how to define variables and change update their values.
 
 The basic workflow is to define your variables using `setVariableDefinitions()`, then set or update the values using `setVariableValues()`. Both of these methods are defined by the module InstanceBase class.
 
 ## API call: `setVariableDefinitions()`
 
-Your module can define the list of variables it exposes by making a call to `this.setVariableDefinitions({ ...some variables here... })`. You will need to do this as part of your `init()` method, but can also call it at any other time if you wish to update the list of variables exposed.
+Your module should define the list of variables it exposes by making a call to `this.setVariableDefinitions({ ...some variables here... })`. You will need to do this as part of your `init()` method, but can also call it at any other time if you wish to change the list of variables exposed.
 
 :::warning
 Please try not to call this method too often, as updating the list has a cost. If you are calling it multiple times in a short span of time, consider if it would be possible to batch the calls so it is only done once.
@@ -39,7 +39,7 @@ VariableId must only use letters [a-zA-Z], numbers, underscore, hyphen.
 
 ## API call: `setVariableValues()`
 
-At any point in your module you can call `this.setVariableValues({ ... new values ... })`. You can specify as many or few variables as you wish in this call. Only the ones you specify will be updated.
+At any point in your module you can call `this.setVariableValues({ ... new values ... })`. You can specify as many or few variables as you wish in this call. Only the variables you specify will be updated.
 
 For example:
 
@@ -48,8 +48,11 @@ this.setVariableValues({
     'variable1': 'new value'
     'variable2': 99,
     'old_variable': undefined // This unsets a value
+    'array_variable': [1, 2, 3, 4]
 })
 ```
+
+Variables can have values of any type, the user can use expressions to manipulate the values you provide.
 
 :::warning
 
