@@ -15,4 +15,4 @@ The sidebar is the main way to navigate Companion. It provides quick access to s
 
 - [The Slack group for developers](https://bfoc.us/ke7e9dqgaz)
 
-- [Donate to show your support and fund future development](https://bfoc.us/ccfbf8wm2x)
+- [Sponsor Companion to show your support and fund future development](https://bfoc.us/ccfbf8wm2x)

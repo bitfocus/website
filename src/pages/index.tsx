@@ -52,7 +52,7 @@ function HeroSection() {
 					href="https://bfoc.us/42jn7eku7p"
 					target="_blank"
 				>
-					Donate
+					Sponsor Companion
 				</Link>
 			</div>
 		</section>
