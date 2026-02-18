@@ -1,7 +1,7 @@
 ---
 title: Module Upgrade Scripts
 sidebar_label: Upgrade Scripts
-sidebar_position: 21
+sidebar_position: 25
 description: Module upgrade script details.
 ---
 

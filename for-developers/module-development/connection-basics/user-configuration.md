@@ -13,9 +13,7 @@ This allows Companion to be more careful in avoiding logging of this object, and
 
 The fields available for secrets is quite limited, as we expect it to only be useful for api keys, usernames, passwords and similar things. If other field types is useful, let us know and we can look at adding more.
 
-## Control flow (API calls)
-
-API calls: `getConfigFields()`, `saveConfig()`, `configUpdated()`
+## API calls: `getConfigFields()`, `saveConfig()`, `configUpdated()`
 
 As part of creating a module, you should implement the [`getConfigFields()` method](https://bitfocus.github.io/companion-module-base/classes/InstanceBase.html#getconfigfields).
 
