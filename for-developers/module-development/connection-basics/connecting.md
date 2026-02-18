@@ -114,21 +114,21 @@ for [UDPHelper options](https://bitfocus.github.io/companion-module-base/interfa
 
 ```ts
 interface UDPHelperOptions {
-	bind_ip?: string
-	bind_port?: number
-	broadcast?: boolean
-	multicast_interface?: string
-	multicast_ttl?: number
-	ttl?: number
+  bind_ip?: string
+  bind_port?: number
+  broadcast?: boolean
+  multicast_interface?: string
+  multicast_ttl?: number
+  ttl?: number
 }
 ```
 
 ```ts
 interface UDPHelperEvents {
-	data: [msg: Buffer<ArrayBufferLike>, rinfo: RemoteInfo]
-	error: [err: Error]
-	listening: []
-	status_change: [status: UDPStatuses, message: string]
+  data: [msg: Buffer<ArrayBufferLike>, rinfo: RemoteInfo]
+  error: [err: Error]
+  listening: []
+  status_change: [status: UDPStatuses, message: string]
 }
 ```
 

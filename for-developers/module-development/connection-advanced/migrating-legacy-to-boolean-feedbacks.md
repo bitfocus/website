@@ -150,9 +150,9 @@ Quick tip: The script will only be run once, if you want to force it to be run a
 
 ```js
 const upgradeToBooleanFeedbacks = instance_skel.CreateConvertToBooleanFeedbackUpgradeScript({
-	set_source: true,
-	set_output: true,
-	// List as many feedback types as you like
+  set_source: true,
+  set_output: true,
+  // List as many feedback types as you like
 })
 
 runEntrypoint(MyInstance, [myOtherUpgradeScript, upgradeToBooleanFeedbacks])
@@ -164,10 +164,10 @@ If this is the case, you can customise the behaviour by providing more details:
 
 ```js
 CreateConvertToBooleanFeedbackUpgradeScript({
-	set_source: {
-		bg: 'bgcolor',
-		fg: 'fgcolor',
-	},
+  set_source: {
+    bg: 'bgcolor',
+    fg: 'fgcolor',
+  },
 })
 ```
 

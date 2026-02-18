@@ -139,16 +139,16 @@ The webui is written in a combination of CSS/Sass (_.scss) and [React](https://r
 
 ```json
 {
-	"version": "0.2.0",
-	"configurations": [
-		{
-			"type": "chrome",
-			"request": "launch",
-			"name": "Launch Companion Webui (in Chrome)",
-			"url": "http://localhost:5173/",
-			"webRoot": "${workspaceFolder}/webui/src"
-		}
-	]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch Companion Webui (in Chrome)",
+      "url": "http://localhost:5173/",
+      "webRoot": "${workspaceFolder}/webui/src"
+    }
+  ]
 }
 ```
 

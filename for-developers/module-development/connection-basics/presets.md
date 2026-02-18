@@ -41,73 +41,38 @@ Let's start with a minimal example preset button:
 ```javascript
 const presets = {}
 presets[`my_first_preset`] = {
-	type: 'simple',
-	name: `My button`, // A name for the preset. Shown to the user when they hover over it, and used when using the searchbox
-	style: {
-		// This is the minimal set of style properties you must define
-		text: `$(my-module:some-variable)`, // You can use variables from your module here
-		size: 'auto',
-		color: 0xffffff, // or combineRgb(255, 255, 255),
-		bgcolor: 0x000000, // or combineRgb(0, 0, 0),
-	},
-	steps: [
-		{
-			down: [
-				{
-					// add an action on down press
-					actionId: 'my-action',
-					options: {
-						// options values to use
-						brightness: 100,
-					},
-				},
-			],
-			up: [],
-		},
-	],
-	feedbacks: [], // You can add some presets from your module here
+  type: 'simple',
+  name: `My button`, // A name for the preset. Shown to the user when they hover over it, and used when using the searchbox
+  style: {
+    // This is the minimal set of style properties you must define
+    text: `$(my-module:some-variable)`, // You can use variables from your module here
+    size: 'auto',
+    color: 0xffffff, // or combineRgb(255, 255, 255),
+    bgcolor: 0x000000, // or combineRgb(0, 0, 0),
+  },
+  steps: [
+    {
+      down: [
+        {
+          // add an action on down press
+          actionId: 'my-action',
+          options: {
+            // options values to use
+            brightness: 100,
+          },
+        },
+      ],
+      up: [],
+    },
+  ],
+  feedbacks: [], // You can add some presets from your module here
 }
 this.setPresetDefinitions(presets)
 ```
 
-TODO: continue below here
-
-Presets are placed into categories, which show up as separate groups in the Companion admin UI. Other than that,
-the property-names for the button preset definition correspond to the nomenclature on the button definitions.
-
-The only tricky part is that action-lists are nested inside steps, so you don't explicitly write "step 1", but rather the
-steps are determined by positions in the steps array. Inside the element of the array, the press action-list is labeled `down:`; the release action-list is labeled `up:`, see the [Actions section](#actions), below for additional options.
-
-The basic structure looks like:
-
-```ts
-   steps: [
-    { // step 1
-       up: [...],
-       down: [...],
-    }
-    { // step 2
-       up: [...],
-       down: [...],
-    }
-   ]
-```
-
-### Configuring a preset
-
-There is [generated documentation](https://bitfocus.github.io/companion-module-base/interfaces/CompanionButtonPresetDefinition.html) detailing all of the properties that can be set for presets.
-
-In addition to the minimal example shown above there are more properties that can be set.
-
-You can see the full list of values that can be set and their valid values in the `style` object [here](https://bitfocus.github.io/companion-module-base/interfaces/CompanionButtonStyleProps.html)
-
-Additionally, there are some behaviour options that can be set in the `options` object [described here](https://bitfocus.github.io/companion-module-base/interfaces/CompanionButtonPresetOptions.html)
-
 ### Actions
 
-The `steps` property is where the magic happens. This describes what the action will do when pressed. This used to be defined with `actions` and `release_actions`, but it has been restructured in 3.0 to give some new functionality.
-
-In 2.x it was possible to latch buttons, that has been removed and replaced with steps. In the typical case a button will have a single step, which will give the behaviour of a normal button.
+The `steps` property is where the magic happens. This describes what the action will do when pressed. In the typical case a button will have a single step, which will give the behaviour of a normal button.  
 You can make a latching button by defining a second step which does something different. By default, each time the button is released it will shift to the next step, this can be disabled by setting `options: { stepAutoProgress: false }` for the preset. This likely isnt very useful right now, due to it not being possible to use internal actions in presets.
 
 You can add as many steps as you like, and build a button which runs through a whole cue list by simply pressing it. There are internal actions that which a user can use to change the step manually.
@@ -155,7 +120,7 @@ steps: [
 ],
 ```
 
-Each action inside of the `steps` property can also have a `delay` property specified (in milliseconds).
+Each action defined can also have a `delay` property specified (in milliseconds).
 
 :::tip
 
@@ -172,21 +137,189 @@ These look similar to actions, but a little different:
 
 ```javascript
 feedbacks: [
-	{
-		feedbackId: 'my-feedback',
-		options: {
-			channel: 1,
-		},
-		style: {
-			// The style property is only valid for 'boolean' feedbacks, and defines the style change it will have.
-			color: combineRgb(255, 255, 255),
-			bgcolor: combineRgb(255, 0, 0),
-		},
-	},
+  {
+    feedbackId: 'my-feedback',
+    options: {
+      channel: 1,
+    },
+    style: {
+      // The style property is only valid for 'boolean' feedbacks, and defines the style change it will have.
+      color: combineRgb(255, 255, 255),
+      bgcolor: combineRgb(255, 0, 0),
+    },
+  },
 ]
 ```
 
 The feedbackId should match a feedback you have defined, and the options should contain the parameters as you defined as the options.
+
+### Local Variables
+
+You can also set a `localVariables` property to create some local variables on the button. Currently these are limited to be simple static values, intended to make it easier to use a value across the actions, feedbacks and style without repeating it.  
+By doing this, it becomes much easier for the user to change it if needed. This also allows for better reusing one preset within the preset structure with [the templating groups](#template-group).
+
+An example:
+
+```javascript
+localVariables: [
+  {
+    // This 'simple' type translates to the `internal: User variable` inside companion
+    variableType: 'simple',
+    variableName: 'input',
+    startupValue: 1,
+  },
+],
+```
+
+## Preset Structure
+
+In the API 2.0, we now expect you to provide a separate structure alongside the presets to define how they should be arranged within the UI.
+
+A minimal example of this:
+
+```javascript
+const structure = [
+  {
+    id: 'section-main',
+    name: 'Main',
+    description: 'The things you usually want'
+    definitions: ['my_first_preset', 'my_second_preset'] // This should match the keys when setting them on the `presets` object
+  }
+]
+```
+
+In this example, there is a single section containing just 2 presets. This is a very basic presentation, but matches what most modules were doing before API 2.0.
+
+### Simple Groups
+
+You can get a bit more structure to how your presets are displayed by using some groups inside each section:
+
+```javascript
+const structure = [
+  {
+    id: 'section-main',
+    name: 'Main',
+    description: 'The things you usually want'
+    definitions: [
+      {
+        id: 'main-1',
+        type: 'simple',
+        name: 'First',
+        description: 'A second line of text'
+        presets: ['my_first_preset', 'my_second_preset'] // This should match the keys when setting them on the `presets` object
+      },
+      {
+        id: 'main-2',
+        type: 'simple',
+        name: '',
+        presets: ['my_first_preset', 'my_third_preset'] // You can repeat presets within the structure if needed
+      }
+    ]
+  }
+]
+```
+
+These groups will separate out each list of presets into their own blocks, with headings and an optional description between each of them.
+
+This allows for much more organisation of presets than before, without creating hundreds of sections/categories.
+
+However, this is still a pretty manual and repetitive way of defining presets. For many, they could use some [templating](#template-groups)
+
+:::tip
+If you were using the 'text' preset type previously, these groups will help you create the same effect and are just a bit more formalised.
+:::
+
+### Template Groups
+
+In a lot of modules, they have many channels/outputs/inputs or some other resource where presets are identical except for one number varying between them.
+
+A simple matrix/video router module, will commonly produce a preset for each input+output combintation, to quickly route each input to each output. This can often produce 100s or 1000s of presets which are almost identical.  
+In some cases, this has caused issues due to the size of the data produced being a performance drain and occasinally making the modules crash on lower powered machines
+
+Instead, groups in the new structure can be defined as 'template' groups. This templating, allows for overriding local variables you defined on the presets with different values.
+
+An example template group:
+
+```javascript
+{
+  id: `route_to_1`,
+  name: `To Output 1`,
+  type: 'template',
+  presetId: 'route_output',
+
+  // define which variable to override, and the values to use
+  templateVariableName: 'input',
+  templateValues: [
+    // Tip: the name will override the 'name' field of the preset itself
+    { name: `Input 1 to Output 1`, value: 1 },
+    { name: `Input 2 to Output 1`, value: 2 },
+  ]
+
+  // Optionally, define a fixed override for other variables
+  commonVariableValues: {
+    output: 1,
+  },
+}
+```
+
+Using the preset:
+
+```javascript
+presets[`route_output`] = {
+  name: `Input X to Output Y`,
+  type: 'simple',
+  style: {
+    text: `$(videohub:input_$(local:input))`,
+    size: '18',
+    color: 0xffffff,
+    bgcolor: 0x000000,
+  },
+  feedbacks: [
+    {
+      feedbackId: 'input_bg',
+      style: {
+        bgcolor: 0xffff00,
+        color: 0x000000,
+      },
+      options: {
+        input: { isExpression: true, value: '$(local:input)' },
+        output: { isExpression: true, value: '$(local:output)' },
+      },
+    },
+  ],
+  steps: [
+    {
+      down: [
+        {
+          actionId: 'route',
+          options: {
+            source: { isExpression: true, value: '$(local:input)' },
+            destination: { isExpression: true, value: '$(local:output)' },
+            ignore_lock: false,
+          },
+        },
+      ],
+      up: [],
+    },
+  ],
+  localVariables: [
+    {
+      variableType: 'simple',
+      variableName: 'input',
+      startupValue: 0,
+    },
+    {
+      variableType: 'simple',
+      variableName: 'output',
+      startupValue: 0,
+    },
+  ],
+}
+```
+
+In this way, you can use one `route_output` preset as a template for hundreds of combinations inside the Companion UI, with a much much lower cost.
+
+As a bonus, these variables also make it easier for users to adjust which input or output is used later if they need to, without finding the correct preset again.
 
 ## Standard Colors
 

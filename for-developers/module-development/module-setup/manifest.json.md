@@ -19,30 +19,30 @@ A full manifest definition is:
 
 ```json
 {
-	"id": "fake-module",
-	"name": "fake module",
-	"shortname": "fake",
-	"description": "Fake Module",
-	"manufacturer": "Fake Module",
-	"products": ["Fake"],
-	"keywords": ["Fake"],
-	"version": "0.0.0",
-	"license": "MIT",
-	"repository": "git+https://github.com/bitfocus/companion-module-fake-module.git",
-	"bugs": "https://github.com/bitfocus/companion-module-fake-module/issues",
-	"maintainers": [
-		{
-			"name": "Your name",
-			"email": "your.email@example.com"
-		}
-	],
-	"legacyIds": [],
-	"runtime": {
-		"type": "node22",
-		"api": "nodejs-ipc",
-		"apiVersion": "0.0.0",
-		"entrypoint": "../dist/index.js"
-	}
+  "id": "fake-module",
+  "name": "fake module",
+  "shortname": "fake",
+  "description": "Fake Module",
+  "manufacturer": "Fake Module",
+  "products": ["Fake"],
+  "keywords": ["Fake"],
+  "version": "0.0.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/bitfocus/companion-module-fake-module.git",
+  "bugs": "https://github.com/bitfocus/companion-module-fake-module/issues",
+  "maintainers": [
+    {
+      "name": "Your name",
+      "email": "your.email@example.com"
+    }
+  ],
+  "legacyIds": [],
+  "runtime": {
+    "type": "node22",
+    "api": "nodejs-ipc",
+    "apiVersion": "0.0.0",
+    "entrypoint": "../dist/index.js"
+  }
 }
 ```
 

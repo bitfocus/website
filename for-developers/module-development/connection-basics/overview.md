@@ -33,12 +33,12 @@ For example (in a single file, just for simplicity):
 
 ```typescript
 export interface MyConfig {
-	port: number
-	host: string
+  port: number
+  host: string
 }
 
 export interface MySecrets {
-	password: string
+  password: string
 }
 
 export class ModuleInstance extends InstanceBase<MyConfig, MySecrets> {}

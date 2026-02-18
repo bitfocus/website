@@ -5,9 +5,11 @@ sidebar_position: 25
 description: Module upgrade script details.
 ---
 
-Over time you will add new functionality to your module. Sometimes, this can involve changing how existing actions or feedbacks are implemented. For example, by changing a on/off option to be an on/off/toggle option (i.e. 3 choices instead of just 2 choices).
+Over time you will add new functionality to your module. Sometimes, this can involve changing how existing actions or feedbacks are implemented.
 
 When this happens, existing usages of the action or feedback may become broken. The job of the upgrade script is to fix up the actions and feedbacks the the user has already added to their site to handle the changes.
+
+### TODO
 
 ## Upgrade scripts and the module entrypoint
 
@@ -24,7 +26,7 @@ The upgrades.ts file can export a single variable that contains an array of scri
 // upgrades.ts
 
 export const upgradeScripts = [
-	// add your scripts here
+  // add your scripts here
 ]
 ```
 
@@ -51,19 +53,19 @@ _TODO this could use some updating for typescript... also the format of defining
 
 ```ts
 const upgradeScript1 = {
-	example_conversion: function (context, props) {
-		const result = {
-			updatedConfig: null,
-			updatedActions: [],
-			updatedFeedbacks: [],
-		}
+  example_conversion: function (context, props) {
+    const result = {
+      updatedConfig: null,
+      updatedActions: [],
+      updatedFeedbacks: [],
+    }
 
-		// write your script in here
+    // write your script in here
 
-		return result
-	},
+    return result
+  },
 
-	// more will be added here later
+  // more will be added here later
 }
 ```
 

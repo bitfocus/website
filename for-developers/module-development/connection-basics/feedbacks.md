@@ -172,8 +172,8 @@ A helper function (`CreateUseBuiltinInvertForFeedbacksUpgradeScript`) is provide
 
 ```js
 CreateUseBuiltinInvertForFeedbacksUpgradeScript({
-	myfeedback: 'invert',
-	another: 'inverted',
+  myfeedback: 'invert',
+  another: 'inverted',
 })
 ```
 
@@ -293,17 +293,17 @@ To enable strong typings, you can define a type such as:
 
 ```ts
 export type FeedbacksSchema = {
-	route: {
-		type: 'boolean'
-		options: {
-			source: number
-			destination: number
-		}
-	}
+  route: {
+    type: 'boolean'
+    options: {
+      source: number
+      destination: number
+    }
+  }
 }
 
 export interface MyTypes {
-	feedbacks: FeedbacksSchema
+  feedbacks: FeedbacksSchema
 }
 ```
 
@@ -311,28 +311,28 @@ This will tell the InstanceBase that there should be one type of feedback which 
 
 ```ts
 const act: CompanionFeedbackDefinition<FeedbacksSchema['route']['options']> = {
-	name: 'My First Feedback',
-	options: [
-		{
-			id: 'source',
-			type: 'number',
-			label: 'Test',
-			default: 5,
-			min: 0,
-			max: 100,
-		},
-		{
-			id: 'destination',
-			type: 'number',
-			label: 'Test',
-			default: 5,
-			min: 0,
-			max: 100,
-		},
-	],
-	callback: async (event) => {
-		console.log('Hello world!', event.options.source, event.options.destination)
-	},
+  name: 'My First Feedback',
+  options: [
+    {
+      id: 'source',
+      type: 'number',
+      label: 'Test',
+      default: 5,
+      min: 0,
+      max: 100,
+    },
+    {
+      id: 'destination',
+      type: 'number',
+      label: 'Test',
+      default: 5,
+      min: 0,
+      max: 100,
+    },
+  ],
+  callback: async (event) => {
+    console.log('Hello world!', event.options.source, event.options.destination)
+  },
 }
 ```
 

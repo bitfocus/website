@@ -25,9 +25,9 @@ All the variable definitions are passed in as a single javascript array, in the 
 
 ```js
 ;[
-	{ variableId: 'variable1', name: 'My first variable' },
-	{ variableId: 'variable2', name: 'My second variable' },
-	{ variableId: 'variable3', name: 'Another variable' },
+  { variableId: 'variable1', name: 'My first variable' },
+  { variableId: 'variable2', name: 'My second variable' },
+  { variableId: 'variable3', name: 'Another variable' },
 ]
 ```
 

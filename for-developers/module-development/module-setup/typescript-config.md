@@ -18,16 +18,16 @@ A typical _tsconfig.json_ file looks like:
 
 ```json
 {
-	"extends": "@companion-module/tools/tsconfig/node22/recommended",
-	"include": ["src/**/*.ts"],
-	"exclude": ["node_modules/**", "src/**/*spec.ts", "src/**/__tests__/*", "src/**/__mocks__/*"],
-	"compilerOptions": {
-		"outDir": "./dist",
-		"baseUrl": "./",
-		"paths": {
-			"*": ["./node_modules/*"]
-		}
-	}
+  "extends": "@companion-module/tools/tsconfig/node22/recommended",
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules/**", "src/**/*spec.ts", "src/**/__tests__/*", "src/**/__mocks__/*"],
+  "compilerOptions": {
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["./node_modules/*"]
+    }
+  }
 }
 ```
 
@@ -36,30 +36,30 @@ Our TypeScript template splits it into two files:
 ```json
 //tsconfig.json
 {
-	"extends": "./tsconfig.build.json",
-	"include": ["src/**/*.ts"],
-	"exclude": ["node_modules/**"],
-	"compilerOptions": {
-		"types": ["node"]
-	}
+  "extends": "./tsconfig.build.json",
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules/**"],
+  "compilerOptions": {
+    "types": ["node"]
+  }
 }
 ```
 
 ```json
 // tsconfig.build.json
 {
-	"extends": "@companion-module/tools/tsconfig/node22/recommended",
-	"include": ["src/**/*.ts"],
-	"exclude": ["node_modules/**", "src/**/*spec.ts", "src/**/__tests__/*", "src/**/__mocks__/*"],
-	"compilerOptions": {
-		"outDir": "./dist",
-		"baseUrl": "./",
-		"paths": {
-			"*": ["./node_modules/*"]
-		},
-		"module": "Node16",
-		"moduleResolution": "Node16"
-	}
+  "extends": "@companion-module/tools/tsconfig/node22/recommended",
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules/**", "src/**/*spec.ts", "src/**/__tests__/*", "src/**/__mocks__/*"],
+  "compilerOptions": {
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["./node_modules/*"]
+    },
+    "module": "Node16",
+    "moduleResolution": "Node16"
+  }
 }
 ```
 

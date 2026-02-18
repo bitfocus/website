@@ -62,38 +62,38 @@ Before Companion 3.5, when a series of actions was executed, each action's callb
 
 ```js
 const actions = [
-	// This action will begin to make a http request and subsequent sequential actions
-	// will execute before the request is finished.
-	{
-		name: 'Fetch Google',
-		options: [],
-		callback: (action) => {
-			fetch('https://google.com/').then(
-				() => {
-					console.log('request complete')
-				},
-				() => {
-					console.log('request failed')
-				}
-			)
-		},
-	},
-	// This action will begin to make a request and subsequent sequential actions
-	// won't execute until the request is finished.
-	{
-		name: 'Fetch Google and wait',
-		options: [],
-		callback: async (action) => {
-			return fetch('https://google.com/').then(
-				() => {
-					console.log('request complete')
-				},
-				() => {
-					console.log('request failed')
-				}
-			)
-		},
-	},
+  // This action will begin to make a http request and subsequent sequential actions
+  // will execute before the request is finished.
+  {
+    name: 'Fetch Google',
+    options: [],
+    callback: (action) => {
+      fetch('https://google.com/').then(
+        () => {
+          console.log('request complete')
+        },
+        () => {
+          console.log('request failed')
+        }
+      )
+    },
+  },
+  // This action will begin to make a request and subsequent sequential actions
+  // won't execute until the request is finished.
+  {
+    name: 'Fetch Google and wait',
+    options: [],
+    callback: async (action) => {
+      return fetch('https://google.com/').then(
+        () => {
+          console.log('request complete')
+        },
+        () => {
+          console.log('request failed')
+        }
+      )
+    },
+  },
 ]
 ```
 
@@ -186,16 +186,16 @@ To enable strong typings, you can define a type such as:
 
 ```ts
 export type ActionsSchema = {
-	route: {
-		options: {
-			source: number
-			destination: number
-		}
-	}
+  route: {
+    options: {
+      source: number
+      destination: number
+    }
+  }
 }
 
 export interface MyTypes {
-	actions: ActionsSchema
+  actions: ActionsSchema
 }
 ```
 
@@ -203,28 +203,28 @@ This will tell the InstanceBase that there should be one type of action which is
 
 ```ts
 const act: CompanionActionDefinition<ActionsSchema['route']['options']> = {
-	name: 'My First Action',
-	options: [
-		{
-			id: 'source',
-			type: 'number',
-			label: 'Test',
-			default: 5,
-			min: 0,
-			max: 100,
-		},
-		{
-			id: 'destination',
-			type: 'number',
-			label: 'Test',
-			default: 5,
-			min: 0,
-			max: 100,
-		},
-	],
-	callback: async (event) => {
-		console.log('Hello world!', event.options.source, event.options.destination)
-	},
+  name: 'My First Action',
+  options: [
+    {
+      id: 'source',
+      type: 'number',
+      label: 'Test',
+      default: 5,
+      min: 0,
+      max: 100,
+    },
+    {
+      id: 'destination',
+      type: 'number',
+      label: 'Test',
+      default: 5,
+      min: 0,
+      max: 100,
+    },
+  ],
+  callback: async (event) => {
+    console.log('Hello world!', event.options.source, event.options.destination)
+  },
 }
 ```
 

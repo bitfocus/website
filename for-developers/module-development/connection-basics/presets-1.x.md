@@ -54,32 +54,32 @@ Let's start with a minimal example preset button:
 ```javascript
 const presets = {}
 presets[`my_first_preset`] = {
-	type: 'button',
-	category: 'Test', // This groups presets into categories in the ui. Try to create logical groups to help users find presets
-	name: `My button`, // A name for the preset. Shown to the user when they hover over it
-	style: {
-		// This is the minimal set of style properties you must define
-		text: `$(my-module:some-variable)`, // You can use variables from your module here
-		size: 'auto',
-		color: combineRgb(255, 255, 255),
-		bgcolor: combineRgb(0, 0, 0),
-	},
-	steps: [
-		{
-			down: [
-				{
-					// add an action on down press
-					actionId: 'my-action',
-					options: {
-						// options values to use
-						brightness: 100,
-					},
-				},
-			],
-			up: [],
-		},
-	],
-	feedbacks: [], // You can add some presets from your module here
+  type: 'button',
+  category: 'Test', // This groups presets into categories in the ui. Try to create logical groups to help users find presets
+  name: `My button`, // A name for the preset. Shown to the user when they hover over it
+  style: {
+    // This is the minimal set of style properties you must define
+    text: `$(my-module:some-variable)`, // You can use variables from your module here
+    size: 'auto',
+    color: combineRgb(255, 255, 255),
+    bgcolor: combineRgb(0, 0, 0),
+  },
+  steps: [
+    {
+      down: [
+        {
+          // add an action on down press
+          actionId: 'my-action',
+          options: {
+            // options values to use
+            brightness: 100,
+          },
+        },
+      ],
+      up: [],
+    },
+  ],
+  feedbacks: [], // You can add some presets from your module here
 }
 this.setPresetDefinitions(presets)
 ```
@@ -172,17 +172,17 @@ These look similar to actions, but a little different:
 
 ```javascript
 feedbacks: [
-	{
-		feedbackId: 'my-feedback',
-		options: {
-			channel: 1,
-		},
-		style: {
-			// The style property is only valid for 'boolean' feedbacks, and defines the style change it will have.
-			color: 0xffffff, // or combineRgb(255, 255, 255),
-			bgcolor: 0xff0000, // or combineRgb(255, 0, 0),
-		},
-	},
+  {
+    feedbackId: 'my-feedback',
+    options: {
+      channel: 1,
+    },
+    style: {
+      // The style property is only valid for 'boolean' feedbacks, and defines the style change it will have.
+      color: 0xffffff, // or combineRgb(255, 255, 255),
+      bgcolor: 0xff0000, // or combineRgb(255, 0, 0),
+    },
+  },
 ]
 ```
 
