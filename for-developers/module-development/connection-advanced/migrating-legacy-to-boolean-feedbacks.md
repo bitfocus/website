@@ -149,7 +149,7 @@ Users will have feedbacks assigned to buttons already, and these will all need u
 Quick tip: The script will only be run once, if you want to force it to be run again locally, (Pending, this step has changed) to force all the upgrade scripts to be rerun. Make sure to _not_ commit that line
 
 ```js
-const upgradeToBooleanFeedbacks = instance_skel.CreateConvertToBooleanFeedbackUpgradeScript({
+const upgradeToBooleanFeedbacks = CreateConvertToBooleanFeedbackUpgradeScript({
   set_source: true,
   set_output: true,
   // List as many feedback types as you like
@@ -179,5 +179,5 @@ Feel free to ask on slack if you have any questions, or anything here doesn't ma
 
 ### Further Reading
 
-- [Upgrade Scripts](../connection-basics//upgrade-scripts.md)
+- [Upgrade Scripts](../connection-basics/upgrade-scripts.md)
 - [Feedbacks](../connection-basics/feedbacks.md)

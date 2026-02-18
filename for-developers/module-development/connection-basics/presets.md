@@ -171,6 +171,53 @@ localVariables: [
 ],
 ```
 
+You can then reference these variables like normal variables elsewhere in your presets:
+
+```javascript
+  style: {
+    text: `$(local:output)`,
+  },
+  steps: [
+  ],
+  feedbacks: [
+    {
+      feedbackId: 'my-feedback',
+      options: {
+        channel: { isExpression: true, value: `$(local:output)` }, // Confused? Check the 'Using Expressions' section
+      },
+      style: {
+        // The style property is only valid for 'boolean' feedbacks, and defines the style change it will have.
+        color: combineRgb(255, 255, 255),
+        bgcolor: combineRgb(255, 0, 0),
+      },
+    },
+  ],
+```
+
+### Using Expressions
+
+Since API 2.0, most fields in your actions and feedbacks will support expressions (except for the ones which you set `disableAutoExpressions: true` to opt out of this behaviour).
+
+Not only can the user define these expressions, but you can do so in your presets too.
+
+For example:
+
+```javascript
+feedbacks: [
+  {
+    feedbackId: 'my-feedback',
+    options: {
+      value1: 1, // You can define plain values like before
+      value2: { isExpression: false, value: 1 }, // Or wrap it if that is easier
+      value3: { isExpression: true, value: `$(local:output) + 1` }, // If it is an expression it must be wrapped
+    },
+    style: { ... },
+  },
+],
+```
+
+When the action or feedback is executed, the expressions will have been precomputed, with the computed value provided directly to you.
+
 ## Preset Structure
 
 In the API 2.0, we now expect you to provide a separate structure alongside the presets to define how they should be arranged within the UI.
