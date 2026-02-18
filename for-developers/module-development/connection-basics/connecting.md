@@ -5,7 +5,11 @@ sidebar_position: 12
 description: Helper classes for connecting to your device.
 ---
 
-One of the most first tasks most modules have to perform is to connect to their device. Companion provides three helper classes for network connections: TCPHelper, UDPHelper, TelnetHelper. These classes provide an asynchronous interface for connecting, communicating and disconnecting from your device.
+One of the most first tasks most modules have to perform is to connect to their device. You can either use an existing connection library from [NPM](https://www.npmjs.com/) if one exists, or you can write your own connection logic inside the module.
+
+Companion provides three helper classes to help with writing your connection logic: TCPHelper, UDPHelper, TelnetHelper. These classes provide an asynchronous interface for connecting, communicating and disconnecting from your device.
+
+Or if the device uses HTTP, we recommend using the builtin [`fetch` api](https://nodejs.org/en/learn/getting-started/fetch).
 
 ## TCPHelper class
 
