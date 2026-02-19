@@ -7,7 +7,7 @@ description: How to set up Bonjour Device Discovery in the user configuration.
 
 Bonjour is a standardised method of device discovery, utilising MDNS.
 
-Starting with v3.2, Companion allows you to easily discover devices using the Bonjour protocol, thus helping users with configuration.
+Starting with [API 1.7](../api-changes/v1.7.md) (Companion 3.2), Companion allows you to easily discover devices using the Bonjour protocol, thus helping users with configuration.
 
 ## Setting up Bonjour
 
@@ -44,27 +44,18 @@ In the UI, this field will look like:
 The 'Manual' option is always shown, and must be handled to allow users to manually specify an address for environments where Bonjour does not work.  
 This can be achieved with further config fields such as:
 
-```
+```js
 {
 	type: 'textinput',
 	id: 'host',
 	label: 'Target IP',
-	width: 6,
-	isVisible: (options) => !options['bonjour_host'],
+	isVisibleExpression: `!$(options:bonjour_host)`
 	default: '',
 	regex: Regex.IP,
 },
-{
-	type: 'static-text',
-	id: 'host-filler',
-	width: 6,
-	label: '',
-	isVisible: (options) => !!options['bonjour_host'],
-	value: '',
-},
 ```
 
-Note the presence of the `isVisible` function, to control the visibility of the fields depending on whether a bonjour discovered device has been selected. In this example, it is using an empty 'static-text' field, to keep the layout consistent.
+Note the presence of the `isVisibleExpression`, to control the visibility of the fields depending on whether a bonjour discovered device has been selected.
 
 In your module code, the `bonjour_host` will have a value such as `10.0.0.1:8000` or null.
 
@@ -72,6 +63,12 @@ In your module code, the `bonjour_host` will have a value such as `10.0.0.1:8000
 
 We currently support a subset of the possible query options. In all queries, the `type` and `protocol` must be set.  
 If your device needs further filtering, this can be done by specifying any `txt` field values the entries must have.
+
+Since [API 1.10](../api-changes/v1.10.md) each entry in the manifest under `bonjourQueries` in the manifest can be an array, to allow you to run multiple queries in parallel. This can be useful when supporting multiple models which use slightly difffernet queries
+
+Since [API 1.12](../api-changes/v1.12.md) it is possible to filter by `port` number in the query. It is recommended to only use this as a last resort, as port numbers are often configurable.
+
+Since [API 2.0](../api-changes/v2.0.md) it is possible to specify an `addressFamily` for the query. This allows you to specify whether `ipv4`, `ipv6` or both (`ipv4+6`) addresses are returned by the query.
 
 ## Further Reading
 

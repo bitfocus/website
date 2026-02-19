@@ -62,7 +62,7 @@ The parameters are:
 
 - `config` - the [user-configuration object](./user-configuration.md) as provided by the user
 - `isFirstInit` - if this is the first time this instance of your module has been run, this will be true
-- `secrets` - the secrets object]('./secrets.md) as provided by the user
+- `secrets` - [the secrets object]('./secrets.md) as provided by the user
 
 In this method you should store the `config` and `secrets` if needed, and perform any tasks to setup any connections, or other logic that your class should be running. If you are connecting over an Ethernet connection, consider setting up the connection using [TCPHelper, TelnetHelper, or UDPHelper](./connecting.md) from `@companion-module/base`. In the callbacks for these classes, you can set the connection status by calling `updateStatus`. See the [Connecting to the device](./connecting.md) page for more details.
 

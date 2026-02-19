@@ -9,7 +9,7 @@ description: How to set custom variables in actions.
 
 This is an experimental idea, that may be removed without notice.
 
-Consider using, instead, [value feedbacks](../connection-basics/feedbacks.md#feedback-types) to set local variables.
+Consider instead using [value feedbacks](../connection-basics/feedbacks.md#feedback-types) to allow the user to store a feedback into a local variable.
 
 :::
 

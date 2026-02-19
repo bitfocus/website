@@ -23,14 +23,13 @@ learn: (event) => {
 },
 ```
 
-In the call, you are passed the same action/feedback object as you would for other callbacks. The callback should return
-the `event.options` object, with the appropriate fields updated. A good way to ensure that other options are preserved
-is to start the return object with `...event.options`. In this example, only the `input` field is updated:
+In the call, you are passed the same action/feedback object as you would for other callbacks. The callback should return a similar `event.options` object, containing only the new values. You cannot return an expression in these, only plain values.
+
+In this example, only the `input` field is updated:
 
 ```js
 learn: (event) => {
     return {
-        ...event.options,
         input: this.currentDeviceState.inputs[event.options.output],
     }
 },
@@ -38,7 +37,9 @@ learn: (event) => {
 
 :::warning
 
-Make sure to include any other options in the result, as the returned value is used as the new options object. If any values are omitted, they will become undefined.
+As of API 2.0, you must only return the 'learnt' options in the result. Returning all options will overwrite any expressions the user may be using, so you should avoid returning fields which are unchanged.
+
+Prior to API 2.0, it was recommended to include all options in the result, otherwise they would become undefined>
 
 :::
 
@@ -55,7 +56,6 @@ learn: (event) => {
 
     // Return the new options
     return {
-        ...event.options,
         input: input,
     }
 },
