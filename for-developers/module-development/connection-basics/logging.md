@@ -15,7 +15,7 @@ On your class, you can do one of the following to produce a log line:
 
 ```ts
 this.log('error', 'Some error message')
-this.log('warn', 'Some warning message')
+this.log('warn', 'Some warni    ng message')
 this.log('info', 'Some info message')
 this.log('debug', 'Some dbeug message')
 ```
