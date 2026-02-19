@@ -156,7 +156,7 @@ The feedbackId should match a feedback you have defined, and the options should 
 ### Local Variables
 
 You can also set a `localVariables` property to create some local variables on the button. Currently these are limited to be simple static values, intended to make it easier to use a value across the actions, feedbacks and style without repeating it.  
-By doing this, it becomes much easier for the user to change it if needed. This also allows for better reusing one preset within the preset structure with [the templating groups](#template-group).
+By doing this, it becomes much easier for the user to change it if needed. This also allows for better reusing one preset within the preset structure with [the templating groups](#template-groups).
 
 An example:
 
@@ -280,8 +280,8 @@ If you were using the 'text' preset type previously, these groups will help you 
 
 In a lot of modules, they have many channels/outputs/inputs or some other resource where presets are identical except for one number varying between them.
 
-A simple matrix/video router module, will commonly produce a preset for each input+output combintation, to quickly route each input to each output. This can often produce 100s or 1000s of presets which are almost identical.  
-In some cases, this has caused issues due to the size of the data produced being a performance drain and occasinally making the modules crash on lower powered machines
+A simple matrix/video router module, will commonly produce a preset for each input+output combination, to quickly route each input to each output. This can often produce 100s or 1000s of presets which are almost identical.  
+In some cases, this has caused issues due to the size of the data produced being a performance drain and occasionally making the modules crash on lower powered machines
 
 Instead, groups in the new structure can be defined as 'template' groups. This templating, allows for overriding local variables you defined on the presets with different values.
 

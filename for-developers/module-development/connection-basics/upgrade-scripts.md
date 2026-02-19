@@ -76,7 +76,7 @@ runEntrypoint(MyModuleClass, upgradeScripts)
 Each upgrade script will only get run once for each action and feedback, but it is good practise to write the scripts so that they can be executed multiple times. This will help you when testing your script, or if jumping between versions of companion.
 :::
 
-We recommend defining the functions in a dedicated `upgrades.js` file, as they should not depend on your main class and this helps avoids files growing too long to be managable.
+We recommend defining the functions in a dedicated `upgrades.js` file, as they should not depend on your main class and this helps avoids files growing too long to be manageable.
 
 A simple example of a script is:
 
@@ -94,7 +94,7 @@ const UpgradeScripts = [
     for (const action of props.actions) {
       if (action.actionId === 'test') {
         // Mutate an option
-        action.options.value = action.optins.value + 1
+        action.options.value = action.options.value + 1
         // Tell companion that this one was changed
         result.updatedActions.push(action)
       }
@@ -143,7 +143,7 @@ This looks something like:
 			controlId: 'bank:def', // This is readonly
 			feedbackId: 'my-action',
 			options: {
-				valA: { isExpresion: false, value: 1 },
+				valA: { isExpression: false, value: 1 },
 			}
 			isInverted: { isExpression: false, value: false }
 		}

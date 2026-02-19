@@ -11,7 +11,7 @@ You can see the auto-generated documentation for this file as a typescript inter
 
 Tip: At any point you can validate your `manifest.json` by running `yarn companion-module-check`.
 
-### Format
+## Format
 
 If you are comfortable reading or working with JSON Schema, you can find the formal definition [here](https://github.com/bitfocus/companion-module-base/blob/main/assets/manifest.schema.json)
 
@@ -46,7 +46,7 @@ A full manifest definition is:
 }
 ```
 
-### Properties
+## Properties
 
 - `id` unique id of your module. This has to match the repository name excluding the `companion-module-`
 - `name` ???
