@@ -368,6 +368,12 @@ In this way, you can use one `route_output` preset as a template for hundreds of
 
 As a bonus, these variables also make it easier for users to adjust which input or output is used later if they need to, without finding the correct preset again.
 
+## Typescript typings
+
+When using typescript, if you strongly type your [actions](./actions.md#typescript-typings) and [feedbacks](./feedbacks.md#typescript-typings) as explained in their respective pages, then in your prests, the api will expect your presets to also be typed as `CompanionPresetDefinitions<MyTypes>`.
+
+These types get propagated through to the actions and feedback properties on the presets, ensuring that they are also strongly typed. This will help you ensure that your usage of the actions and feedbacks in your presets match the definitions you have created
+
 ## Standard Colors
 
 Below are some color profiles for typical action and/or feedback combinations we recommend.
