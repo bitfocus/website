@@ -4,4 +4,4 @@ description: The task necessary to maintain and upgrade a module repository over
 auto_toc: 2
 ---
 
-This section describes the task necessary to maintain and upgrade a module repository over time.
+This section describes the task necessary to package, deliver, maintain and upgrade a module repository over time.
