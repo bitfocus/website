@@ -291,7 +291,7 @@ const config: Config = {
 							href: 'https://bfoc.us/nr4da457op',
 						},
 						{
-							label: 'Donate',
+							label: 'Sponsor Companion',
 							href: 'https://bfoc.us/42jn7eku7p',
 						},
 					],
