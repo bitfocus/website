@@ -5,46 +5,67 @@ sidebar_position: 10
 description: Module method overview.
 ---
 
-With the notable exception of the module entrypoint function, The module/Companion API is primarily defined in the generic class `InstanceBase<>`, which is provided by `@companion-module/base`. Your module's custom code will instantiate and extend that class to fill out the base class's methods as describe here.
+TODO: API 2.0
 
-The API can be divided into (1) the entrypoint (2) methods that get called by Companion during the life of your module (3) other methods are called by you to tell Companion how to interact with the end-users and (4) various helper classes and functions that are not part of `InstanceBase<>`.
+The module/Companion API is primarily defined by the generic class `InstanceBase<>`, which is provided by `@companion-module/base`. Your module's code will extend that class to fill out the missing base class's methods as describe here, and you will call many of the ones provided to expose functionality into Companion.
 
-## Module entrypoint
+The API can be divided into (1) exposing your module class (2) methods that get called by Companion during the life of your module (3) other methods are called by you to tell Companion how to interact with the end-users and (4) various helper classes and functions that are not part of `InstanceBase<>`.
 
-The main entrypoint for modules is the call `runEntrypoint(ModuleInstance, UpgradeScripts)` that you typically place at the top-level of _src/main.ts_ (if you're using the [recommended file structure](../module-setup/file-structure.md)).
+## Exposing your module class
 
-When Companion loads the "main" file, this function will pass to Companion you module class (see the next section) and a list of upgrade
-scripts (see the [upgrade-scripts page](./upgrade-scripts.md)).
+The main component of this is to export your class, so that Companion can import and execute it. This should be done at the top-level of _src/main.ts_ (if you're using the [recommended file structure](../module-setup/file-structure.md)).
+
+In ESM this typically this like:
+
+```ts
+export default class MyModule extends InstanceBase {
+  ...
+}
+
+export const UpgradeScripts = [...] // If you have any upgrade scripts
+```
+
+Or for commonjs:
+
+```ts
+module.exports = class MyModule extends InstanceBase {
+  ...
+}
+
+module.exports.UpgradeScripts = [...] // If you have any upgrade scripts
+```
+
+:::tip
+In API 1.x, this was achieved by a call to `runEntrypoint(ModuleInstance, UpgradeScripts)`. This is no longer supported and will need to be updated
+:::
 
 ## Define the module class
 
-### `class InstanceBase<TConfig, TSecrets?>`
+### Typescript Generics
+
+If you are not using Typescript, you can skip this section
+
+:::tip
+This has changed in [API 2.0](../api-changes/v2.0.md), before this it was a simpler `TConfig` that was generic for just your module config.
+:::
 
 The first step in creating a module is creating the module Instance class. If you are using the recommended [TypeScript module template](https://github.com/bitfocus/companion-module-template-ts), then the module definition is in _src/main.ts_.
 
-The class has two type parameters for objects you define:
+The class has a type parameter which describes many things about your module. If no type is specified, the default is:
 
-- `TConfig` is your user-configuration object type/interface/class. In the template, this object is defined in _src/config.ts_
-- `TSecrets` (optional) is the definition of your secrets object
-
-You can name these objects anything you like.
-
-For example (in a single file, just for simplicity):
-
-```typescript
-export interface MyConfig {
-  port: number
-  host: string
+```ts
+export interface InstanceTypes {
+  config: JsonObject
+  secrets: JsonObject | undefined
+  actions: Record<string, CompanionActionSchema<CompanionOptionValues>>
+  feedbacks: Record<string, CompanionFeedbackSchema<CompanionOptionValues>>
+  variables: CompanionVariableValues
 }
-
-export interface MySecrets {
-  password: string
-}
-
-export class ModuleInstance extends InstanceBase<MyConfig, MySecrets> {}
 ```
 
-This assigns the type `MyConfig` to `TConfig` and `MySecrets` to `TSecrets`
+You can override each of these with concrete types, so that Typescript can offer narrower types throughout your module.
+
+Each page explains the structure and usage of each portion in more detail
 
 ## Methods called from Companion
 
