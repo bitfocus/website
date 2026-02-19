@@ -94,8 +94,8 @@ handleHttpRequest(request: CompanionHTTPRequest): CompanionHTTPResponse | Promis
 ## HTML Response Example
 
 ```ts
+import path from 'path'
 import fs from 'fs'
-
 
 handleHttpRequest(request: CompanionHTTPRequest): CompanionHTTPResponse | Promise<CompanionHTTPResponse> {
   const endpoint = request.path.replace('/', '').toLowerCase();
@@ -103,7 +103,13 @@ handleHttpRequest(request: CompanionHTTPRequest): CompanionHTTPResponse | Promis
   // If a request is to `/instance/INSTANCE NAME/` respond with the index.html, otherwise load whatever file is being requested.
   // In production it is HIGHLY recommended to pre-loading the files to be served and responding with only those specific files rather than a wildcard
   if (request.method === 'GET') {
-    const filePath = endpoint === '' ? './html/index.html' : `./html/${endpoint}`;
+    // Resolve the requested path and ensure it stays within the html/ directory
+    const htmlDir = path.resolve(__dirname, 'html')
+    const requestedFile = endpoint === '' ? 'index.html' : endpoint
+    const filePath = path.resolve(htmlDir, requestedFile)
+    if (!filePath.startsWith(htmlDir)) {
+      return { status: 403, body: 'Forbidden' }
+    }
 
     // While here the files being returned are static files stored with the module,
     // it is entirely possible to dynamically generate a HTML response, much like the JSON example previously
@@ -119,7 +125,7 @@ handleHttpRequest(request: CompanionHTTPRequest): CompanionHTTPResponse | Promis
     // Content-Type should generally be handled by Express on companions side, but for some file types being served you may need to manually set the header
     return {
       status: 200,
-      body: fs.readFileSync(file).toString()
+      body: fs.readFileSync(filePath, 'utf8')
     }
   }
 
