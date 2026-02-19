@@ -55,7 +55,7 @@ If using typescript, you should specify a `typescriptRoot`
 import { generateEslintConfig } from '@companion-module/tools/eslint/config.mjs'
 
 export default generateEslintConfig({
-	enableTypescript: true,
+  enableTypescript: true,
 })
 ```
 
@@ -153,18 +153,18 @@ You can easily override rules in this setup with:
 import { generateEslintConfig } from '@companion-module/tools/eslint/config.mjs'
 
 const baseConfig = await generateEslintConfig({
-	enableTypescript: true,
+  enableTypescript: true,
 })
 
 const customConfig = [
-	...baseConfig,
+  ...baseConfig,
 
-	{
-		rules: {
-			'n/no-missing-import': 'off',
-			'node/no-unpublished-import': 'off',
-		},
-	},
+  {
+    rules: {
+      'n/no-missing-import': 'off',
+      'node/no-unpublished-import': 'off',
+    },
+  },
 ]
 
 export default customConfig

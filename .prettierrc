@@ -5,9 +5,17 @@
 	"semi": false,
 	"singleQuote": true,
 	"useTabs": true,
+	"tabWidth": 2,
 	"endOfLine": "lf",
 	"trailingComma": "es5",
 	"overrides": [
+		{
+			"files": ["*.md", "**/*.md", "*.mdx", "**/*.mdx"],
+			"options": {
+				"useTabs": false,
+				"tabWidth": 2
+			}
+		},
 		{
 			"files": ["*.yml", "*.yaml"],
 			"options": {
