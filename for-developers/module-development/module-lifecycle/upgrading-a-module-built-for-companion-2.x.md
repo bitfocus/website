@@ -5,6 +5,13 @@ sidebar_position: 10
 description: How to update a module that was built for Companion 2 or earlier.
 ---
 
+:::danger
+
+This guide was written over 3 years ago for an earlier version of the module api.
+A majority of it will translate, but it will not be perfect match. You may want to follow this to update to the API 1.x format, then follow the newer upgrade docs for updating to the latest structure.
+
+:::
+
 ## Background
 
 In Companion 3.0, we rewrote the module-api from scratch. We chose to do this because the old api had grown very organically over 5 years, and was starting to show various issues. The main issues was modules were running in the main companion thread, and method signatures were assuming various calls to be synchronous, and modules being able to access various internals of companion (and some making concerningly large use of that ability).  

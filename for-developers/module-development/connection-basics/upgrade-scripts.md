@@ -68,8 +68,6 @@ class MyModuleClass extends InstanceBase<MyModuleConfig> {
 runEntrypoint(MyModuleClass, upgradeScripts)
 ```
 
-### TODO
-
 ## Writing an upgrade script
 
 :::tip
@@ -85,6 +83,7 @@ const UpgradeScripts = [
   function example_conversion(context, props) {
     const result = {
       updatedConfig: null,
+      updatedSecrets: null,
       updatedActions: [],
       updatedFeedbacks: [],
     }

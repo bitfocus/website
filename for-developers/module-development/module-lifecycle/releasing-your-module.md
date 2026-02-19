@@ -5,7 +5,7 @@ sidebar_position: 3
 description: How to release your module for delivery to others using Companion's "web store".
 ---
 
-_TODO: Update this whole page?_
+Since Companion 4.0, modules get installed on demand from our api. This allows new updates to your module to get into users hands much quicker than before, as long as your module uses a compatible version of the module api.
 
 ## First Release
 
@@ -13,9 +13,7 @@ If this is the first release of your module, you will need to request the reposi
 
 Please post a message in the `#module-development` channel the includes your GitHub username and the desired name of your module in the `manufacturer-product` format.
 
-_TODO: This or the previous or both?_
-
-You will need to use the [BitFocus Developer Portal](https://developer.bitfocus.io/modules/my-list) to list it with Companion.
+Once you have a repository, and have pushed your code, you can [release a new version](#releasing-a-new-version)
 
 ## Releasing a New Version
 
@@ -30,7 +28,7 @@ When a new version of your module has been tested and is ready for distribution,
 
 3. **Create a Git tag**
    - Prefix the version number with `v` (e.g., `v1.2.3`).
-   - You can create the tag by:
+   - You can create the tag by either:
      - [Creating a release on GitHub](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository#creating-a-release), or
      - [Creating a local tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging) and pushing it to the repository.
 
