@@ -1,6 +1,6 @@
 ---
-title: Connection Module Basic API
-description: Basic API calls and objects for Companion connection modules
+title: Connection Module Advanced Topics
+description: Advanced API calls and techniques for Companion connection modules
 auto_toc: 2
 ---
 

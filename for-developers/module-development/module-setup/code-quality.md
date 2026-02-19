@@ -63,7 +63,7 @@ You can now run `yarn lint` and see any linter errors. If you need any help unde
 
 :::note
 
-If you have any suggestions on changes to make to this eslint config, do [open an issue](https://github.com/bitfocus/companion-module-tools/issues) to let us know. We hope that this set of rules will evolve over time based on what is and isnt useful to module developers.
+If you have any suggestions on changes to make to this eslint config, do [open an issue](https://github.com/bitfocus/companion-module-tools/issues) to let us know. We hope that this set of rules will evolve over time based on what is and isn't useful to module developers.
 
 :::
 

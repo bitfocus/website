@@ -2,7 +2,7 @@
 title: Module User-Config Definitions
 sidebar_label: User-Config Definitions
 sidebar_position: 15
-description: Module config and secrets details.
+description: Module user configuration and secrets details.
 ---
 
 The module configuration is like preferences for the connection. E.g. the IP-address of the device controlled by the instance. The config object itself is a JavaScript object defined by you. In TypeScript, you create a type or interface to define your config object and then use that type in declaring your InstanceBase class, i.e. `class ModuleInstance extends InstanceBase<MyConfigType>` (see src/main.ts in the [TypeScript module template](https://github.com/bitfocus/companion-module-template-ts)).

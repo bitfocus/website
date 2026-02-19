@@ -12,7 +12,7 @@ When this happens, existing usages of the action or feedback may become broken. 
 ## Exposing upgrade scripts
 
 The [TypeScript module template](https://github.com/bitfocus/companion-module-template-ts) includes a separate file:
-`src/upgrades.ts`, which is where your upgrades should be defined. It is not required to use this structure, but it keeps it more readable than having everything in one file. More complex modules will likely want to split the actions definitions into even more files/folders.
+`src/upgrades.ts`, which is where your upgrades should be defined. It is not required to use this structure, but it keeps it more readable than having everything in one file. More complex modules will likely want to split the upgrade definitions into even more files/folders. For example: a different file for each major upgrade.
 
 The upgrades.ts file can export a single variable that contains an array of scripts, to be described next.
 
@@ -73,7 +73,7 @@ runEntrypoint(MyModuleClass, upgradeScripts)
 ## Writing an upgrade script
 
 :::tip
-Each upgrade script will only get run once for each action and feedback, but it is good practise to write the scripts so that they can be executed multiple times. This will help you when testing your script, or if jumping between versions of companion.
+Each upgrade script will only get run once for each action and feedback, but it is good practice to write the scripts so that they can be executed multiple times. This will help you when testing your script, or if jumping between versions of companion.
 :::
 
 We recommend defining the functions in a dedicated `upgrades.js` file, as they should not depend on your main class and this helps avoids files growing too long to be manageable.

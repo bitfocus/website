@@ -121,7 +121,7 @@ Tip: While you are making these changes, does the value of `name` still make sen
 Some changes to `options` may be required, but we shall cover those in a later step, as the same changes will need to be done for feedbacks and config_fields.
 
 If you aren't already aware, there are some other properties you can implement if you need then.
-You can find the typescript definitions as well as descriptions of each property you can set [here](https://github.com/bitfocus/companion-module-base/blob/main/src/module-api/action.ts). Do let us know if anything needs more explanation/clarification.
+You can find the typescript definitions as well as descriptions of each property you can set [in the module-base repo](https://github.com/bitfocus/companion-module-base/blob/main/src/module-api/action.ts). Do let us know if anything needs more explanation/clarification.
 
 The `callback` property is the only way for an action to be executed. In previous versions it was possible to do this by implementing the `action()` function in the main class too. We found that using this callback made modules more maintainable as everything for an action was better grouped together, especially when the other methods are implemented.
 If you need help figuring out how to convert your code from the old `action` method to these callbacks then reach out on slack.
@@ -159,7 +159,7 @@ Tip: While you are making these changes, does the value of `name` still make sen
 Some changes to `options` may be required, but we shall cover those in a later step, as the same changes will need to be done for feedbacks and config_fields.
 
 If you aren't already aware, there are some other properties you can implement if you need then.
-You can find the typescript definitions as well as descriptions of each property you can set [here](https://github.com/bitfocus/companion-module-base/blob/main/src/module-api/feedback.ts). Do let us know if anything needs more explanation/clarification.
+You can find the typescript definitions as well as descriptions of each property you can set [in the module-base repo](https://github.com/bitfocus/companion-module-base/blob/main/src/module-api/feedback.ts). Do let us know if anything needs more explanation/clarification.
 
 The `callback` property is the only way for an feedback to be checked. In previous versions it was possible to do this by implementing the `feedback()` function in the main class too. We found that using this callback made modules more maintainable as everything for a feedback was better grouped together, especially when the other methods are implemented.
 If you need help figuring out how to convert your code from the old `feedback` method to these callbacks then reach out on slack.
@@ -352,7 +352,7 @@ Tip: Make sure you don't change the id fields, or it won't track the changes!
 
 The config object is the same as you receive in the module, and is the same as before.
 
-The action and feedback objects have a similar shape to how they are provided to their callbacks. You can see more about the exact structure of the objects [here](https://github.com/bitfocus/companion-module-base/blob/main/src/module-api/upgrade.ts). This is harder to document the changes, and upgrade scripts are not that widely used.
+The action and feedback objects have a similar shape to how they are provided to their callbacks. You can see more about the exact structure of the objects [in the module-base repo](https://github.com/bitfocus/companion-module-base/blob/main/src/module-api/upgrade.ts). This is harder to document the changes, and upgrade scripts are not that widely used.
 
 Finally, these are no longer provided via the static method. They will be passed into a function call later described later on. We suggest making them an array outside of the class that can be used later on.
 
@@ -427,7 +427,7 @@ It is expected that `init()` will return a Promise. The simplest way to do this 
 
 `init()` also has a parameter, of your config object.
 
-Inside of init, you are free to do things as you wish. But make sure that any method returning a promise isnt left floating, so that errors propagate correctly.
+Inside of init, you are free to do things as you wish. But make sure that any method returning a promise isn't left floating, so that errors propagate correctly.
 
 Tip: if you do a `this.checkFeedbacks()` inside of `init()`, you can remove that line
 

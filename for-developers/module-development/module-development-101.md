@@ -20,7 +20,7 @@ There are a few files that make up every module. Please familiarize yourself wit
 
 ## Program the module
 
-While you can handle all your module's code in one big file, we strongly recommend splitting it across several files as illustrated [here](./module-setup/file-structure#file-structure).
+While you can handle all your module's code in one big file, we strongly recommend splitting it across several files as illustrated in our [file structure overview](./module-setup/file-structure#file-structure).
 
 To understand what is needed in a module it helps to understand how the code is used. Your module is presented to Companion as a class that extends the module base class. A user can add one or more _instances_ of your module to their Companion site. When Companion starts up, it initializes each instance of the module by starting a new process and passing configuration information, as described next.
 

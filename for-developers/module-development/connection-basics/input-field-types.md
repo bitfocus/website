@@ -10,7 +10,7 @@ There are some small differences in what is available where, documented here.
 
 ## Option types
 
-When defining an , the actions, feedbacks and module config definition object includes a property called `options:` that takes a list of input-field definitions. For example,
+When defining actions, feedbacks and module config definitions, the object includes a property called `options:` that takes a list of input-field definitions. For example,
 
 ```javascript
 {
@@ -20,7 +20,7 @@ When defining an , the actions, feedbacks and module config definition object in
         options: [
             {
                 type: 'number',
-                label: 'Source'
+                label: 'Source',
                 id: 'source',
                 default: 1,
             },

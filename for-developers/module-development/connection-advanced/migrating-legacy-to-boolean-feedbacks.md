@@ -13,7 +13,7 @@ Previously, it was up to the module author to decide what properties a feedback 
 
 With boolean feedbacks, the module author simply has to make the feedback be a true or false value, and the user can decide what style properties that should change.
 
-A side-benefit of using boolean feedbacks is that they can be used as conditions in the trigges system.
+A side-benefit of using boolean feedbacks is that they can be used as conditions in the triggers system.
 
 ## Steps to migrate to boolean feedbacks
 
@@ -60,25 +60,27 @@ To:
 
 ```js
 feedbacks['set_source'] = {
-    type: 'boolean', // Change this
-    label: 'Brief description of the feedback here',
-    description: 'Longer description of the feedback',
-    defaultStyle: {
-        // Move the values from options to here
-        color: combineRgb(0, 0, 0),
-        bgcolor: combineRgb(255, 0, 0)
-    }
-    // remove the old style properties from options
-    options: [{
-        type: 'number',
-        label: 'Source'
-        id: 'source',
-        default: 1
-    }]
-    callback: (feedback) => {
-        // Update this to return the boolean value you used to use to decide to return the style object
-        return this.currentSource == feedback.options.source
+  type: 'boolean', // Change this
+  label: 'Brief description of the feedback here',
+  description: 'Longer description of the feedback',
+  defaultStyle: {
+    // Move the values from options to here
+    color: combineRgb(0, 0, 0),
+    bgcolor: combineRgb(255, 0, 0),
+  },
+  // remove the old style properties from options
+  options: [
+    {
+      type: 'number',
+      label: 'Source',
+      id: 'source',
+      default: 1,
     },
+  ],
+  callback: (feedback) => {
+    // Update this to return the boolean value you used to use to decide to return the style object
+    return this.currentSource == feedback.options.source
+  },
 }
 ```
 
@@ -144,7 +146,7 @@ To:
 
 ### 3. Add an upgrade script
 
-Users will have feedbacks assigned to buttons already, and these will all need updating to the new format. A helper has been added to help with self.
+Users will have feedbacks assigned to buttons already, and these will all need updating to the new format. A helper has been added to help with this.
 
 Quick tip: The script will only be run once, if you want to force it to be run again locally, (Pending, this step has changed) to force all the upgrade scripts to be rerun. Make sure to _not_ commit that line
 

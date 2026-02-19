@@ -5,7 +5,7 @@ sidebar_position: 19
 description: Module variable definition details.
 ---
 
-Variables are a way for modules to expose values to the user, which can be used as part of the button text, as input to some actions or feedbacks and more. This section explains how to define variables and change update their values.
+Variables are a way for modules to expose values to the user, which can be used as part of the button text, as input to some actions or feedbacks and more. This section explains how to define variables and update their values.
 
 The basic workflow is to define your variables using `setVariableDefinitions()`, then set or update the values using `setVariableValues()`. Both of these methods are defined by the module InstanceBase class.
 
@@ -19,7 +19,7 @@ Please try not to call this method too often, as updating the list has a cost. I
 
 ## Variable definitions
 
-The [TypeScript module template](https://github.com/bitfocus/companion-module-template-ts) includes a file `src/variables.ts`, which is where your variables should be defined. It is not required to use this structure, but it keeps it more readable than having everything in one file. More complex modules will likely want to split the actions definitions into even more files/folders.
+The [TypeScript module template](https://github.com/bitfocus/companion-module-template-ts) includes a file `src/variables.ts`, which is where your variables should be defined. It is not required to use this structure, but it keeps it more readable than having everything in one file. More complex modules will likely want to split the variable definitions into even more files/folders.
 
 All the variable definitions are passed in as a single javascript array, in the form of:
 
@@ -47,8 +47,8 @@ For example:
 this.setVariableValues({
     'variable1': 'new value'
     'variable2': 99,
-    'old_variable': undefined // This unsets a value
-    'array_variable': [1, 2, 3, 4]
+    'old_variable': undefined, // This unsets a value
+    'array_variable': [1, 2, 3, 4],
 })
 ```
 
