@@ -121,7 +121,7 @@ export default function autoTocPlugin() {
 		// compile a list of files inside a subdir:
 		const dirs = subdirs.map((d) => {
 			const subdir = join(dir, d)
-			const raw = readFileSync(join(subdir, '_category_.json'))
+			const raw = readFileSync(join(subdir, '_category_.json'), 'utf-8')
 			const frontmatter = JSON.parse(raw)
 			const indexfile = frontmatter.link?.id ?? 'index.md' // if link is missing, it appears to default to a doc named index.md, if present.
 			const subfiles = readdirSync(subdir).filter((f) => f.endsWith('.md') && !f.startsWith(indexfile))
