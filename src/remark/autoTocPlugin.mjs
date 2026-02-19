@@ -12,7 +12,9 @@
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs'
 import { dirname, basename, join } from 'node:path'
 
-/** Parse YAML frontmatter from a markdown string (simple key: value only). */
+/** Parse YAML frontmatter from a markdown string (simple key: value only).
+ * Note: a possibly better way to do this would be with npm gray-matter. Leaving this for now
+ */
 function parseFrontmatter(content) {
 	const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)
 	if (!match) return { frontmatter: {}, body: content }
@@ -101,9 +103,12 @@ export default function autoTocPlugin() {
 			fileList.map((f) => {
 				const content = readFileSync(join(dir, f), 'utf-8')
 				const { frontmatter, body } = parseFrontmatter(content)
+				let title = frontmatter.sidebar_label?.replace(/└─ */, '') || frontmatter.title || f.replace(/\.md$/, '')
+				// replace enclosing quotes, if present. putting this in parseFrontmatter didn't work for some reason.
+				title = title.replaceAll(/['^["']|["']$/g, '')
 				return {
 					slug: f.replace(/\.md$/, ''),
-					title: frontmatter.sidebar_label?.replace('└─', '') || frontmatter.title || f.replace(/\.md$/, ''),
+					title: title,
 					sidebarPosition: parseInt(frontmatter.sidebar_position || '0', 10),
 					headings: extractHeadings(body),
 					files: [],
@@ -118,7 +123,7 @@ export default function autoTocPlugin() {
 			const subdir = join(dir, d)
 			const raw = readFileSync(join(subdir, '_category_.json'))
 			const frontmatter = JSON.parse(raw)
-			const indexfile = frontmatter.link?.id ?? 'index' // if link is missing, it appears to default to a doc named index.md, if present.
+			const indexfile = frontmatter.link?.id ?? 'index.md' // if link is missing, it appears to default to a doc named index.md, if present.
 			const subfiles = readdirSync(subdir).filter((f) => f.endsWith('.md') && !f.startsWith(indexfile))
 			const subpages = getPages(subfiles, subdir)
 			subpages.sort((a, b) => a.sidebarPosition - b.sidebarPosition)
@@ -150,7 +155,9 @@ export default function autoTocPlugin() {
 				children: [
 					{
 						type: 'link',
-						url: `./${page.slug}`,
+						// folder URLs need a trailing slash in order for links on the target page (not the link itself) to work!
+						//  i.e. w/o this the url is:  ""./category" instead of ""./category/"" and the links in index.md will go to ""./subfile" instead of ""./category/subfile"
+						url: `./${page.slug}` + (page.files.length > 0 ? '/' : ''),
 						children: [{ type: 'text', value: page.title }],
 					},
 				],
