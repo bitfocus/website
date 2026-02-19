@@ -1,11 +1,11 @@
 {
-	"label": "Module Dev LifeCycle",
+	"label": "Module Release and Maintenance",
 	"position": 30,
 	"link": {
 		"type": "doc",
 		"id": "index"
 	},
 	"customProps": {
-		"description": "The task necessary to maintain and upgrade a module repository over time."
+		"description": "The task necessary to release, maintain and upgrade a module repository over time."
 	}
 }

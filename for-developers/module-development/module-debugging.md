@@ -58,7 +58,7 @@ You can use any compatible debugger such as the builtin VS Code debugger, or Chr
 
 :::warning
 
-It may not not possible to debug the `init` method from your module with this, Companion still imposes the same launch timeout as usual here. But you can attach after this and see what is going on.
+It may not be possible to debug the `init` method from your module with this, Companion still imposes the same launch timeout as usual here. But you can attach after this and see what is going on.
 
 :::
 

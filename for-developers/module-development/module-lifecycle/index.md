@@ -1,6 +1,6 @@
 ---
-title: Module-Development Lifecycle
-description: The task necessary to maintain and upgrade a module repository over time.
+title: 'Module Development Lifecycle: Release and Maintenance'
+description: The task necessary to release, maintain and upgrade a module repository over time.
 auto_toc: 2
 ---
 

@@ -117,7 +117,10 @@ yarn dev:webui
 This will launch the development version of the webui on a different port, typically [http://localhost:5173](http://localhost:5173)
 
 :::important
-You still need to have `yarn dev` (in the base folder) running separately for this to work
+
+1. You still need to have `yarn dev` (in the base folder) running separately for this to work
+2. `console.log()` code will display in the browser's console, not the command-line nor the Companion logs.
+
 :::
 
 :::tip

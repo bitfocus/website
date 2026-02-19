@@ -105,7 +105,7 @@ export default function autoTocPlugin() {
 				const { frontmatter, body } = parseFrontmatter(content)
 				let title = frontmatter.sidebar_label?.replace(/└─ */, '') || frontmatter.title || f.replace(/\.md$/, '')
 				// replace enclosing quotes, if present. putting this in parseFrontmatter didn't work for some reason.
-				title = title.replaceAll(/['^["']|["']$/g, '')
+				title = title.replaceAll(/^["']|["']$/g, '')
 				return {
 					slug: f.replace(/\.md$/, ''),
 					title: title,

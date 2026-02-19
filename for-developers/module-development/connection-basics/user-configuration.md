@@ -7,9 +7,7 @@ description: Module user configuration and secrets details.
 
 The module configuration is like preferences for the connection. E.g. the IP-address of the device controlled by the instance. The config object itself is a JavaScript object defined by you. In TypeScript, you create a type or interface to define your config object and then use that type in declaring your InstanceBase class, i.e. `class ModuleInstance extends InstanceBase<MyConfigType>` (see src/main.ts in the [TypeScript module template](https://github.com/bitfocus/companion-module-template-ts)).
 
-Secrets is a new feature (since [API 1.13 - Companion 4.1](http://localhost:4005/for-developers/module-development/api-changes/v1.13#secrets)).  
-By defining a field as a secret, Companion will store its values in a separate secrets object.  
-This allows Companion to be more careful in avoiding logging of this object, and allows the user to easily omit these values when exporting their configuration, which is beneficial for sharing with others.
+Secrets is a new feature (since [API 1.13 - Companion 4.1](../api-changes/v1.13#secrets)). By defining a field as a secret, Companion will store its values in a separate secrets object. This allows Companion to be more careful in avoiding logging of this object, and allows the user to easily omit these values when exporting their configuration, which is beneficial for sharing with others.
 
 The fields available for secrets is quite limited, as we expect it to only be useful for api keys, usernames, passwords and similar things. If other field types is useful, let us know and we can look at adding more.
 
