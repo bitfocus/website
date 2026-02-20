@@ -1,5 +1,5 @@
 ---
-title: Module Development Files
+title: Companion Module Developers' Guide
 description: Outline of the Module Development section.
 auto_toc: 2
 ---
