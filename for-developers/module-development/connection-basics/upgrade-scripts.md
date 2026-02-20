@@ -7,7 +7,7 @@ description: Module upgrade script details.
 
 Over time you will add new functionality to your module. Sometimes, this can involve changing how existing actions or feedbacks are implemented.
 
-When this happens, existing usages of the action or feedback may become broken. The job of the upgrade script is to fix up the actions and feedbacks the the user has already added to their site to handle the changes.
+When this happens, existing usages of the action or feedback may become broken. The job of the upgrade script is to fix up the actions and feedbacks that the user has already added to their site to handle the changes.
 
 ## Exposing upgrade scripts
 
@@ -43,7 +43,7 @@ Which one you use will depend on exactly how they are defined
 
 ### API 1.x
 
-The main entrypoint for modules, as described in the [overview page](./overview.md) is the call `runEntrypoint(ModuleInstance, UpgradeScripts)` that you typically place at the top-level of _src/main.ts_ (if you're using the [recommended file structure](../module-setup/file-structure.md)). When Companion loads the "main" file, this function will pass to Companion you module class and a list of upgrade scripts, as will be described here.
+The main entrypoint for modules, as described in the [overview page](./overview.md) is the call `runEntrypoint(ModuleInstance, UpgradeScripts)` that you typically place at the top-level of _src/main.ts_ (if you're using the [recommended file structure](../module-setup/file-structure.md)). When Companion loads the "main" file, this function will pass to Companion your module class and a list of upgrade scripts, as will be described here.
 
 The upgrades.ts file can export a single variable that contains an array of scripts, to be described next.
 
@@ -74,7 +74,7 @@ runEntrypoint(MyModuleClass, upgradeScripts)
 Each upgrade script will only get run once for each action and feedback, but it is good practice to write the scripts so that they can be executed multiple times. This will help you when testing your script, or if jumping between versions of companion.
 :::
 
-We recommend defining the functions in a dedicated `upgrades.js` file, as they should not depend on your main class and this helps avoids files growing too long to be manageable.
+We recommend defining the functions in a dedicated `upgrades.ts` file, as they should not depend on your main class and this helps avoids files growing too long to be manageable.
 
 A simple example of a script is:
 
@@ -133,8 +133,8 @@ This looks something like:
 			id: 'abc', // You must not edit this, or Companion will ignore any other changes
 			controlId: 'bank:def', // This is readonly
 			actionId: 'my-action',
-			options: { ... }
-		}
+			options: { ... },
+		},
 	],
 	feedbacks: [
 		{
@@ -143,15 +143,15 @@ This looks something like:
 			feedbackId: 'my-action',
 			options: {
 				valA: { isExpression: false, value: 1 },
-			}
+			},
 			isInverted: { isExpression: false, value: false }
-		}
+		},
 	]
 }
 ```
 
 :::warning
-The options objects on these actions and feedbacks look _very_ different to how they do in the callback of your action or feedback.
+The options objects on these actions and feedbacks look _very_ different from how they do in the callback of your action or feedback.
 :::
 
 ### The return value

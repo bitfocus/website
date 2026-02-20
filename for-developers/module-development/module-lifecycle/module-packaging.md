@@ -23,7 +23,7 @@ If you are using one of our [recommended module templates](../module-setup/file-
    yarn companion-module-build
 ```
 
-If successful, there will now be a `pkg/` folder at your module root folder a `<module-name>-<version>.tgz` file in the root folder. The module name of version are taken from your _package.json_ file, so for example, if the module is named 'generic-animation' and the version number in _package.json_ is 0.70, then the file will be named _generic-animation-0.7.0.tgz_.
+If successful, there will now be a `pkg/` folder at your module root folder a `<module-name>-<version>.tgz` file in the root folder. The module name and version are taken from your _package.json_ file, so for example, if the module is named 'generic-animation' and the version number in _package.json_ is 0.70, then the file will be named _generic-animation-0.7.0.tgz_.
 
 If you need to debug the package code rather than the dev code, create an empty file `DEBUG-PACKAGED` in your module folder. Companion will read the code from `pkg` instead of your source folders.
 
@@ -141,7 +141,7 @@ module.exports = {
 }
 ```
 
-Alternatively, if you are having issues with error reports from users that have unreadable stack traces due to this minification, it can be disabled. We would prefer it to remain on for all modules to avoid bloating the install size (it can triple the size of a module), we do not mind modules enabling if it they have a reason to.
+Alternatively, if you are having issues with error reports from users that have unreadable stack traces due to this minification, it can be disabled. We would prefer it to remain on for all modules to avoid bloating the install size (it can triple the size of a module), we do not mind modules enabling it if they have a reason to.
 
 ### Using worker threads
 
@@ -160,6 +160,6 @@ _TODO_
 - [Introduction to modules](../home.md)
 - [Module development 101](../module-development-101.md)
 - [Debugging Modules](../module-debugging.md)
-- [Module Permissoins](../connection-advanced/permissions.md)
+- [Module Permissions](../connection-advanced/permissions.md)
 - [Module Setup](../module-setup/)
 - [Module Basics](../connection-basics/)

@@ -47,7 +47,7 @@ This was the main issue that was blocking our ability to support adding newer ve
 
 Everything that modules need to access Companion is now located inside of `@companion-module/base`. Some things have not been made available, as they were determined to not be appropriate and alternatives will be recommended to the few module authors who utilised them.
 
-Another benefit of this separation is that it allows us to better isolate modules from being tied to specific versions of Companion. The `@companion-module/base` acts as a stable barrier between the two. It has intentionally been kept separate from the rest of the Companion code, so that changes made here get an extra level of scrutiny, as we want to guarantee backwards compatibility as much as possible. For example, in Companion version 2.x changes made to the module api occasionally required fixes to be applied to multiple modules. By having this barrier, we can avoid such problems for as long as possible, and can more easily create compatibility layers as needed.
+Another benefit of this separation is that it allows us to better isolate modules from being tied to specific versions of Companion. The `@companion-module/base` acts as a stable barrier between the two. It has intentionally been kept separate from the rest of the Companion code, so that changes made here get an extra level of scrutiny, as we want to guarantee backwards compatibility as much as possible. For example, in Companion version 2.x changes made to the module API occasionally required fixes to be applied to multiple modules. By having this barrier, we can avoid such problems for as long as possible, and can more easily create compatibility layers as needed.
 
 ## Further reading
 

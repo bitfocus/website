@@ -61,7 +61,7 @@ To:
 ```js
 feedbacks['set_source'] = {
   type: 'boolean', // Change this
-  label: 'Brief description of the feedback here',
+  name: 'Brief description of the feedback here',
   description: 'Longer description of the feedback',
   defaultStyle: {
     // Move the values from options to here

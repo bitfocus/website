@@ -97,7 +97,7 @@ The minimum boolean feedback definition is as follows:
   callback: (feedback) => {
     // This callback will be called whenever companion wants to check if this feedback is 'active' and should affect the button style
     return self.some_device_state.source == feedback.options.source
-  }
+  },
 }
 ```
 
@@ -134,9 +134,9 @@ As of [API v1.13](../api-changes/v1.13.md) (Companion 4.1), variables in textinp
 As of [API v2.0](../api-changes/v2.0.md) (Companion 4.3), modules are unable to parse variables themselves, Companion does it for you based on the fields describing of the options.
 :::
 
-Between API v1.1 and API v.14, a `context` object is passed as the second argument in the `callback`, `subscribe`, `unsubscribe` and `learn` callbacks.
+Between API v1.1 and API v1.14, a `context` object is passed as the second argument in the `callback`, `subscribe`, `unsubscribe` and `learn` callbacks.
 
-The `context` object in these versions includes a special version of the `parseVariablesInString()` method that allows Companion to track what which variables are referenced by each feedback, so that they can be re-executed whenever the parsed variables changed.
+The `context` object in these versions includes a special version of the `parseVariablesInString()` method that allows Companion to track which variables are referenced by each feedback, so that they can be re-executed whenever the parsed variables changed.
 
 ```js
 {
@@ -148,7 +148,7 @@ The `context` object in these versions includes a special version of the `parseV
   },
   options: [{
     type: 'text',
-    label: 'text'
+    label: 'text',
     id: 'text',
     default: '',
     useVariables: true
@@ -157,18 +157,18 @@ The `context` object in these versions includes a special version of the `parseV
     // Note: make sure to use `parseVariablesInString` from `context`. That lets Companion know what feedback the call was for
     const text = await context.parseVariablesInString(feedback.options.text)
     return text === 'OK'
-  }
+  },
 }
 ```
 
 #### Inverting boolean feedbacks
 
-Since [API v1.5](../api-changes/v1.5.md) (Companion 3.1), Companion provides builtin support for 'inverting' the value of boolean feedbacks. This is done automatically for any boolean feedbacks your module exposes.
+Since [API v1.5](../api-changes/v1.5.md) (Companion 3.1), Companion providesbuilt-in support for 'inverting' the value of boolean feedbacks. This is done automatically for any boolean feedbacks your module exposes.
 
 If you wish to influence the auto-detection behaviour, you can do so by setting `showInvert: false` on a feedback. If this is an existing feedback, make sure to update any existing usages in an [upgrade scripts](./upgrade-scripts.md), to preserve existing behaviour for users.
 
-If your feedback already provides a field to match a true or false state, we strongly advise removing it and replacing existing usage with the builtin invert property.  
-A helper function (`CreateUseBuiltinInvertForFeedbacksUpgradeScript`) is provided to generate an upgrade script for your module to convert an existing invert checkbox to the builtin system. It expects a parameter describe the feedbacks to process, and the name of the invert checkbox being replaced:
+If your feedback already provides a field to match a true or false state, we strongly advise removing it and replacing existing usage with thebuilt-in invert property.  
+A helper function (`CreateUseBuiltinInvertForFeedbacksUpgradeScript`) is provided to generate an upgrade script for your module to convert an existing invert checkbox to thebuilt-in system. It expects a parameter describe the feedbacks to process, and the name of the invert checkbox being replaced:
 
 ```js
 CreateUseBuiltinInvertForFeedbacksUpgradeScript({
@@ -189,11 +189,11 @@ For boolean feedbacks a `defaultStyle` should be defined. This will give the fee
 
 The Companion UI will sort your feedbacks by name when presenting them in a list. You can add a longer description line of text with the `description` property.
 
-Since [API 2.0](../api-changes/v2.0.md), you can customise the sort order of the feedbacks by setting the `sortName` property on an action definition. When this is set, it will be used instead of the `name` when sorting the action definitions alphabetically.
+Since [API 2.0](../api-changes/v2.0.md), you can customise the sort order of the feedbacks by setting the `sortName` property on an feedback definition. When this is set, it will be used instead of the `name` when sorting the feedback definitions alphabetically.
 
 ### Subscribe & unsubscribe flow
 
-Sometimes you will want to only load state from the device when it is needed by a feedback. This is common for devices which have thousands of properties, or if loading and maintining a bit of data has a cost, such as requiring polling to fetch.
+Sometimes you will want to only load state from the device when it is needed by a feedback. This is common for devices which have thousands of properties, or if loading and maintaining a bit of data has a cost, such as requiring polling to fetch.
 
 This flow changed in [API 2.0](../api-changes/v2.0.md), any existing feedbacks will need migrating to the new flow.
 
@@ -207,16 +207,16 @@ feedbacks['check_source'] = {
     name: 'Test feedback',
     options: [{
         type: 'number',
-        label: 'Source'
+        label: 'Source',
         id: 'source',
-        default: 1
+        default: 1,
     }],
     callback: (feedback) => {
         ...
     },
     unsubscribe: (feedback) => {
         ...
-    }
+    },
 }
 ```
 
@@ -246,9 +246,9 @@ feedbacks['check_source'] = {
     name: 'Test feedback',
     options: [{
         type: 'number',
-        label: 'Source'
+        label: 'Source',
         id: 'source',
-        default: 1
+        default: 1,
     }],
     callback: (feedback) => {
         ...
@@ -258,7 +258,7 @@ feedbacks['check_source'] = {
     },
     unsubscribe: (feedback) => {
         ...
-    }
+    },
 }
 ```
 

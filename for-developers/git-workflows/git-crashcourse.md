@@ -49,7 +49,7 @@ Commits initially exist only on your computer. To transfer them to GitHub, you'l
 
 ### Creating a Pull Request (PR)
 
-Once your changes are in your GitHub fork, you'll create a pull request to propose including them in the original Bitfocus/companion repository. The Github website automatically detects your pushed branch and guides you through the process of creating a pull request.
+Once your changes are in your GitHub fork, you'll create a pull request to propose including them in the original Bitfocus/companion repository. The GitHub website automatically detects your pushed branch and guides you through the process of creating a pull request.
 
 ## Avoiding Merge Conflicts
 

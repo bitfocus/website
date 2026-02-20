@@ -41,11 +41,11 @@ The basic structure looks like:
     { // step 1
        up: [...],
        down: [...],
-    }
+    },
     { // step 2
        up: [...],
        down: [...],
-    }
+    },
    ]
 ```
 
@@ -159,7 +159,7 @@ Each action inside of the `steps` property can also have a `delay` property spec
 
 :::tip
 
-You can "simulate" an `internal:wait` action by adding the property ` delay:` (in ms) to any action definition.
+You can "simulate" an `internal:wait` action by adding the property `delay:` (in ms) to any action definition.
 This will cause it to execute _after_ the delay, and is converted internally to `internal:wait`.
 
 :::

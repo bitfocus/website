@@ -9,7 +9,7 @@ The module configuration is like preferences for the connection. E.g. the IP-add
 
 Secrets is a new feature (since [API 1.13 - Companion 4.1](../api-changes/v1.13#secrets)). By defining a field as a secret, Companion will store its values in a separate secrets object. This allows Companion to be more careful in avoiding logging of this object, and allows the user to easily omit these values when exporting their configuration, which is beneficial for sharing with others.
 
-The fields available for secrets is quite limited, as we expect it to only be useful for api keys, usernames, passwords and similar things. If other field types is useful, let us know and we can look at adding more.
+The fields available for secrets is quite limited, as we expect it to only be useful for API keys, usernames, passwords and similar things. If other field types is useful, let us know and we can look at adding more.
 
 ## API calls: `getConfigFields()`, `saveConfig()`, `configUpdated()`
 
@@ -37,11 +37,11 @@ The contents of the config and secrets objects must be JSON safe values, due to 
 
 :::tip
 
-Since API v1.14, ee are working to unify the layout of this configuration to match elsewhere in Companion, meaning this value is not respected by default.
+Since API v1.14, we are working to unify the layout of this configuration to match elsewhere in Companion, meaning this value is not respected by default.
 
 At the moment (in Companion v4.2/v4.3) it is possible to opt into the old layout, if you are not ready to ensure this works well for your module, you can opt out by adding in the constructor `this.options.disableNewConfigLayout = true`. This should only be done as a temporary measure, at some point in the future this will not be supported.
 
-If you do this, let us know what is missing for you to switch. We recognise that there may be functionality you need and want to expand upon what the new layout offers. Reach out on [Github](https://github.com/bitfocus/companion/issues) to let us know what you need to be able to migrate.
+If you do this, let us know what is missing for you to switch. We recognise that there may be functionality you need and want to expand upon what the new layout offers. Reach out on [GitHub](https://github.com/bitfocus/companion/issues) to let us know what you need to be able to migrate.
 
 :::
 
@@ -51,7 +51,7 @@ Each field is required to have a `width` property. This should be a value 1-12, 
 
 If you are connecting over the network, your device may be discoverable using the Bonjour protocol. See the advanced topic [Bonjour Device Discovery](../connection-advanced/bonjour-device-discovery.md) for further details.
 
-If your device uses a different discovery mechanism, we would like to hear about it so that we can expand this support for more devices. Reach out on [Github](https://github.com/bitfocus/companion/issues)
+If your device uses a different discovery mechanism, we would like to hear about it so that we can expand this support for more devices. Reach out on [GitHub](https://github.com/bitfocus/companion/issues)
 
 ## Further reading
 

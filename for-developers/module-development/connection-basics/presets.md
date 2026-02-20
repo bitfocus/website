@@ -67,7 +67,14 @@ presets[`my_first_preset`] = {
   ],
   feedbacks: [], // You can add some presets from your module here
 }
-this.setPresetDefinitions(presets)
+const structure = [
+  {
+    id: 'section-main',
+    name: 'Main',
+    definitions: ['my_first_preset'],
+  },
+]
+this.setPresetDefinitions(structure, presets)
 ```
 
 ### Actions
@@ -124,7 +131,7 @@ Each action defined can also have a `delay` property specified (in milliseconds)
 
 :::tip
 
-You can "simulate" an `internal:wait` action by adding the property ` delay:` (in ms) to any action definition.
+You can "simulate" an `internal:wait` action by adding the property `delay:` (in ms) to any action definition.
 This will cause it to execute _after_ the delay, and is converted internally to `internal:wait`.
 
 :::
@@ -229,9 +236,9 @@ const structure = [
   {
     id: 'section-main',
     name: 'Main',
-    description: 'The things you usually want'
-    definitions: ['my_first_preset', 'my_second_preset'] // This should match the keys when setting them on the `presets` object
-  }
+    description: 'The things you usually want',
+    definitions: ['my_first_preset', 'my_second_preset'], // This should match the keys when setting them on the `presets` object
+  },
 ]
 ```
 
@@ -246,23 +253,23 @@ const structure = [
   {
     id: 'section-main',
     name: 'Main',
-    description: 'The things you usually want'
+    description: 'The things you usually want',
     definitions: [
       {
         id: 'main-1',
         type: 'simple',
         name: 'First',
-        description: 'A second line of text'
-        presets: ['my_first_preset', 'my_second_preset'] // This should match the keys when setting them on the `presets` object
+        description: 'A second line of text',
+        presets: ['my_first_preset', 'my_second_preset'], // This should match the keys when setting them on the `presets` object
       },
       {
         id: 'main-2',
         type: 'simple',
         name: '',
-        presets: ['my_first_preset', 'my_third_preset'] // You can repeat presets within the structure if needed
-      }
-    ]
-  }
+        presets: ['my_first_preset', 'my_third_preset'], // You can repeat presets within the structure if needed
+      },
+    ],
+  },
 ]
 ```
 
@@ -300,7 +307,7 @@ An example template group:
     // Tip: the name will override the 'name' field of the preset itself
     { name: `Input 1 to Output 1`, value: 1 },
     { name: `Input 2 to Output 1`, value: 2 },
-  ]
+  ],
 
   // Optionally, define a fixed override for other variables
   commonVariableValues: {
@@ -370,7 +377,7 @@ As a bonus, these variables also make it easier for users to adjust which input 
 
 ## Typescript typings
 
-When using typescript, if you strongly type your [actions](./actions.md#typescript-typings) and [feedbacks](./feedbacks.md#typescript-typings) as explained in their respective pages, then in your prests, the api will expect your presets to also be typed as `CompanionPresetDefinitions<MyTypes>`.
+When using typescript, if you strongly type your [actions](./actions.md#typescript-typings) and [feedbacks](./feedbacks.md#typescript-typings) as explained in their respective pages, then in your prests, the API will expect your presets to also be typed as `CompanionPresetDefinitions<MyTypes>`.
 
 These types get propagated through to the actions and feedback properties on the presets, ensuring that they are also strongly typed. This will help you ensure that your usage of the actions and feedbacks in your presets match the definitions you have created
 

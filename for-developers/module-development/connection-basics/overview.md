@@ -119,7 +119,7 @@ This is the last method that is called for your module when it is no longer need
 
 ### `getConfigFields(): SomeCompanionConfigField[]`
 
-This is called whenever the user goes to edit [the user-configuration ](./user-configuration.md)
+This is called whenever the user goes to edit [the user-configuration](./user-configuration.md).
 
 The return object of this method is an array of input-field definitions for both the `TConfig` object and the
 `TSecrets` object . Input-fields of the type 'secret-text' are automatically
@@ -145,7 +145,7 @@ This will write a message to the Companion log from your module
 
 ### `updateStatus(status: InstanceStatus, message?: null | string): void`
 
-Call this to update the connected-status of your module. update the status of your module on the Connections page.
+Call this to update the connected-status of your module. (Updates the status of your module shown on the Connections page.)
 
 Provide one of the defined [`status` values](https://bitfocus.github.io/companion-module-base/enums/InstanceStatus.html) and an optional message which will be shown when hovering over it.
 

@@ -39,7 +39,7 @@ learn: (event) => {
 
 As of API 2.0, you must only return the 'learnt' options in the result. Returning all options will overwrite any expressions the user may be using, so you should avoid returning fields which are unchanged.
 
-Prior to API 2.0, it was recommended to include all options in the result, otherwise they would become undefined>
+Prior to API 2.0, it was recommended to include all options in the result, otherwise they would become undefined.
 
 :::
 
@@ -69,4 +69,4 @@ learn: (event) => {
 - [Actions](../connection-basics/actions.md)
 - [Feedbacks](../connection-basics/feedbacks.md)
 
-You can also see the full api specification for [actions](https://bitfocus.github.io/companion-module-base/interfaces/CompanionActionDefinition.html#learn) and [feedbacks](https://bitfocus.github.io/companion-module-base/interfaces/CompanionBooleanFeedbackDefinition.html#learn).
+You can also see the full API specification for [actions](https://bitfocus.github.io/companion-module-base/interfaces/CompanionActionDefinition.html#learn) and [feedbacks](https://bitfocus.github.io/companion-module-base/interfaces/CompanionBooleanFeedbackDefinition.html#learn).

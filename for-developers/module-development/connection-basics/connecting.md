@@ -5,18 +5,18 @@ sidebar_position: 12
 description: Helper classes for connecting to your device.
 ---
 
-One of the most first tasks most modules have to perform is to connect to their device. You can either use an existing connection library from [NPM](https://www.npmjs.com/) if one exists, or you can write your own connection logic inside the module.
+One of the first tasks most modules have to perform is to connect to their device. You can either use an existing connection library from [NPM](https://www.npmjs.com/) if one exists, or you can write your own connection logic inside the module.
 
 Companion provides three helper classes to help with writing your connection logic: TCPHelper, UDPHelper, TelnetHelper. These classes provide an asynchronous interface for connecting, communicating and disconnecting from your device.
 
-Or if the device uses HTTP, we recommend using the builtin [`fetch` api](https://nodejs.org/en/learn/getting-started/fetch).
+Or if the device uses HTTP, we recommend using the built-in [`fetch` API](https://nodejs.org/en/learn/getting-started/fetch).
 
 ## TCPHelper class
 
 The TCPHelper class uses the `EventEmitter` system to provide asynchronous communications.
 
 You start by creating an instance of the class and calling its `connect()` method.
-You define the various `on()` callbacks to respond to possible TCP event -- see the example, below.
+You define the various `on()` callbacks to respond to possible TCP events -- see the example, below.
 
 Your [action](./actions.md) callbacks will call tcp.send() to send outgoing data. The on('data') callback will receive
 and process incoming data.
@@ -47,7 +47,7 @@ class MyModule extends InstanceBase<MyConfig> {
 
     tcp.on('connect', () => {
         this.updateStatus(InstanceStatus.Ok)
-        this.log('debug', 'Connected!")
+        this.log('debug', 'Connected!')
     })
     tcp.on('error', (err) => {
         this.updateStatus(InstanceStatus.ConnectionFailure, 'Connection error')
@@ -59,7 +59,7 @@ class MyModule extends InstanceBase<MyConfig> {
     tcp.on('end', () => {
         this.updateStatus(InstanceStatus.Disconnected, 'Disconnecting')
         this.log('debug', 'Socket disconnecting')
-        tcp?.destroy()
+        tcp.destroy()
     })
     tcp.on('data', (msg_data) => {
         // process your incoming data here and call appropriate methods/functions
@@ -67,7 +67,7 @@ class MyModule extends InstanceBase<MyConfig> {
     tcp.on('status_change', (state, message) => {
         this.updateStatus(state, message)
         this.log('debug', 'Status Changed to ' + state + (message != undefined ? ': ' + message : ''))
-    }
+    })
 
     tcp.connect()
   }
@@ -104,7 +104,7 @@ TelnetHelper is very similar to TCPHelper, with these events
 ```
 
 - [TelnetHelper](https://bitfocus.github.io/companion-module-base/classes/TelnetHelper.html)
-- [TelentHelperEvents](https://bitfocus.github.io/companion-module-base/interfaces/TelnetHelperEvents.html)
+- [TelnetHelperEvents](https://bitfocus.github.io/companion-module-base/interfaces/TelnetHelperEvents.html)
 
 ## UDPHelper class
 

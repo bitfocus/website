@@ -13,7 +13,7 @@ There are two key challenges to using OAuth with Companion:
 1. OAuth requires a stable redirect URL, the URL to access Companion can change daily
 2. The user needs to fill in various fields then navigate to a URL to begin the authentication.
 
-Described below is the current recommended way of supporting OAuth, but many existing modules are not using this. Expect this to be refined in the future, as support is improved
+Described below is the current recommended way of supporting OAuth, but many existing modules are not using this. Expect this to be refined in the future, as support is improved.
 
 ## Handling the OAuth callback / redirect URL
 
@@ -21,9 +21,9 @@ OAuth needs a stable redirect URL, as it needs to be provided to both Companion 
 To aid in this, a small redirector site has been created, which will help abstract this.
 
 This is hosted at `https://bitfocus.github.io/companion-oauth/callback`.
-By providing your instance id (`this.id`) as the state parameter in the authentication url, the redirect site will help redirect the user to a http handler where you can access the generated authentication code.
+By providing your instance id (`this.id`) as the state parameter in the authentication url, the redirect site will help redirect the user to a HTTP handler where you can access the generated authentication code.
 
-To receive the authentication code, you should implement the [handleHttpRequest](HTTP handler) method, listening for the `/oauth/callback` path.
+To receive the authentication code, you should implement the [handleHttpRequest](./http-handler.md) method, listening for the `/oauth/callback` path.
 An implementation can look like:
 
 ```js
@@ -47,7 +47,8 @@ async handleHttpRequest(request) {
 		try {
 			// Exchange code for token
 
-			// TODO: Implement your logic here
+			// TODO: Implement your logic here e.g.:
+			// const response = await axios.post('https://...', { code: authCode, ... })
 
 			//Save new values to Configuration
 			this.log('info', 'Authentication Success, saving tokens')

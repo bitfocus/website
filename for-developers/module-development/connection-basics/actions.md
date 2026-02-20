@@ -105,7 +105,7 @@ As of [API v1.13](../api-changes/v1.13.md) (Companion 4.1), variables in textinp
 As of [API v2.0](../api-changes/v2.0.md) (Companion 4.3), modules are unable to parse variables themselves, Companion does it for you based on the fields describing of the options.
 :::
 
-Between API v1.1 and API v.14, a `context` object is passed as the second argument in the `callback`, `subscribe`, `unsubscribe` and `learn` callbacks.
+Between API v1.1 and API v1.14, a `context` object is passed as the second argument in the `callback`, `subscribe`, `unsubscribe` and `learn` callbacks.
 
 The `context` object in these versions includes a special version of the `parseVariablesInString()` method that allows Companion to know what control the parse was being run for. This allowed it to parse local variables. If you use `parseVariablesInString` off the `InstanceBase` class instead, any local variables would not be supported.
 
@@ -123,7 +123,7 @@ Since [API 2.0](../api-changes/v2.0.md), you can customise the sort order of the
 
 ### Subscribe & unsubscribe flow
 
-Sometimes it is useful to know what actions and options are being used. This is common for devices which have thousands of properties, or if loading and maintining a bit of data has a cost, such as requiring polling to fetch.
+Sometimes it is useful to know what actions and options are being used. This is common for devices which have thousands of properties, or if loading and maintaining a bit of data has a cost, such as requiring polling to fetch.
 
 On the action definition, it is possible to register some additional callbacks to be informed about the actions.
 
@@ -133,9 +133,9 @@ actions['set_source'] = {
     name: 'Test action',
     options: [{
         type: 'number',
-        label: 'Source'
+        label: 'Source',
         id: 'source',
-        default: 1
+        default: 1,
     }],
     callback: (action) => {
         ...
@@ -145,7 +145,7 @@ actions['set_source'] = {
     },
     unsubscribe: (action) => {
         ...
-    }
+    },
 }
 ```
 

@@ -98,7 +98,7 @@ Run `yarn husky` to ensure husky is initialised.
 
 ### Running the linter on push
 
-It is a good idea to setup a Github Actions workflow to run the linter, so that you don't get surprised by unexpected linter failures when running it locally.
+It is a good idea to setup a GitHub Actions workflow to run the linter, so that you don't get surprised by unexpected linter failures when running it locally.
 
 To do this, create a new file in the repository at `.github/workflows/lint.yaml`, with the content:
 

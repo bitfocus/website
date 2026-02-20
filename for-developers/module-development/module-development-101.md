@@ -30,7 +30,7 @@ In the [typical module structure](./module-setup/file-structure#file-structure),
 
 Your constructor should only do some minimal class setup. It does not have access to the configuration information, so it should not be used to start doing things. Instead...
 
-The `init` method is passed any previously-stored user-config information. (The structure of the user-config is defined by you and used as the type of the generic base class.) Inside the `init` method you should initiate the connection to your device (but dont await it! Instead use the The `updateStatus()` method to inform Companion asynchronously of the connection status). Here you also pass the module's actions, feedbacks, variables and presets to Companion for the first time.
+The `init` method is passed any previously-stored user-config information. (The structure of the user-config is defined by you and used as the type of the generic base class.) Inside the `init` method you should initiate the connection to your device (but dont await it! Instead use the `updateStatus()` method to inform Companion asynchronously of the connection status). Here you also pass the module's actions, feedbacks, variables and presets to Companion for the first time.
 
 Once the module is running the `configUpdated` (but not `init`) method will be called if the user changes the config on the Connections page. (You can programmatically change the user config by calling `saveConfig()`, defined in the base class.) You can also update the action, feedback, etc. definitions at any time.
 

@@ -47,13 +47,13 @@ Note: We recommend `@companion-module/base` to be installed as `~1.4` rather tha
 
 Add a new file (if not exist already) : `.yarnrc.yml` and put the following code in:
 
-```
+```yaml
 nodeLinker: node-modules
 ```
 
 You should also add the following to your `.gitignore` file:
 
-```
+```text
 /pkg
 /pkg.tgz
 ```
@@ -302,7 +302,7 @@ For example, before:
 ```js
 this.setVariable('one', 'word')
 this.setVariable('two', 34)
-this.setVariable('three, undefined)
+this.setVariable('three', undefined)
 ```
 
 After:
@@ -454,7 +454,7 @@ Any where the name starts with an underscore must not be used as they are intern
 - The method `setVariables` has been renamed to `setVariableValues`, as explained earlier
 - The method `setVariable` has been removed, as explained earlier
 - The method `getVariable` has been renamed to `getVariableValue`.
-- The method `checkFeedbacks` now accepts multiple feedbacks to check. eg `this.checkFeedbacks('one', 'two, 'three')`
+- The method `checkFeedbacks` now accepts multiple feedbacks to check. eg `this.checkFeedbacks('one', 'two', 'three')`
 - The method `parseVariables` has been renamed to `parseVariablesInString`. Note that this method returns a promise instead of accepting a callback.
 - The method `getAllFeedbacks` has been removed, with no replacement
 - The method `getAllActions` has been removed, with no replacement
@@ -473,7 +473,7 @@ Note: More will be added in the future, let us know if you have any ideas for co
 
 Once you have made sure that any method calls to methods exposed on InstanceBase have been updated, there is only a little bit more.
 
-At the bottom of your file you should fine a line looking something like `export = MyInstance`.
+At the bottom of your file you should find a line looking something like `export = MyInstance`.
 You should replace this line with `runEntrypoint(MyInstance, UpgradeScripts)`, making sure to pass your class as the first parameter, and your array of upgrade scripts to the second. If you have no upgrade scripts then make the second parameter be `[]`.
 
 Congratulations. You have now converted all of your code!
@@ -488,13 +488,13 @@ If all went well, then your module will run and connect to your device.
 
 If it does not, hopefully you can figure out what has broken. There are too many possibilities for us to document here, but we can try to document some common issues.
 
-Once it is running, make sure to test every action, feedback, variable and preset. It is very easy to make a mistake during the upgrading process. Whatever bugs you find now means less to be found by other users.
+Once it is running, make sure to test every action, feedback, variable and preset. It is easy to make a mistake during the upgrading process. Whatever bugs you find now means less to be found by other users.
 
 When you are happy with it being stable enough for others to test, let us know and we shall include it in the beta builds.
 
 ### 14) Package it and test
 
-For modules in this new format, we require them to be packaged with some special tooling. This is done to both reduce the number of files that your module spans on disk, and also the size. Loading code spread across hundreds of files is surprisingly slow on some oses, any by combining it all into a few files, we can often reduce the size from multiple mb, to a few hundred kb.
+For modules in this new format, we require them to be packaged with some special tooling. This is done to both reduce the number of files that your module spans on disk, and also the size. Loading code spread across hundreds of files is surprisingly slow on some OSes, any by combining it all into a few files, we can often reduce the size from multiple mb, to a few hundred kb.
 
 During the build process of the releases your module package will be generated automatically and bundled with the application, so you have to make sure that the final package is working. If you are developing with a complete dev environment, it is not sufficient if your module works in the dev environment.
 
@@ -513,7 +513,7 @@ If you encountered any issues in this process that you need help with, then have
 Have any thoughts/feedback on this process? Anything in the docs that should be improved? Do [let us know](https://github.com/bitfocus/companion-module-base/issues), we are interested in your feedback!  
 We won't be able to cater to everything you dislike about the changes, as other modules are already using these new apis, but perhaps we can make the transition smoother?
 
-Have an idea of a new connection helper that would be beneficical to you? Or have some utility code that you are copying into multiple modules? We are interested to hear this. We are happy to add more to `@companion-module/base` if it will be useful to many modules and is unlikely to result in breaking changes.
+Have an idea of a new connection helper that would be beneficial to you? Or have some utility code that you are copying into multiple modules? We are interested to hear this. We are happy to add more to `@companion-module/base` if it will be useful to many modules and is unlikely to result in breaking changes.
 
 We appreciate that this update is throwing a lot of changes at you, but changes of this scale are a rare occurrence and shouldn't be necessary to repeat for at least another 5 years.
 

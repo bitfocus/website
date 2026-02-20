@@ -5,7 +5,7 @@ sidebar_position: 7
 description: How to debug your Companion module during development.
 ---
 
-Once you've started coding, debugging the code will be come essential to your success. We consider it
+Once you've started coding, debugging the code will become essential to your success. We consider it
 important enough that we're covering it here before you dive into the details in the following sections.
 
 There are three main routes to debugging: log through the API, console.log, interactive debugging
@@ -14,7 +14,7 @@ There are three main routes to debugging: log through the API, console.log, inte
 
 Companion provides individual log pages for each module that are different from the main Companion log page.
 
-You can open the module specific log view from the connections page by clicking the <span style={{background: "#f2f2f2", borderRadius: "5px", fontSize: "0.8em", padding: "0.25em 0.75em", border: "1px solid #cccccc"}}>⋮</span> button and selecting "View logs":
+You can open the module-specific log view from the connections page by clicking the <span style={{background: "#f2f2f2", borderRadius: "5px", fontSize: "0.8em", padding: "0.25em 0.75em", border: "1px solid #cccccc"}}>⋮</span> button and selecting "View logs":
 
 ![Connection debug log](./images/connection-debug-log-button.png)
 
@@ -50,11 +50,11 @@ Depending on buffering, several `console.log()` messages may be grouped together
 
 Often it can be useful and more convenient to attach a debugger to your module so you can create breakpoints from which you can inspect its state while the module is running. This method also has the advantage of not requiring the addition of numerous logging statements.
 
-To attach to your module's process, first add a file named _DEBUG-INSPECT_ (no suffix) in the root of your module folder. The file can be empty or have a single number in it, which specifies the debugger port number. Next time you start Companion, it will launch your module with the remote debugging protocol enabled.
+To attach to your module's process, first add a file named `DEBUG-INSPECT` (no suffix) in the root of your module folder. The file can be empty or have a single number in it, which specifies the debugger port number. Next time you start Companion, it will launch your module with the remote debugging protocol enabled.
 
 By default Companion will pick and use a random port that will change each launch, alternatively, you can specify a port number inside the `DEBUG-INSPECT` file to use a fixed port for debugging.
 
-You can use any compatible debugger such as the builtin VS Code debugger, or Chrome inspector to connect to your process.
+You can use any compatible debugger such as thebuilt-in VS Code debugger, or Chrome inspector to connect to your process.
 
 :::warning
 
@@ -66,9 +66,9 @@ It may not be possible to debug the `init` method from your module with this, Co
 
 VS Code users can store a setup which allows you to use F5 to initiate debugging as follows:
 
-1. Put a port number in DEBUG-INSPECT -- for this example it is 12345.
+1. Put a port number in `DEBUG-INSPECT` -- for this example it is 12345.
 
-2. Put the following into the file _.vscode/launch.json_ (where the value of "port" matches the value in DEBUG-INSPECT).
+2. Put the following into the file `.vscode/launch.json` (where the value of "port" matches the value in `DEBUG-INSPECT`).
 
 ```json
 {

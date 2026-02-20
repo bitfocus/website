@@ -42,7 +42,7 @@ The Bitfocus repository is read-only for most users. In the next step we will cr
 
 ## 1b. Fork Companion to your GitHub account
 
-Back on the [Companion GitHub page](https://github.com/bitfocus/companion) or the module's GitHub page, click on the `Fork` button in the Code tab. This will create a repository under your Github account that you can write to.
+Back on the [Companion GitHub page](https://github.com/bitfocus/companion) or the module's GitHub page, click on the `Fork` button in the Code tab. This will create a repository under your GitHub account that you can write to.
 
 **updating**: Once the fork has been created, use the "Sync Fork" button in GitHub to keep it up-to-date.
 

@@ -5,7 +5,7 @@ sidebar_position: 3
 description: How to release your module for delivery to others using Companion's "web store".
 ---
 
-Since Companion 4.0, modules get installed on demand from our api. This allows new updates to your module to get into users hands much quicker than before, as long as your module uses a compatible version of the module api.
+Since Companion 4.0, modules get installed on demand from our API. This allows new updates to your module to get into users hands much quicker than before, as long as your module uses a compatible version of the module API.
 
 ## First Release
 

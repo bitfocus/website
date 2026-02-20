@@ -22,7 +22,7 @@ this.log('debug', 'Some dbeug message')
 
 ## `console.log` and friends
 
-If you want to produce some debug logging from your mode code, you can use the builtin `console` methods such as `console.log` and `console.error`.
+If you want to produce some debug logging from your mode code, you can use thebuilt-in `console` methods such as `console.log` and `console.error`.
 
 These are treated as debug logs, and will only be shown inside of the module debug log view; accessible from the popout menu in the connections list.
 
