@@ -70,4 +70,4 @@ Once your module is tested and you are ready to release it publicly, you will us
 
 If your module it not intended for public release, or you want to share it locally for testing, you can also read the guide on [packaging your module](https://github.com/bitfocus/companion-module-base/wiki/Module-packaging).
 
-Questions? Reach out on [SLACK](https://bfoc.us/uu1kmq6qs4)! :)
+Questions? Reach out on [SLACK](https://l.companion.free/q/zYXXxnGyd)! :)

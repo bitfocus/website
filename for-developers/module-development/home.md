@@ -79,4 +79,4 @@ You are now ready to start developing your module. Here are our suggested next s
 
 You can develop code while the module is running in Companion: whenever you save a file inside your module development folder, Companion will automatically restart any connections using that module.
 
-If it does not, or you are having issues getting your module to load in then please reach out on [Slack](https://bfoc.us/ke7e9dqgaz) and we will be happy to assist you in getting started.
+If it does not, or you are having issues getting your module to load in then please reach out on [Slack](https://l.companion.free/q/zYXXxnGyd) and we will be happy to assist you in getting started.

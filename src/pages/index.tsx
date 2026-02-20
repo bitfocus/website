@@ -38,7 +38,7 @@ function HeroSection() {
 			<div className={landingStyles.heroButtons}>
 				<Link
 					className={`${landingStyles.primaryButton} ${landingStyles.heroButton}`}
-					href="https://bfoc.us/djzdpq4g9g"
+					href="https://l.companion.free/q/NWWgIdrpT"
 					target="_blank"
 				>
 					<span>Download</span>
@@ -49,7 +49,7 @@ function HeroSection() {
 				</UserGuideLink>
 				<Link
 					className={`${landingStyles.secondaryButton} ${landingStyles.heroButton}`}
-					href="https://bfoc.us/42jn7eku7p"
+					href="https://l.companion.free/q/apxyeOnyk"
 					target="_blank"
 				>
 					Sponsor Companion
@@ -240,7 +240,7 @@ function GitHubSection() {
 	return (
 		<section className={landingStyles.githubSection}>
 			<div className={landingStyles.sectionContainer}>
-				<Link href="https://bfoc.us/4orxauukeg" target="_blank">
+				<Link href="https://l.companion.free/q/cEm4EqPps" target="_blank">
 					<img
 						alt="github"
 						src="img/github_logo.png"
