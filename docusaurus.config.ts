@@ -233,7 +233,7 @@ const config: Config = {
 				},
 				{
 					title: 'Download Companion',
-					href: 'https://bfoc.us/djzdpq4g9g',
+					href: 'https://l.companion.free/q/NWWgIdrpT',
 					className: 'fontawesome-container',
 					html: `<svg class="fontawesome" viewBox="0 0 640 640" fill="currentColor" aria-label="Download Companion" xmlns="http://www.w3.org/2000/svg">
 							<!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
@@ -244,7 +244,7 @@ const config: Config = {
 				},
 				{
 					title: 'Companion GitHub',
-					href: 'https://bfoc.us/4orxauukeg',
+					href: 'https://l.companion.free/q/cEm4EqPps',
 					className: 'fontawesome-container',
 					html: `<svg class="fontawesome" viewBox="0 0 640 640" fill="currentColor" aria-label="Companion GitHub" xmlns="http://www.w3.org/2000/svg">
 							<!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
@@ -284,15 +284,15 @@ const config: Config = {
 					items: [
 						{
 							label: 'Slack',
-							href: 'https://bfoc.us/bea2b02q12',
+							href: 'https://l.companion.free/q/lnM1PowUQ',
 						},
 						{
 							label: 'Facebook Group',
-							href: 'https://bfoc.us/nr4da457op',
+							href: 'https://l.companion.free/q/4xwAt8TOP',
 						},
 						{
 							label: 'Sponsor Companion',
-							href: 'https://bfoc.us/42jn7eku7p',
+							href: 'https://l.companion.free/q/apxyeOnyk',
 						},
 					],
 				},
@@ -301,11 +301,11 @@ const config: Config = {
 					items: [
 						{
 							label: 'Bitfocus Website',
-							href: 'https://bitfocus.io',
+							href: 'https://l.companion.free/q/3yqQOWBHA',
 						},
 						{
 							label: 'GitHub',
-							href: 'https://github.com/bitfocus/companion',
+							href: 'https://l.companion.free/q/cEm4EqPps',
 						},
 					],
 				},

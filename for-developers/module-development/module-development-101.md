@@ -72,4 +72,4 @@ The first step in sharing your code, whether to share privately or distribute th
 
 Once your packaged module has passed your quality-control and you are ready to release it publicly, you will use the [BitFocus Developer Portal](https://developer.bitfocus.io/modules/companion-connection/discover) to list it with Companion. Please follow the guide for [releasing your module](./module-lifecycle/releasing-your-module.md).
 
-Questions? Reach out on [SLACK](https://bfoc.us/uu1kmq6qs4)! :)
+Questions? Reach out on [SLACK](https://l.companion.free/q/zYXXxnGyd)! :)
