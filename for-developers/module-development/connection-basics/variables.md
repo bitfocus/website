@@ -31,7 +31,7 @@ All the variable definitions are passed in as a single javascript array, in the 
 ]
 ```
 
-:::important
+:::warning[Important]
 
 VariableId must only use letters [a-zA-Z], numbers, underscore, hyphen.
 
@@ -82,7 +82,7 @@ export interface MyTypes {
 }
 ```
 
-In your calls to `setVariablesDefinitions`, you can then type your definitions as `CompanionVariableDefinition<VariablesSchema>`. And calls to `setVariableValues` will expect to receive a `Partial<VariablesSchema>`, helping you match the types.
+In your calls to `setVariableDefinitions`, you can then type your definitions as `CompanionVariableDefinition<VariablesSchema>`. And calls to `setVariableValues` will expect to receive a `Partial<VariablesSchema>`, helping you match the types.
 
 ## Further Reading
 

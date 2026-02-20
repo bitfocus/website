@@ -45,7 +45,7 @@ The minimum action definition looks like:
 
 ### Action execution (callback)
 
-The callback function is called when the action is executed (i.e. associate button is pressed).
+The callback function is called when the action is executed (i.e. associated button is pressed).
 
 It is called with 2 parameters:
 
@@ -153,7 +153,7 @@ Whenever an action is added to a button, subscribe will be called.
 Whenever an action is removed from a button, unsubscribe will be called.
 Whenever the options of an action on a button is changed, unsubscribe will be called, followed by subscribe, then the callback.
 
-It is also possible to force either unsubscribe or subscribe to be called for every action, by calling `this.subscribeActions()` or `this.unsubscribeActions()`. Both functions accept `actionIds` parameters, to only run on a certain feedback type (eg `this.unsubscribeActions('set_source', 'set_source2')`).
+It is also possible to force either unsubscribe or subscribe to be called for every action, by calling `this.subscribeActions()` or `this.unsubscribeActions()`. Both functions accept `actionIds` parameters, to only run on a certain action type (eg `this.unsubscribeActions('set_source', 'set_source2')`).
 When using these callbacks, it is common to call `this.subscribeActions()` once the connection to the device has been established, to help ensure all the required data gets loaded.
 
 Since [API v1.13](../api-changes/v1.13.md), it is possible to specify `skipUnsubscribeOnOptionsChange` to avoid excessive unsubscribe calls when options are changed. And `optionsToIgnoreForSubscribe` can be used to limit which fields are able to trigger `subscribe` calls.

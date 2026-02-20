@@ -5,7 +5,7 @@ sidebar_position: 5
 description: Configuring the module to work with TypeScript.
 ---
 
-:::important
+:::tip
 
 This is an advanced topic. If you use the [recommended templates](./file-structure.md), a default typescript
 config file is included and you will generally not want to change it.

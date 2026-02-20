@@ -9,7 +9,7 @@
  *
  * auto_toc: number | boolean - if number, only include headers to that H# level. If `true`, go up to H3.
  */
-import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs'
+import { readFileSync, readdirSync, existsSync } from 'node:fs'
 import { dirname, basename, join } from 'node:path'
 
 /** Parse YAML frontmatter from a markdown string (simple key: value only).
@@ -192,19 +192,24 @@ export default function autoTocPlugin() {
 
 			// Bullet list of each subdirectory file as a link
 			if (page.files.length > 0) {
-				for (const subfile of page.files) {
-					nodes.push({
-						type: 'text',
-						// note: the "spaces" before are U+2800: unicode Braille Pattern Blank
-						value: subfile === page.files.at(-1) ? '⠀⠀└── ' : '⠀⠀├── ',
-					})
-					nodes.push({
-						type: 'link',
-						url: `./${page.slug}/${subfile.slug}`,
-						children: [{ type: 'text', value: subfile.title }],
-					})
-					nodes.push({ type: 'break' })
-				}
+				nodes.push({
+					type: 'pargraph',
+					children: page.files.flatMap((subfile) => {
+						return [
+							{
+								type: 'text',
+								// note: the "spaces" before are U+2800: unicode Braille Pattern Blank
+								value: subfile === page.files.at(-1) ? '⠀⠀└── ' : '⠀⠀├── ',
+							},
+							{
+								type: 'link',
+								url: `./${page.slug}/${subfile.slug}`,
+								children: [{ type: 'text', value: subfile.title }],
+							},
+							{ type: 'break' },
+						]
+					}),
+				})
 			}
 		}
 

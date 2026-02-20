@@ -24,7 +24,7 @@ The following outline names the bitfocus remote "origin" and your remote fork "p
 
 ## 1a. Clone Companion to a local repository
 
-:::important[Windows Users!]
+:::warning[Windows Users!]
 If you are cloning to a Windows computer be sure to [configure git line-endings as described here](installing-git.md#configure-git) _**before**_ cloning Companion.
 :::
 

@@ -84,7 +84,7 @@ Companion is an MIT licensed project. We recommend modules released with the pro
 
 In the future it might be possible to use different licenses for modules, but that is not yet certain.
 
-:::important
+:::tip
 
 Consult the Companion team if you wish to incorporate a dependency that does not have an MIT license.
 

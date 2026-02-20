@@ -7,7 +7,7 @@ description: Using prettier and a linter to prevent common bugs.
 
 We recommend using [eslint](https://eslint.org/) and [prettier](https://prettier.io/) to improve the readability and uniformity of your code and to prevent easily-overlooked coding errors. The two tools work together to enforces the formatting and coding rules. If you are using an IDE such as VS Code, we recommend installing the prettier plugin. In that plugin you can also enable 'format on save' to automate some of the formatting.
 
-:::important
+:::tip
 
 Our [recommended templates](./file-structure.md) come with eslint and prettier configuration files. The remainder of this page is only necessary for people who are setting up their repo manually or want to upgrade an older module's repo... or if you just want to gain a deeper understanding of the mechanics of these config files.
 
