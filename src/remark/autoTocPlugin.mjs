@@ -193,7 +193,7 @@ export default function autoTocPlugin() {
 			// Bullet list of each subdirectory file as a link
 			if (page.files.length > 0) {
 				nodes.push({
-					type: 'pargraph',
+					type: 'paragraph',
 					children: page.files.flatMap((subfile) => {
 						return [
 							{
