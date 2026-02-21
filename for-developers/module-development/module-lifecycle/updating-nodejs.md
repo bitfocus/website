@@ -1,8 +1,8 @@
 ---
 title: 'Updating the Node.JS Version in your Module'
 sidebar_label: 'Updating Node.JS'
-sidebar_position: 8
-description: Explanation of the companion module library.
+sidebar_position: 5
+description: How to update your module to use a newer version of Node.JS.
 ---
 
 Nodejs often makes new releases. In the major version jumps, these can include some breaking changes which could impact your module, so we don't want to do that without you being aware of it.

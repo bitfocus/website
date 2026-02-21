@@ -1,0 +1,11 @@
+{
+	"label": "Connections: Advanced",
+	"position": 17,
+	"link": {
+		"type": "doc",
+		"id": "index"
+	},
+	"customProps": {
+		"description": "Advanced topics for programming a connection module."
+	}
+}

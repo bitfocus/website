@@ -1,0 +1,11 @@
+{
+	"label": "Module Setup",
+	"position": 10,
+	"link": {
+		"type": "doc",
+		"id": "index"
+	},
+	"customProps": {
+		"description": "The files and file structure necessary to create and configure a module repository."
+	}
+}

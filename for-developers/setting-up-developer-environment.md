@@ -110,7 +110,7 @@ yarn globally and are having problems, consider removing the global install.
 
 See the [instructions for installing Git here](./git-workflows/installing-git.md).
 
-:::important[Windows Note]
+:::info[Windows Note]
 As per [the windows note here](./git-workflows/installing-git.md#configure-git):
 
 In order for `git clone` to give you `lf` endings, this default needs to be overridden _**before you clone the companion repository**_. In a git bash window type:

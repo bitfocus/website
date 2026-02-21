@@ -10,7 +10,7 @@
 	"trailingComma": "es5",
 	"overrides": [
 		{
-			"files": ["*.md", "**/*.md", "*.mdx", "**/*.mdx"],
+			"files": ["**/*.md", "**/*.mdx"],
 			"options": {
 				"useTabs": false,
 				"tabWidth": 2
