@@ -17,7 +17,7 @@ A few example use cases for the HTTP handler:
 
 ## API call: handleHttpRequest
 
-The `this.handleHttpRequest` method on the Instance class is what handles HTTP requests being passed from Companion to the module instance
+The `this.handleHttpRequest` method on the Instance class is what handles HTTP requests being passed from Companion to the module instance.
 
 ```js
 handleHttpRequest(request: CompanionHTTPRequest): CompanionHTTPResponse | Promise<CompanionHTTPResponse> {

@@ -15,16 +15,16 @@ On your class, you can do one of the following to produce a log line:
 
 ```ts
 this.log('error', 'Some error message')
-this.log('warn', 'Some warni    ng message')
+this.log('warn', 'Some warning message')
 this.log('info', 'Some info message')
-this.log('debug', 'Some dbeug message')
+this.log('debug', 'Some debug message')
 ```
 
 ## `console.log` and friends
 
-If you want to produce some debug logging from your mode code, you can use thebuilt-in `console` methods such as `console.log` and `console.error`.
+If you want to produce some debug logging from your module code, you can use the built-in `console` methods such as `console.log` and `console.error`.
 
-These are treated as debug logs, and will only be shown inside of the module debug log view; accessible from the popout menu in the connections list.
+These are treated as debug logs, and will only be shown inside the module debug log view; accessible from the popout menu in the connections list.
 
 ## `createModuleLogger`
 

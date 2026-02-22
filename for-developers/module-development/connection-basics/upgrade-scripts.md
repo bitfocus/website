@@ -68,6 +68,14 @@ class MyModuleClass extends InstanceBase<MyModuleConfig> {
 runEntrypoint(MyModuleClass, upgradeScripts)
 ```
 
+## Testing an upgrade script
+
+In order to test an upgrade script, we recommend that before you add the upgrade script you build out a page of configuration to test with.
+
+Then you can reimport that page over and over again, each time will re-run it through the upgrade scripts.
+
+This may leave other pages of buttons broken as they will have been run through the first run of the upgrade script, make sure to backup your config first, or use a disposable configuration that is not important to you
+
 ## Writing an upgrade script
 
 :::tip
@@ -140,7 +148,7 @@ This looks something like:
 		{
 			id: 'abc', // You must not edit this, or Companion will ignore any other changes
 			controlId: 'bank:def', // This is readonly
-			feedbackId: 'my-action',
+			feedbackId: 'my-feedback',
 			options: {
 				valA: { isExpression: false, value: 1 },
 			},

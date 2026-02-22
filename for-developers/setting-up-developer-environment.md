@@ -7,7 +7,7 @@ description: Setting up a Developer Environment
 
 import UserGuideLink from '@site/src/UserGuideLink';
 
-Companion is written in Javascript/Typescript and uses the [Node.js](https://nodejs.org/en/) runtime. In addition, all parts of Companion are organized and tracked using [Git](./git-workflows/installing-git.md). Here we will provide instructions for installing the development tools you will need for contributing to Companion, whether as a module or a part of core Companion.
+Companion is written in Javascript/TypeScript and uses the [Node.js](https://nodejs.org/en/) runtime. In addition, all parts of Companion are organized and tracked using [Git](./git-workflows/installing-git.md). Here we will provide instructions for installing the development tools you will need for contributing to Companion, whether as a module or a part of core Companion.
 
 Companion, Javascript and Node.js are platform independent, so you can develop on Windows, macOS or Linux and the code you write will be able to run on all three platforms.
 

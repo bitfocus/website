@@ -3,7 +3,7 @@
  *
  * When a document has `auto_toc: true` in its frontmatter, this plugin reads
  * all sibling `.md` files in the same directory, extracts their titles and
- * headings, and appends an bulleted TOC to the document.
+ * headings, and appends a bulleted TOC to the document.
  *
  * If subdirectories exist, they will be listed with their files as the "content"
  *

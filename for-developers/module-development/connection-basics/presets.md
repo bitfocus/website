@@ -15,7 +15,7 @@ The user can then drag-and-drop the preset onto the button-grid, to build out co
 
 ## API call: `setPresetDefinitions()`
 
-In order to add presets to a module, you call `this.setPresetDefinitions(presetsStructure, presetsDefinitions)`much like how you define actions and feedbacks. However for presets you define your presets and a structure defining the layout separately. This allows for a lot more flexibility, and to reduce a lot of repetition
+In order to add presets to a module, you call `this.setPresetDefinitions(presetsStructure, presetsDefinitions)` much like how you define actions and feedbacks. However for presets you define your presets and a structure defining the layout separately. This allows for a lot more flexibility, and to reduce a lot of repetition
 
 :::tip
 Make sure you call this after the `this.setActionDefinitions()` and `this.setFeedbackDefinitions()` calls.
@@ -82,7 +82,7 @@ this.setPresetDefinitions(structure, presets)
 The `steps` property is where the magic happens. This describes what the action will do when pressed. In the typical case a button will have a single step, which will give the behaviour of a normal button.  
 You can make a latching button by defining a second step which does something different. By default, each time the button is released it will shift to the next step, this can be disabled by setting `options: { stepAutoProgress: false }` for the preset. This likely isn't very useful right now, due to it not being possible to use internal actions in presets.
 
-You can add as many steps as you like, and build a button which runs through a whole cue list by simply pressing it. There are internal actions that which a user can use to change the step manually.
+You can add as many steps as you like, and build a button which runs through a whole cue list by simply pressing it. There are internal actions that a user can use to change the step manually.
 
 Tip: You can build a preset for a rotary encoder by setting `options: { rotaryActions: true }`, and defining `rotate_left` and `rotate_right` actions on each step of your button:
 
@@ -375,9 +375,9 @@ In this way, you can use one `route_output` preset as a template for hundreds of
 
 As a bonus, these variables also make it easier for users to adjust which input or output is used later if they need to, without finding the correct preset again.
 
-## Typescript typings
+## TypeScript typings
 
-When using typescript, if you strongly type your [actions](./actions.md#typescript-typings) and [feedbacks](./feedbacks.md#typescript-typings) as explained in their respective pages, then in your prests, the API will expect your presets to also be typed as `CompanionPresetDefinitions<MyTypes>`.
+When using typescript, if you strongly type your [actions](./actions.md#typescript-typings) and [feedbacks](./feedbacks.md#typescript-typings) as explained in their respective pages, then in your presets, the API will expect your presets to also be typed as `CompanionPresetDefinitions<MyTypes>`.
 
 These types get propagated through to the actions and feedback properties on the presets, ensuring that they are also strongly typed. This will help you ensure that your usage of the actions and feedbacks in your presets match the definitions you have created
 

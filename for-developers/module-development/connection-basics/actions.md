@@ -21,7 +21,7 @@ Please try not to call this method too often, as updating the list has a cost. I
 
 The [TypeScript module template](https://github.com/bitfocus/companion-module-template-ts) includes a file `src/actions.ts` which is where your actions should be defined. It is not required to use this structure, but it keeps it more readable than having everything in one file. More complex modules will likely want to split the actions definitions into even more files/folders.
 
-All the actions are passed in as a single javascript object, in the form of:
+All the actions are passed in as a single JavaScript object, in the form of:
 
 ```js
 {
@@ -173,7 +173,7 @@ This is an experimental idea, that may be removed without notice
 
 Some action executions return a value which may want to be used elsewhere in Companion. This could be written [to a custom variable](../connection-advanced/setting-custom-variables.md)
 
-## Typescript typings
+## TypeScript typings
 
 :::tip
 This was introduced in [API v2.0](../api-changes/v2.0.md), prior to this any strong typings had to be managed yourself

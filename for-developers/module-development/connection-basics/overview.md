@@ -41,9 +41,9 @@ In API 1.x, this was achieved by a call to `runEntrypoint(ModuleInstance, Upgrad
 
 ## Define the module class
 
-### Typescript Generics
+### TypeScript Generics
 
-If you are not using Typescript, you can skip this section
+If you are not using TypeScript, you can skip this section
 
 :::tip
 This has changed in [API 2.0](../api-changes/v2.0.md), before this it was a simpler `TConfig` that was generic for just your module config.
@@ -63,7 +63,7 @@ export interface InstanceTypes {
 }
 ```
 
-You can override each of these with concrete types, so that Typescript can offer narrower types throughout your module.
+You can override each of these with concrete types, so that TypeScript can offer narrower types throughout your module.
 
 Each page explains the structure and usage of each portion in more detail
 

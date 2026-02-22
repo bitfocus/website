@@ -1,5 +1,5 @@
 ---
-title: Runtime Permission
+title: Runtime Permissions
 sidebar_label: Runtime Permissions
 sidebar_position: 10
 description: Enable advanced runtime permissions for your module
@@ -17,7 +17,7 @@ To enable any of these, start by adding to the `runtime` object in your manifest
 ```
 
 :::tip
-These permissions are applied during development too. However, when [the debugger](../module-debugging.md#attach-a-debugger) is enabled, the permissions are disabled. Make sure to test the module with this disabled before publishing
+These permissions are applied during development too. However, when [the debugger](../module-debugging.md#attach-a-debugger) is enabled, the permissions are disabled. Make sure to test the module without the debugger enabled before publishing
 :::
 
 ## Worker threads
@@ -77,4 +77,4 @@ In some rare cases, your module may need to talk to old devices which use now de
 }
 ```
 
-This currently translates to the process being run with the [`--openssl-legacy-provider` argument](https://nodejs.org/docs/latest-v22.x/api/cli.html#--openssl-legacy-provider).
+This currently translates to the process being run with the [`--openssl-legacy-provider` argument](https://nodejs.org/api/cli.html#--openssl-legacy-provider).

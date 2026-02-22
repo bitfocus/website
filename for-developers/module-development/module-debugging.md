@@ -54,7 +54,7 @@ To attach to your module's process, first add a file named `DEBUG-INSPECT` (no s
 
 By default Companion will pick and use a random port that will change each launch, alternatively, you can specify a port number inside the `DEBUG-INSPECT` file to use a fixed port for debugging.
 
-You can use any compatible debugger such as thebuilt-in VS Code debugger, or Chrome inspector to connect to your process.
+You can use any compatible debugger such as the built-in VS Code debugger, or Chrome inspector to connect to your process.
 
 :::warning
 

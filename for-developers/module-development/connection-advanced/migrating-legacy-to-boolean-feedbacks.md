@@ -2,7 +2,7 @@
 title: Migrating Legacy Feedbacks to Boolean Feedbacks
 sidebar_label: Migrating to Boolean Feedbacks
 sidebar_position: 10
-description: How to set up migrate legacy feedbacks to boolean feedbacks.
+description: How to migrate legacy feedbacks to boolean feedbacks.
 ---
 
 ## Why update your feedbacks?
@@ -148,7 +148,7 @@ To:
 
 Users will have feedbacks assigned to buttons already, and these will all need updating to the new format. A helper has been added to help with this.
 
-Quick tip: The script will only be run once, if you want to force it to be run again locally, (Pending, this step has changed) to force all the upgrade scripts to be rerun. Make sure to _not_ commit that line
+Quick tip: The script will only be run once, if you want to force it to be run again locally, check the [Testing an upgrade script](../connection-basics/upgrade-scripts.md#testing-an-upgrade-script) guide.
 
 ```js
 const upgradeToBooleanFeedbacks = CreateConvertToBooleanFeedbackUpgradeScript({
@@ -168,7 +168,7 @@ If this is the case, you can customise the behaviour by providing more details:
 CreateConvertToBooleanFeedbackUpgradeScript({
   set_source: {
     bg: 'bgcolor',
-    fg: 'fgcolor',
+    fg: 'color',
   },
 })
 ```

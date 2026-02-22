@@ -15,7 +15,7 @@ The user can then drag-and-drop the preset onto the button-grid, to build out co
 
 ## API call: `setPresetDefinitions()`
 
-In order to add presets to a module, you call `this.setPresetDefinitions(presetsDefinitions)`much like how you define actions and feedbacks.
+In order to add presets to a module, you call `this.setPresetDefinitions(presetsDefinitions)` much like how you define actions and feedbacks.
 
 ## Preset types
 
@@ -110,7 +110,7 @@ The `steps` property is where the magic happens. This describes what the action 
 In Companion 2.x it was possible to latch buttons, but now that can be achieved with steps. In the typical case a button will have a single step, which will give the behaviour of a normal button.
 You can make a latching button by defining a second step which does something different. By default, each time the button is released it will shift to the next step, this can be disabled by setting `options: { stepAutoProgress: false }` for the preset. This likely isn't very useful right now, due to it not being possible to use internal actions in presets.
 
-You can add as many steps as you like, and build a button which runs through a whole cue list by simply pressing it. There are internal actions that which a user can use to change the step manually.
+You can add as many steps as you like, and build a button which runs through a whole cue list by simply pressing it. There are internal actions that a user can use to change the step manually.
 
 Tip: You can build a preset for a rotary encoder by setting `options: { rotaryActions: true }`, and defining `rotate_left` and `rotate_right` actions on each step of your button:
 

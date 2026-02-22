@@ -5,7 +5,7 @@ sidebar_position: 4
 description: Using prettier and a linter to prevent common bugs.
 ---
 
-We recommend using [eslint](https://eslint.org/) and [prettier](https://prettier.io/) to improve the readability and uniformity of your code and to prevent easily-overlooked coding errors. The two tools work together to enforces the formatting and coding rules. If you are using an IDE such as VS Code, we recommend installing the prettier plugin. In that plugin you can also enable 'format on save' to automate some of the formatting.
+We recommend using [eslint](https://eslint.org/) and [prettier](https://prettier.io/) to improve the readability and uniformity of your code and to prevent easily-overlooked coding errors. The two tools work together to enforce the formatting and coding rules. If you are using an IDE such as VS Code, we recommend installing the prettier plugin. In that plugin you can also enable 'format on save' to automate some of the formatting.
 
 :::tip
 
@@ -24,7 +24,7 @@ If you are _not_ using the [recommended templates](./file-structure.md), you can
 
 ```json
 "lint:raw": "eslint",
-"lint": "yarn lint:raw ."
+"lint": "yarn lint:raw .",
 "format": "prettier -w ."
 ```
 
@@ -49,7 +49,7 @@ import { generateEslintConfig } from '@companion-module/tools/eslint/config.mjs'
 export default generateEslintConfig({})
 ```
 
-If using typescript, you should specify a `typescriptRoot`
+If using typescript, you should specify `enableTypescript`
 
 ```js
 import { generateEslintConfig } from '@companion-module/tools/eslint/config.mjs'
@@ -63,7 +63,7 @@ You can now run `yarn lint` and see any linter errors. If you need any help unde
 
 :::note
 
-If you have any suggestions on changes to make to this eslint config, do [open an issue](https://github.com/bitfocus/companion-module-tools/issues) to let us know. We hope that this set of rules will evolve over time based on what is and isn't useful to module developers.
+If you have any suggestions on changes to make to this eslint config, do [open an issue](https://github.com/bitfocus/companion-module-tools/issues) to let us know. We hope that this set of rules will expand over time based on what is and isn't useful to module developers.
 
 :::
 

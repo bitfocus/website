@@ -9,7 +9,7 @@ The module configuration is like preferences for the connection. E.g. the IP-add
 
 Secrets is a new feature (since [API 1.13 - Companion 4.1](../api-changes/v1.13#secrets)). By defining a field as a secret, Companion will store its values in a separate secrets object. This allows Companion to be more careful in avoiding logging of this object, and allows the user to easily omit these values when exporting their configuration, which is beneficial for sharing with others.
 
-The fields available for secrets is quite limited, as we expect it to only be useful for API keys, usernames, passwords and similar things. If other field types is useful, let us know and we can look at adding more.
+The fields available for secrets is quite limited, as we expect it to only be useful for API keys, usernames, passwords and similar things. If other field types would be useful, let us know and we can look at adding more.
 
 ## API calls: `getConfigFields()`, `saveConfig()`, `configUpdated()`
 

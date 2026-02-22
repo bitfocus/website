@@ -64,7 +64,7 @@ In your module code, the `bonjour_host` will have a value such as `10.0.0.1:8000
 We currently support a subset of the possible query options. In all queries, the `type` and `protocol` must be set.  
 If your device needs further filtering, this can be done by specifying any `txt` field values the entries must have.
 
-Since [API 1.10](../api-changes/v1.10.md) each entry in the manifest under `bonjourQueries` in the manifest can be an array, to allow you to run multiple queries in parallel. This can be useful when supporting multiple models which use slightly different queries
+Since [API 1.10](../api-changes/v1.10.md) each entry in the manifest under `bonjourQueries` can be an array, to allow you to run multiple queries in parallel. This can be useful when supporting multiple models which use slightly different queries
 
 Since [API 1.12](../api-changes/v1.12.md) it is possible to filter by `port` number in the query. It is recommended to only use this as a last resort, as port numbers are often configurable.
 

@@ -66,7 +66,7 @@ To start, run the command `yarn companion-generate-manifest`. This will generate
 
 As part of the process, you should notice that the `HELP.md` file has moved into the folder too. The `HELP.md` is also expected to be inside of this folder, as well as any images it uses.
 
-Please give the manifest a read, it should be fairly self explanatory. You should verify that the `runtime.entrypoint` property is a relative path to your main javascript file. It should have been generated correctly, but be aware that you will need to change this if you move/rename the file it references.
+Please give the manifest a read, it should be fairly self explanatory. You should verify that the `runtime.entrypoint` property is a relative path to your main JavaScript file. It should have been generated correctly, but be aware that you will need to change this if you move/rename the file it references.
 
 ### 3) package.json cleanup
 
@@ -494,7 +494,7 @@ When you are happy with it being stable enough for others to test, let us know a
 
 ### 14) Package it and test
 
-For modules in this new format, we require them to be packaged with some special tooling. This is done to both reduce the number of files that your module spans on disk, and also the size. Loading code spread across hundreds of files is surprisingly slow on some OSes, any by combining it all into a few files, we can often reduce the size from multiple mb, to a few hundred kb.
+For modules in this new format, we require them to be packaged with some special tooling. This is done to both reduce the number of files that your module spans on disk, and also the size. Loading code spread across hundreds of files is surprisingly slow on some OSes, any by combining it all into a few files, we can often reduce the size from multiple MB, to a few hundred KB.
 
 During the build process of the releases your module package will be generated automatically and bundled with the application, so you have to make sure that the final package is working. If you are developing with a complete dev environment, it is not sufficient if your module works in the dev environment.
 
@@ -522,7 +522,7 @@ We appreciate that this update is throwing a lot of changes at you, but changes 
 There are some extra steps that we recommend modules take, but are completely optional.
 
 - [Setting up code formatting](../module-setup/code-quality.md)
-- [Reusable Typescript config](../module-setup/typescript-config.md)
+- [Reusable TypeScript config](../module-setup/typescript-config.md)
 - [Could any feedbacks be converted to booleans?](../connection-advanced/migrating-legacy-to-boolean-feedbacks.md)
 - [Using the subscribe/unsubscribe callbacks in actions](../connection-basics/actions.md#subscribe--unsubscribe-flow)
 - [Using the subscribe/unsubscribe callbacks in feedbacks](../connection-basics/feedbacks.md#subscribe--unsubscribe-flow)

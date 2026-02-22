@@ -65,7 +65,7 @@ In older versions of Companion, these were the only available type of feedback. 
 
 The [TypeScript module template](https://github.com/bitfocus/companion-module-template-ts) includes a file `src/feedbacks.ts` which is where your feedbacks should be defined. It is not required to use this structure, but it keeps it more readable than having everything in one file. More complex modules will likely want to split the feedback definitions into even more files/folders.
 
-All the feedbacks are passed in a single javascript object, like
+All the feedbacks are passed in a single JavaScript object, like
 
 ```js
 {
@@ -118,7 +118,7 @@ The expected values you can return from this depend on the [type of the feedback
 
 Starting with API v1.1, feedback callbacks can be async or return a promise if you need.
 
-You should not be performing any network requests here, but it can be necessary when generating an images or using other native code.
+You should not be performing any network requests here, but it can be necessary when generating images or using other native code.
 
 :::tip
 You must make sure to use a sensible timeout on any async execution, or your feedback can get stuck showing a stale value.
@@ -167,8 +167,8 @@ Since [API v1.5](../api-changes/v1.5.md) (Companion 3.1), Companion providesbuil
 
 If you wish to influence the auto-detection behaviour, you can do so by setting `showInvert: false` on a feedback. If this is an existing feedback, make sure to update any existing usages in an [upgrade scripts](./upgrade-scripts.md), to preserve existing behaviour for users.
 
-If your feedback already provides a field to match a true or false state, we strongly advise removing it and replacing existing usage with thebuilt-in invert property.  
-A helper function (`CreateUseBuiltinInvertForFeedbacksUpgradeScript`) is provided to generate an upgrade script for your module to convert an existing invert checkbox to thebuilt-in system. It expects a parameter describe the feedbacks to process, and the name of the invert checkbox being replaced:
+If your feedback already provides a field to match a true or false state, we strongly advise removing it and replacing existing usage with the built-in invert property.  
+A helper function (`CreateUseBuiltinInvertForFeedbacksUpgradeScript`) is provided to generate an upgrade script for your module to convert an existing invert checkbox to the built-in system. It expects a parameter describe the feedbacks to process, and the name of the invert checkbox being replaced:
 
 ```js
 CreateUseBuiltinInvertForFeedbacksUpgradeScript({
@@ -189,7 +189,7 @@ For boolean feedbacks a `defaultStyle` should be defined. This will give the fee
 
 The Companion UI will sort your feedbacks by name when presenting them in a list. You can add a longer description line of text with the `description` property.
 
-Since [API 2.0](../api-changes/v2.0.md), you can customise the sort order of the feedbacks by setting the `sortName` property on an feedback definition. When this is set, it will be used instead of the `name` when sorting the feedback definitions alphabetically.
+Since [API 2.0](../api-changes/v2.0.md), you can customise the sort order of the feedbacks by setting the `sortName` property on a feedback definition. When this is set, it will be used instead of the `name` when sorting the feedback definitions alphabetically.
 
 ### Subscribe & unsubscribe flow
 
@@ -280,7 +280,7 @@ When using these callbacks, it is common to call `this.subscribeFeedbacks()` onc
 Some feedbacks have many options that users may wish to configure on the device and 'capture' into a feedback in Companion.
 Implementing the [learn option values](../connection-advanced/learn-action-feedback-values.md) flow will allow them to achieve that
 
-## Typescript typings
+## TypeScript typings
 
 :::tip
 This was introduced in [API v2.0](../api-changes/v2.0.md), prior to this any strong typings had to be managed yourself
