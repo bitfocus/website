@@ -104,7 +104,7 @@ handleHttpRequest(request: CompanionHTTPRequest): CompanionHTTPResponse | Promis
   // In production it is HIGHLY recommended to pre-loading the files to be served and responding with only those specific files rather than a wildcard
   if (request.method === 'GET') {
     // Resolve the requested path and ensure it stays within the html/ directory
-    const htmlDir = path.resolve(__dirname, 'html')
+    const htmlDir = path.resolve(__dirname, 'html') // Or path.resolve(import.meta.dirname, 'html')
     const requestedFile = endpoint === '' ? 'index.html' : endpoint
     const filePath = path.resolve(htmlDir, requestedFile)
     if (!filePath.startsWith(htmlDir + path.sep) && filePath !== htmlDir) {

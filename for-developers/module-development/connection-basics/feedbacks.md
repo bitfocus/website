@@ -163,7 +163,7 @@ The `context` object in these versions includes a special version of the `parseV
 
 #### Inverting boolean feedbacks
 
-Since [API v1.5](../api-changes/v1.5.md) (Companion 3.1), Companion providesbuilt-in support for 'inverting' the value of boolean feedbacks. This is done automatically for any boolean feedbacks your module exposes.
+Since [API v1.5](../api-changes/v1.5.md) (Companion 3.1), Companion provides built-in support for 'inverting' the value of boolean feedbacks. This is done automatically for any boolean feedbacks your module exposes.
 
 If you wish to influence the auto-detection behaviour, you can do so by setting `showInvert: false` on a feedback. If this is an existing feedback, make sure to update any existing usages in an [upgrade scripts](./upgrade-scripts.md), to preserve existing behaviour for users.
 
