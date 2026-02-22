@@ -158,7 +158,7 @@ When using these callbacks, it is common to call `this.subscribeActions()` once 
 
 Since [API v1.13](../api-changes/v1.13.md), it is possible to specify `skipUnsubscribeOnOptionsChange` to avoid excessive unsubscribe calls when options are changed. And `optionsToIgnoreForSubscribe` can be used to limit which fields are able to trigger `subscribe` calls.
 
-Since [API v2.0](../api-changes/v2.0.md), as Companion is responsible for all variable and expression parsing, `optionsToMonitorForSubscribe` should be used instead when wanting to limit which fields trigger `subscribe calls`.
+Since [API v2.0](../api-changes/v2.0.md), as Companion is responsible for all variable and expression parsing, `optionsToMonitorForSubscribe` should be used instead when wanting to limit which fields trigger `subscribe` calls.
 
 ### Learn option values
 
