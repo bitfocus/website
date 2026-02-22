@@ -149,6 +149,11 @@ export default function autoTocPlugin() {
 			}
 		}
 
-		tree.children.push(...nodes)
+		tree.children.push({
+			type: 'mdxJsxFlowElement',
+			name: 'div',
+			attributes: [{ type: 'mdxJsxAttribute', name: 'className', value: 'auto-toc-content' }],
+			children: nodes,
+		})
 	}
 }
