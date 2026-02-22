@@ -40,6 +40,8 @@ const config: Config = {
 		locales: ['en'],
 	},
 
+	clientModules: ['./src/client/umamiLinks.js'],
+
 	presets: [
 		[
 			'classic',
