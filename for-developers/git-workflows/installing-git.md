@@ -27,7 +27,7 @@ You do not have to limit yourself to a single tool: because of the way Git works
 
 ## Configure Git
 
-:::important[Windows Note]
+:::warning[Windows Note]
 Companion’s `prettier` config requires `eol=lf`, but the system default (in C:/Program Files/Git/etc/gitconfig) may have set autocrlf to true during installation.
 
 In order for `git clone` to give you `lf` endings, i.e. before you have even downloaded the repository, this default needs to be overridden _**before you clone the companion repository**_. In a git bash window type:

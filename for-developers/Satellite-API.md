@@ -4,7 +4,7 @@ sidebar_label: Satellite API
 sidebar_position: 90
 ---
 
-It is possible to remotely connect a 'Stream Deck' to companion so that it appears as its own device and follows the paging model. This is different to how the OSC/TCP/UDP servers operate.
+It is possible to remotely connect a 'Stream Deck' to companion so that it appears as its own device and follows the paging model. This is different from how the OSC/TCP/UDP servers operate.
 
 This page documents the protocol. The intention is to only ever add non-breaking functionality to this API, and to keep this document updated with new functionality as it is added.
 
@@ -153,9 +153,9 @@ You must respond with `PONG payload`
 
 Optional parameters:
 
-- `BITMAP` base64 encoded pixel data. This is only sent for devices which were added where `BITMAPS` is enabled. Resolution follows the size defined by the `BITMAPS`, also on the version of the api. Currently encoded as 8bit RGB (this may be configurable in the future).
-- `COLOR` hex or css encoded 8bit RGB color for the key background. This is only sent for devices which were added where `COLORS` was true
-- `TEXTCOLOR` hex or css encoded 8bit RGB color for the key text. This is only sent for devices which were added where `COLORS` was true (added in v1.6)
+- `BITMAP` base64 encoded pixel data. This is only sent for devices which were added where `BITMAPS` is enabled. Resolution follows the size defined by the `BITMAPS` (if using a suitable API version). Currently encoded as 8-bit RGB (this may be configurable in the future).
+- `COLOR` hex or css encoded 8-bit RGB color for the key background. This is only sent for devices which were added where `COLORS` was true
+- `TEXTCOLOR` hex or css encoded 8-bit RGB color for the key text. This is only sent for devices which were added where `COLORS` was true (added in v1.6)
 - `TEXT` base64 encoded text as should be displayed on the key. This is only sent for devices which were added where `TEXT` was true
 - `FONT_SIZE` numeric size that should be used when displaying the text on the key. This is only sent for devices which were added where `TEXT_STYLE` was true (added in v1.4.0)
 

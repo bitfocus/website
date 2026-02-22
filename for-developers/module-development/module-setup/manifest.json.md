@@ -7,13 +7,13 @@ description: Specification of the Companion manifest file
 
 Starting with Companion 3.0, Companion looks at the `companion/manifest.json` file for module information (before 3.0 it looked at `package.json`) This provides a companion specific and programming language agnostic manifest about your module. In the future this will allow us to do more powerful things!
 
-You can see the auto-generated documentation for this file as a typescript interface [here](https://bitfocus.github.io/companion-module-base/interfaces/ModuleManifest.html).
+Read the [auto-generated documentation for manifest.json](https://bitfocus.github.io/companion-module-base/interfaces/ModuleManifest.html) for more details.
 
 Tip: At any point you can validate your `manifest.json` by running `yarn companion-module-check`.
 
-### Format
+## Format
 
-If you are comfortable reading or working with JSON Schema, you can find the formal definition [here](https://github.com/bitfocus/companion-module-base/blob/main/assets/manifest.schema.json)
+If you are comfortable reading or working with JSON Schema, you can find the [formal definition in the module-base repo](https://github.com/bitfocus/companion-module-base/blob/main/assets/manifest.schema.json)
 
 A full manifest definition is:
 
@@ -46,7 +46,7 @@ A full manifest definition is:
 }
 ```
 
-### Properties
+## Properties
 
 - `id` unique id of your module. This has to match the repository name excluding the `companion-module-`
 - `name` ???
@@ -68,4 +68,4 @@ The runtime block is defined as:
 - `type` This can be either `node18` or `node22`, depending on the required version of Node.js. In the future this may allow for other languages to be used.
 - `api` This must be `nodejs-ipc`. It defines the protocol used between your module and Companion. In the future more options will be possible, to allow for other languages.
 - `apiVersion` This should be left as `0.0.0`, the build process populates with the correct value
-- `entrypoint` The main javascript file for your module. This is what companion will execute to start your module.
+- `entrypoint` The main JavaScript file for your module. This is what companion will execute to start your module.

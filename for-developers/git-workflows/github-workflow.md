@@ -24,7 +24,7 @@ The following outline names the bitfocus remote "origin" and your remote fork "p
 
 ## 1a. Clone Companion to a local repository
 
-:::important[Windows Users!]
+:::warning[Windows Users!]
 If you are cloning to a Windows computer be sure to [configure git line-endings as described here](installing-git.md#configure-git) _**before**_ cloning Companion.
 :::
 
@@ -42,7 +42,7 @@ The Bitfocus repository is read-only for most users. In the next step we will cr
 
 ## 1b. Fork Companion to your GitHub account
 
-Back on the [Companion GitHub page](https://github.com/bitfocus/companion) or the module's GitHub page, click on the `Fork` button in the Code tab. This will create a repository under your Github account that you can write to.
+Back on the [Companion GitHub page](https://github.com/bitfocus/companion) or the module's GitHub page, click on the `Fork` button in the Code tab. This will create a repository under your GitHub account that you can write to.
 
 **updating**: Once the fork has been created, use the "Sync Fork" button in GitHub to keep it up-to-date.
 

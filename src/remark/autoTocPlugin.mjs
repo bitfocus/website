@@ -3,12 +3,18 @@
  *
  * When a document has `auto_toc: true` in its frontmatter, this plugin reads
  * all sibling `.md` files in the same directory, extracts their titles and
- * headings, and appends an organized TOC to the document.
+ * headings, and appends a bulleted TOC to the document.
+ *
+ * If subdirectories exist, they will be listed with their files as the "content"
+ *
+ * auto_toc: number | boolean - if number, only include headers to that H# level. If `true`, go up to H3.
  */
-import { readFileSync, readdirSync } from 'node:fs'
-import { dirname, join } from 'node:path'
+import { readFileSync, readdirSync, existsSync } from 'node:fs'
+import { dirname, basename, join } from 'node:path'
 
-/** Parse YAML frontmatter from a markdown string (simple key: value only). */
+/** Parse YAML frontmatter from a markdown string (simple key: value only).
+ * Note: a possibly better way to do this would be with npm gray-matter. Leaving this for now
+ */
 function parseFrontmatter(content) {
 	const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)
 	if (!match) return { frontmatter: {}, body: content }
@@ -84,21 +90,53 @@ function parseInlineContent(text) {
 
 export default function autoTocPlugin() {
 	return (tree, vfile) => {
-		if (!vfile.data?.frontMatter?.auto_toc) return
+		const auto_toc = vfile.data?.frontMatter?.auto_toc
+		if (!auto_toc) return
 
+		const depth = typeof auto_toc === 'number' ? auto_toc : 3 // max header-level depth
 		const dir = dirname(vfile.path)
-		const files = readdirSync(dir).filter((f) => f.endsWith('.md') && !f.startsWith('index'))
+		const vfilename = basename(vfile.path)
+		const files = readdirSync(dir).filter((f) => f.endsWith('.md') && !f.startsWith(vfilename))
+		const subdirs = readdirSync(dir).filter((f) => existsSync(join(dir, f, '_category_.json')))
 
-		const pages = files.map((f) => {
-			const content = readFileSync(join(dir, f), 'utf-8')
-			const { frontmatter, body } = parseFrontmatter(content)
+		const getPages = (fileList, dir) =>
+			fileList.map((f) => {
+				const content = readFileSync(join(dir, f), 'utf-8')
+				const { frontmatter, body } = parseFrontmatter(content)
+				let title = frontmatter.sidebar_label?.replace(/└─ */, '') || frontmatter.title || f.replace(/\.md$/, '')
+				// replace enclosing quotes, if present. putting this in parseFrontmatter didn't work for some reason.
+				title = title.replaceAll(/^["']|["']$/g, '')
+				return {
+					slug: f.replace(/\.md$/, ''),
+					title: title,
+					sidebarPosition: parseInt(frontmatter.sidebar_position || '0', 10),
+					headings: extractHeadings(body),
+					files: [],
+				}
+			})
+
+		let pages = getPages(files, dir)
+
+		// TODO: handle directories inside the subdir
+		// compile a list of files inside a subdir:
+		const dirs = subdirs.map((d) => {
+			const subdir = join(dir, d)
+			const raw = readFileSync(join(subdir, '_category_.json'), 'utf-8')
+			const frontmatter = JSON.parse(raw)
+			const indexfile = frontmatter.link?.id ?? 'index.md' // if link is missing, it appears to default to a doc named index.md, if present.
+			const subfiles = readdirSync(subdir).filter((f) => f.endsWith('.md') && !f.startsWith(indexfile))
+			const subpages = getPages(subfiles, subdir)
+			subpages.sort((a, b) => a.sidebarPosition - b.sidebarPosition)
 			return {
-				slug: f.replace(/\.md$/, ''),
-				title: frontmatter.title || f.replace(/\.md$/, ''),
-				sidebarPosition: parseInt(frontmatter.sidebar_position || '0', 10),
-				headings: extractHeadings(body),
+				slug: d,
+				title: '> ' + (frontmatter.label || d),
+				sidebarPosition: frontmatter.position || 0,
+				headings: [],
+				files: subpages,
 			}
 		})
+
+		pages = pages.concat(dirs)
 
 		// Ascending sidebar_position → most-negative first → newest version on top
 		pages.sort((a, b) => a.sidebarPosition - b.sidebarPosition)
@@ -108,7 +146,7 @@ export default function autoTocPlugin() {
 			// ### [Page Title](./slug)
 			nodes.push({
 				type: 'heading',
-				depth: 3,
+				depth: 3, // make page name h3
 				data: {
 					hProperties: {
 						className: 'auto-toc-heading',
@@ -117,7 +155,9 @@ export default function autoTocPlugin() {
 				children: [
 					{
 						type: 'link',
-						url: `./${page.slug}`,
+						// folder URLs need a trailing slash in order for links on the target page (not the link itself) to work!
+						//  i.e. w/o this the url is:  ""./category" instead of ""./category/"" and the links in index.md will go to ""./subfile" instead of ""./category/subfile"
+						url: `./${page.slug}` + (page.files.length > 0 ? '/' : ''),
 						children: [{ type: 'text', value: page.title }],
 					},
 				],
@@ -129,22 +169,46 @@ export default function autoTocPlugin() {
 					type: 'list',
 					ordered: false,
 					spread: false,
-					children: page.headings.map((h) => ({
-						type: 'listItem',
-						spread: false,
-						children: [
+					children: page.headings
+						.filter((h) => h.level <= depth)
+						.map((h) => ({
+							type: 'listItem',
+							spread: false,
+							children: [
+								{
+									type: 'paragraph',
+									children: [
+										{
+											type: 'link',
+											url: `./${page.slug}#${h.id}`,
+											children: parseInlineContent(h.text),
+										},
+									],
+								},
+							],
+						})),
+				})
+			}
+
+			// Bullet list of each subdirectory file as a link
+			if (page.files.length > 0) {
+				nodes.push({
+					type: 'paragraph',
+					children: page.files.flatMap((subfile) => {
+						return [
 							{
-								type: 'paragraph',
-								children: [
-									{
-										type: 'link',
-										url: `./${page.slug}#${h.id}`,
-										children: parseInlineContent(h.text),
-									},
-								],
+								type: 'text',
+								// note: the "spaces" before are U+2800: unicode Braille Pattern Blank
+								value: subfile === page.files.at(-1) ? '⠀⠀└── ' : '⠀⠀├── ',
 							},
-						],
-					})),
+							{
+								type: 'link',
+								url: `./${page.slug}/${subfile.slug}`,
+								children: [{ type: 'text', value: subfile.title }],
+							},
+							{ type: 'break' },
+						]
+					}),
 				})
 			}
 		}
