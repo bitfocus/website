@@ -107,7 +107,7 @@ handleHttpRequest(request: CompanionHTTPRequest): CompanionHTTPResponse | Promis
     const htmlDir = path.resolve(__dirname, 'html')
     const requestedFile = endpoint === '' ? 'index.html' : endpoint
     const filePath = path.resolve(htmlDir, requestedFile)
-    if (!filePath.startsWith(htmlDir)) {
+    if (!filePath.startsWith(htmlDir + path.sep) && filePath !== htmlDir) {
       return { status: 403, body: 'Forbidden' }
     }
 
