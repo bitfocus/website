@@ -9,6 +9,10 @@ sidebar_position: 2
 
 This guide walks you through setting up Companion Satellite to connect your local surfaces to a remote Companion server.
 
+:::danger Security Notice
+Do not expose Companion's TCP ports directly to the internet. Satellite should always connect over a trusted private network or VPN — not via a publicly accessible IP address or port-forwarded router.
+:::
+
 ## Before You Open Satellite
 
 Before launching Companion Satellite, complete the following steps:
@@ -16,6 +20,10 @@ Before launching Companion Satellite, complete the following steps:
 - Connect the Stream Deck or other surfaces that you want to use.
 - Close the Elgato Stream Deck app. Companion Satellite will not detect your device if the Elgato Stream Deck app is open.
 - Close the application for any other surface types you wish to use.
+
+:::info
+Companion 3.4.0 or newer is required to use Satellite.
+:::
 
 ## Start the Program
 

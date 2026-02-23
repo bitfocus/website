@@ -1,11 +1,12 @@
 import type { ReactNode } from 'react'
-import Link from '@docusaurus/Link'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import Layout from '@theme/Layout'
 import Heading from '@theme/Heading'
 
 import landingStyles from './landing.module.css'
 import UserGuideLink from '../UserGuideLink'
+import { HeroButtons, PrimaryHeroButton, SecondaryHeroButton, heroButtonStyles } from '../components/HeroButtons'
+import { BenefitsSection, Benefit, GitHubSection } from '../components/SharedSections'
 
 function HeroSection() {
 	return (
@@ -35,26 +36,15 @@ function HeroSection() {
 				workflows right at your fingertips.
 			</p>
 
-			<div className={landingStyles.heroButtons}>
-				<Link
-					className={`${landingStyles.primaryButton} ${landingStyles.heroButton}`}
-					href="https://l.companion.free/q/NWWgIdrpT"
-					target="_blank"
-				>
-					<span>Download</span>
-					<span className={landingStyles.buttonSubtitle}>Win / Mac / Linux</span>
-				</Link>
-				<UserGuideLink className={`${landingStyles.secondaryButton} ${landingStyles.heroButton}`} to="./">
+			<HeroButtons>
+				<PrimaryHeroButton href="https://l.companion.free/q/NWWgIdrpT" subtitle="Win / Mac / Linux">
+					Download
+				</PrimaryHeroButton>
+				<UserGuideLink className={`${heroButtonStyles.secondaryButton} ${heroButtonStyles.heroButton}`} to="./">
 					User Guide
 				</UserGuideLink>
-				<Link
-					className={`${landingStyles.secondaryButton} ${landingStyles.heroButton}`}
-					href="https://l.companion.free/q/apxyeOnyk"
-					target="_blank"
-				>
-					Sponsor Companion
-				</Link>
-			</div>
+				<SecondaryHeroButton href="https://l.companion.free/q/apxyeOnyk">Sponsor Companion</SecondaryHeroButton>
+			</HeroButtons>
 		</section>
 	)
 }
@@ -104,26 +94,20 @@ function FeaturesAndVideoSection() {
 	)
 }
 
-function BenefitsSection() {
+export default function Home(): ReactNode {
+	const { siteConfig } = useDocusaurusContext()
 	return (
-		<section className={landingStyles.benefitsSection}>
-			<div className={landingStyles.sectionContainer}>
-				<div
-					style={{
-						display: 'flex',
-						flexWrap: 'wrap',
-						gap: '2.5rem',
-						justifyContent: 'center',
-					}}
-				>
-					<div
-						style={{
-							textAlign: 'center',
-							flex: '1 1 300px',
-							maxWidth: '400px',
-						}}
-					>
-						<div style={{ marginBottom: '1rem' }}>
+		<Layout
+			title={`${siteConfig.title} User Guide`}
+			description="Companion elevates the affordable Elgato Stream Deck and similar devices into professional control surfaces for an extensive range of equipment and applications. From presentation switchers and broadcast equipment to video playback software and home automation systems, Companion delivers studio-grade control, putting powerful workflows right at your fingertips."
+		>
+			<main>
+				<HeroSection />
+				<FeaturesAndVideoSection />
+				<BenefitsSection>
+					<Benefit
+						title="Free and open source!"
+						icon={
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								fill="none"
@@ -138,30 +122,14 @@ function BenefitsSection() {
 									d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"
 								/>
 							</svg>
-						</div>
-						<h3
-							style={{
-								fontSize: '0.875rem',
-								fontWeight: 500,
-								color: 'var(--ifm-heading-color)',
-								marginBottom: '0.5rem',
-							}}
-						>
-							Free and open source!
-						</h3>
-						<p style={{ fontSize: '0.875rem', color: '#6b7280' }}>
-							Companion will always stay free, open source and community driven. You're very welcome to help us by
-							contributing or donating!
-						</p>
-					</div>
-					<div
-						style={{
-							textAlign: 'center',
-							flex: '1 1 300px',
-							maxWidth: '400px',
-						}}
+						}
 					>
-						<div style={{ marginBottom: '1rem' }}>
+						Companion will always stay free, open source and community driven. You're very welcome to help us by
+						contributing or donating!
+					</Benefit>
+					<Benefit
+						title="Trusted by your local technician"
+						icon={
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								fill="none"
@@ -176,30 +144,14 @@ function BenefitsSection() {
 									d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5"
 								/>
 							</svg>
-						</div>
-						<h3
-							style={{
-								fontSize: '0.875rem',
-								fontWeight: 500,
-								color: 'var(--ifm-heading-color)',
-								marginBottom: '0.5rem',
-							}}
-						>
-							Trusted by your local technician
-						</h3>
-						<p style={{ fontSize: '0.875rem', color: '#6b7280' }}>
-							Most places you go in the AV and broadcast industry, you can find someone using Companion for something.
-							We're very proud of that.
-						</p>
-					</div>
-					<div
-						style={{
-							textAlign: 'center',
-							flex: '1 1 300px',
-							maxWidth: '400px',
-						}}
+						}
 					>
-						<div style={{ marginBottom: '1rem' }}>
+						Most places you go in the AV and broadcast industry, you can find someone using Companion for something.
+						We're very proud of that.
+					</Benefit>
+					<Benefit
+						title="Companion is brand agnostic"
+						icon={
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								fill="none"
@@ -214,81 +166,12 @@ function BenefitsSection() {
 									d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z"
 								/>
 							</svg>
-						</div>
-						<h3
-							style={{
-								fontSize: '0.875rem',
-								fontWeight: 500,
-								color: 'var(--ifm-heading-color)',
-								marginBottom: '0.5rem',
-							}}
-						>
-							Companion is brand agnostic
-						</h3>
-						<p style={{ fontSize: '0.875rem', color: '#6b7280' }}>
-							Not a part of a closed eco system. The project strive to be as open as possible, and support controlling
-							as many products as possible, regardless of brand.
-						</p>
-					</div>
-				</div>
-			</div>
-		</section>
-	)
-}
-
-function GitHubSection() {
-	return (
-		<section className={landingStyles.githubSection}>
-			<div className={landingStyles.sectionContainer}>
-				<Link href="https://l.companion.free/q/cEm4EqPps" target="_blank">
-					<img
-						alt="github"
-						src="img/github_logo.png"
-						width={120}
-						height={32}
-						style={{
-							opacity: 0.5,
-							margin: '0 auto',
-							transition: 'opacity 0.2s',
-						}}
-						onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.8')}
-						onMouseLeave={(e) => (e.currentTarget.style.opacity = '0.5')}
-					/>
-				</Link>
-				<Heading
-					as="h3"
-					className={landingStyles.githubTitle}
-					style={{
-						fontSize: '1.25rem',
-						marginBottom: '2rem',
-						marginTop: '1rem',
-					}}
-				>
-					Open Source on GitHub
-				</Heading>
-				<p
-					className={landingStyles.githubDescription}
-					style={{ fontSize: '1rem', maxWidth: '42rem', margin: '0 auto' }}
-				>
-					Companion is completely open source and welcomes contributions from the community. Whether you're fixing bugs,
-					adding features, or creating new device modules, your contributions help make Companion better for everyone.
-				</p>
-			</div>
-		</section>
-	)
-}
-
-export default function Home(): ReactNode {
-	const { siteConfig } = useDocusaurusContext()
-	return (
-		<Layout
-			title={`${siteConfig.title} User Guide`}
-			description="Companion elevates the affordable Elgato Stream Deck and similar devices into professional control surfaces for an extensive range of equipment and applications. From presentation switchers and broadcast equipment to video playback software and home automation systems, Companion delivers studio-grade control, putting powerful workflows right at your fingertips."
-		>
-			<main>
-				<HeroSection />
-				<FeaturesAndVideoSection />
-				<BenefitsSection />
+						}
+					>
+						Not a part of a closed eco system. The project strive to be as open as possible, and support controlling as
+						many products as possible, regardless of brand.
+					</Benefit>
+				</BenefitsSection>
 				<GitHubSection />
 			</main>
 		</Layout>
