@@ -14,7 +14,7 @@ A majority of it will translate, but it will not be perfect match. You may want 
 
 ## Background
 
-In Companion 3.0, we rewrote the module-api from scratch. We chose to do this because the old api had grown very organically over 5 years, and was starting to show various issues. The main issues was modules were running in the main companion thread, and method signatures were assuming various calls to be synchronous, and modules being able to access various internals of companion (and some making concerningly large use of that ability).  
+In Companion 3.0, we rewrote the module-api from scratch. We chose to do this because the old api had grown very organically over 5 years, and was starting to show various issues. The main issues was modules were running in the main companion thread, and method signatures were assuming various calls to be synchronous, and modules being able to access various internals of companion (and some making concerningly large use of that ability).
 Rather than trying to quickly fix up the api, it was decided to rethink it entirely.
 
 The general shape of the api should be familiar, but many methods names have been changed, and the whole api is written to rely on promises a lot more when before either callbacks were abused or methods would be synchronous.
@@ -206,7 +206,7 @@ Note: Even when there are no actions or feedbacks, you would need to put those o
 
 Note: Remember that the `rgb` and `rgbRev` methods no longer exist on your instance class. They have been renamed to `combineRgb` and `splitRgb` and should be imported from `'@companion-module/base'`.
 
-The latch button mode has been replaced with a more flexible 'stepped' system. On each button, you can have as many steps as you wish, each with their own down/up/rotate actions. When releasing the button, it will by default automatically progress to the next step, or you can disable that and use an internal action to change the current step of a button.  
+The latch button mode has been replaced with a more flexible 'stepped' system. On each button, you can have as many steps as you wish, each with their own down/up/rotate actions. When releasing the button, it will by default automatically progress to the next step, or you can disable that and use an internal action to change the current step of a button.
 While is is wordier and more complex to make a latched button, this allows for much more complex flows, such as using another button as a 'shift' key, or having one 'go' button which runs the whole pre-programmed show.
 
 The `steps` property is an array of objects. Each object should be at a minimum `{ down: [], up: [] }` (`rotate_left` and `rotate_right` are also valid here).
@@ -438,13 +438,13 @@ Inside of init, you are free to do things as you wish. But make sure that any me
 
 Tip: if you do a `this.checkFeedbacks()` inside of `init()`, you can remove that line
 
-The method `config_fields` should be renamed to `getConfigFields`.  
-The method `updateConfig` should be renamed to `configUpdated`, it too is expected to return a Promise and should also be marked as async.  
+The method `config_fields` should be renamed to `getConfigFields`.
+The method `updateConfig` should be renamed to `configUpdated`, it too is expected to return a Promise and should also be marked as async.
 The method `destroy` is expected to return a Promise and should also be marked as async.
 
 If you have a method called `action` or `feedback` still, make sure it has been migrated fully in the earlier steps, then remove it as it will no longer be called.
 
-Some other methods provided by companion have been changed.  
+Some other methods provided by companion have been changed.
 Any where the name starts with an underscore must not be used as they are internal methods that will change without notice.
 
 - The static method `CreateConvertToBooleanFeedbackUpgradeScript` has been removed and can be imported from `@companion-module/base` instead
@@ -500,8 +500,8 @@ During the build process of the releases your module package will be generated a
 
 Sometimes once built there are issues that prevent a package from running, so it is mandatory to test it before distributing it. In our experience, issues often occur when working with files from disk, or introducing a new dependency that doesn't play nice. Once you have done this once, if you are just changing some internal logic you probably don't need to repeat this unless you want to be sure.
 
-You can build your module into this format with `yarn companion-module-build`. If this was successful, there should now be a `pkg` folder and a `pkg.tgz` file. These both contain the build version of your module!  
-If you create an empty file `DEBUG-PACKAGED` in your module folder, then companion will read the code from `pkg` instead. This will let you test it.  
+You can build your module into this format with `yarn companion-module-build`. If this was successful, there should now be a `pkg` folder and a `pkg.tgz` file. These both contain the build version of your module!
+If you create an empty file `DEBUG-PACKAGED` in your module folder, then companion will read the code from `pkg` instead. This will let you test it.
 You probably don't need to do a very thorough test, as long as it starts and connects to your device and a couple of actions work it should be fine.
 
 Make sure to remove this `DEBUG-PACKAGED` file once you are done testing it, or next time you try to update your module it will keep loading the copy from `pkg`!
@@ -510,7 +510,7 @@ If you encountered any issues in this process that you need help with, then have
 
 ### 15) Feedback
 
-Have any thoughts/feedback on this process? Anything in the docs that should be improved? Do [let us know](https://github.com/bitfocus/companion-module-base/issues), we are interested in your feedback!  
+Have any thoughts/feedback on this process? Anything in the docs that should be improved? Do [let us know](https://github.com/bitfocus/companion-module-base/issues), we are interested in your feedback!
 We won't be able to cater to everything you dislike about the changes, as other modules are already using these new apis, but perhaps we can make the transition smoother?
 
 Have an idea of a new connection helper that would be beneficial to you? Or have some utility code that you are copying into multiple modules? We are interested to hear this. We are happy to add more to `@companion-module/base` if it will be useful to many modules and is unlikely to result in breaking changes.

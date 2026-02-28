@@ -38,10 +38,10 @@ and in your `companion/manifest.json`:
 
 These two structures are linked by the common id, in the future this will allow us to automate device discovery further.
 
-In the UI, this field will look like:  
+In the UI, this field will look like:
 ![image](../images/bonjour.png)
 
-The 'Manual' option is always shown, and must be handled to allow users to manually specify an address for environments where Bonjour does not work.  
+The 'Manual' option is always shown, and must be handled to allow users to manually specify an address for environments where Bonjour does not work.
 This can be achieved with further config fields such as:
 
 ```js
@@ -61,7 +61,7 @@ In your module code, the `bonjour_host` will have a value such as `10.0.0.1:8000
 
 ### Writing your Bonjour Query
 
-We currently support a subset of the possible query options. In all queries, the `type` and `protocol` must be set.  
+We currently support a subset of the possible query options. In all queries, the `type` and `protocol` must be set.
 If your device needs further filtering, this can be done by specifying any `txt` field values the entries must have.
 
 Since [API 1.10](../api-changes/v1.10.md) each entry in the manifest under `bonjourQueries` can be an array, to allow you to run multiple queries in parallel. This can be useful when supporting multiple models which use slightly different queries

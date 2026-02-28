@@ -21,7 +21,7 @@ The process may involve a bit of work, but it is pretty straightforward.
 
 ### 1. Update feedback definitions
 
-The feedback definitions need updating to the new style.  
+The feedback definitions need updating to the new style.
 From:
 
 ```javascript
@@ -161,7 +161,7 @@ runEntrypoint(MyInstance, [myOtherUpgradeScript, upgradeToBooleanFeedbacks])
 ```
 
 This script will handle moving the options properties across to the style object for you.
-It handles the most common cases of property naming, which may not match what your module does.  
+It handles the most common cases of property naming, which may not match what your module does.
 If this is the case, you can customise the behaviour by providing more details:
 
 ```js

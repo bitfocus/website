@@ -62,8 +62,8 @@ See also our instructions for [debugging your module](./module-debugging.md)
 
 ## Test the module
 
-In any case, your module should be tested throughout at different stages of its life.  
-You should check the compatibility to the Companion core, especially to different versions of the configuration fields. Some users may not have used Companion in a long time and their configuration file might look different than what you expect.  
+In any case, your module should be tested throughout at different stages of its life.
+You should check the compatibility to the Companion core, especially to different versions of the configuration fields. Some users may not have used Companion in a long time and their configuration file might look different than what you expect.
 And last but not least you should check **all** your actions with **all** the options and feedbacks and whatever with the real device (as much as possible). Most bugs we find are typos, which would have easily been detected by complete testing. Also please don't rely solely on simulations where possible, often the real device reacts slightly differently than the simulator.
 
 ## Share your code

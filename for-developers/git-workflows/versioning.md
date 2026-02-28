@@ -27,7 +27,7 @@ Companion is not a monolithic application and different version numbers apply to
 
 We are following the standards given by semantic versioning, adopted for end-user applications. That means wherever semantic versioning relates to an API, we relate to end-user functionality.
 
-- The major-version is counted up if there are breaking changes in the core of companion (on either a technical level, or a significant change in how users use the application). E.g.: stored database files will not be usable any more, APIs will not be usable any more  
+- The major-version is counted up if there are breaking changes in the core of companion (on either a technical level, or a significant change in how users use the application). E.g.: stored database files will not be usable any more, APIs will not be usable any more
   The major version is not a marketing instrument, we hope to avoid breaking changes as long as possible and so the major version should not change often. This is does not mean lack of innovation and actually less major versions are good.
 - The minor-version is counted up if functionality is added or changed in the core of companion. Added or changed functionality means that there is an intention to add or change functionality which the user can recognize. Typical examples are: a new item, better naming of an item, changed/better color of an item, changed/improved placement, changed behaviour like search giving grouped results instead ungrouped or results with scrollbars instead of no scrollbars.
 - The patch-version is counted up if there are changes which do not add or change functionality for the user or the change is that a broken functionality will be fixed. Typical examples are: refactoring code, bundling different versions of libraries or frameworks, fixing a bug without adding new functionality or changing the way it should have been working from the start.
@@ -38,7 +38,7 @@ We are following the standards given by semantic versioning, adopted for end-use
 
 ### Version of Companion's APIs
 
-Other applications or modules communicate with Companion by the use of application programming interfaces (APIs). It is the ultimate goal of API versioning to ensure compatibility.  
+Other applications or modules communicate with Companion by the use of application programming interfaces (APIs). It is the ultimate goal of API versioning to ensure compatibility.
 We are strictly following semantic versioning for our APIs.
 
 ### Version of Modules

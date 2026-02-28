@@ -5,7 +5,7 @@ sidebar_position: 18
 description: Module input field types and definition details.
 ---
 
-Companion has a standardised set of input fields usable across [action](./actions.md), [feedback](./feedbacks.md), or [user-config](./user-configuration.md) definitions.  
+Companion has a standardised set of input fields usable across [action](./actions.md), [feedback](./feedbacks.md), or [user-config](./user-configuration.md) definitions.
 There are some small differences in what is available where, documented here.
 
 ## Option types

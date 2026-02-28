@@ -167,7 +167,7 @@ Since [API v1.5](../api-changes/v1.5.md) (Companion 3.1), Companion provides bui
 
 If you wish to influence the auto-detection behaviour, you can do so by setting `showInvert: false` on a feedback. If this is an existing feedback, make sure to update any existing usages in an [upgrade scripts](./upgrade-scripts.md), to preserve existing behaviour for users.
 
-If your feedback already provides a field to match a true or false state, we strongly advise removing it and replacing existing usage with the built-in invert property.  
+If your feedback already provides a field to match a true or false state, we strongly advise removing it and replacing existing usage with the built-in invert property.
 A helper function (`CreateUseBuiltinInvertForFeedbacksUpgradeScript`) is provided to generate an upgrade script for your module to convert an existing invert checkbox to the built-in system. It expects a parameter describe the feedbacks to process, and the name of the invert checkbox being replaced:
 
 ```js

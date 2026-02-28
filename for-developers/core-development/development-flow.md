@@ -94,7 +94,7 @@ To debug the back-end code you can:
 
    In VS Code, the simplest way to debug is to open a _Javascript Debug Terminal_ from the _Add Terminal_ pulldown menu (the '+' menu) and run either `yarn dev` (normal logging) or `yarn dev:debug` (voluminous reporting, debug-level: 'silly'). It is also possible to start these options from a menu using "_Debug: Debug npm script_"
 
-:::tip  
+:::tip
 To include dev modules when running `yarn dev`, put the following in a file named `.env` in your top-level companion folder:
 
 ```

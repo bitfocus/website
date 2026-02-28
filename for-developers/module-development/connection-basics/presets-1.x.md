@@ -6,7 +6,7 @@ description: Module presets definition details.
 ---
 
 :::warning
-This describes how presets worked **before** the overhaul in the [API 2.0](../api-changes/v2.0.md).  
+This describes how presets worked **before** the overhaul in the [API 2.0](../api-changes/v2.0.md).
 If you are using the newer API, check the [new presets page](./presets.md)
 :::
 

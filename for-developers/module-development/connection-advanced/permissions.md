@@ -5,7 +5,7 @@ sidebar_position: 10
 description: Enable advanced runtime permissions for your module
 ---
 
-Since [API 1.12](../api-changes/v1.12.md) modules are run with some restrictive permissions applied. The intention here is to limit some of the more dangerous abilities of the nodejs runtime, so that we can warn users about modules which require them.  
+Since [API 1.12](../api-changes/v1.12.md) modules are run with some restrictive permissions applied. The intention here is to limit some of the more dangerous abilities of the nodejs runtime, so that we can warn users about modules which require them.
 Think of it as similar to how your phone prompts you to accept a list of permissions when installing an app.
 
 To enable any of these, start by adding to the `runtime` object in your manifest:

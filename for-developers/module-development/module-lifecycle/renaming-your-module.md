@@ -7,7 +7,7 @@ description: How to rename your module after having released it.
 
 Occasionally you will need to rename a module, perhaps for example, to make the name more inclusive as you add more devices, or the manufacturer releases a new device.
 
-1. Ask in the module-development slack for approval on the new name  
+1. Ask in the module-development slack for approval on the new name
    This is so that we can be sure the new name conforms to our standard structure of `companion-module-manufacturer-product` (or `companion-module-manufacturer-protocol`).
 
 2. Once approved, the team will be able to rename the GitHub repository for you.

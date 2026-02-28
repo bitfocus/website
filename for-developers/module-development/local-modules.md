@@ -12,9 +12,9 @@ Starting with Companion 3.0 you can develop, test and use your own module code w
 The structure is setup so that you can load multiple modules at the same time. A module folder is specified as described below.
 Inside of this folder should be one or more folders that use the following layouts, with each folder corresponding to a different module.
 
-1. A git clone of a module from github  
+1. A git clone of a module from github
    This requires some additional setup, as the module will need to be prepared with a `yarn install`, and for some, a `yarn build`.
-2. Packaged output  
+2. Packaged output
    This is a folder that contains a `companion/manifest.json`, `companion/HELP.md`, `package.json`, `main.js` (or another name), and possibly a few other files.
    No extra work is needed for this to be loaded
 
@@ -32,7 +32,7 @@ Inside of this folder should be one or more folders that use the following layou
 
 - In the **Developer** section click on _**Select**_ to specify the directory where you have stored your developer modules.
 - Make sure **Enable Developer Modules** is switched on. You can now close the window
-- Click on "Launch GUI" to open the Admin interface. In the connections list you should find the connection provided by the developer module. If the developer module is using the same internal ID as a module that is distributed with Companion, be sure to choose the "dev" version in the configuration.  
+- Click on "Launch GUI" to open the Admin interface. In the connections list you should find the connection provided by the developer module. If the developer module is using the same internal ID as a module that is distributed with Companion, be sure to choose the "dev" version in the configuration.
   If you don't see the developers module, please check the log and switch on debug, maybe the module has crashed.
 - You can replace a developers module or files within it while Companion is running. Companion will detect the change and restart only that module without affecting other modules. You can also force a module to reload by disabling and re-enabling a connection.
 
@@ -51,7 +51,7 @@ the **Developer Module Path** is _**mydev**_ and not _mydev/module1_.
 - Find the developers module folder on your installation. This is often `/opt/companion-module-dev/`.
 - Check the section above on how to structure this folder
 - Run Companion.
-- Open the Admin interface in your Browser. In the connections list you should find the connection provided by the developer module. If the developer module is using the same internal ID as a module that is distributed with Companion, it will override the distributed version.  
+- Open the Admin interface in your Browser. In the connections list you should find the connection provided by the developer module. If the developer module is using the same internal ID as a module that is distributed with Companion, it will override the distributed version.
   If you don't see the developers module, please check the log and switch on debug, maybe the module has crashed.
 
 ## Headless development

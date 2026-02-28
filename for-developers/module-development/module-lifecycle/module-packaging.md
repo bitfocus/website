@@ -56,7 +56,7 @@ Webpack has a few options for how `__dirname` behaves in packaged code. By defau
 ### Including extra data files
 
 :::tip
-Since [API 1.12](../api-changes/v1.12.md), your module by default has read-only access to just your module folder, and not the whole filesystem.  
+Since [API 1.12](../api-changes/v1.12.md), your module by default has read-only access to just your module folder, and not the whole filesystem.
 You can [opt into more permissions](../connection-advanced/permissions.md) if you need it, but this will require permission from the user in the future.
 :::
 
@@ -70,8 +70,8 @@ module.exports = {
 }
 ```
 
-You can use any glob pattern to define files to be copied.  
-All files will be copied to the root folder of the package, which is the same folder where the packaged main script is in. Make sure that there are no name conflicts when copying files from different folders.  
+You can use any glob pattern to define files to be copied.
+All files will be copied to the root folder of the package, which is the same folder where the packaged main script is in. Make sure that there are no name conflicts when copying files from different folders.
 Make sure you don't copy files you don't need, as these files will be included in the installation for all users of Companion.
 
 ### Using native dependencies
@@ -83,7 +83,7 @@ Read more about [permissions](../connection-advanced/permissions.md).
 
 Native dependencies are not possible to bundle in the same way as js ones. So to support these requires a bit of extra work on your part.
 
-It is not yet possible to use all native dependencies. We only support ones that publish prebuilt binaries as part of their npm package.  
+It is not yet possible to use all native dependencies. We only support ones that publish prebuilt binaries as part of their npm package.
 This means that some libraries are not possible to use. Reach out if you are affected by this, we would appreciate some input, and can work with you to find or fix a library to be compatible
 
 To support these modules, you should make one of two changes to your build-config.cjs, depending on how the library works.
@@ -98,7 +98,7 @@ module.exports = {
 }
 ```
 
-If the library is using `node-gyp-build`, then there are a couple of options.  
+If the library is using `node-gyp-build`, then there are a couple of options.
 The preferred method is to set `useOriginalStructureDirname: true` in `build-config.cjs`. This changes the value of `__dirname` in your built module, and allows `node-gyp-build` to find its prebuilds.
 
 If you are not able to use `useOriginalStructureDirname: true`, then you can instead mark the dependency as an external:

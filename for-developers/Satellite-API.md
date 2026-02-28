@@ -22,10 +22,10 @@ This lists what versions of Companion introduced support for each API version.
 
 ## API Spec
 
-The server by default runs on port TCP 16622, but this will become configurable in the future. You should make sure to support alternate ports to allow for future compatibility as well as firewalls or router port forwarding.  
+The server by default runs on port TCP 16622, but this will become configurable in the future. You should make sure to support alternate ports to allow for future compatibility as well as firewalls or router port forwarding.
 As of Companion 3.5, it is also possible to use this protocol over websockets, with a default port of 16623.
 
-Each message is presented as a line, with a `\n` or `\r\n` terminator.  
+Each message is presented as a line, with a `\n` or `\r\n` terminator.
 Messages follow the general format of `COMMAND-NAME ARG1=VAL1 ARG2=true ARG3="VAL3 with spaces"\n`.
 Key numbers are in the range of 0-31.
 
@@ -35,7 +35,7 @@ Upon connection you will receive `BEGIN CompanionVersion=2.2.0-d9008309-3449 Api
 
 ## Messages to send
 
-Upon receiving an unknown command, the server will respond with the format `ERROR MESSAGE="Unknown command: SOMETHING"`  
+Upon receiving an unknown command, the server will respond with the format `ERROR MESSAGE="Unknown command: SOMETHING"`
 Known commands will get either a success or error response like the following:
 
 - `COMMAND-NAME ERROR MESSAGE="Some text here"\n`
@@ -51,7 +51,7 @@ Close the connection, removing all registered devices
 
 `PING payload`
 Check the server is alive, with an arbitrary payload
-Responds with `PONG payload`  
+Responds with `PONG payload`
 You must call this at an interval, we recommend every 2 seconds, this is to ensure the connection does't get closed from being idle.
 
 ### Adding a satellite device
@@ -76,7 +76,7 @@ Optional parameters:
 - `TEXT` - true/false whether you want to be streamed button text for display on the buttons (default false)
 - `TEXT_STYLE` - (added in v1.4.0) true/false whether you want to be streamed text style information for display on the buttons (default false)
 - `BRIGHTNESS` - (added in v1.7.0) true/false whether the device supporting changing brightness (default true)
-- `VARIABLES` - (added in v1.7.0) a base64 encoded json array describing any input or output variables supported for this device  
+- `VARIABLES` - (added in v1.7.0) a base64 encoded json array describing any input or output variables supported for this device
    Each item in the array should be of the form:
   ```
   {

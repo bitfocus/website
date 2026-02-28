@@ -5,7 +5,7 @@ sidebar_position: 3
 description: How to set up Authentication with OAuth in the user configuration.
 ---
 
-Some modules need to authenticate against an external service or API.  
+Some modules need to authenticate against an external service or API.
 Companion does not currently have native support for OAuth, so modules are required to do the flow manually.
 
 There are two key challenges to using OAuth with Companion:
@@ -17,7 +17,7 @@ Described below is the current recommended way of supporting OAuth, but many exi
 
 ## Handling the OAuth callback / redirect URL
 
-OAuth needs a stable redirect URL, as it needs to be provided to both Companion and in the application settings you are connecting to.  
+OAuth needs a stable redirect URL, as it needs to be provided to both Companion and in the application settings you are connecting to.
 To aid in this, a small redirector site has been created, which will help abstract this.
 
 This is hosted at `https://bitfocus.github.io/companion-oauth/callback`.
@@ -79,7 +79,7 @@ async handleHttpRequest(request) {
 
 ## Opening the authentication URL
 
-The user needs to open the authentication URL to start the OAuth process.  
+The user needs to open the authentication URL to start the OAuth process.
 As some users will be configuring their Companion remotely, you can't rely on being able to automatically open the url for them.
 
 Most modules currently will put the needed URL in a config field for the user to access, and also write it to the log. Some will also open it automatically.

@@ -11,7 +11,7 @@ For other platforms see: [Initial Setup](setting-up-developer-environment.md) in
 
 Although it is possible to develop directly in Windows, there are occasions when you might want to use a Linux environment under Windows. The key is to use Windows' Subsystem for Linux (WSL).
 
-First install Windows Subsystem for Linux version 2 (WSL2),  
+First install Windows Subsystem for Linux version 2 (WSL2),
 WSL is included with Windows but needs to be activated. Follow [Microsoft’s installation instructions](https://learn.microsoft.com/en-us/windows/wsl/setup/environment). Basically, open a command or powershell window and type:
 
 ```powershell
@@ -22,7 +22,7 @@ After this completes, reboot your computer and WSL will automatically install th
 
 ## Install the basic development tools
 
-Once this is done continue through Microsoft’s instructions, especially  
+Once this is done continue through Microsoft’s instructions, especially
  `sudo apt update && sudo apt upgrade`,
 as well as the instructions to:
 
@@ -34,7 +34,7 @@ If you develop with Visual Studio Code, which we currently recommend, then you c
 
 You will need to install all the prerequisite tools on the WSL machine just like you would do on Linux, as described in the [Setting Up A Developer Environment](setting-up-developer-environment.md).
 
-When you are running Companion from a VS Code terminal, VS Code will know the network ports and create automatic port forwards for you. That means although Companion runs on the virtual machine, you'll be able to access the admin page from your Windows host by accessing localhost or 127.0.0.1 and the used port.  
+When you are running Companion from a VS Code terminal, VS Code will know the network ports and create automatic port forwards for you. That means although Companion runs on the virtual machine, you'll be able to access the admin page from your Windows host by accessing localhost or 127.0.0.1 and the used port.
 That makes it quite convenient but you always have to remember that Companion runs on a virtual machine inside of your computer and that virtual machine has a different IP-address. When you want to access the API of software running on your Windows host, you can't use 127.0.0.1 like you would without WSL. 127.0.0.1 is the localhost of the WSL. WSL sets up a virtual network interface for you and to access your host OS, you have to use 172.28.96.1. Verify this using the command `ip route` in your Linux shell.
 
 ## Set Up Access to USB Ports

@@ -6,7 +6,7 @@ description: Module presets definition details.
 ---
 
 :::info
-This describes the current state of presets in [API 2.0](../api-changes/v2.0.md).  
+This describes the current state of presets in [API 2.0](../api-changes/v2.0.md).
 If your module is using an older API version, you want the [old presets page](./presets-1.x.md).
 :::
 
@@ -79,7 +79,7 @@ this.setPresetDefinitions(structure, presets)
 
 ### Actions
 
-The `steps` property is where the magic happens. This describes what the action will do when pressed. In the typical case a button will have a single step, which will give the behaviour of a normal button.  
+The `steps` property is where the magic happens. This describes what the action will do when pressed. In the typical case a button will have a single step, which will give the behaviour of a normal button.
 You can make a latching button by defining a second step which does something different. By default, each time the button is released it will shift to the next step, this can be disabled by setting `options: { stepAutoProgress: false }` for the preset. This likely isn't very useful right now, due to it not being possible to use internal actions in presets.
 
 You can add as many steps as you like, and build a button which runs through a whole cue list by simply pressing it. There are internal actions that a user can use to change the step manually.
@@ -162,7 +162,7 @@ The feedbackId should match a feedback you have defined, and the options should 
 
 ### Local Variables
 
-You can also set a `localVariables` property to create some local variables on the button. Currently these are limited to be simple static values, intended to make it easier to use a value across the actions, feedbacks and style without repeating it.  
+You can also set a `localVariables` property to create some local variables on the button. Currently these are limited to be simple static values, intended to make it easier to use a value across the actions, feedbacks and style without repeating it.
 By doing this, it becomes much easier for the user to change it if needed. This also allows for better reusing one preset within the preset structure with [the templating groups](#template-groups).
 
 An example:
@@ -287,7 +287,7 @@ If you were using the 'text' preset type previously, these groups will help you 
 
 In a lot of modules, they have many channels/outputs/inputs or some other resource where presets are identical except for one number varying between them.
 
-A simple matrix/video router module, will commonly produce a preset for each input+output combination, to quickly route each input to each output. This can often produce 100s or 1000s of presets which are almost identical.  
+A simple matrix/video router module, will commonly produce a preset for each input+output combination, to quickly route each input to each output. This can often produce 100s or 1000s of presets which are almost identical.
 In some cases, this has caused issues due to the size of the data produced being a performance drain and occasionally making the modules crash on lower powered machines
 
 Instead, groups in the new structure can be defined as 'template' groups. This templating, allows for overriding local variables you defined on the presets with different values.
