@@ -56,8 +56,10 @@ Webpack has a few options for how `__dirname` behaves in packaged code. By defau
 ### Including extra data files
 
 :::tip
+
 Since [API 1.12](../api-changes/v1.12.md), your module by default has read-only access to just your module folder, and not the whole filesystem.
 You can [opt into more permissions](../connection-advanced/permissions.md) if you need it, but this will require permission from the user in the future.
+
 :::
 
 Sometimes it can be useful to store some extra data as text files, or other formats on disk. Once your module is packaged, it wont have access to any files, from the repository unless they are JavaScript which gets included in the bundle or the files are explicitly copied. You will need to do this to allow any `fs.readFile()` or similar calls to work.
@@ -77,8 +79,10 @@ Make sure you don't copy files you don't need, as these files will be included i
 ### Using native dependencies
 
 :::tip
+
 Since [API 1.12](../api-changes/v1.12.md), you have to mark in your manifest.json that you need to do this. In the future we will use this as information for the user.
 Read more about [permissions](../connection-advanced/permissions.md).
+
 :::
 
 Native dependencies are not possible to bundle in the same way as js ones. So to support these requires a bit of extra work on your part.

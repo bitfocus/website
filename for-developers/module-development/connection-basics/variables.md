@@ -14,7 +14,9 @@ The basic workflow is to define your variables using `setVariableDefinitions()`,
 Your module should define the list of variables it exposes by making a call to `this.setVariableDefinitions([ ...some variables here... ])`. You will need to do this as part of your `init()` method, but can also call it at any other time if you wish to change the list of variables exposed.
 
 :::warning
+
 Please try not to call this method too often, as updating the list has a cost. If you are calling it multiple times in a short span of time, consider if it would be possible to batch the calls so it is only done once.
+
 :::
 
 ## Variable definitions
@@ -63,7 +65,9 @@ Please try to batch variable updates whenever possible, as updating the values h
 ## TypeScript typings
 
 :::tip
+
 This was introduced in [API v2.0](../api-changes/v2.0.md), prior to this any strong typings had to be managed yourself
+
 :::
 
 As part of the `InstanceTypes` generic argument passed to `InstanceBase`, a `variables` property must be defined.

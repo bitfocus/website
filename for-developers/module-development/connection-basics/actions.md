@@ -14,7 +14,9 @@ This section explains how to define actions, provide options to the user, and re
 Your module defines the list of actions it supports by making a call to [`this.setActionDefinitions({ ...some actions here... })`](https://bitfocus.github.io/companion-module-base/classes/InstanceBase.html#setactiondefinitions). You will need to do this as part of your `init()` method, but can also call it at any other time if you wish to update the list of actions exposed.
 
 :::warning
+
 Please try not to call this method too often, as updating the list has a cost. If you are calling it multiple times in a short span of time, consider if it would be possible to batch the calls so it is only done once.
+
 :::
 
 ## Action definitions
@@ -100,9 +102,11 @@ const actions = [
 #### Using variables
 
 :::note
+
 As of [API v1.13](../api-changes/v1.13.md) (Companion 4.1), variables in textinput fields are now automatically parsed.
 
 As of [API v2.0](../api-changes/v2.0.md) (Companion 4.3), modules are unable to parse variables themselves, Companion does it for you based on the fields describing of the options.
+
 :::
 
 Between API v1.1 and API v1.14, a `context` object is passed as the second argument in the `callback`, `subscribe`, `unsubscribe` and `learn` callbacks.
@@ -168,7 +172,9 @@ Implementing the [learn option values](../connection-advanced/learn-action-feedb
 ### Result to Custom variable
 
 :::danger
+
 This is an experimental idea, that may be removed without notice
+
 :::
 
 Some action executions return a value which may want to be used elsewhere in Companion. This could be written [to a custom variable](../connection-advanced/setting-custom-variables.md)
@@ -176,7 +182,9 @@ Some action executions return a value which may want to be used elsewhere in Com
 ## TypeScript typings
 
 :::tip
+
 This was introduced in [API v2.0](../api-changes/v2.0.md), prior to this any strong typings had to be managed yourself
+
 :::
 
 As part of the `InstanceTypes` generic argument passed to `InstanceBase`, an `actions` property must be defined.
@@ -229,7 +237,9 @@ const act: CompanionActionDefinition<ActionsSchema['route']['options']> = {
 ```
 
 :::tip
+
 We can't enforce that the options array matches these types, you will have to do that yourself.
+
 :::
 
 These types will also propagate into [presets](./presets.md)

@@ -6,8 +6,10 @@ description: Module presets definition details.
 ---
 
 :::info
+
 This describes the current state of presets in [API 2.0](../api-changes/v2.0.md).
 If your module is using an older API version, you want the [old presets page](./presets-1.x.md).
+
 :::
 
 Presets are a description of ready-made buttons that will be presented to the user in the Presets tab on the Buttons page.
@@ -18,8 +20,10 @@ The user can then drag-and-drop the preset onto the button-grid, to build out co
 In order to add presets to a module, you call `this.setPresetDefinitions(presetsStructure, presetsDefinitions)` much like how you define actions and feedbacks. However for presets you define your presets and a structure defining the layout separately. This allows for a lot more flexibility, and to reduce a lot of repetition
 
 :::tip
+
 Make sure you call this after the `this.setActionDefinitions()` and `this.setFeedbackDefinitions()` calls.
 If you do it before, the variable replacement will be incomplete, and you will get errors in the logs about the missing action and feedback definitions.
+
 :::
 
 ## Preset types
@@ -29,7 +33,9 @@ Currently there is one type of preset. We have plans to introduce more in a futu
 - [Simple Button Preset](https://bitfocus.github.io/companion-module-base/interfaces/CompanionSimplePresetDefinition.html) (`type: "simple"`)
 
 :::info
+
 In API 1.x, there used to be a 'text' preset type too. That has been replaced with the new [structure](#preset-structure) object.
+
 :::
 
 ## Simple button preset definitions
@@ -280,7 +286,9 @@ This allows for much more organisation of presets than before, without creating 
 However, this is still a pretty manual and repetitive way of defining presets. For many, they could use some [templating](#template-groups)
 
 :::tip
+
 If you were using the 'text' preset type previously, these groups will help you create the same effect and are just a bit more formalised.
+
 :::
 
 ### Template Groups

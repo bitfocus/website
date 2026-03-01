@@ -17,7 +17,9 @@ To enable any of these, start by adding to the `runtime` object in your manifest
 ```
 
 :::tip
+
 These permissions are applied during development too. However, when [the debugger](../module-debugging.md#attach-a-debugger) is enabled, the permissions are disabled. Make sure to test the module without the debugger enabled before publishing
+
 :::
 
 ## Worker threads
@@ -63,8 +65,10 @@ If you need read access to more of the filesystem, or write access to the filesy
 ```
 
 :::tip
+
 In a future release of Companion, we intend to require the user to grant access to specific paths to each connection.
 View this as a request for more access, it may or may not be granted by the user.
+
 :::
 
 ## Insecure OpenSSL algorithms

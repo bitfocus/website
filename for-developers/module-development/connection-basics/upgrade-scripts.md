@@ -79,7 +79,9 @@ This may leave other pages of buttons broken as they will have been run through 
 ## Writing an upgrade script
 
 :::tip
+
 Each upgrade script will only get run once for each action and feedback, but it is good practice to write the scripts so that they can be executed multiple times. This will help you when testing your script, or if jumping between versions of companion.
+
 :::
 
 We recommend defining the functions in a dedicated `upgrades.ts` file, as they should not depend on your main class and this helps avoids files growing too long to be manageable.
@@ -115,7 +117,9 @@ const UpgradeScripts = [
 ```
 
 :::warning
+
 It is very important to not _remove_ an upgrade script once it has been defined. You can change old upgrade scripts if needed, but if the number of scripts gets reduced, then Companion will skip the next one you add for some users (it counts how many have been run)
+
 :::
 
 The script gets fed the bits of data you may need to do the upgrades.
@@ -159,7 +163,9 @@ This looks something like:
 ```
 
 :::warning
+
 The options objects on these actions and feedbacks look _very_ different from how they do in the callback of your action or feedback.
+
 :::
 
 ### The return value

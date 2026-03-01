@@ -31,7 +31,9 @@ See topics below for running the launcher and docs in development mode.
 ### Getting Started: Cloning
 
 :::warning[Windows Note]
+
 Be sure to [setup git line-endings behavior](../setting-up-developer-environment.md#3-install-and-setup-git) **before** cloning!
+
 :::
 
 Using your git client, you can clone Companion. To do it from a command line interface, change to the directory you want to contain the repo (the repo will be added as a subdirectoy) then:
@@ -63,8 +65,10 @@ yarn dist:webui
 ```
 
 :::tip[Windows Tip]
+
 Windows Antimalware Executable can slow down install and build times by 50-100%. You can improve performance by excluding certain folders: After cloning the companion repo and running `yarn install` the first time (see above) go to Windows Security > Virus and Threat Protection > Exclusions and add node_modules from your companion root. For completeness and a slight additional boost add: cache, dist, electron-output, shared-lib\dist, webui\build, and companion\dist.
 You may want/need to exclude these folders from backup apps too.
+
 :::
 
 ### Updating: Fetch or Pull
@@ -72,7 +76,9 @@ You may want/need to exclude these folders from backup apps too.
 Keep the up-to-date by fetching (`git fetch`) or pulling (`git pull`). See our pages [Git Crash Course](../git-workflows/git-crashcourse.md) and [GitHub Workflow](../git-workflows/github-workflow.md) if you need an introduction or refresher on these topics.
 
 :::tip
+
 Consider using a graphical front-end such as SmartGit, or even the GitGUI program included with git, to visualize and simplify the process.
+
 :::
 
 ## Working with the back-end code
@@ -95,6 +101,7 @@ To debug the back-end code you can:
    In VS Code, the simplest way to debug is to open a _Javascript Debug Terminal_ from the _Add Terminal_ pulldown menu (the '+' menu) and run either `yarn dev` (normal logging) or `yarn dev:debug` (voluminous reporting, debug-level: 'silly'). It is also possible to start these options from a menu using "_Debug: Debug npm script_"
 
 :::tip
+
 To include dev modules when running `yarn dev`, put the following in a file named `.env` in your top-level companion folder:
 
 ```
@@ -104,6 +111,7 @@ COMPANION_DEV_MODULES=<dev modules path>
 (Replace "\<dev modules path>" with the actual path.)
 
 See [Setting a Dev Folder](../module-development/local-modules.md) for further details and options.
+
 :::
 
 ## Working with the (front-end) UI code
@@ -124,11 +132,15 @@ This will launch the development version of the webui on a different port, typic
 :::
 
 :::tip
+
 You can open more than one terminal inside VS Code using the '+' menu, so in the first terminal run `yarn dev` and in the second one you can run `yarn dev:webui`
+
 :::
 
 :::note
+
 `yarn dev:webui` is equivalent to running `yarn dev` from the webui folder, i.e. `cd webui; yarn dev`
+
 :::
 
 #### Debugging the webui in Visual Studio Code:
@@ -195,5 +207,8 @@ yarn start
 **Developer documentation** (what you're reading now!) is maintained separately in the [Bitfocus website repo](https://github.com/bitfocus/website) under the folder _for-developers_. To contribute to the developer documentation, clone that repository, then use `yarn start` to get dynamic updates, as above.
 
 :::danger[warning]
+
 Do not edit the _user-guide_, _versioned\*_ and _whats-new_ folders in the _**website**_ repo! They are automatically updated from the main companion repo. Edit the source for those folders in the _**companion**_ repo, as described above.
+
 :::
+

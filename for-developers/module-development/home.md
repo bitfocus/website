@@ -22,9 +22,11 @@ You can develop modules against any standard release or beta build of Companion.
 Download and install a recent version from [the website](https://bitfocus.io/user/downloads)
 
 :::tip
+
 Starting with Companion v4.0, the module release cycle has been decoupled from the Companion release cycle: The timing of module version releases are determined by the module developer independently of the Companion releases.
 
 We therefore recommend developing your module using the current stable version to ensure that users will be able to use your module right away instead of having to wait until the current beta is released.
+
 :::
 
 ## Set up the Development Folder

@@ -19,13 +19,17 @@ The examples below use the core Companion repo, bitfocus/companion, for specific
    :::
 
 :::note[Expert Note]
+
 The following outline names the bitfocus remote "origin" and your remote fork "personal". This seems much clearer than the convention of naming the bitfocus repo "upstream" and your remote fork "origin" (which it is not!). The convention recommended here eliminates a step and also ensures that your pulls come from the Bitfocus repo. Many thanks to Brian Teeman for this and other suggestions.
+
 :::
 
 ## 1a. Clone Companion to a local repository
 
 :::warning[Windows Users!]
+
 If you are cloning to a Windows computer be sure to [configure git line-endings as described here](installing-git.md#configure-git) _**before**_ cloning Companion.
+
 :::
 
 ```bash
@@ -35,7 +39,9 @@ git clone https://github.com/bitfocus/companion.git
 (module developers: substitute the appropriate GitHub location.)
 
 :::note
+
 The Bitfocus repository is read-only for most users. In the next step we will create a writeable "fork" of the Bitfocus repo that will be used for sending in proposed code changes (PRs)
+
 :::
 
 **updating**: Once your local repository has been established, use `git fetch` or `git pull` to keep it up-to-date. (Some GUI frontends can automate this part.)
@@ -59,7 +65,9 @@ git remote add personal https://github.com/<your username>/companion.git
 (In a GUI frontend you would select "Add Remote..." from a menu. SmartGit, for example, will automatically pick up the URL from your clipboard when you do this.)
 
 :::note
+
 By default, the Bitfocus remote that you cloned above, was named "origin". So "origin" refers to Bitfocus (the "origin" of your clone) and "personal" refers to your fork on GitHub.
+
 :::
 
 ## 2. Create a new branch in your local repo

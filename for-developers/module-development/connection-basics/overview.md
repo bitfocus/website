@@ -36,7 +36,9 @@ module.exports.UpgradeScripts = [...] // If you have any upgrade scripts
 ```
 
 :::tip
+
 In API 1.x, this was achieved by a call to `runEntrypoint(ModuleInstance, UpgradeScripts)`. This is no longer supported and will need to be updated
+
 :::
 
 ## Define the module class
@@ -46,7 +48,9 @@ In API 1.x, this was achieved by a call to `runEntrypoint(ModuleInstance, Upgrad
 If you are not using TypeScript, you can skip this section
 
 :::tip
+
 This has changed in [API 2.0](../api-changes/v2.0.md), before this it was a simpler `TConfig` that was generic for just your module config.
+
 :::
 
 The first step in creating a module is creating the module Instance class. If you are using the recommended [TypeScript module template](https://github.com/bitfocus/companion-module-template-ts), then the module definition is in _src/main.ts_.

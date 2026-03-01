@@ -43,7 +43,9 @@ These messages will still show up in the module-specific log page and can be fil
 </p>
 
 :::note
+
 Depending on buffering, several `console.log()` messages may be grouped together, so only the first will appear to have a timestamp. Use the API `this.log()` function described above, if seeing things reported in exactly the call order is important.
+
 :::
 
 ## Attach a debugger

@@ -14,19 +14,25 @@ This section explains how to define feedbacks, provide options to the user, and 
 Your module defines the list of feedbacks it supports by making a call to [`this.setFeedbackDefinitions({ ...some feedbacks here... })`](https://bitfocus.github.io/companion-module-base/classes/InstanceBase.html#setfeedbackdefinitions). You will need to do this as part of your `init()` method, but can also call it at any other time if you wish to update the list of feedbacks exposed.
 
 :::warning
+
 Please try not to call this method too often, as updating the list has a cost. If you are calling it multiple times in a short span of time, consider if it would be possible to batch the calls so it is only done once.
+
 :::
 
 ## API calls: `checkFeedbacks(...)`, `checkAllFeedbacks()` & `checkFeedbacksById(...)`
 
 :::note
+
 Starting with [API 2.0](../api-changes/v2.0.md), it is no longer possible to call `checkFeedbacks()` without any arguments. When you need to call this, you should instead use `checkAllFeedbacks()`
+
 :::
 
 You should tell Companion to re-run the callback of your feedbacks whenever the result is expected to change by calling `this.checkFeedbacks('your-feedback-id', 'another-feedback')`.
 
 :::tip
+
 For modules with many options on feedbacks, you may want to make use of the [subscription flow](#subscribe--unsubscribe-flow) and `this.checkFeedbacksById('abc', 'def')`, to trigger smaller and more controlled invalidations.
+
 :::
 
 ## Feedback types
@@ -58,7 +64,9 @@ Commonly, you will have some options on the feedback to let the user choose the 
 They can also be used to return image pixel buffers, to show some custom content, although this is no longer recommended
 
 :::tip
+
 In older versions of Companion, these were the only available type of feedback. We recommend that older modules should [update their feedbacks to boolean feedbacks](../connection-advanced/migrating-legacy-to-boolean-feedbacks.md) whenever possible.
+
 :::
 
 ## Feedback definitions
@@ -121,7 +129,9 @@ Starting with API v1.1, feedback callbacks can be async or return a promise if y
 You should not be performing any network requests here, but it can be necessary when generating images or using other native code.
 
 :::tip
+
 You must make sure to use a sensible timeout on any async execution, or your feedback can get stuck showing a stale value.
+
 :::
 
 #### Using variables
@@ -129,9 +139,11 @@ You must make sure to use a sensible timeout on any async execution, or your fee
 Since API v1.1, it has been possible to use variables in feedback callbacks. This makes your feedbacks much more powerful as it lets the user build more complex interactions and systems.
 
 :::note
+
 As of [API v1.13](../api-changes/v1.13.md) (Companion 4.1), variables in textinput fields are now automatically parsed.
 
 As of [API v2.0](../api-changes/v2.0.md) (Companion 4.3), modules are unable to parse variables themselves, Companion does it for you based on the fields describing of the options.
+
 :::
 
 Between API v1.1 and API v1.14, a `context` object is passed as the second argument in the `callback`, `subscribe`, `unsubscribe` and `learn` callbacks.
@@ -227,8 +239,10 @@ Whenever the options of an feedback on a button is changed, only the callback wi
 With this, if you need to do any data loading, you should dispatch but not await this inside the callback, and trigger a reevaluation of the feedback (using either `this.checkFeedbacks()` or `this.checkFeedbacksById()`).
 
 :::tip
+
 To help you decide if you need to perform any data loading, in each call to the `callback` you can now access the options provided to the previous call with `feedback.previousOptions`.
 With this you can check whether the options affecting the data loading have changed, and skip the loading process when it is not needed.
+
 :::
 
 It is also possible to force the callbacks for all your feedbacks to be re-executed, by calling `this.checkFeedbacks()` or `this.unsubscribeFeedbacks()`. Both functions accept `feedbackIds` parameters, to only run on a certain feedback type (eg `this.unsubscribeFeedbacks('set_source', 'set_source2')`).
@@ -269,7 +283,9 @@ Whenever the options of an feedback on a button is changed, unsubscribe will be 
 If the referenced variables change, the callback will be called without any calls to unsubscribe or subscribe.
 
 :::warning
+
 There was a behaviour change in [API 1.13](../api-changes/v1.13.md). With all variables now being parsed by Companion when building the `options`, it no longer made sense to call unsubscribe and subscribe on every options change, so they will only be called when adding or removing the feedback
+
 :::
 
 It is also possible to force either unsubscribe or subscribe to be called for every feedback, by calling `this.subscribeFeedbacks()` or `this.unsubscribeFeedbacks()`. Both functions accept `feedbackIds` parameters, to only run on a certain feedback type (eg `this.unsubscribeFeedbacks('set_source', 'set_source2')`).
@@ -283,7 +299,9 @@ Implementing the [learn option values](../connection-advanced/learn-action-feedb
 ## TypeScript typings
 
 :::tip
+
 This was introduced in [API v2.0](../api-changes/v2.0.md), prior to this any strong typings had to be managed yourself
+
 :::
 
 As part of the `InstanceTypes` generic argument passed to `InstanceBase`, an `feedbacks` property must be defined.
@@ -337,7 +355,9 @@ const act: CompanionFeedbackDefinition<FeedbacksSchema['route']['options']> = {
 ```
 
 :::tip
+
 We can't enforce that the options array matches these types, you will have to do that yourself.
+
 :::
 
 These types will also propagate into [presets](./presets.md)

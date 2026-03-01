@@ -35,6 +35,7 @@ You can also start a "headless" run manually by running main.js from xxx-unpacke
 ```
 
 :::info[Linux note]
+
 To build Windows distributables from Linux systems (even WSL) you must install Wine first:
 
 ```bash
@@ -43,9 +44,11 @@ sudo bash -c “dpkg --add-architecture i386 && apt-get update && apt-get instal
 ```
 
 note: if your wine config gets corrupted, delete `~/.wine`.
+
 :::
 
 :::info[Windows note]
+
 The very end of ‘yarn dist’ (signing) creates symlinks. By default, Windows restricts symlink creation, so this step will fail. You have three options to allow building Companion in Windows:
 
 1. Run `yarn dist` in a shell with Administrator privileges.
@@ -60,10 +63,15 @@ The very end of ‘yarn dist’ (signing) creates symlinks. By default, Windows 
 :::
 
 :::tip[Windows Tip]
+
 Windows Antimalware Executable can slow down build times by 50-100%. You can improve performance by excluding certain folders: After cloning the companion repo and running `yarn install` the first time (see [Developing Core Companion](development-flow.md)) go to Windows Security > Virus and Threat Protection > Exclusions and add node_modules from your companion root. For completeness and a slight additional boost add: cache, dist, electron-output, shared-lib\dist, webui\build, and companion\dist.
 You may want/need to exclude these folders from backup apps too.
+
 :::
 
 :::danger[Raspberry Pi]
+
 It is not recommended to run Companion on a Raspberry Pi with the desktop environment installed.
+
 :::
+
