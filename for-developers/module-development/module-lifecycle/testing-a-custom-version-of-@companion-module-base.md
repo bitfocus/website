@@ -2,7 +2,8 @@
 title: 'Using a custom @companion-module/base library'
 sidebar_label: 'Custom @companion-module/base'
 sidebar_position: 8
-description: How to test and use your module with a non-release version of the companion
+description:
+  How to test and use your module with a non-release version of the companion
   modules.
 ---
 

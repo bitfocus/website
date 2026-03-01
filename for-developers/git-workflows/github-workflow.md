@@ -5,7 +5,7 @@ sidebar_position: 3
 description: Introduction to git and github workflow for beginners
 ---
 
-![Github Contribution Workflow Diagram](images/github-contribution-workflow.png)
+![image](images/github-contribution-workflow.png)
 
 The following is the basic workflow for contributing to Companion (and many
 other open-source repositories) on GitHub. The order of operations is a key to
@@ -29,7 +29,9 @@ bitfocus/companion-module-generic-http.)
    you're contributing to an existing repository. Eventually you may get
    write-access, for example if you become the maintainer of a Companion module,
    in which case the flow can be simplified...but it's still good practice to
-   develop new features on a new branch. :::
+   develop new features on a new branch.
+
+:::
 
 :::note[Expert Note]
 
@@ -89,7 +91,7 @@ On the GitHub page for your new fork, copy the HTTPS link to your fork using the
 green <span
 style={{background: "#00CC00", borderRadius: "5px", fontSize: "0.8em", padding: "0.5em"}}>
 **&lt;&gt; Code &#x25BC;** </span> button. Then paste it on a line starting with
-`it remote add personal`. It should look like this (for core Companion):
+`git remote add personal`. It should look like this (for core Companion):
 
 ```bash
 git remote add personal https://github.com/<your username>/companion.git

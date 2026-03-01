@@ -23,7 +23,7 @@
 			}
 		},
 		{
-			"files": "for-developers/**/*.md, for-developers/**/*.mdx",
+			"files": ["for-developers/**/*.md", "for-developers/**/*.mdx"],
 			"options": {
 				"proseWrap": "always",
 				"printWidth": 80,

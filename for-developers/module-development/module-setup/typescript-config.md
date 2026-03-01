@@ -24,7 +24,12 @@ A typical _tsconfig.json_ file looks like:
 {
   "extends": "@companion-module/tools/tsconfig/node22/recommended",
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules/**", "src/**/*spec.ts", "src/**/__tests__/*", "src/**/__mocks__/*"],
+  "exclude": [
+    "node_modules/**",
+    "src/**/*spec.ts",
+    "src/**/__tests__/*",
+    "src/**/__mocks__/*",
+  ],
   "compilerOptions": {
     "outDir": "./dist",
     "baseUrl": "./",
@@ -54,7 +59,12 @@ Our TypeScript template splits it into two files:
 {
   "extends": "@companion-module/tools/tsconfig/node22/recommended",
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules/**", "src/**/*spec.ts", "src/**/__tests__/*", "src/**/__mocks__/*"],
+  "exclude": [
+    "node_modules/**",
+    "src/**/*spec.ts",
+    "src/**/__tests__/*",
+    "src/**/__mocks__/*",
+  ],
   "compilerOptions": {
     "outDir": "./dist",
     "baseUrl": "./",

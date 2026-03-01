@@ -21,7 +21,8 @@ three platforms.
 
 For module development you may be able to skip step 5, below, "Enabling USB on
 Unix". Instead simply install Companion according to the instructions in the
-<UserGuideLink to="getting-started/Installation">getting started guide</UserGuideLink>.
+<UserGuideLink to="getting-started/Installation">getting started
+guide</UserGuideLink>.
 
 :::
 
