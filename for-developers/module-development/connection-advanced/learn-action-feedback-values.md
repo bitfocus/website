@@ -5,15 +5,26 @@ sidebar_position: 5
 description: How to set up "learn" functionality in actions and feedbacks.
 ---
 
-To make it easier for users to configure your actions and feedbacks, you can implement the `learn` callback. This is intended to allow for the options of an action or feedback to be set to match the current state of the device. For example, you can program a `learn` callback to set the value for a "Set-Position" action to set the position of a picture-in-picture to its current location on your device. The callback simply queries the current state of the device and returns the appropriate value, as described below.
+To make it easier for users to configure your actions and feedbacks, you can
+implement the `learn` callback. This is intended to allow for the options of an
+action or feedback to be set to match the current state of the device. For
+example, you can program a `learn` callback to set the value for a
+"Set-Position" action to set the position of a picture-in-picture to its current
+location on your device. The callback simply queries the current state of the
+device and returns the appropriate value, as described below.
 
-When implemented, a <span style={{background: "#39f", color: "#fff", borderRadius: "5px", fontSize: "0.8em", padding: "0.5em"}}>Learn Values</span> button appears in the action or feedback allowing the user to trigger a learn event.
+When implemented, a <span
+style={{background: "#39f", color: "#fff", borderRadius: "5px", fontSize: "0.8em", padding: "0.5em"}}>Learn
+Values</span> button appears in the action or feedback allowing the user to
+trigger a learn event.
 
 ![Launcher window](../images/action-learn-button.png)
 
-Implementing this callback is the same for actions and feedbacks, but the parameters do vary a little accordingly.
+Implementing this callback is the same for actions and feedbacks, but the
+parameters do vary a little accordingly.
 
-For an action which has a single option called `input`, one implementation could look like:
+For an action which has a single option called `input`, one implementation could
+look like:
 
 ```js
 learn: (event) => {
@@ -23,7 +34,10 @@ learn: (event) => {
 },
 ```
 
-In the call, you are passed the same action/feedback object as you would for other callbacks. The callback should return a similar `event.options` object, containing only the new values. You cannot return an expression in these, only plain values.
+In the call, you are passed the same action/feedback object as you would for
+other callbacks. The callback should return a similar `event.options` object,
+containing only the new values. You cannot return an expression in these, only
+plain values.
 
 In this example, only the `input` field is updated:
 
@@ -37,13 +51,17 @@ learn: (event) => {
 
 :::warning
 
-As of API 2.0, you must only return the 'learnt' options in the result. Returning all options will overwrite any expressions the user may be using, so you should avoid returning fields which are unchanged.
+As of API 2.0, you must only return the 'learnt' options in the result.
+Returning all options will overwrite any expressions the user may be using, so
+you should avoid returning fields which are unchanged.
 
-Prior to API 2.0, it was recommended to include all options in the result, otherwise they would become undefined.
+Prior to API 2.0, it was recommended to include all options in the result,
+otherwise they would become undefined.
 
 :::
 
-If for some reason you are not able to provide any new values, you can instead return `undefined` to tell Companion to abort this `learn` operation.
+If for some reason you are not able to provide any new values, you can instead
+return `undefined` to tell Companion to abort this `learn` operation.
 
 ```js
 learn: (event) => {
@@ -69,4 +87,7 @@ learn: (event) => {
 - [Actions](../connection-basics/actions.md)
 - [Feedbacks](../connection-basics/feedbacks.md)
 
-You can also see the full API specification for [actions](https://bitfocus.github.io/companion-module-base/interfaces/CompanionActionDefinition.html#learn) and [feedbacks](https://bitfocus.github.io/companion-module-base/interfaces/CompanionBooleanFeedbackDefinition.html#learn).
+You can also see the full API specification for
+[actions](https://bitfocus.github.io/companion-module-base/interfaces/CompanionActionDefinition.html#learn)
+and
+[feedbacks](https://bitfocus.github.io/companion-module-base/interfaces/CompanionBooleanFeedbackDefinition.html#learn).

@@ -5,26 +5,35 @@ sidebar_position: 3
 description: How to set up Authentication with OAuth in the user configuration.
 ---
 
-Some modules need to authenticate against an external service or API.
-Companion does not currently have native support for OAuth, so modules are required to do the flow manually.
+Some modules need to authenticate against an external service or API. Companion
+does not currently have native support for OAuth, so modules are required to do
+the flow manually.
 
 There are two key challenges to using OAuth with Companion:
 
-1. OAuth requires a stable redirect URL, the URL to access Companion can change daily
-2. The user needs to fill in various fields then navigate to a URL to begin the authentication.
+1. OAuth requires a stable redirect URL, the URL to access Companion can change
+   daily
+2. The user needs to fill in various fields then navigate to a URL to begin the
+   authentication.
 
-Described below is the current recommended way of supporting OAuth, but many existing modules are not using this. Expect this to be refined in the future, as support is improved.
+Described below is the current recommended way of supporting OAuth, but many
+existing modules are not using this. Expect this to be refined in the future, as
+support is improved.
 
 ## Handling the OAuth callback / redirect URL
 
-OAuth needs a stable redirect URL, as it needs to be provided to both Companion and in the application settings you are connecting to.
-To aid in this, a small redirector site has been created, which will help abstract this.
+OAuth needs a stable redirect URL, as it needs to be provided to both Companion
+and in the application settings you are connecting to. To aid in this, a small
+redirector site has been created, which will help abstract this.
 
-This is hosted at `https://bitfocus.github.io/companion-oauth/callback`.
-By providing your instance id (`this.id`) as the state parameter in the authentication url, the redirect site will help redirect the user to a HTTP handler where you can access the generated authentication code.
+This is hosted at `https://bitfocus.github.io/companion-oauth/callback`. By
+providing your instance id (`this.id`) as the state parameter in the
+authentication url, the redirect site will help redirect the user to a HTTP
+handler where you can access the generated authentication code.
 
-To receive the authentication code, you should implement the [handleHttpRequest](./http-handler.md) method, listening for the `/oauth/callback` path.
-An implementation can look like:
+To receive the authentication code, you should implement the
+[handleHttpRequest](./http-handler.md) method, listening for the
+`/oauth/callback` path. An implementation can look like:
 
 ```js
 async handleHttpRequest(request) {
@@ -79,10 +88,12 @@ async handleHttpRequest(request) {
 
 ## Opening the authentication URL
 
-The user needs to open the authentication URL to start the OAuth process.
-As some users will be configuring their Companion remotely, you can't rely on being able to automatically open the url for them.
+The user needs to open the authentication URL to start the OAuth process. As
+some users will be configuring their Companion remotely, you can't rely on being
+able to automatically open the url for them.
 
-Most modules currently will put the needed URL in a config field for the user to access, and also write it to the log. Some will also open it automatically.
+Most modules currently will put the needed URL in a config field for the user to
+access, and also write it to the log. Some will also open it automatically.
 
 ## Further Reading
 

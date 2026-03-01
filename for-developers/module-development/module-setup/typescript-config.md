@@ -7,12 +7,16 @@ description: Configuring the module to work with TypeScript.
 
 :::tip
 
-This is an advanced topic. If you use the [recommended templates](./file-structure.md), a default typescript
-config file is included and you will generally not want to change it.
+This is an advanced topic. If you use the
+[recommended templates](./file-structure.md), a default typescript config file
+is included and you will generally not want to change it.
 
 :::
 
-The [recommended templates](./file-structure.md) provide typescript config presets in _tsconfig.json_ that we believe to be best practice, but they can be configured to be too strict for some, or may need to be modified if you change the name of the source or destination directories.
+The [recommended templates](./file-structure.md) provide typescript config
+presets in _tsconfig.json_ that we believe to be best practice, but they can be
+configured to be too strict for some, or may need to be modified if you change
+the name of the source or destination directories.
 
 A typical _tsconfig.json_ file looks like:
 
@@ -63,6 +67,9 @@ Our TypeScript template splits it into two files:
 }
 ```
 
-You are free to override properties as you wish, this is only our recommendation after all.
+You are free to override properties as you wish, this is only our recommendation
+after all.
 
-If you have any suggestions on changes to make to this base tsconfig, do [open an issue](https://github.com/bitfocus/companion-module-tools/issues) to let us know. We hope to collect some alternate presets along with recommended.
+If you have any suggestions on changes to make to this base tsconfig, do
+[open an issue](https://github.com/bitfocus/companion-module-tools/issues) to
+let us know. We hope to collect some alternate presets along with recommended.

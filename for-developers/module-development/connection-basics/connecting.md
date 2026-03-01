@@ -5,21 +5,29 @@ sidebar_position: 12
 description: Helper classes for connecting to your device.
 ---
 
-One of the first tasks most modules have to perform is to connect to their device. You can either use an existing connection library from [NPM](https://www.npmjs.com/) if one exists, or you can write your own connection logic inside the module.
+One of the first tasks most modules have to perform is to connect to their
+device. You can either use an existing connection library from
+[NPM](https://www.npmjs.com/) if one exists, or you can write your own
+connection logic inside the module.
 
-Companion provides three helper classes to help with writing your connection logic: TCPHelper, UDPHelper, TelnetHelper. These classes provide an asynchronous interface for connecting, communicating and disconnecting from your device.
+Companion provides three helper classes to help with writing your connection
+logic: TCPHelper, UDPHelper, TelnetHelper. These classes provide an asynchronous
+interface for connecting, communicating and disconnecting from your device.
 
-Or if the device uses HTTP, we recommend using the built-in [`fetch` API](https://nodejs.org/en/learn/getting-started/fetch).
+Or if the device uses HTTP, we recommend using the built-in
+[`fetch` API](https://nodejs.org/en/learn/getting-started/fetch).
 
 ## TCPHelper class
 
-The TCPHelper class uses the `EventEmitter` system to provide asynchronous communications.
+The TCPHelper class uses the `EventEmitter` system to provide asynchronous
+communications.
 
-You start by creating an instance of the class and calling its `connect()` method.
-You define the various `on()` callbacks to respond to possible TCP events -- see the example, below.
+You start by creating an instance of the class and calling its `connect()`
+method. You define the various `on()` callbacks to respond to possible TCP
+events -- see the example, below.
 
-Your [action](./actions.md) callbacks will call tcp.send() to send outgoing data. The on('data') callback will receive
-and process incoming data.
+Your [action](./actions.md) callbacks will call tcp.send() to send outgoing
+data. The on('data') callback will receive and process incoming data.
 
 The following events are defined in @companion-module/base:
 
@@ -32,7 +40,8 @@ The following events are defined in @companion-module/base:
     status_change: [status: TCPStatuses, message: string];
 ```
 
-The `TCPHelper` code could all go in the module's `init()` function, for example:
+The `TCPHelper` code could all go in the module's `init()` function, for
+example:
 
 ```typescript
 class MyModule extends InstanceBase<MyConfig> {
@@ -78,8 +87,9 @@ class MyModule extends InstanceBase<MyConfig> {
 
 :::note
 
-In general, broken TCP connections are not detectable through the event system. If you must ensure that the
-connection is live, you may need to write a keep-alive responder that periodically sends a query to your device.
+In general, broken TCP connections are not detectable through the event system.
+If you must ensure that the connection is live, you may need to write a
+keep-alive responder that periodically sends a query to your device.
 
 :::
 
@@ -108,9 +118,11 @@ TelnetHelper is very similar to TCPHelper, with these events
 
 ## UDPHelper class
 
-UDPHelper is similar to the previous two, but since UDP doesn't maintain connections, you don't have a
-`connect()` method. Conversely, there are more options when creating the UDPHelper instance, see the auto-generated documentation
-for [UDPHelper options](https://bitfocus.github.io/companion-module-base/interfaces/UDPHelperOptions.html).
+UDPHelper is similar to the previous two, but since UDP doesn't maintain
+connections, you don't have a `connect()` method. Conversely, there are more
+options when creating the UDPHelper instance, see the auto-generated
+documentation for
+[UDPHelper options](https://bitfocus.github.io/companion-module-base/interfaces/UDPHelperOptions.html).
 
 ```ts
 interface UDPHelperOptions {

@@ -5,25 +5,40 @@ sidebar_position: 19
 description: Module variable definition details.
 ---
 
-Variables are a way for modules to expose values to the user, which can be used as part of the button text, as input to some actions or feedbacks and more. This section explains how to define variables and update their values.
+Variables are a way for modules to expose values to the user, which can be used
+as part of the button text, as input to some actions or feedbacks and more. This
+section explains how to define variables and update their values.
 
-The basic workflow is to define your variables using `setVariableDefinitions()`, then set or update the values using `setVariableValues()`. Both of these methods are defined by the module InstanceBase class.
+The basic workflow is to define your variables using `setVariableDefinitions()`,
+then set or update the values using `setVariableValues()`. Both of these methods
+are defined by the module InstanceBase class.
 
 ## API call: `setVariableDefinitions()`
 
-Your module should define the list of variables it exposes by making a call to `this.setVariableDefinitions([ ...some variables here... ])`. You will need to do this as part of your `init()` method, but can also call it at any other time if you wish to change the list of variables exposed.
+Your module should define the list of variables it exposes by making a call to
+`this.setVariableDefinitions([ ...some variables here... ])`. You will need to
+do this as part of your `init()` method, but can also call it at any other time
+if you wish to change the list of variables exposed.
 
 :::warning
 
-Please try not to call this method too often, as updating the list has a cost. If you are calling it multiple times in a short span of time, consider if it would be possible to batch the calls so it is only done once.
+Please try not to call this method too often, as updating the list has a cost.
+If you are calling it multiple times in a short span of time, consider if it
+would be possible to batch the calls so it is only done once.
 
 :::
 
 ## Variable definitions
 
-The [TypeScript module template](https://github.com/bitfocus/companion-module-template-ts) includes a file `src/variables.ts`, which is where your variables should be defined. It is not required to use this structure, but it keeps it more readable than having everything in one file. More complex modules will likely want to split the variable definitions into even more files/folders.
+The
+[TypeScript module template](https://github.com/bitfocus/companion-module-template-ts)
+includes a file `src/variables.ts`, which is where your variables should be
+defined. It is not required to use this structure, but it keeps it more readable
+than having everything in one file. More complex modules will likely want to
+split the variable definitions into even more files/folders.
 
-All the variable definitions are passed in as a single JavaScript array, in the form of:
+All the variable definitions are passed in as a single JavaScript array, in the
+form of:
 
 ```js
 ;[
@@ -41,7 +56,10 @@ VariableId must only use letters [a-zA-Z], numbers, underscore, hyphen.
 
 ## API call: `setVariableValues()`
 
-At any point in your module you can call `this.setVariableValues({ ... new values ... })`. You can specify as many or few variables as you wish in this call. Only the variables you specify will be updated.
+At any point in your module you can call
+`this.setVariableValues({ ... new values ... })`. You can specify as many or few
+variables as you wish in this call. Only the variables you specify will be
+updated.
 
 For example:
 
@@ -54,11 +72,14 @@ this.setVariableValues({
 })
 ```
 
-Variables can have values of any type, the user can use expressions to manipulate the values you provide.
+Variables can have values of any type, the user can use expressions to
+manipulate the values you provide.
 
 :::warning
 
-Please try to batch variable updates whenever possible, as updating the values has a cost. If you are calling it multiple times in a short span of time, consider if it would be possible to batch the calls so it is only done once.
+Please try to batch variable updates whenever possible, as updating the values
+has a cost. If you are calling it multiple times in a short span of time,
+consider if it would be possible to batch the calls so it is only done once.
 
 :::
 
@@ -66,12 +87,14 @@ Please try to batch variable updates whenever possible, as updating the values h
 
 :::tip
 
-This was introduced in [API v2.0](../api-changes/v2.0.md), prior to this any strong typings had to be managed yourself
+This was introduced in [API v2.0](../api-changes/v2.0.md), prior to this any
+strong typings had to be managed yourself
 
 :::
 
-As part of the `InstanceTypes` generic argument passed to `InstanceBase`, a `variables` property must be defined.
-By default this is `CompanionVariableValues` which means it is loosely typed.
+As part of the `InstanceTypes` generic argument passed to `InstanceBase`, a
+`variables` property must be defined. By default this is
+`CompanionVariableValues` which means it is loosely typed.
 
 To enable strong typings, you can define a type such as:
 
@@ -86,7 +109,10 @@ export interface MyTypes {
 }
 ```
 
-In your calls to `setVariableDefinitions`, you can then type your definitions as `CompanionVariableDefinition<VariablesSchema>`. And calls to `setVariableValues` will expect to receive a `Partial<VariablesSchema>`, helping you match the types.
+In your calls to `setVariableDefinitions`, you can then type your definitions as
+`CompanionVariableDefinition<VariablesSchema>`. And calls to `setVariableValues`
+will expect to receive a `Partial<VariablesSchema>`, helping you match the
+types.
 
 ## Further Reading
 

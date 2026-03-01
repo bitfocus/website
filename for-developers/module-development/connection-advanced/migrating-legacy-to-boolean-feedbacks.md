@@ -7,13 +7,22 @@ description: How to migrate legacy feedbacks to boolean feedbacks.
 
 ## Why update your feedbacks?
 
-Since Companion v3, most feedbacks are best defined as 'boolean' feedbacks, as they give the user more flexibility and will end up with a more consistent interface.
+Since Companion v3, most feedbacks are best defined as 'boolean' feedbacks, as
+they give the user more flexibility and will end up with a more consistent
+interface.
 
-Previously, it was up to the module author to decide what properties a feedback should change. This tended to limit feedbacks to changing the background and text colour. But what if the user wants to change a png, or the text? They could ask for that to be possible, but that would likely require the module author to duplicate the feedback with different style options.
+Previously, it was up to the module author to decide what properties a feedback
+should change. This tended to limit feedbacks to changing the background and
+text colour. But what if the user wants to change a png, or the text? They could
+ask for that to be possible, but that would likely require the module author to
+duplicate the feedback with different style options.
 
-With boolean feedbacks, the module author simply has to make the feedback be a true or false value, and the user can decide what style properties that should change.
+With boolean feedbacks, the module author simply has to make the feedback be a
+true or false value, and the user can decide what style properties that should
+change.
 
-A side-benefit of using boolean feedbacks is that they can be used as conditions in the triggers system.
+A side-benefit of using boolean feedbacks is that they can be used as conditions
+in the triggers system.
 
 ## Steps to migrate to boolean feedbacks
 
@@ -21,8 +30,7 @@ The process may involve a bit of work, but it is pretty straightforward.
 
 ### 1. Update feedback definitions
 
-The feedback definitions need updating to the new style.
-From:
+The feedback definitions need updating to the new style. From:
 
 ```javascript
 feedbacks['set_source'] = {
@@ -86,7 +94,8 @@ feedbacks['set_source'] = {
 
 ### 2. Update presets
 
-Any presets defined in the module will need to be updated to match the changes in the definition
+Any presets defined in the module will need to be updated to match the changes
+in the definition
 
 From:
 
@@ -146,9 +155,13 @@ To:
 
 ### 3. Add an upgrade script
 
-Users will have feedbacks assigned to buttons already, and these will all need updating to the new format. A helper has been added to help with this.
+Users will have feedbacks assigned to buttons already, and these will all need
+updating to the new format. A helper has been added to help with this.
 
-Quick tip: The script will only be run once, if you want to force it to be run again locally, check the [Testing an upgrade script](../connection-basics/upgrade-scripts.md#testing-an-upgrade-script) guide.
+Quick tip: The script will only be run once, if you want to force it to be run
+again locally, check the
+[Testing an upgrade script](../connection-basics/upgrade-scripts.md#testing-an-upgrade-script)
+guide.
 
 ```js
 const upgradeToBooleanFeedbacks = CreateConvertToBooleanFeedbackUpgradeScript({
@@ -160,9 +173,10 @@ const upgradeToBooleanFeedbacks = CreateConvertToBooleanFeedbackUpgradeScript({
 runEntrypoint(MyInstance, [myOtherUpgradeScript, upgradeToBooleanFeedbacks])
 ```
 
-This script will handle moving the options properties across to the style object for you.
-It handles the most common cases of property naming, which may not match what your module does.
-If this is the case, you can customise the behaviour by providing more details:
+This script will handle moving the options properties across to the style object
+for you. It handles the most common cases of property naming, which may not
+match what your module does. If this is the case, you can customise the
+behaviour by providing more details:
 
 ```js
 CreateConvertToBooleanFeedbackUpgradeScript({
@@ -177,7 +191,8 @@ CreateConvertToBooleanFeedbackUpgradeScript({
 
 Make sure to test it all thoroughly, then you are done!
 
-Feel free to ask on slack if you have any questions, or anything here doesn't make sense.
+Feel free to ask on slack if you have any questions, or anything here doesn't
+make sense.
 
 ### Further Reading
 

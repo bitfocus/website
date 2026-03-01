@@ -4,4 +4,5 @@ description: The files and file structure necessary to create a module repositor
 auto_toc: 3
 ---
 
-This section describes the files and file structure necessary to create a module repository.
+This section describes the files and file structure necessary to create a module
+repository.
