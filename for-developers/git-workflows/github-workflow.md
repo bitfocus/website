@@ -5,7 +5,7 @@ sidebar_position: 3
 description: Introduction to git and github workflow for beginners
 ---
 
-![image](images/github-contribution-workflow.png)
+![Github Contribution Workflow Diagram](images/github-contribution-workflow.png)
 
 The following is the basic workflow for contributing to Companion (and many
 other open-source repositories) on GitHub. The order of operations is a key to

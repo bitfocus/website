@@ -66,13 +66,13 @@ allow building Companion in Windows:
 2. Turn on Developer Mode in Windows Settings. (Open Settings and search for
    "developer"):
 
-   ![image](images/developers-setting.png)
+   ![Windows Developer Settings](images/developers-setting.png)
 
 3. Set a local policy in the “Local Security Policy” editor: Security Settings >
    Local Policies > User Rights Assignment: Create symbolic links, to allow
    yourself to create symlinks:
 
-   ![image](images/set-symlink-permission.png)
+   ![Windows Symlink Permissions](images/set-symlink-permission.png)
 
 :::
 

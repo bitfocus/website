@@ -41,7 +41,8 @@ and in your `companion/manifest.json`:
 These two structures are linked by the common id, in the future this will allow
 us to automate device discovery further.
 
-In the UI, this field will look like: ![image](../images/bonjour.png)
+In the UI, this field will look like:
+![Bonjour Host Dropdown](../images/bonjour.png)
 
 The 'Manual' option is always shown, and must be handled to allow users to
 manually specify an address for environments where Bonjour does not work. This

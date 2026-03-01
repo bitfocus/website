@@ -29,12 +29,12 @@ corresponding to a different module.
 - Check the section above on how to structure this folder
 - Open/show the launcher window of Companion:
 
-  ![image](images/launcher.png)
+  ![Companion Launcher](images/launcher.png)
 
 - In the top right corner you will see a Cog. Click on it to show the **Advanced
   Settings** window:
 
-![image](images/launcher-advanced.png)
+![Launcher Advanced Settings Window](images/launcher-advanced.png)
 
 - In the **Developer** section click on _**Select**_ to specify the directory
   where you have stored your developer modules.
