@@ -11,7 +11,7 @@ The basic workflow is to define your variables using `setVariableDefinitions()`,
 
 ## API call: `setVariableDefinitions()`
 
-Your module should define the list of variables it exposes by making a call to `this.setVariableDefinitions([ ...some variables here... ])`. You will need to do this as part of your `init()` method, but can also call it at any other time if you wish to change the list of variables exposed.
+Your module should define the list of variables it exposes by making a call to `this.setVariableDefinitions({} ...some variables here... })`. You will need to do this as part of your `init()` method, but can also call it at any other time if you wish to change the list of variables exposed.
 
 :::warning
 Please try not to call this method too often, as updating the list has a cost. If you are calling it multiple times in a short span of time, consider if it would be possible to batch the calls so it is only done once.
@@ -21,10 +21,30 @@ Please try not to call this method too often, as updating the list has a cost. I
 
 The [TypeScript module template](https://github.com/bitfocus/companion-module-template-ts) includes a file `src/variables.ts`, which is where your variables should be defined. It is not required to use this structure, but it keeps it more readable than having everything in one file. More complex modules will likely want to split the variable definitions into even more files/folders.
 
+### API 2.x
+
+All the variable definitions are passed in as a single JavaScript object, in the form of:
+
+```js
+const definitions = {
+  variable1: { name: 'My first variable' },
+  variable2: { name: 'My second variable' },
+  variable3: { name: 'Another variable' },
+}
+```
+
+:::warning[Important]
+
+VariableId must only use letters [a-zA-Z], numbers, underscore, hyphen.
+
+:::
+
+### API 1.x
+
 All the variable definitions are passed in as a single JavaScript array, in the form of:
 
 ```js
-;[
+const definitions = [
   { variableId: 'variable1', name: 'My first variable' },
   { variableId: 'variable2', name: 'My second variable' },
   { variableId: 'variable3', name: 'Another variable' },
