@@ -19,8 +19,10 @@ make this easier, we are open to suggestions!
 
 Some modules which are known to have some unit tests:
 
+- [allenheath-sq](https://github.com/search?q=repo%3Abitfocus%2Fcompanion-module-allenheath-sq%20path%3A*.test.ts&type=code)
+- [etc-eos](https://github.com/bitfocus/companion-module-etc-eos/blob/master/src/main.test.js)
 - [grassvalley-kaleido-solo](https://github.com/bitfocus/companion-module-grassvalley-kaleido-solo/blob/main/index.test.js)
-- [etc-eos](https://github.com/bitfocus/companion-module-etc-eos/blob/master/main.test.js)
-- [youtube-live](https://github.com/bitfocus/companion-module-youtube-live/tree/master/src/__tests__)
+- [ptzoptics-visca](https://github.com/search?q=repo%3Abitfocus%2Fcompanion-module-ptzoptics-visca%20path%3A*.test.ts&type=code)
+- [youtube-live](https://github.com/search?q=repo%3Abitfocus%2Fcompanion-module-youtube-live%20path%3A*.test.ts&type=code)
 
 Feel free to add yours here.
