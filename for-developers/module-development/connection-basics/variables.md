@@ -37,11 +37,17 @@ defined. It is not required to use this structure, but it keeps it more readable
 than having everything in one file. More complex modules will likely want to
 split the variable definitions into even more files/folders.
 
-The [TypeScript module template](https://github.com/bitfocus/companion-module-template-ts) includes a file `src/variables.ts`, which is where your variables should be defined. It is not required to use this structure, but it keeps it more readable than having everything in one file. More complex modules will likely want to split the variable definitions into even more files/folders.
+The
+[TypeScript module template](https://github.com/bitfocus/companion-module-template-ts)
+includes a file `src/variables.ts`, which is where your variables should be
+defined. It is not required to use this structure, but it keeps it more readable
+than having everything in one file. More complex modules will likely want to
+split the variable definitions into even more files/folders.
 
 ### API 2.x
 
-All the variable definitions are passed in as a single JavaScript object, in the form of:
+All the variable definitions are passed in as a single JavaScript object, in the
+form of:
 
 ```js
 const definitions = {
@@ -59,7 +65,8 @@ VariableId must only use letters [a-zA-Z], numbers, underscore, hyphen.
 
 ### API 1.x
 
-All the variable definitions are passed in as a single JavaScript array, in the form of:
+All the variable definitions are passed in as a single JavaScript array, in the
+form of:
 
 ```js
 const definitions = [
