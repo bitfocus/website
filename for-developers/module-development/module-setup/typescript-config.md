@@ -20,7 +20,7 @@ the name of the source or destination directories.
 
 A typical _tsconfig.json_ file looks like:
 
-```jsonc
+```json
 {
   "extends": "@companion-module/tools/tsconfig/node22/recommended",
   "include": ["src/**/*.ts"],
@@ -34,27 +34,27 @@ A typical _tsconfig.json_ file looks like:
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "*": ["./node_modules/*"],
-    },
-  },
+      "*": ["./node_modules/*"]
+    }
+  }
 }
 ```
 
 Our TypeScript template splits it into two files:
 
-```jsonc
+```json
 //tsconfig.json
 {
   "extends": "./tsconfig.build.json",
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules/**"],
   "compilerOptions": {
-    "types": ["node"],
-  },
+    "types": ["node"]
+  }
 }
 ```
 
-```jsonc
+```json
 // tsconfig.build.json
 {
   "extends": "@companion-module/tools/tsconfig/node22/recommended",
@@ -69,11 +69,11 @@ Our TypeScript template splits it into two files:
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "*": ["./node_modules/*"],
+      "*": ["./node_modules/*"]
     },
     "module": "Node16",
-    "moduleResolution": "Node16",
-  },
+    "moduleResolution": "Node16"
+  }
 }
 ```
 
