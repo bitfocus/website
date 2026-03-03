@@ -16,9 +16,10 @@ are defined by the module InstanceBase class.
 ## API call: `setVariableDefinitions()`
 
 Your module should define the list of variables it exposes by making a call to
-`this.setVariableDefinitions([ ...some variables here... ])`. You will need to
-do this as part of your `init()` method, but can also call it at any other time
-if you wish to change the list of variables exposed.
+`this.setVariableDefinitions(...some variables here...)` -- the exact format
+depends on the module API you are using; see below. You will need to do this as
+part of your `init()` method, but can also call it at any other time if you wish
+to change the list of variables exposed.
 
 :::warning
 
@@ -39,8 +40,8 @@ split the variable definitions into even more files/folders.
 
 ### API 2.x
 
-All the variable definitions are passed in as a single JavaScript object, in the
-form of:
+All the variable definitions are passed in as a single JavaScript _object_, in
+the form of:
 
 ```js
 const definitions = {
@@ -58,8 +59,8 @@ VariableId must only use letters [a-zA-Z], numbers, underscore, hyphen.
 
 ### API 1.x
 
-All the variable definitions are passed in as a single JavaScript array, in the
-form of:
+All the variable definitions are passed in as a single JavaScript _array_, in
+the form of:
 
 ```js
 const definitions = [
