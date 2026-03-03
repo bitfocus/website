@@ -16,10 +16,10 @@ module folder is specified as described below. Inside of this folder should be
 one or more folders that use the following layouts, with each folder
 corresponding to a different module.
 
-1. A git clone of a module from github This requires some additional setup, as
+1. **A git clone of a module from github**. This requires some additional setup, as
    the module will need to be prepared with a `yarn install`, and for some, a
    `yarn build`.
-2. Packaged output This is a folder that contains a `companion/manifest.json`,
+2. **Packaged output**. This is a folder that contains a `companion/manifest.json`,
    `companion/HELP.md`, `package.json`, `main.js` (or another name), and
    possibly a few other files. No extra work is needed for this to be loaded
 

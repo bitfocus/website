@@ -28,7 +28,7 @@ A typical _tsconfig.json_ file looks like:
     "node_modules/**",
     "src/**/*spec.ts",
     "src/**/__tests__/*",
-    "src/**/__mocks__/*",
+    "src/**/__mocks__/*"
   ],
   "compilerOptions": {
     "outDir": "./dist",
@@ -63,7 +63,7 @@ Our TypeScript template splits it into two files:
     "node_modules/**",
     "src/**/*spec.ts",
     "src/**/__tests__/*",
-    "src/**/__mocks__/*",
+    "src/**/__mocks__/*"
   ],
   "compilerOptions": {
     "outDir": "./dist",
