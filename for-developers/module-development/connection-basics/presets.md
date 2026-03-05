@@ -6,35 +6,55 @@ description: Module presets definition details.
 ---
 
 :::info
-This describes the current state of presets in [API 2.0](../api-changes/v2.0.md).  
-If your module is using an older API version, you want the [old presets page](./presets-1.x.md).
+
+This describes the current state of presets in
+[API 2.0](../api-changes/v2.0.md). If your module is using an older API version,
+you want the [old presets page](./presets-1.x.md).
+
 :::
 
-Presets are a description of ready-made buttons that will be presented to the user in the Presets tab on the Buttons page.
-The user can then drag-and-drop the preset onto the button-grid, to build out config quickly without having to code it from scratch.
+Presets are a description of ready-made buttons that will be presented to the
+user in the Presets tab on the Buttons page. The user can then drag-and-drop the
+preset onto the button-grid, to build out config quickly without having to code
+it from scratch.
 
 ## API call: `setPresetDefinitions()`
 
-In order to add presets to a module, you call `this.setPresetDefinitions(presetsStructure, presetsDefinitions)` much like how you define actions and feedbacks. However for presets you define your presets and a structure defining the layout separately. This allows for a lot more flexibility, and to reduce a lot of repetition
+In order to add presets to a module, you call
+`this.setPresetDefinitions(presetsStructure, presetsDefinitions)` much like how
+you define actions and feedbacks. However for presets you define your presets
+and a structure defining the layout separately. This allows for a lot more
+flexibility, and to reduce a lot of repetition
 
 :::tip
-Make sure you call this after the `this.setActionDefinitions()` and `this.setFeedbackDefinitions()` calls.
-If you do it before, the variable replacement will be incomplete, and you will get errors in the logs about the missing action and feedback definitions.
+
+Make sure you call this after the `this.setActionDefinitions()` and
+`this.setFeedbackDefinitions()` calls. If you do it before, the variable
+replacement will be incomplete, and you will get errors in the logs about the
+missing action and feedback definitions.
+
 :::
 
 ## Preset types
 
-Currently there is one type of preset. We have plans to introduce more in a future release.
+Currently there is one type of preset. We have plans to introduce more in a
+future release.
 
-- [Simple Button Preset](https://bitfocus.github.io/companion-module-base/interfaces/CompanionSimplePresetDefinition.html) (`type: "simple"`)
+- [Simple Button Preset](https://bitfocus.github.io/companion-module-base/interfaces/CompanionSimplePresetDefinition.html)
+  (`type: "simple"`)
 
 :::info
-In API 1.x, there used to be a 'text' preset type too. That has been replaced with the new [structure](#preset-structure) object.
+
+In API 1.x, there used to be a 'text' preset type too. That has been replaced
+with the new [structure](#preset-structure) object.
+
 :::
 
 ## Simple button preset definitions
 
-This preset type is referred to the 'simple' preset as it offers a bit less flexibility than the other preset types, but is intended to be easier to write while still covering most use cases.
+This preset type is referred to the 'simple' preset as it offers a bit less
+flexibility than the other preset types, but is intended to be easier to write
+while still covering most use cases.
 
 Let's start with a minimal example preset button:
 
@@ -79,12 +99,22 @@ this.setPresetDefinitions(structure, presets)
 
 ### Actions
 
-The `steps` property is where the magic happens. This describes what the action will do when pressed. In the typical case a button will have a single step, which will give the behaviour of a normal button.  
-You can make a latching button by defining a second step which does something different. By default, each time the button is released it will shift to the next step, this can be disabled by setting `options: { stepAutoProgress: false }` for the preset. This likely isn't very useful right now, due to it not being possible to use internal actions in presets.
+The `steps` property is where the magic happens. This describes what the action
+will do when pressed. In the typical case a button will have a single step,
+which will give the behaviour of a normal button. You can make a latching button
+by defining a second step which does something different. By default, each time
+the button is released it will shift to the next step, this can be disabled by
+setting `options: { stepAutoProgress: false }` for the preset. This likely isn't
+very useful right now, due to it not being possible to use internal actions in
+presets.
 
-You can add as many steps as you like, and build a button which runs through a whole cue list by simply pressing it. There are internal actions that a user can use to change the step manually.
+You can add as many steps as you like, and build a button which runs through a
+whole cue list by simply pressing it. There are internal actions that a user can
+use to change the step manually.
 
-Tip: You can build a preset for a rotary encoder by setting `options: { rotaryActions: true }`, and defining `rotate_left` and `rotate_right` actions on each step of your button:
+Tip: You can build a preset for a rotary encoder by setting
+`options: { rotaryActions: true }`, and defining `rotate_left` and
+`rotate_right` actions on each step of your button:
 
 ```ts
 steps: [
@@ -107,7 +137,10 @@ steps: [
 ],
 ```
 
-To define a duration group with a specific delay, you can set additional values inside a step with the delay in milliseconds as the key. This should contain the same structure as the `up` and `down` lists. See the example below as a reference:
+To define a duration group with a specific delay, you can set additional values
+inside a step with the delay in milliseconds as the key. This should contain the
+same structure as the `up` and `down` lists. See the example below as a
+reference:
 
 ```ts
 steps: [
@@ -127,18 +160,21 @@ steps: [
 ],
 ```
 
-Each action defined can also have a `delay` property specified (in milliseconds).
+Each action defined can also have a `delay` property specified (in
+milliseconds).
 
 :::tip
 
-You can "simulate" an `internal:wait` action by adding the property `delay:` (in ms) to any action definition.
-This will cause it to execute _after_ the delay, and is converted internally to `internal:wait`.
+You can "simulate" an `internal:wait` action by adding the property `delay:` (in
+ms) to any action definition. This will cause it to execute _after_ the delay,
+and is converted internally to `internal:wait`.
 
 :::
 
 ### Feedbacks
 
-The `feedbacks` property allows you to define style changes using feedbacks from your module.
+The `feedbacks` property allows you to define style changes using feedbacks from
+your module.
 
 These look similar to actions, but a little different:
 
@@ -158,12 +194,17 @@ feedbacks: [
 ]
 ```
 
-The feedbackId should match a feedback you have defined, and the options should contain the parameters as you defined as the options.
+The feedbackId should match a feedback you have defined, and the options should
+contain the parameters as you defined as the options.
 
 ### Local Variables
 
-You can also set a `localVariables` property to create some local variables on the button. Currently these are limited to be simple static values, intended to make it easier to use a value across the actions, feedbacks and style without repeating it.  
-By doing this, it becomes much easier for the user to change it if needed. This also allows for better reusing one preset within the preset structure with [the templating groups](#template-groups).
+You can also set a `localVariables` property to create some local variables on
+the button. Currently these are limited to be simple static values, intended to
+make it easier to use a value across the actions, feedbacks and style without
+repeating it. By doing this, it becomes much easier for the user to change it if
+needed. This also allows for better reusing one preset within the preset
+structure with [the templating groups](#template-groups).
 
 An example:
 
@@ -178,7 +219,8 @@ localVariables: [
 ],
 ```
 
-You can then reference these variables like normal variables elsewhere in your presets:
+You can then reference these variables like normal variables elsewhere in your
+presets:
 
 ```javascript
   style: {
@@ -203,9 +245,12 @@ You can then reference these variables like normal variables elsewhere in your p
 
 ### Using Expressions
 
-Since API 2.0, most fields in your actions and feedbacks will support expressions (except for the ones which you set `disableAutoExpressions: true` to opt out of this behaviour).
+Since API 2.0, most fields in your actions and feedbacks will support
+expressions (except for the ones which you set `disableAutoExpressions: true` to
+opt out of this behaviour).
 
-Not only can the user define these expressions, but you can do so in your presets too.
+Not only can the user define these expressions, but you can do so in your
+presets too.
 
 For example:
 
@@ -223,11 +268,13 @@ feedbacks: [
 ],
 ```
 
-When the action or feedback is executed, the expressions will have been precomputed, with the computed value provided directly to you.
+When the action or feedback is executed, the expressions will have been
+precomputed, with the computed value provided directly to you.
 
 ## Preset Structure
 
-In the API 2.0, we now expect you to provide a separate structure alongside the presets to define how they should be arranged within the UI.
+In the API 2.0, we now expect you to provide a separate structure alongside the
+presets to define how they should be arranged within the UI.
 
 A minimal example of this:
 
@@ -242,11 +289,14 @@ const structure = [
 ]
 ```
 
-In this example, there is a single section containing just 2 presets. This is a very basic presentation, but matches what most modules were doing before API 2.0.
+In this example, there is a single section containing just 2 presets. This is a
+very basic presentation, but matches what most modules were doing before API
+2.0.
 
 ### Simple Groups
 
-You can get a bit more structure to how your presets are displayed by using some groups inside each section:
+You can get a bit more structure to how your presets are displayed by using some
+groups inside each section:
 
 ```javascript
 const structure = [
@@ -273,24 +323,37 @@ const structure = [
 ]
 ```
 
-These groups will separate out each list of presets into their own blocks, with headings and an optional description between each of them.
+These groups will separate out each list of presets into their own blocks, with
+headings and an optional description between each of them.
 
-This allows for much more organisation of presets than before, without creating hundreds of sections/categories.
+This allows for much more organisation of presets than before, without creating
+hundreds of sections/categories.
 
-However, this is still a pretty manual and repetitive way of defining presets. For many, they could use some [templating](#template-groups)
+However, this is still a pretty manual and repetitive way of defining presets.
+For many, they could use some [templating](#template-groups)
 
 :::tip
-If you were using the 'text' preset type previously, these groups will help you create the same effect and are just a bit more formalised.
+
+If you were using the 'text' preset type previously, these groups will help you
+create the same effect and are just a bit more formalised.
+
 :::
 
 ### Template Groups
 
-In a lot of modules, they have many channels/outputs/inputs or some other resource where presets are identical except for one number varying between them.
+In a lot of modules, they have many channels/outputs/inputs or some other
+resource where presets are identical except for one number varying between them.
 
-A simple matrix/video router module, will commonly produce a preset for each input+output combination, to quickly route each input to each output. This can often produce 100s or 1000s of presets which are almost identical.  
-In some cases, this has caused issues due to the size of the data produced being a performance drain and occasionally making the modules crash on lower powered machines
+A simple matrix/video router module, will commonly produce a preset for each
+input+output combination, to quickly route each input to each output. This can
+often produce 100s or 1000s of presets which are almost identical. In some
+cases, this has caused issues due to the size of the data produced being a
+performance drain and occasionally making the modules crash on lower powered
+machines
 
-Instead, groups in the new structure can be defined as 'template' groups. This templating, allows for overriding local variables you defined on the presets with different values.
+Instead, groups in the new structure can be defined as 'template' groups. This
+templating, allows for overriding local variables you defined on the presets
+with different values.
 
 An example template group:
 
@@ -371,19 +434,30 @@ presets[`route_output`] = {
 }
 ```
 
-In this way, you can use one `route_output` preset as a template for hundreds of combinations inside the Companion UI, with a much much lower cost.
+In this way, you can use one `route_output` preset as a template for hundreds of
+combinations inside the Companion UI, with a much much lower cost.
 
-As a bonus, these variables also make it easier for users to adjust which input or output is used later if they need to, without finding the correct preset again.
+As a bonus, these variables also make it easier for users to adjust which input
+or output is used later if they need to, without finding the correct preset
+again.
 
 ## TypeScript typings
 
-When using typescript, if you strongly type your [actions](./actions.md#typescript-typings) and [feedbacks](./feedbacks.md#typescript-typings) as explained in their respective pages, then in your presets, the API will expect your presets to also be typed as `CompanionPresetDefinitions<MyTypes>`.
+When using typescript, if you strongly type your
+[actions](./actions.md#typescript-typings) and
+[feedbacks](./feedbacks.md#typescript-typings) as explained in their respective
+pages, then in your presets, the API will expect your presets to also be typed
+as `CompanionPresetDefinitions<MyTypes>`.
 
-These types get propagated through to the actions and feedback properties on the presets, ensuring that they are also strongly typed. This will help you ensure that your usage of the actions and feedbacks in your presets match the definitions you have created
+These types get propagated through to the actions and feedback properties on the
+presets, ensuring that they are also strongly typed. This will help you ensure
+that your usage of the actions and feedbacks in your presets match the
+definitions you have created
 
 ## Standard Colors
 
-Below are some color profiles for typical action and/or feedback combinations we recommend.
+Below are some color profiles for typical action and/or feedback combinations we
+recommend.
 
 | Color  | RGB Value | Text color | Usage                                                                                |
 | ------ | --------- | ---------- | ------------------------------------------------------------------------------------ |
@@ -397,7 +471,10 @@ Below are some color profiles for typical action and/or feedback combinations we
 
 It is possible to use almost any unicode character or emoji within button text.
 
-Some common ones are listed below (you can copy and paste the glyph directly into your code), or find more. [emojipedia](https://emojipedia.org/) can help you find one suitable for what you need, but we recommend keeping it simple and letting the user change it themselves.
+Some common ones are listed below (you can copy and paste the glyph directly
+into your code), or find more. [emojipedia](https://emojipedia.org/) can help
+you find one suitable for what you need, but we recommend keeping it simple and
+letting the user change it themselves.
 
 | Glyph | Hex Code | font size | Usage                     |
 | ----- | -------- | --------- | ------------------------- |

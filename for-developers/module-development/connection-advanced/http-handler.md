@@ -5,19 +5,38 @@ sidebar_position: 4
 description: How to set up HTTP handling for your module.
 ---
 
-Companion's webserver that serves the Web UI also provides a path for each connection so that HTTP requests can be passed through to an instance of a module. Your module can then choose to respond or otherwise Companion will automatically respond with a 404. The path to an instance will be `/instance/INSTANCE NAME/`, so for example if a user has Companion on `http://127.0.0.1:8000/` and creates a Google Sheets connection called 'sheet', HTTP traffic to `http://127.0.0.1:8000/instance/sheet/` will be forwarded to the HTTP handler in Google Sheets for that connection.
+Companion's webserver that serves the Web UI also provides a path for each
+connection so that HTTP requests can be passed through to an instance of a
+module. Your module can then choose to respond or otherwise Companion will
+automatically respond with a 404. The path to an instance will be
+`/instance/INSTANCE NAME/`, so for example if a user has Companion on
+`http://127.0.0.1:8000/` and creates a Google Sheets connection called 'sheet',
+HTTP traffic to `http://127.0.0.1:8000/instance/sheet/` will be forwarded to the
+HTTP handler in Google Sheets for that connection.
 
-Because each instance acts as a child process of Companion, only a subset of the properties for a HTTP request to Express are passed on to the child processes. This allows for most common usages, but more complex setups such as utilizing the HTTP handler for WebSockets will not work.
+Because each instance acts as a child process of Companion, only a subset of the
+properties for a HTTP request to Express are passed on to the child processes.
+This allows for most common usages, but more complex setups such as utilizing
+the HTTP handler for WebSockets will not work.
 
 A few example use cases for the HTTP handler:
 
-- Expose data generated/collected by the module. For example the Google Sheets module makes all of the spreadsheet data available as both JSON and CSV, this allows apps such as vMix to utilize that as a data source far more efficiently and responsively than if it was to interact with Google Sheets itself.
-- Expose some of the functionality of Actions, so if an external device/service needs to be able to run an Action it could be made available to be run directly rather than requiring it placed on a button and then use Companion's API to press/release that button.
-- A HTML page that acts as a UI for users, which could even pull data from JSON endpoints to dynamically fill that HTML page with data, and POST endpoints that the page can send requests to for triggering functionality in the module.
+- Expose data generated/collected by the module. For example the Google Sheets
+  module makes all of the spreadsheet data available as both JSON and CSV, this
+  allows apps such as vMix to utilize that as a data source far more efficiently
+  and responsively than if it was to interact with Google Sheets itself.
+- Expose some of the functionality of Actions, so if an external device/service
+  needs to be able to run an Action it could be made available to be run
+  directly rather than requiring it placed on a button and then use Companion's
+  API to press/release that button.
+- A HTML page that acts as a UI for users, which could even pull data from JSON
+  endpoints to dynamically fill that HTML page with data, and POST endpoints
+  that the page can send requests to for triggering functionality in the module.
 
 ## API call: handleHttpRequest
 
-The `this.handleHttpRequest` method on the Instance class is what handles HTTP requests being passed from Companion to the module instance.
+The `this.handleHttpRequest` method on the Instance class is what handles HTTP
+requests being passed from Companion to the module instance.
 
 ```js
 handleHttpRequest(request: CompanionHTTPRequest): CompanionHTTPResponse | Promise<CompanionHTTPResponse> {

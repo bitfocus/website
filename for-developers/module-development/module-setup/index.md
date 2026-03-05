@@ -1,7 +1,9 @@
 ---
 title: Module Setup and Structure
-description: The files and file structure necessary to create a module repository.
+description:
+  The files and file structure necessary to create a module repository.
 auto_toc: 3
 ---
 
-This section describes the files and file structure necessary to create a module repository.
+This section describes the files and file structure necessary to create a module
+repository.

@@ -21,6 +21,15 @@
 			"options": {
 				"singleQuote": false
 			}
+		},
+		{
+			"files": ["for-developers/**/*.md", "for-developers/**/*.mdx"],
+			"options": {
+				"proseWrap": "always",
+				"printWidth": 80,
+				"useTabs": false,
+				"tabWidth": 2
+			}
 		}
 	]
 }
