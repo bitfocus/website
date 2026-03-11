@@ -84,7 +84,7 @@ You can make a latching button by defining a second step which does something di
 
 You can add as many steps as you like, and build a button which runs through a whole cue list by simply pressing it. There are internal actions that a user can use to change the step manually.
 
-Tip: You can build a preset for a rotary encoder by setting `options: { rotaryActions: true }`, and defining `rotate_left` and `rotate_right` actions on each step of your button:
+Tip: You can build a preset for a rotary encoder by defining `rotate_left` and `rotate_right` actions on each step of your button:
 
 ```ts
 steps: [
