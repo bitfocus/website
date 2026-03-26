@@ -2,6 +2,7 @@
 title: Satellite API
 sidebar_label: Satellite API
 sidebar_position: 90
+toc_max_heading_level: 4
 ---
 
 It is possible to remotely connect a 'Stream Deck' to companion so that it appears as its own device and follows the paging model. This is different from how the OSC/TCP/UDP servers operate.
@@ -20,7 +21,7 @@ This lists what versions of Companion introduced support for each API version.
 | 1.8         | v4.0+              |
 | 1.9         | v4.2+              |
 
-## API Spec
+## Connection
 
 The server by default runs on port TCP 16622, but this will become configurable in the future. You should make sure to support alternate ports to allow for future compatibility as well as firewalls or router port forwarding.  
 As of Companion 3.5, it is also possible to use this protocol over websockets, with a default port of 16623.
@@ -33,7 +34,7 @@ Note: You can send boolean values can as both true/false and 0/1, you will alway
 
 Upon connection you will receive `BEGIN CompanionVersion=2.2.0-d9008309-3449 ApiVersion=1.0.0` stating the build of companion you are connected to. The `CompanionVersion` field should not be relied on to be meaningful to your application, but can be presented as information to the user, or to aid debugging. You should use the `ApiVersion` field to check compatibility with companion. The number followers [semver](https://semver.org/) for versioning. We hope to keep breaking changes to a minimum, and will do so only when necessary.
 
-## Messages to send
+### Messages to send
 
 Upon receiving an unknown command, the server will respond with the format `ERROR MESSAGE="Unknown command: SOMETHING"`  
 Known commands will get either a success or error response like the following:
@@ -43,19 +44,42 @@ Known commands will get either a success or error response like the following:
 - `COMMAND-NAME OK\n`
 - `COMMAND-NAME OK ARG1=arg1\n`
 
-### Close connection
+#### Close connection
 
 `QUIT`
 Close the connection, removing all registered devices
 
-### Ping/pong
+#### Ping/pong
 
 `PING payload`
 Check the server is alive, with an arbitrary payload
 Responds with `PONG payload`  
 You must call this at an interval, we recommend every 2 seconds, this is to ensure the connection does't get closed from being idle.
 
-### Adding a satellite device
+### Messages to receive
+
+No responses are expected to these unless stated below, and to do so will result in an error.
+
+#### Ping/pong
+
+`PING payload`
+The server is checking you are still alive, with an arbitrary payload
+You must respond with `PONG payload`
+
+## Surfaces
+
+The surface API is the primary way to use the Satellite protocol. It lets your client register one or more virtual surfaces with Companion — each surface appears in the Surfaces table in the UI just like a physical device, follows Companion's page model, and receives streamed button state updates (bitmaps, colours, text) that your client is responsible for rendering.
+
+Two modes are available when registering a surface:
+
+- **Simple mode** — a flat uniform grid of buttons with shared rendering settings. Easiest to implement and sufficient for most use cases.
+- **Advanced mode** (since v1.9.0) — individually configurable controls, each with its own rendering style. Suited for mixed surfaces such as a grid of buttons alongside encoders.
+
+Once a surface is registered with `ADD-DEVICE`, Companion will begin streaming `KEY-STATE` updates for every button on the surface. Your client reports user interactions (button presses, encoder rotations) back to Companion using `KEY-PRESS` and `KEY-ROTATE`.
+
+### Messages to send
+
+#### Adding a satellite device
 
 When adding a device, you need to choose between a simple and advanced mode. The advanced mode allows finer grained control definitions, but requires a bit more work. The simple mode is more basic but is sufficient for many use cases and is easier to implement.
 
@@ -79,7 +103,7 @@ Optional parameters (all modes):
   ```
 - `PINCODE_LOCK` - (added in v1.8.0) you can set to indicate that you will handle display of the pincode locked state. set to `FULL` to indicate that you will handle display and input or to `PARTIAL` to indicate that you will handle display and the user will not be able to input a pincode. (Partial mode has no difference in behaviour currently, but we will utilise it in the future)
 
-#### Simple mode
+##### Simple mode
 
 Describe the surface as a flat grid of uniform buttons. All buttons share the same rendering settings.
 
@@ -101,7 +125,7 @@ Describe the surface as a flat grid of uniform buttons. All buttons share the sa
 
 In simple mode, `KEY-PRESS`, `KEY-ROTATE` and `KEY-STATE` use `KEY` to identify controls.
 
-#### Advanced mode (since v1.9.0)
+##### Advanced mode (since v1.9.0)
 
 Describe a surface with individually configurable controls, where each control can have its own rendering settings. When `LAYOUT_MANIFEST` is provided, the simple mode parameters (`KEYS_TOTAL`, `KEYS_PER_ROW`, `BITMAPS`, `COLORS`, `TEXT`, `TEXT_STYLE`) are ignored. `KEY-PRESS`, `KEY-ROTATE` and `KEY-STATE` use `CONTROLID` to identify controls by the ID defined in the manifest.
 
@@ -135,13 +159,13 @@ Example manifest (before base64 encoding):
 }
 ```
 
-### Removing a satellite device
+#### Removing a satellite device
 
 `REMOVE-DEVICE DEVICEID=00000`
 
 - `DEVICEID` the unique identifier used to add the device
 
-### Pressing a key
+#### Pressing a key
 
 Simple mode: `KEY-PRESS DEVICEID=00000 KEY=0 PRESSED=true`  
 Advanced mode (since v1.9.0): `KEY-PRESS DEVICEID=00000 CONTROLID="0/0" PRESSED=true`
@@ -151,7 +175,7 @@ Advanced mode (since v1.9.0): `KEY-PRESS DEVICEID=00000 CONTROLID="0/0" PRESSED=
 - `CONTROLID` (advanced mode, since v1.9.0) the ID of the control as defined in the `LAYOUT_MANIFEST`
 - `PRESSED` true/false whether the key is pressed
 
-### Rotating an encoder (Since v1.3.0)
+#### Rotating an encoder (Since v1.3.0)
 
 Note: there is a checkbox to enable this per bank inside Companion, allowing users to define the actions to execute
 
@@ -163,7 +187,7 @@ Advanced mode (since v1.9.0): `KEY-ROTATE DEVICEID=00000 CONTROLID="enc/0" DIREC
 - `CONTROLID` (advanced mode, since v1.9.0) the ID of the control as defined in the `LAYOUT_MANIFEST`
 - `DIRECTION` direction of the rotation. 1 for right, -1 for left
 
-### Updating a variable (Since v1.7.0)
+#### Updating a variable (Since v1.7.0)
 
 This can be used when input variables are defined as part of `ADD-DEVICE`.
 
@@ -175,7 +199,7 @@ This can be used when input variables are defined as part of `ADD-DEVICE`.
 
 The success response echoes the variable name: `SET-VARIABLE-VALUE OK VARIABLE="some-id"` (since v1.7.1)
 
-### Pincode key press (Since v1.8.0)
+#### Pincode key press (Since v1.8.0)
 
 When handling the pincode locked state yourself, report a pincode key was pressed
 
@@ -186,17 +210,11 @@ When handling the pincode locked state yourself, report a pincode key was presse
 
 Note: depending on your surface, this may not translate directly to a button press.
 
-## Messages to receive
+### Messages to receive
 
 No responses are expected to these unless stated below, and to do so will result in an error.
 
-### Ping/pong
-
-`PING payload`
-The server is checking you are still alive, with an arbitrary payload
-You must respond with `PONG payload`
-
-### State change for key
+#### State change for key
 
 Simple mode: `KEY-STATE DEVICEID=00000 KEY=0 BITMAP=abcabcabc COLOR=#00ff00`  
 Advanced mode (since v1.9.0): `KEY-STATE DEVICEID=00000 CONTROLID="0/0" BITMAP=abcabcabc COLOR=#00ff00`
@@ -217,20 +235,20 @@ Optional parameters (sent based on the control's resolved style preset):
 
 Note: expect more parameters to be added to this message over time. Some could increase the frequency of the message being received.
 
-### Reset all keys to black
+#### Reset all keys to black
 
 `KEYS-CLEAR DEVICEID=00000`
 
 - `DEVICEID` the unique identifier of the device
 
-### Change brightness
+#### Change brightness
 
 `BRIGHTNESS DEVICEID=00000 VALUE=100`
 
 - `DEVICEID` the unique identifier of the device
 - `VALUE` brightness number in range 0-100
 
-### Update of a variable (Since v1.7.0)
+#### Update of a variable (Since v1.7.0)
 
 This can be received when output variables are defined as part of `ADD-DEVICE`.
 
@@ -240,7 +258,7 @@ This can be received when output variables are defined as part of `ADD-DEVICE`.
 - `VARIABLE` the id of the variable being updated
 - `VALUE` the value of the variable, base64 encoded. The encoding is so that special characters and newlines don't have to be escaped, avoiding a wide range of easy to trigger bugs.
 
-### Locked state update (Since v1.8.0)
+#### Locked state update (Since v1.8.0)
 
 This can be received when `PINCODE_LOCK` was specified when adding the device
 
