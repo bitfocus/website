@@ -20,6 +20,7 @@ This lists what versions of Companion introduced support for each API version.
 | 1.7         | v3.4+              |
 | 1.8         | v4.0+              |
 | 1.9         | v4.2+              |
+| 1.10        | v4.3+              |
 
 ## Connection
 
@@ -269,3 +270,102 @@ This can be received when `PINCODE_LOCK` was specified when adding the device
 - `CHARACTER_COUNT` how many characters have been entered for the pincode
 
 Between this reporting `LOCKED=true` and `LOCKED=false`, you will not receive any other drawing messages, and any input messages you send will be ignored.
+
+## Button Subscriptions (Since v1.10.0)
+
+The subscription API lets a client observe any individual button at an absolute location in Companion — without registering a surface. This is useful for custom UIs, secondary displays, or any scenario where you want to monitor or interact with a specific button rather than presenting a full surface to Companion.
+
+Each subscription is identified by a client-chosen `SUBID`. The `SUBID` may contain alphanumeric characters, `-`, and `/` (the same rules as `CONTROLID`). It must be unique within the connection.
+
+A location is expressed as `PAGE/ROW/COL` using Companion's native location syntax, e.g. `1/2/3` for page 1, row 2, column 3.
+
+Subscribing to a location that does not contain a button is valid — Companion will respond with `OK` and immediately stream an empty button.
+
+### Messages to send
+
+#### Subscribe to a button
+
+`ADD-SUB SUBID=myid LOCATION=1/2/3`
+
+- `SUBID` unique identifier for this subscription, chosen by the client
+- `LOCATION` the button location in `PAGE/ROW/COL` format
+
+Two modes are available for specifying what should be streamed. At least one style option should be set for useful output.
+
+##### Simple style
+
+Flat parameters, mirrors the simple surface mode:
+
+- `BITMAP` a number specifying the desired square bitmap size in pixels. If 0 or false, bitmaps will not be streamed.
+- `COLORS` stream colour data; `hex` for hexadecimal notation or `rgb` for CSS rgb notation
+- `TEXT` true/false whether you want button text streamed (default false)
+- `TEXT_STYLE` true/false whether you want text style properties streamed (default false)
+
+##### Advanced style
+
+- `STYLE` a base64-encoded JSON object following the `SatelliteControlStylePreset` schema defined in [`assets/satellite-surface.schema.json`](https://github.com/bitfocus/companion/blob/main/assets/satellite-surface.schema.json). When `STYLE` is provided, the simple style parameters (`BITMAP`, `COLORS`, `TEXT`, `TEXT_STYLE`) are ignored.
+
+The object can define:
+
+- `bitmap` — if set, bitmaps of the given pixel dimensions will be streamed, e.g. `{ "w": 72, "h": 72 }`. Unlike the simple mode `BITMAP`, this allows non-square dimensions.
+- `colors` — stream colour data; `"hex"` for hexadecimal notation or `"rgb"` for CSS rgb notation
+- `text` — `true` to stream button text
+- `textStyle` — `true` to stream text style properties (e.g. font size)
+
+Example `STYLE` value (before base64 encoding):
+
+```json
+{ "bitmap": { "w": 72, "h": 72 }, "colors": "hex", "text": true }
+```
+
+This matches the json format used for the surface advanced mode.
+
+Upon success, Companion immediately sends a `SUB-STATE` message with the current state of the button.
+
+#### Unsubscribe from a button
+
+`REMOVE-SUB SUBID=myid`
+
+- `SUBID` the identifier of the subscription to remove
+
+No further `SUB-STATE` messages will be sent for this `SUBID`.
+
+#### Reporting a button press
+
+`SUB-PRESS SUBID=myid PRESSED=true`
+
+- `SUBID` the subscription identifier
+- `PRESSED` true/false whether the button is pressed
+
+#### Reporting an encoder rotation
+
+`SUB-ROTATE SUBID=myid DIRECTION=1`
+
+- `SUBID` the subscription identifier
+- `DIRECTION` direction of the rotation. 1 for right, -1 for left
+
+Note: there is a checkbox to enable rotation actions per button inside Companion, allowing users to define the actions to execute.
+
+### Messages to receive
+
+No response is expected to these messages.
+
+#### Button state update
+
+`SUB-STATE SUBID=myid TYPE=BUTTON`
+
+Sent immediately after a successful `ADD-SUB` and again whenever the button's state changes.
+
+- `SUBID` the subscription identifier
+- `TYPE` type of the location. Either `BUTTON`, `PAGEUP`, `PAGEDOWN` or `PAGENUM`
+- `PRESSED` true/false whether the button is currently held down.
+
+Optional parameters (sent based on the style options specified in `ADD-SUB`):
+
+- `BITMAP` base64 encoded pixel data. Sent when `BITMAP` was set in `ADD-SUB`. Resolution matches the size requested. Currently encoded as 8-bit RGB (this may be configurable in the future).
+- `COLOR` hex or css encoded 8-bit RGB color for the button background. Sent when `COLORS` was set in `ADD-SUB`.
+- `TEXTCOLOR` hex or css encoded 8-bit RGB color for the button text. Sent when `COLORS` was set in `ADD-SUB`.
+- `TEXT` base64 encoded text as should be displayed on the button. Sent when `TEXT=true` was set in `ADD-SUB`.
+- `FONT_SIZE` numeric size that should be used when displaying the text on the button. Sent when `TEXT_STYLE=true` was set in `ADD-SUB`.
+
+Note: expect more parameters to be added to this message over time. Some could increase the frequency of the message being received.
