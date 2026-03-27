@@ -39,6 +39,7 @@ Upon receiving an unknown command, the server will respond with the format `ERRO
 Known commands will get either a success or error response like the following:
 
 - `COMMAND-NAME ERROR MESSAGE="Some text here"\n`
+- `COMMAND-NAME ERROR DEVICEID=00000 MESSAGE="Some text here"\n` (since v1.2.0, `DEVICEID` is included when it is known)
 - `COMMAND-NAME OK\n`
 - `COMMAND-NAME OK ARG1=arg1\n`
 
@@ -172,6 +173,8 @@ This can be used when input variables are defined as part of `ADD-DEVICE`.
 - `VARIABLE` the id of the variable being updated
 - `VALUE` the value of the variable, base64 encoded. The encoding is so that special characters and newlines don't have to be escaped, avoiding a wide range of easy to trigger bugs.
 
+The success response echoes the variable name: `SET-VARIABLE-VALUE OK VARIABLE="some-id"` (since v1.7.1)
+
 ### Pincode key press (Since v1.8.0)
 
 When handling the pincode locked state yourself, report a pincode key was pressed
@@ -202,6 +205,7 @@ Advanced mode (since v1.9.0): `KEY-STATE DEVICEID=00000 CONTROLID="0/0" BITMAP=a
 - `KEY` (simple mode) number of the key which the pixel buffer is for
 - `CONTROLID` (advanced mode, since v1.9.0) the ID of the control as defined in the `LAYOUT_MANIFEST`
 - `TYPE` type of the key. (added in v1.1.0) Either `BUTTON`, `PAGEUP`, `PAGEDOWN` or `PAGENUM`
+- `PRESSED` true/false whether the key is currently held down. (added in v1.1.0)
 
 Optional parameters (sent based on the control's resolved style preset):
 
