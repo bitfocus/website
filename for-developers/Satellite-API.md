@@ -225,6 +225,7 @@ Advanced mode (since v1.9.0): `KEY-STATE DEVICEID=00000 CONTROLID="0/0" BITMAP=a
 - `CONTROLID` (advanced mode, since v1.9.0) the ID of the control as defined in the `LAYOUT_MANIFEST`
 - `TYPE` type of the key. (added in v1.1.0) Either `BUTTON`, `PAGEUP`, `PAGEDOWN` or `PAGENUM`
 - `PRESSED` true/false whether the key is currently held down. (added in v1.1.0)
+- `LOCATION` (since v1.10.0) the absolute location of the button in the format `page/row/column` (e.g. `3/1/0`). This is sent for all button types, but is not always set.
 
 Optional parameters (sent based on the control's resolved style preset):
 
