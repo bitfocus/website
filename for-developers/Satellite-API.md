@@ -55,7 +55,7 @@ Close the connection, removing all registered devices
 `PING payload`
 Check the server is alive, with an arbitrary payload
 Responds with `PONG payload`  
-You must call this at an interval, we recommend every 2 seconds, this is to ensure the connection does't get closed from being idle.
+You must call this at an interval, we recommend every 2 seconds, this is to ensure the connection doesn't get closed from being idle.
 
 ### Messages to receive
 
