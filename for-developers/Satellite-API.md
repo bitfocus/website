@@ -2,6 +2,7 @@
 title: Satellite API
 sidebar_label: Satellite API
 sidebar_position: 90
+toc_max_heading_level: 4
 ---
 
 It is possible to remotely connect a 'Stream Deck' to companion so that it appears as its own device and follows the paging model. This is different from how the OSC/TCP/UDP servers operate.
@@ -19,8 +20,9 @@ This lists what versions of Companion introduced support for each API version.
 | 1.7         | v3.4+              |
 | 1.8         | v4.0+              |
 | 1.9         | v4.2+              |
+| 1.10        | v4.3+              |
 
-## API Spec
+## Connection
 
 The server by default runs on port TCP 16622, but this will become configurable in the future. You should make sure to support alternate ports to allow for future compatibility as well as firewalls or router port forwarding.  
 As of Companion 3.5, it is also possible to use this protocol over websockets, with a default port of 16623.
@@ -33,7 +35,9 @@ Note: You can send boolean values can as both true/false and 0/1, you will alway
 
 Upon connection you will receive `BEGIN CompanionVersion=2.2.0-d9008309-3449 ApiVersion=1.0.0` stating the build of companion you are connected to. The `CompanionVersion` field should not be relied on to be meaningful to your application, but can be presented as information to the user, or to aid debugging. You should use the `ApiVersion` field to check compatibility with companion. The number followers [semver](https://semver.org/) for versioning. We hope to keep breaking changes to a minimum, and will do so only when necessary.
 
-## Messages to send
+On servers that support it (since v1.10.0), `BEGIN` is immediately followed by a `CAPS` message declaring which optional features are available. See [Capabilities](#capabilities) below.
+
+### Messages to send
 
 Upon receiving an unknown command, the server will respond with the format `ERROR MESSAGE="Unknown command: SOMETHING"`  
 Known commands will get either a success or error response like the following:
@@ -43,19 +47,54 @@ Known commands will get either a success or error response like the following:
 - `COMMAND-NAME OK\n`
 - `COMMAND-NAME OK ARG1=arg1\n`
 
-### Close connection
+#### Close connection
 
 `QUIT`
 Close the connection, removing all registered devices
 
-### Ping/pong
+#### Ping/pong
 
 `PING payload`
 Check the server is alive, with an arbitrary payload
 Responds with `PONG payload`  
-You must call this at an interval, we recommend every 2 seconds, this is to ensure the connection does't get closed from being idle.
+You must call this at an interval, we recommend every 2 seconds, this is to ensure the connection doesn't get closed from being idle.
 
-### Adding a satellite device
+### Messages to receive
+
+No responses are expected to these unless stated below, and to do so will result in an error.
+
+#### Ping/pong
+
+`PING payload`
+The server is checking you are still alive, with an arbitrary payload
+You must respond with `PONG payload`
+
+#### Capabilities (Since v1.10.0) {#capabilities}
+
+`CAPS SUBSCRIPTIONS=1`
+
+Sent by the server immediately after `BEGIN`, before any other messages. Declares which optional features are available in this session. If a flag is absent, the client should treat it as disabled.
+
+- `SUBSCRIPTIONS` true/false whether the [Button Subscription](#button-subscriptions-since-v1100) API (`ADD-SUB`, `REMOVE-SUB`, `SUB-PRESS`, `SUB-ROTATE`, `SUB-STATE`) is available
+
+If the server changes the availability of an optional feature at runtime, it will close the connection. The client should reconnect and re-read the new `CAPS` message.
+
+Note: servers older than v1.10.0 do not send `CAPS`. Clients should rely solely on the `ApiVersion` from `BEGIN` to determine whether a feature exists at all; `CAPS` only needs to be checked for features that may be conditionally disabled within a version that otherwise supports them.
+
+## Surfaces
+
+The surface API is the primary way to use the Satellite protocol. It lets your client register one or more virtual surfaces with Companion — each surface appears in the Surfaces table in the UI just like a physical device, follows Companion's page model, and receives streamed button state updates (bitmaps, colours, text) that your client is responsible for rendering.
+
+Two modes are available when registering a surface:
+
+- **Simple mode** — a flat uniform grid of buttons with shared rendering settings. Easiest to implement and sufficient for most use cases.
+- **Advanced mode** (since v1.9.0) — individually configurable controls, each with its own rendering style. Suited for mixed surfaces such as a grid of buttons alongside encoders.
+
+Once a surface is registered with `ADD-DEVICE`, Companion will begin streaming `KEY-STATE` updates for every button on the surface. Your client reports user interactions (button presses, encoder rotations) back to Companion using `KEY-PRESS` and `KEY-ROTATE`.
+
+### Messages to send
+
+#### Adding a satellite device
 
 When adding a device, you need to choose between a simple and advanced mode. The advanced mode allows finer grained control definitions, but requires a bit more work. The simple mode is more basic but is sufficient for many use cases and is easier to implement.
 
@@ -79,7 +118,7 @@ Optional parameters (all modes):
   ```
 - `PINCODE_LOCK` - (added in v1.8.0) you can set to indicate that you will handle display of the pincode locked state. set to `FULL` to indicate that you will handle display and input or to `PARTIAL` to indicate that you will handle display and the user will not be able to input a pincode. (Partial mode has no difference in behaviour currently, but we will utilise it in the future)
 
-#### Simple mode
+##### Simple mode
 
 Describe the surface as a flat grid of uniform buttons. All buttons share the same rendering settings.
 
@@ -101,7 +140,7 @@ Describe the surface as a flat grid of uniform buttons. All buttons share the sa
 
 In simple mode, `KEY-PRESS`, `KEY-ROTATE` and `KEY-STATE` use `KEY` to identify controls.
 
-#### Advanced mode (since v1.9.0)
+##### Advanced mode (since v1.9.0)
 
 Describe a surface with individually configurable controls, where each control can have its own rendering settings. When `LAYOUT_MANIFEST` is provided, the simple mode parameters (`KEYS_TOTAL`, `KEYS_PER_ROW`, `BITMAPS`, `COLORS`, `TEXT`, `TEXT_STYLE`) are ignored. `KEY-PRESS`, `KEY-ROTATE` and `KEY-STATE` use `CONTROLID` to identify controls by the ID defined in the manifest.
 
@@ -135,13 +174,13 @@ Example manifest (before base64 encoding):
 }
 ```
 
-### Removing a satellite device
+#### Removing a satellite device
 
 `REMOVE-DEVICE DEVICEID=00000`
 
 - `DEVICEID` the unique identifier used to add the device
 
-### Pressing a key
+#### Pressing a key
 
 Simple mode: `KEY-PRESS DEVICEID=00000 KEY=0 PRESSED=true`  
 Advanced mode (since v1.9.0): `KEY-PRESS DEVICEID=00000 CONTROLID="0/0" PRESSED=true`
@@ -151,7 +190,7 @@ Advanced mode (since v1.9.0): `KEY-PRESS DEVICEID=00000 CONTROLID="0/0" PRESSED=
 - `CONTROLID` (advanced mode, since v1.9.0) the ID of the control as defined in the `LAYOUT_MANIFEST`
 - `PRESSED` true/false whether the key is pressed
 
-### Rotating an encoder (Since v1.3.0)
+#### Rotating an encoder (Since v1.3.0)
 
 Note: there is a checkbox to enable this per bank inside Companion, allowing users to define the actions to execute
 
@@ -163,7 +202,7 @@ Advanced mode (since v1.9.0): `KEY-ROTATE DEVICEID=00000 CONTROLID="enc/0" DIREC
 - `CONTROLID` (advanced mode, since v1.9.0) the ID of the control as defined in the `LAYOUT_MANIFEST`
 - `DIRECTION` direction of the rotation. 1 for right, -1 for left
 
-### Updating a variable (Since v1.7.0)
+#### Updating a variable (Since v1.7.0)
 
 This can be used when input variables are defined as part of `ADD-DEVICE`.
 
@@ -175,7 +214,7 @@ This can be used when input variables are defined as part of `ADD-DEVICE`.
 
 The success response echoes the variable name: `SET-VARIABLE-VALUE OK VARIABLE="some-id"` (since v1.7.1)
 
-### Pincode key press (Since v1.8.0)
+#### Pincode key press (Since v1.8.0)
 
 When handling the pincode locked state yourself, report a pincode key was pressed
 
@@ -186,17 +225,11 @@ When handling the pincode locked state yourself, report a pincode key was presse
 
 Note: depending on your surface, this may not translate directly to a button press.
 
-## Messages to receive
+### Messages to receive
 
 No responses are expected to these unless stated below, and to do so will result in an error.
 
-### Ping/pong
-
-`PING payload`
-The server is checking you are still alive, with an arbitrary payload
-You must respond with `PONG payload`
-
-### State change for key
+#### State change for key
 
 Simple mode: `KEY-STATE DEVICEID=00000 KEY=0 BITMAP=abcabcabc COLOR=#00ff00`  
 Advanced mode (since v1.9.0): `KEY-STATE DEVICEID=00000 CONTROLID="0/0" BITMAP=abcabcabc COLOR=#00ff00`
@@ -206,6 +239,7 @@ Advanced mode (since v1.9.0): `KEY-STATE DEVICEID=00000 CONTROLID="0/0" BITMAP=a
 - `CONTROLID` (advanced mode, since v1.9.0) the ID of the control as defined in the `LAYOUT_MANIFEST`
 - `TYPE` type of the key. (added in v1.1.0) Either `BUTTON`, `PAGEUP`, `PAGEDOWN` or `PAGENUM`
 - `PRESSED` true/false whether the key is currently held down. (added in v1.1.0)
+- `LOCATION` (since v1.10.0) the absolute location of the button in the format `page/row/column` (e.g. `3/1/0`). This is sent for all button types, but is not always set.
 
 Optional parameters (sent based on the control's resolved style preset):
 
@@ -217,20 +251,20 @@ Optional parameters (sent based on the control's resolved style preset):
 
 Note: expect more parameters to be added to this message over time. Some could increase the frequency of the message being received.
 
-### Reset all keys to black
+#### Reset all keys to black
 
 `KEYS-CLEAR DEVICEID=00000`
 
 - `DEVICEID` the unique identifier of the device
 
-### Change brightness
+#### Change brightness
 
 `BRIGHTNESS DEVICEID=00000 VALUE=100`
 
 - `DEVICEID` the unique identifier of the device
 - `VALUE` brightness number in range 0-100
 
-### Update of a variable (Since v1.7.0)
+#### Update of a variable (Since v1.7.0)
 
 This can be received when output variables are defined as part of `ADD-DEVICE`.
 
@@ -240,7 +274,7 @@ This can be received when output variables are defined as part of `ADD-DEVICE`.
 - `VARIABLE` the id of the variable being updated
 - `VALUE` the value of the variable, base64 encoded. The encoding is so that special characters and newlines don't have to be escaped, avoiding a wide range of easy to trigger bugs.
 
-### Locked state update (Since v1.8.0)
+#### Locked state update (Since v1.8.0)
 
 This can be received when `PINCODE_LOCK` was specified when adding the device
 
@@ -251,3 +285,102 @@ This can be received when `PINCODE_LOCK` was specified when adding the device
 - `CHARACTER_COUNT` how many characters have been entered for the pincode
 
 Between this reporting `LOCKED=true` and `LOCKED=false`, you will not receive any other drawing messages, and any input messages you send will be ignored.
+
+## Button Subscriptions (Since v1.10.0)
+
+The subscription API lets a client observe any individual button at an absolute location in Companion — without registering a surface. This is useful for custom UIs, secondary displays, or any scenario where you want to monitor or interact with a specific button rather than presenting a full surface to Companion.
+
+Each subscription is identified by a client-chosen `SUBID`. The `SUBID` may contain alphanumeric characters, `-`, and `/` (the same rules as `CONTROLID`). It must be unique within the connection.
+
+A location is expressed as `PAGE/ROW/COL` using Companion's native location syntax, e.g. `1/2/3` for page 1, row 2, column 3.
+
+Subscribing to a location that does not contain a button is valid — Companion will respond with `OK` and immediately stream an empty button.
+
+### Messages to send
+
+#### Subscribe to a button
+
+`ADD-SUB SUBID=myid LOCATION=1/2/3`
+
+- `SUBID` unique identifier for this subscription, chosen by the client
+- `LOCATION` the button location in `PAGE/ROW/COL` format
+
+Two modes are available for specifying what should be streamed. At least one style option should be set for useful output.
+
+##### Simple style
+
+Flat parameters, mirrors the simple surface mode:
+
+- `BITMAP` a number specifying the desired square bitmap size in pixels. If 0 or false, bitmaps will not be streamed.
+- `COLORS` stream colour data; `hex` for hexadecimal notation or `rgb` for CSS rgb notation
+- `TEXT` true/false whether you want button text streamed (default false)
+- `TEXT_STYLE` true/false whether you want text style properties streamed (default false)
+
+##### Advanced style
+
+- `STYLE` a base64-encoded JSON object following the `SatelliteControlStylePreset` schema defined in [`assets/satellite-surface.schema.json`](https://github.com/bitfocus/companion/blob/main/assets/satellite-surface.schema.json). When `STYLE` is provided, the simple style parameters (`BITMAP`, `COLORS`, `TEXT`, `TEXT_STYLE`) are ignored.
+
+The object can define:
+
+- `bitmap` — if set, bitmaps of the given pixel dimensions will be streamed, e.g. `{ "w": 72, "h": 72 }`. Unlike the simple mode `BITMAP`, this allows non-square dimensions.
+- `colors` — stream colour data; `"hex"` for hexadecimal notation or `"rgb"` for CSS rgb notation
+- `text` — `true` to stream button text
+- `textStyle` — `true` to stream text style properties (e.g. font size)
+
+Example `STYLE` value (before base64 encoding):
+
+```json
+{ "bitmap": { "w": 72, "h": 72 }, "colors": "hex", "text": true }
+```
+
+This matches the json format used for the surface advanced mode.
+
+Upon success, Companion immediately sends a `SUB-STATE` message with the current state of the button.
+
+#### Unsubscribe from a button
+
+`REMOVE-SUB SUBID=myid`
+
+- `SUBID` the identifier of the subscription to remove
+
+No further `SUB-STATE` messages will be sent for this `SUBID`.
+
+#### Reporting a button press
+
+`SUB-PRESS SUBID=myid PRESSED=true`
+
+- `SUBID` the subscription identifier
+- `PRESSED` true/false whether the button is pressed
+
+#### Reporting an encoder rotation
+
+`SUB-ROTATE SUBID=myid DIRECTION=1`
+
+- `SUBID` the subscription identifier
+- `DIRECTION` direction of the rotation. 1 for right, -1 for left
+
+Note: there is a checkbox to enable rotation actions per button inside Companion, allowing users to define the actions to execute.
+
+### Messages to receive
+
+No response is expected to these messages.
+
+#### Button state update
+
+`SUB-STATE SUBID=myid TYPE=BUTTON`
+
+Sent immediately after a successful `ADD-SUB` and again whenever the button's state changes.
+
+- `SUBID` the subscription identifier
+- `TYPE` type of the location. Either `BUTTON`, `PAGEUP`, `PAGEDOWN` or `PAGENUM`
+- `PRESSED` true/false whether the button is currently held down.
+
+Optional parameters (sent based on the style options specified in `ADD-SUB`):
+
+- `BITMAP` base64 encoded pixel data. Sent when `BITMAP` was set in `ADD-SUB`. Resolution matches the size requested. Currently encoded as 8-bit RGB (this may be configurable in the future).
+- `COLOR` hex or css encoded 8-bit RGB color for the button background. Sent when `COLORS` was set in `ADD-SUB`.
+- `TEXTCOLOR` hex or css encoded 8-bit RGB color for the button text. Sent when `COLORS` was set in `ADD-SUB`.
+- `TEXT` base64 encoded text as should be displayed on the button. Sent when `TEXT=true` was set in `ADD-SUB`.
+- `FONT_SIZE` numeric size that should be used when displaying the text on the button. Sent when `TEXT_STYLE=true` was set in `ADD-SUB`.
+
+Note: expect more parameters to be added to this message over time. Some could increase the frequency of the message being received.
