@@ -35,6 +35,8 @@ Note: You can send boolean values can as both true/false and 0/1, you will alway
 
 Upon connection you will receive `BEGIN CompanionVersion=2.2.0-d9008309-3449 ApiVersion=1.0.0` stating the build of companion you are connected to. The `CompanionVersion` field should not be relied on to be meaningful to your application, but can be presented as information to the user, or to aid debugging. You should use the `ApiVersion` field to check compatibility with companion. The number followers [semver](https://semver.org/) for versioning. We hope to keep breaking changes to a minimum, and will do so only when necessary.
 
+On servers that support it (since v1.10.0), `BEGIN` is immediately followed by a `CAPS` message declaring which optional features are available. See [Capabilities](#capabilities) below.
+
 ### Messages to send
 
 Upon receiving an unknown command, the server will respond with the format `ERROR MESSAGE="Unknown command: SOMETHING"`  
@@ -66,6 +68,18 @@ No responses are expected to these unless stated below, and to do so will result
 `PING payload`
 The server is checking you are still alive, with an arbitrary payload
 You must respond with `PONG payload`
+
+#### Capabilities (Since v1.10.0) {#capabilities}
+
+`CAPS SUBSCRIPTIONS=1`
+
+Sent by the server immediately after `BEGIN`, before any other messages. Declares which optional features are available in this session. If a flag is absent, the client should treat it as disabled.
+
+- `SUBSCRIPTIONS` true/false whether the [Button Subscription](#button-subscriptions-since-v1100) API (`ADD-SUB`, `REMOVE-SUB`, `SUB-PRESS`, `SUB-ROTATE`, `SUB-STATE`) is available
+
+If the server changes the availability of an optional feature at runtime, it will close the connection. The client should reconnect and re-read the new `CAPS` message.
+
+Note: servers older than v1.10.0 do not send `CAPS`. Clients should rely solely on the `ApiVersion` from `BEGIN` to determine whether a feature exists at all; `CAPS` only needs to be checked for features that may be conditionally disabled within a version that otherwise supports them.
 
 ## Surfaces
 
