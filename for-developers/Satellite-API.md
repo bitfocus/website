@@ -117,6 +117,7 @@ Optional parameters (all modes):
   }
   ```
 - `PINCODE_LOCK` - (added in v1.8.0) you can set to indicate that you will handle display of the pincode locked state. set to `FULL` to indicate that you will handle display and input or to `PARTIAL` to indicate that you will handle display and the user will not be able to input a pincode. (Partial mode has no difference in behaviour currently, but we will utilise it in the future)
+- `CONFIG_FIELDS` - (added in v1.10.0) a base64-encoded JSON array of custom config field definitions to expose in the Companion UI for this device. See schema in [`assets/satellite-config-fields.schema.json`](https://github.com/bitfocus/companion/blob/main/assets/satellite-config-fields.schema.json). When provided, Companion will render these fields in the surface settings panel and push the stored values back to the device via `DEVICE-CONFIG` after the device is registered and again whenever the user changes them.
 
 ##### Simple mode
 
@@ -225,6 +226,17 @@ When handling the pincode locked state yourself, report a pincode key was presse
 
 Note: depending on your surface, this may not translate directly to a button press.
 
+#### Firmware update available (Since v1.10.0)
+
+Notify Companion that a firmware update is available (or no longer available) for this device. When `UPDATE_URL` is set to a non-empty value, Companion will show a firmware update indicator in the UI with a link to that URL. Set `UPDATE_URL` to an empty string to clear the update notification.
+
+`FIRMWARE-UPDATE-INFO DEVICEID=00000 UPDATE_URL="https://example.com/firmware"`
+
+`FIRMWARE-UPDATE-INFO DEVICEID=00000 UPDATE_URL=""`
+
+- `DEVICEID` the unique identifier used to add the device
+- `UPDATE_URL` URL to the firmware update page or download; set to empty string to clear the update notification
+
 ### Messages to receive
 
 No responses are expected to these unless stated below, and to do so will result in an error.
@@ -285,6 +297,15 @@ This can be received when `PINCODE_LOCK` was specified when adding the device
 - `CHARACTER_COUNT` how many characters have been entered for the pincode
 
 Between this reporting `LOCKED=true` and `LOCKED=false`, you will not receive any other drawing messages, and any input messages you send will be ignored.
+
+#### Device config update (Since v1.10.0)
+
+Sent when `CONFIG_FIELDS` was declared in `ADD-DEVICE`. Companion sends this message once immediately after the device is registered (`ADD-DEVICE OK`) and again whenever the user changes a config value in the UI.
+
+`DEVICE-CONFIG DEVICEID=00000 CONFIG="eyJteS1maWVsZCI6InNvbWUtdmFsdWUifQ=="`
+
+- `DEVICEID` the unique identifier used to add the device
+- `CONFIG` base64-encoded JSON object where each key is a field `id` from `CONFIG_FIELDS` and the value is the current stored value for that field
 
 ## Button Subscriptions (Since v1.10.0)
 
