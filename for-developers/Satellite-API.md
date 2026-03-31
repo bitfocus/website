@@ -100,11 +100,13 @@ When adding a device, you need to choose between a simple and advanced mode. The
 
 `ADD-DEVICE DEVICEID=00000 PRODUCT_NAME="Satellite Streamdeck"`
 
-- `DEVICEID` should be a unique identifier for the hardware device. such as a serial number, or mac address. This should be in the format `streamdeck:12345` to both ensure there aren't collisions between device types, and make the id a bit more meaningful.
+- `DEVICEID` a unique identifier for this device within the current session. This is the routing key used to address the device in all subsequent messages. If `SERIAL` is not set, or talking to Companion before API v1.10.0, then this is used as the stable hardware serial number (See `SERIAL` below for more)
 - `PRODUCT_NAME` is the name of the product to show in the Surfaces table in the UI
 
 Optional parameters (all modes):
 
+- `SERIAL` - (added in v1.10.0) the stable hardware serial number or other persistent identifier for this device. Companion uses this value to match the device to its stored configuration across sessions. If not provided, Companion falls back to using `DEVICEID` for config matching (preserving backward compatibility with older satellites). Recommended format is `type:identifier` (e.g. `streamdeck:AB12CD34`) to avoid collisions between device types.
+- `SERIAL_IS_UNIQUE` - (added in v1.10.0) true/false whether the `SERIAL` value uniquely identifies a single physical device. Set to `false` when the hardware does not provide a unique serial number (e.g. some devices report a shared product ID instead of a per-unit serial). When `false`, Companion will not rely on the serial for persistent identification of this specific unit. (default true)
 - `BRIGHTNESS` - (added in v1.7.0) true/false whether the device supporting changing brightness (default true)
 - `VARIABLES` - (added in v1.7.0) a base64 encoded json array describing any input or output variables supported for this device  
    Each item in the array should be of the form:
@@ -300,7 +302,7 @@ Between this reporting `LOCKED=true` and `LOCKED=false`, you will not receive an
 
 #### Device config update (Since v1.10.0)
 
-Sent when `CONFIG_FIELDS` was declared in `ADD-DEVICE`. Companion sends this message once immediately after the device is registered (`ADD-DEVICE OK`) and again whenever the user changes a config value in the UI.
+Sent when `CONFIG_FIELDS` was declared in `ADD-DEVICE`. If your surface defines any config fields, Companion will send this message once immediately after the device is registered (`ADD-DEVICE OK`) and again whenever the user changes a config value in the UI.
 
 `DEVICE-CONFIG DEVICEID=00000 CONFIG="eyJteS1maWVsZCI6InNvbWUtdmFsdWUifQ=="`
 
