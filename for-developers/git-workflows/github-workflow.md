@@ -35,7 +35,7 @@ git clone https://github.com/bitfocus/companion.git
 (module developers: substitute the appropriate GitHub location.)
 
 :::note
-The Bitfocus repository is read-only for most users. In the next step we will create a writeable "fork" of the Bitfocus repo that will be used for sending in proposed code changes (PRs)
+The Bitfocus repository is read-only for most users. In the next step we will create a writable "fork" of the Bitfocus repo that will be used for sending in proposed code changes (PRs)
 :::
 
 **updating**: Once your local repository has been established, use `git fetch` or `git pull` to keep it up-to-date. (Some GUI frontends can automate this part.)
