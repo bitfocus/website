@@ -120,6 +120,7 @@ Optional parameters (all modes):
   ```
 - `PINCODE_LOCK` - (added in v1.8.0) you can set to indicate that you will handle display of the pincode locked state. set to `FULL` to indicate that you will handle display and input or to `PARTIAL` to indicate that you will handle display and the user will not be able to input a pincode. (Partial mode has no difference in behaviour currently, but we will utilise it in the future)
 - `CONFIG_FIELDS` - (added in v1.10.0) a base64-encoded JSON array of custom config field definitions to expose in the Companion UI for this device. See schema in [`assets/satellite-config-fields.schema.json`](https://github.com/bitfocus/companion/blob/main/assets/satellite-config-fields.schema.json). When provided, Companion will render these fields in the surface settings panel and push the stored values back to the device via `DEVICE-CONFIG` after the device is registered and again whenever the user changes them.
+- `CAN_CHANGE_PAGE` - (added in v1.10.0) a label string indicating that the device is capable of initiating page changes (e.g. via a swipe gesture or dedicated page-up/down button). When provided, Companion adds a checkbox with this label to the surface settings panel, letting the user control whether the device is allowed to change pages. The device can then send `CHANGE-PAGE` messages to navigate between pages.
 
 ##### Simple mode
 
@@ -227,6 +228,17 @@ When handling the pincode locked state yourself, report a pincode key was presse
 - `KEY` the value of the pressed key (0-9)
 
 Note: depending on your surface, this may not translate directly to a button press.
+
+#### Changing page (Since v1.10.0)
+
+Request that Companion navigate the surface to the next or previous page. This message is only valid if `CAN_CHANGE_PAGE` was set when adding the device.
+
+The request is silently ignored if the user has disabled the page-change checkbox for this surface in the settings UI. Companion will always respond with `OK`.
+
+`CHANGE-PAGE DEVICEID=00000 DIRECTION=1`
+
+- `DEVICEID` the unique identifier used to add the device
+- `DIRECTION` direction to navigate. `1` for next page, `0` for previous page. Next/previous respects Companion's page order and any page restrictions configured for the surface group.
 
 #### Firmware update available (Since v1.10.0)
 
