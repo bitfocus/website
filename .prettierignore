@@ -6,3 +6,7 @@ package.json
 /.docusaurus/
 /_typos.toml
 /.mypy_cache/
+
+# These are synced from companion, so aren't our responsibility to format
+/user-guide
+/versioned_docs
