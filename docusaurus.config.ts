@@ -23,7 +23,6 @@ const config: Config = {
 			siteStorageNamespacing: true,
 			fasterByDefault: true,
 		},
-		faster: false, // Build errors :(
 	},
 
 	// Set the production url of your site here
