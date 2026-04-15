@@ -15,7 +15,15 @@ const config: Config = {
 
 	// Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
 	future: {
-		v4: true, // Improve compatibility with the upcoming Docusaurus v4
+		v4: {
+			// Improve compatibility with the upcoming Docusaurus v4
+			mdx1CompatDisabledByDefault: false, // Build errors :(
+			removeLegacyPostBuildHeadAttribute: true,
+			useCssCascadeLayers: true,
+			siteStorageNamespacing: true,
+			fasterByDefault: true,
+		},
+		faster: false, // Build errors :(
 	},
 
 	// Set the production url of your site here
