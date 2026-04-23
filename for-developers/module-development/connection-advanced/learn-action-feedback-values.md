@@ -9,7 +9,7 @@ To make it easier for users to configure your actions and feedbacks, you can imp
 
 When implemented, a <span style={{background: "#39f", color: "#fff", borderRadius: "5px", fontSize: "0.8em", padding: "0.5em"}}>Learn Values</span> button appears in the action or feedback allowing the user to trigger a learn event.
 
-![Launcher window](../images/action-learn-button.png)
+![Learn button](../images/action-learn-button.png)
 
 Implementing this callback is the same for actions and feedbacks, but the parameters do vary a little accordingly.
 
@@ -34,6 +34,14 @@ learn: (event) => {
     }
 },
 ```
+
+:::tip
+
+Don't update any internal state inside this callback; the value you return may be applied to the action/feedback or it may be discarded. 
+
+If the user accepts the values, the new values will be provided to the action subscribe or feedback callback as usual.
+
+:::
 
 :::warning
 
