@@ -110,6 +110,7 @@ const config: Config = {
 					if (url.docPath === 'index.md') return null
 					return `https://github.com/bitfocus/companion/tree/main/docs/user-guide/9_whatsnew/${url.docPath}`
 				},
+				beforeDefaultRemarkPlugins: [remarkVideo],
 			} satisfies DocsPluginOptions,
 		],
 		[
