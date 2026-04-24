@@ -37,7 +37,7 @@ learn: (event) => {
 
 :::tip
 
-Don't update any internal state inside this callback; the value you return may be applied to the action/feedback or it may be discarded. 
+Don't update any internal state inside this callback; the value you return may be applied to the action/feedback or it may be discarded.
 
 If the user accepts the values, the new values will be provided to the action subscribe or feedback callback as usual.
 
