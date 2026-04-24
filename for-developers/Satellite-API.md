@@ -309,6 +309,7 @@ This can be received when `PINCODE_LOCK` was specified when adding the device
 - `DEVICEID` the unique identifier used to add the device
 - `LOCKED` whether the surface is locked
 - `CHARACTER_COUNT` how many characters have been entered for the pincode
+- `ROTATION` (optional) the current rotation of the surface in degrees (0, 90, -90, 180) (added in v1.10.1)
 
 Between this reporting `LOCKED=true` and `LOCKED=false`, you will not receive any other drawing messages, and any input messages you send will be ignored.
 
