@@ -13,7 +13,7 @@ Tip: At any point you can validate your `manifest.json` by running `yarn compani
 
 ## Format
 
-If you are comfortable reading or working with JSON Schema, you can find the [formal definition in the module-base repo](https://github.com/bitfocus/companion-module-base/blob/main/assets/manifest.schema.json)
+If you are comfortable reading or working with JSON Schema, you can find the [formal definition in the module-base repo](https://github.com/bitfocus/companion-module-base/blob/main/packages/base/assets/manifest.schema.json)
 
 A full manifest definition is:
 
