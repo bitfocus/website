@@ -49,6 +49,14 @@ With over 700 published modules, you may find a module already written for you d
 - If you are **writing a new module**, then download and expand the zip file for the [TypeScript template module](https://github.com/bitfocus/companion-module-template-ts/archive/refs/heads/main.zip) into the module development folder (see the next section on naming your module). If you prefer, you can clone the [template repo](https://github.com/bitfocus/companion-module-template-ts), but remember to delete the remote link (`git remote remove origin`) before continuing. We encourage you to use TypeScript for all new modules but acknowledge that it isn't for everyone, so we fully support [Javascript](https://github.com/bitfocus/companion-module-template-js) too!
 - Alternatively for a new module, you can start by downloading the zip or cloning a module that controls a device similar to yours -- both options can be found under the green <span style={{background: "#00CC00", borderRadius: "5px", fontSize: "0.8em", padding: "0.5em"}}> **&lt;&gt; Code &#x25BC;** </span> button for that module's GitHub repo. Beware: by using another module as a base, you could inherit some subtle misconfigurations or deviations they have made from our recommendations. As with using the template, if you cloned the repo be sure to remove the remote connection by running `git remote remove origin`, since you will be creating a new module rather than modifying the existing one.
 
+:::tip
+
+We prefer to improve existing modules instead of having multiple which control the same device. We find this reduces user confusion.
+
+If the module you are interested in is looking a bit neglected, we are always appreciative for help with upkeep.
+
+:::
+
 ### Additional steps for new modules
 
 1. Rename your module's directory _companion-module-mymanufacturer-myproduct_, replacing _mymanufacturer-myproduct_ with appropriate names. Try to think of what is most appropriate for your device: Are there other similar devices by the manufacturer that use the same protocol that the module could support later on? If so try and name it to more easily allow for that.
