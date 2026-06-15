@@ -35,6 +35,9 @@ jobs:
         uses: actions/upload-pages-artifact@v5
         with:
           path: build
+          # v5 defaults include-hidden-files to false, which drops .well-known/
+          # and .nojekyll from the artifact. Keep them.
+          include-hidden-files: true
 
   deploy:
     name: Deploy to GitHub Pages
