@@ -1,3 +1,5 @@
+import fs from 'node:fs'
+import path from 'node:path'
 import { themes as prismThemes } from 'prism-react-renderer'
 import type { Config } from '@docusaurus/types'
 import type * as Preset from '@docusaurus/preset-classic'
@@ -172,6 +174,32 @@ const config: Config = {
 							},
 						],
 					}
+				},
+			}
+		},
+		() => {
+			// plugin-security-txt: emit a fresh RFC 9116 /.well-known/security.txt at build
+			// time so the mandatory `Expires` field never goes stale. Set ~11 months out
+			// (the spec recommends less than a year) on each build.
+			return {
+				name: 'plugin-security-txt',
+				async postBuild({ outDir }: { outDir: string }) {
+					const expires = new Date()
+					expires.setMonth(expires.getMonth() + 11)
+
+					const lines = [
+						'# Security policy for Bitfocus Companion',
+						'Contact: https://github.com/bitfocus/companion/security/advisories/new',
+						`Expires: ${expires.toISOString()}`,
+						'Preferred-Languages: en',
+						'Canonical: https://companion.free/.well-known/security.txt',
+						'Policy: https://github.com/bitfocus/companion/blob/main/SECURITY.md',
+						'',
+					]
+
+					const dir = path.join(outDir, '.well-known')
+					await fs.promises.mkdir(dir, { recursive: true })
+					await fs.promises.writeFile(path.join(dir, 'security.txt'), lines.join('\n'), 'utf8')
 				},
 			}
 		},
