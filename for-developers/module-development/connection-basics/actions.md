@@ -97,6 +97,12 @@ const actions = [
 ]
 ```
 
+:::tip When should a callback wait for completion?
+Waiting (not resolving the returned promise until the work is done) is mainly intended for actions that run for an **unknown** amount of time which could be longer than a few milliseconds — for example a network request or waiting for a device to acknowledge a command. In those cases the duration isn't known up front, so resolving only on real completion lets subsequent sequential actions reliably run afterwards.
+
+For actions where there is an expected long duration (such as a fade with a user-supplied time), it is recommended to let the promise resolve early and let the fade run in the background. There is a max duration of 5s for any action execution, to allow for detecting stalls, after which Companion will continue execution as if the action threw an error.
+:::
+
 #### Using variables
 
 :::note
