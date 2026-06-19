@@ -1,7 +1,7 @@
 ---
 title: Module Preset Definitions (API 1.x)
 sidebar_label: Presets (API 1.x)
-sidebar_position: 21
+sidebar_position: 24
 description: Module presets definition details.
 ---
 

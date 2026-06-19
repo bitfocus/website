@@ -6,7 +6,7 @@ description: Module presets definition details.
 ---
 
 :::info
-This describes the current state of presets in [API 2.0](../api-changes/v2.0.md).  
+This describes the current state of presets, as overhauled in [API 2.0](../api-changes/v2.0.md) and extended in [API 2.1](../api-changes/v2.1.md).  
 If your module is using an older API version, you want the [old presets page](./presets-1.x.md).
 :::
 
@@ -24,9 +24,14 @@ If you do it before, the variable replacement will be incomplete, and you will g
 
 ## Preset types
 
-Currently there is one type of preset. We have plans to introduce more in a future release.
+There are two types of preset:
 
-- [Simple Button Preset](https://bitfocus.github.io/companion-module-base/interfaces/CompanionSimplePresetDefinition.html) (`type: "simple"`)
+- [Simple Button Preset](https://bitfocus.github.io/companion-module-base/interfaces/CompanionSimplePresetDefinition.html) (`type: "simple"`) — a button described by a single flat style. This is the default, and covers most use cases.
+- [Layered Button Preset](https://bitfocus.github.io/companion-module-base/interfaces/CompanionLayeredButtonPresetDefinition.html) (`type: "layered"`) — new in [API 2.1](../api-changes/v2.1.md), a button drawn from a stack of [graphics elements](./graphics-elements.md) for richer, detailed graphics.
+
+:::tip
+We recommend continuing to use **simple** presets whenever possible. They are easier to write, and are required for compatibility with Bitfocus Buttons. Only reach for a [layered preset](#layered-button-presets) when a button genuinely needs the detailed drawing it offers.
+:::
 
 :::info
 In API 1.x, there used to be a 'text' preset type too. That has been replaced with the new [structure](#preset-structure) object.
@@ -80,9 +85,9 @@ this.setPresetDefinitions(structure, presets)
 ### Actions
 
 The `steps` property is where the magic happens. This describes what the action will do when pressed. In the typical case a button will have a single step, which will give the behaviour of a normal button.  
-You can make a latching button by defining a second step which does something different. By default, each time the button is released it will shift to the next step, this can be disabled by setting `options: { stepAutoProgress: false }` for the preset. This likely isn't very useful right now, due to it not being possible to use internal actions in presets.
+You can make a latching button by defining a second step which does something different. By default, each time the button is released it will shift to the next step, this can be disabled by setting `options: { stepAutoProgress: false }` for the preset.
 
-You can add as many steps as you like, and build a button which runs through a whole cue list by simply pressing it. There are internal actions that a user can use to change the step manually.
+You can add as many steps as you like, and build a button which runs through a whole cue list by simply pressing it. There are internal actions that a user can use to change the step manually, and since [API 2.1](../api-changes/v2.1.md) a small set of these can also be used directly in your presets — see [Internal actions and feedbacks in presets](#internal-actions-and-feedbacks-in-presets).
 
 Tip: You can build a preset for a rotary encoder by defining `rotate_left` and `rotate_right` actions on each step of your button:
 
@@ -162,10 +167,15 @@ The feedbackId should match a feedback you have defined, and the options should 
 
 ### Local Variables
 
-You can also set a `localVariables` property to create some local variables on the button. Currently these are limited to be simple static values, intended to make it easier to use a value across the actions, feedbacks and style without repeating it.  
+You can also set a `localVariables` property to create some local variables on the button. These make it easier to use a value across the actions, feedbacks and style without repeating it.  
 By doing this, it becomes much easier for the user to change it if needed. This also allows for better reusing one preset within the preset structure with [the templating groups](#template-groups).
 
-An example:
+There are two kinds of local variable:
+
+- **`simple`** — a fixed value, set once at startup. Intended as a single place to define a value that is used in several places on the button.
+- **`feedback`** — new in [API 2.1](../api-changes/v2.1.md), a value driven _live_ by the result of one of your module's feedbacks. The feedback's evaluated value is exposed under the variable name, so it can be referenced from expressions anywhere on the button — without the user having to wire it up themselves. This pairs especially well with [value feedbacks](./feedbacks.md#value-feedbacks).
+
+An example of each:
 
 ```javascript
 localVariables: [
@@ -174,6 +184,13 @@ localVariables: [
     variableType: 'simple',
     variableName: 'input',
     startupValue: 1,
+  },
+  {
+    // This 'feedback' type is driven live by one of your module's feedbacks
+    variableType: 'feedback',
+    variableName: 'current_level',
+    feedbackId: 'get-level', // one of your module's feedbacks
+    options: { channel: 1 },
   },
 ],
 ```
@@ -224,6 +241,147 @@ feedbacks: [
 ```
 
 When the action or feedback is executed, the expressions will have been precomputed, with the computed value provided directly to you.
+
+## Internal actions and feedbacks in presets
+
+Since [API 2.1](../api-changes/v2.1.md), your presets can reference a small, reserved set of Companion's built-in **internal** actions and feedbacks alongside your module's own, using `internal:*` ids. Companion translates each of these to the matching internal action/feedback when the preset is imported onto a control, resolving any references (such as the button location) to the control the preset is placed on.
+
+The internal **actions** available in presets are:
+
+- **`internal:wait`** — `{ time: number }` — wait for an amount of time (ms)
+- **`internal:customLog`** — `{ message: string }` — write a message to the Companion log
+- **`internal:abortButton`** — `{ skipReleaseActions?: boolean }` — abort the actions currently running on this button
+- **`internal:localVariableSet`** — `{ name: string; value: string }` — set one of this button's local variables
+
+The internal **feedbacks** available in presets are:
+
+- **`internal:checkExpression`** — `{ expression: string }` — boolean, driven by an expression
+- **`internal:buttonPushed`** — `{ treatSteppedAsPressed?: boolean }` — boolean, true while the button is pressed
+- **`internal:buttonCurrentStep`** — `{ step: number }` — boolean, true when the button is on the given step
+
+In addition, you can use the logic/flow **building blocks**, which nest other actions or conditions via named `children` groups:
+
+- **`internal:actionGroup`** — `{ executionMode?: 'inherit' | 'concurrent' | 'sequential' }`, children: `{ default: actions }`
+- **`internal:logicIf`** — children: `{ condition: conditions; actions; elseActions? }`
+- **`internal:logicWhile`** — children: `{ condition: conditions; actions }`
+- **`internal:logicOperator`** (feedback) — `{ operation: 'and' | 'or' | 'xor' }`, children: `{ default: conditions }`
+
+```ts
+;[
+  {
+    down: [
+      {
+        actionId: 'my-recall',
+        options: { preset: 1 },
+      },
+      {
+        actionId: 'internal:wait',
+        options: { time: 500 },
+      },
+      {
+        actionId: 'internal:logicIf',
+        options: {},
+        children: {
+          condition: [
+            {
+              feedbackId: 'internal:checkExpression',
+              options: { expression: '$(this:step) == 1' },
+            },
+          ],
+          actions: [
+            {
+              actionId: 'internal:customLog',
+              options: { message: 'On first step' },
+            },
+          ],
+        },
+      },
+    ],
+    up: [],
+  },
+]
+```
+
+:::info
+All of these require a module built against API 2.1 (`2.1.0` or newer). The host drops, with a warning, any internal preset entry that the module is too old to use, so the catalog can grow in future API versions without older modules being able to emit ids they predate.
+:::
+
+## Layered button presets
+
+A `layered` preset is a new preset type in [API 2.1](../api-changes/v2.1.md). Instead of a single flat `style`, it draws its button from a stack of [graphics elements](./graphics-elements.md) — text, images, boxes, lines, circles and groups, plus any [composite elements](./composite-elements.md) your module defines.
+
+:::tip
+Layered presets are for cases where you need detailed, custom drawing that a single style cannot express. For everything else, prefer a [simple preset](#simple-button-preset-definitions) — they are easier to write and are required for compatibility with Bitfocus Buttons.
+:::
+
+A minimal layered preset looks like this:
+
+```javascript
+presets[`my_layered_preset`] = {
+  type: 'layered',
+  name: `Channel meter`,
+  elements: [
+    {
+      type: 'text',
+      id: 'label',
+      x: { isExpression: false, value: 0 },
+      y: { isExpression: false, value: 0 },
+      width: { isExpression: false, value: 100 },
+      height: { isExpression: false, value: 40 },
+      text: { isExpression: true, value: `$(my-module:channel_1_name)` },
+      color: { isExpression: false, value: 0xffffff },
+    },
+    {
+      type: 'box',
+      id: 'bar',
+      x: { isExpression: false, value: 10 },
+      y: { isExpression: false, value: 50 },
+      width: { isExpression: false, value: 80 },
+      height: { isExpression: false, value: 40 },
+      color: { isExpression: false, value: 0x00cc00 },
+    },
+  ],
+  // Optional: describe the base canvas (eg the top bar)
+  canvas: {
+    decoration: { isExpression: false, value: 'topbar' },
+  },
+  steps: [
+    {
+      down: [{ actionId: 'my-action', options: { channel: 1 } }],
+      up: [],
+    },
+  ],
+  feedbacks: [],
+}
+```
+
+The `steps` and `localVariables` properties work exactly as they do for [simple presets](#simple-button-preset-definitions), including [internal actions](#internal-actions-and-feedbacks-in-presets) and [feedback-driven local variables](#local-variables). The drawing elements (and the `canvas`) are documented in full on the [Graphics Elements](./graphics-elements.md) page. The one part that differs is how feedbacks apply their styling.
+
+### Feedback style overrides
+
+A simple preset's boolean feedbacks carry a single `style` object that overrides the whole button. A layered preset is made of many independent elements, so instead its feedbacks declare **per-element style overrides**: each override targets a specific element (by its `id`) and a specific property on that element, and replaces it while the feedback is active.
+
+```javascript
+feedbacks: [
+  {
+    feedbackId: 'channel-active',
+    options: { channel: 1 },
+    styleOverrides: [
+      {
+        elementId: 'bar', // the `id` of the element to change
+        elementProperty: 'color', // the property on that element
+        override: { isExpression: false, value: 0xff0000 },
+      },
+    ],
+  },
+],
+```
+
+This is why elements you want a feedback to change should be given a stable `id`.
+
+:::tip
+When overriding a property that is fed by an **advanced** feedback, set the `override` to indicate which property it provides, eg `{ isExpression: false, value: 'color' }`.
+:::
 
 ## Preset Structure
 
@@ -432,6 +590,8 @@ Some common ones are listed below (you can copy and paste the glyph directly int
 
 ## Further Reading
 
+- [Graphics Elements](./graphics-elements.md) — the drawing elements used by layered presets
+- [Composite Elements](./composite-elements.md) — reusable drawing components
 - [Presets for Module API 1.x](./presets-1.x.md)
 - [Autogenerated docs for the module `InstanceBase` class](https://bitfocus.github.io/companion-module-base/classes/InstanceBase.html)
 - [API Overview](./overview.md)

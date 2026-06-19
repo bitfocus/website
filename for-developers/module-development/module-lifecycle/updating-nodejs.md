@@ -21,7 +21,11 @@ If you are using a node version manager, you can install an updated nodejs to yo
 
 ### Changing your module's version of nodejs
 
-Companion knows what version of nodejs your module is compatible with by looking at the `companion/manifest.json` in your module. Inside the `runtime` object, is a property `type` which should be set to something like `node18` or `node22`. Currently these are the only valid values, others will be allowed in the future. If this is an unknown value, your module will fail to run when adding an instance inside Companion.
+Companion knows what version of nodejs your module is compatible with by looking at the `companion/manifest.json` in your module. Inside the `runtime` object, is a property `type` which should be set to something like `node18`, `node22` or `node26`. These are currently the only valid values, others will be allowed in the future. If this is an unknown value, your module will fail to run when adding an instance inside Companion.
+
+:::tip
+`node26` was added in [API 2.1](../api-changes/v2.1.md) (Companion 5.0). Node 26 is an LTS release and is recommended for new modules, or modules that want to adopt the latest platform features. `node22` remains supported, but we encourage modules to update when they can.
+:::
 
 Make sure that your version of the `@companion-module/base` dependency is appropriate for the version of Companion too. A table of compatibility is listed in [the readme](https://github.com/bitfocus/companion-module-base#supported-versions-of-this-library)
 
