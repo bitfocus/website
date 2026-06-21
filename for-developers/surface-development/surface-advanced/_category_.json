@@ -1,0 +1,11 @@
+{
+	"label": "Surfaces: Advanced",
+	"position": 17,
+	"link": {
+		"type": "doc",
+		"id": "index"
+	},
+	"customProps": {
+		"description": "Advanced and special-purpose topics for surface modules."
+	}
+}
