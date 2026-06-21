@@ -11,13 +11,13 @@ This is the [Bitfocus Companion](https://github.com/bitfocus/companion) document
 
 The following directories are **synced from the [`bitfocus/companion`](https://github.com/bitfocus/companion) repository** and must **not** be edited in this repository under any circumstances. Each one is marked with an empty `__DO_NOT_EDIT__` file and is listed in `.prettierignore`.
 
-| Directory in this repo | Source of truth |
-| --- | --- |
-| `user-guide/` | `bitfocus/companion`, branch `main`, path `docs/user-guide/` (shown on the site as the "Beta" version) |
-| `versioned_docs/version-v4.3/` | `bitfocus/companion`, branch `stable-4.3`, path `docs/user-guide/` |
-| `versioned_docs/version-v4.2/` | `bitfocus/companion`, branch `stable-4.2`, path `docs/user-guide/` |
-| `versioned_docs/version-v4.1/` | Manually imported snapshot — not editable anywhere; do not touch |
-| `whats-new/` | `bitfocus/companion`, branch `main`, path `docs/user-guide/9_whatsnew/` |
+| Directory in this repo         | Source of truth                                                                                        |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `user-guide/`                  | `bitfocus/companion`, branch `main`, path `docs/user-guide/` (shown on the site as the "Beta" version) |
+| `versioned_docs/version-v4.3/` | `bitfocus/companion`, branch `stable-4.3`, path `docs/user-guide/`                                     |
+| `versioned_docs/version-v4.2/` | `bitfocus/companion`, branch `stable-4.2`, path `docs/user-guide/`                                     |
+| `versioned_docs/version-v4.1/` | Manually imported snapshot — not editable anywhere; do not touch                                       |
+| `whats-new/`                   | `bitfocus/companion`, branch `main`, path `docs/user-guide/9_whatsnew/`                                |
 
 This means **no edits at all** to these trees: not content, not typo fixes, not formatting, not frontmatter, not link corrections, not renames or deletions. Even a one-character change is out of scope.
 
