@@ -15,23 +15,23 @@ map of **controls**:
 
 ```typescript
 const myLayout = {
-	stylePresets: {
-		// Required. Used for any control that doesn't name its own preset.
-		default: {
-			bitmap: { w: 72, h: 72, format: 'rgb' },
-		},
-		// Optional extra presets, referenced by name from a control below.
-		encoder: {
-			text: true,
-			colors: 'hex',
-		},
-	},
-	controls: {
-		// Ids are typically "row/column". Companion maps these onto its button grid.
-		'0/0': { row: 0, column: 0 },
-		'0/1': { row: 0, column: 1 },
-		'0/2': { row: 0, column: 2, stylePreset: 'encoder' },
-	},
+  stylePresets: {
+    // Required. Used for any control that doesn't name its own preset.
+    default: {
+      bitmap: { w: 72, h: 72, format: 'rgb' },
+    },
+    // Optional extra presets, referenced by name from a control below.
+    encoder: {
+      text: true,
+      colors: 'hex',
+    },
+  },
+  controls: {
+    // Ids are typically "row/column". Companion maps these onto its button grid.
+    '0/0': { row: 0, column: 0 },
+    '0/1': { row: 0, column: 1 },
+    '0/2': { row: 0, column: 2, stylePreset: 'encoder' },
+  },
 }
 ```
 

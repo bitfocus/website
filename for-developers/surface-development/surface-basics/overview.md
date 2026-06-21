@@ -25,26 +25,26 @@ A minimal plugin looks like this:
 import type { SurfacePlugin } from '@companion-surface/base'
 
 interface MyDeviceInfo {
-	path: string
+  path: string
 }
 
 export const plugin: SurfacePlugin<MyDeviceInfo> = {
-	async init() {
-		// Set up anything the plugin needs. Don't block on hardware that may not be present yet.
-	},
-	async destroy() {
-		// Tear down anything created in init().
-	},
+  async init() {
+    // Set up anything the plugin needs. Don't block on hardware that may not be present yet.
+  },
+  async destroy() {
+    // Tear down anything created in init().
+  },
 
-	// Tell Companion which connected devices are yours — see Discovery.
-	checkSupportsHidDevice(device) {
-		return null
-	},
+  // Tell Companion which connected devices are yours — see Discovery.
+  checkSupportsHidDevice(device) {
+    return null
+  },
 
-	// Open a device Companion has chosen to use — see The Surface Instance.
-	async openSurface(surfaceId, pluginInfo, context) {
-		throw new Error('not implemented')
-	},
+  // Open a device Companion has chosen to use — see The Surface Instance.
+  async openSurface(surfaceId, pluginInfo, context) {
+    throw new Error('not implemented')
+  },
 }
 ```
 

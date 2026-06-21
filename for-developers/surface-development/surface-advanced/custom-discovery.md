@@ -52,17 +52,24 @@ dongle that surfaces appear and disappear behind), implement the `detection` pro
 
 ```typescript
 class MyDetection extends EventEmitter<SurfacePluginDetectionEvents<MyDeviceInfo>> /* … */ {
-	private onDeviceArrived(dev) {
-		this.emit('surfacesAdded', [
-			{ surfaceId: dev.serial, deviceHandle: dev.handle, description: 'My Surface', pluginInfo: { /* … */ } },
-		])
-	}
-	async triggerScan() {
-		/* ask the library to re-enumerate */
-	}
-	rejectSurface(info) {
-		/* release resources for this surface */
-	}
+  private onDeviceArrived(dev) {
+    this.emit('surfacesAdded', [
+      {
+        surfaceId: dev.serial,
+        deviceHandle: dev.handle,
+        description: 'My Surface',
+        pluginInfo: {
+          /* … */
+        },
+      },
+    ])
+  }
+  async triggerScan() {
+    /* ask the library to re-enumerate */
+  }
+  rejectSurface(info) {
+    /* release resources for this surface */
+  }
 }
 ```
 
