@@ -47,6 +47,10 @@ The user can use this feedback to store a value into a local variable. This allo
 
 These can return any JSON object, array, or primitive value.
 
+:::tip
+Because the result is stored in a variable, a value feedback can also return an **image** — encode it as a data URI string (`data:image/png;base64,…`) and the user can display it with the [Image graphics element](./graphics-elements.md#driving-an-image-from-a-variable).
+:::
+
 ### Advanced feedbacks
 
 These are no longer recommended in most cases.

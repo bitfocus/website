@@ -129,13 +129,38 @@ Each element is distinguished by its `type` field.
 }
 ```
 
-| Property      | Type               | Notes                                |
-| ------------- | ------------------ | ------------------------------------ |
-| `base64Image` | `string` \| `null` | A base64-encoded PNG/JPG (required). |
-| `fillMode`    | fill mode          | `'crop'` \| `'fill'` \| `'fit'`      |
-| `halign`      | alignment          | `'left'` \| `'center'` \| `'right'`  |
-| `valign`      | alignment          | `'top'` \| `'center'` \| `'bottom'`  |
-| `rotation`    | `number`           | Degrees 0–359.                       |
+| Property      | Type               | Notes                                                                                      |
+| ------------- | ------------------ | ------------------------------------------------------------------------------------------ |
+| `base64Image` | `string` \| `null` | A data URI containing a base64-encoded PNG/JPG, e.g. `data:image/png;base64,…` (required). |
+| `fillMode`    | fill mode          | `'crop'` \| `'fill'` \| `'fit'`                                                            |
+| `halign`      | alignment          | `'left'` \| `'center'` \| `'right'`                                                        |
+| `valign`      | alignment          | `'top'` \| `'center'` \| `'bottom'`                                                        |
+| `rotation`    | `number`           | Degrees 0–359.                                                                             |
+
+#### Driving an image from a variable
+
+The `base64Image` property can be useful as an expression that resolves to an image your module produces at runtime. The pattern has three parts:
+
+1. **Encode the image as a data URI.** Take your PNG/JPG bytes, base64-encode them, and prefix the result so the value is a full data URI like `data:image/png;base64,iVBORw0KGgo…`. A bare base64 string is _not_ accepted — the `data:` prefix is required.
+2. **Store the string somewhere the user can reference.** Put it in a [variable](./variables.md) with `setVariableValues()`, or return it as the result of a [value feedback](./feedbacks.md#value-feedbacks) (which the user binds to a local variable).
+3. **Reference it from the Image element** through the `base64Image` expression.
+
+```ts
+// 1 + 2: the module pushes a data URI into a variable
+const dataUri = `data:image/png;base64,${pngBuffer.toString('base64')}`
+this.setVariableValues({ thumbnail_base64: dataUri })
+```
+
+```ts
+// 3: the Image element renders whatever that variable currently holds
+{
+  type: 'image',
+  base64Image: { isExpression: true, value: `$(my-module:thumbnail_base64)` },
+  fillMode: { isExpression: false, value: 'fit' },
+}
+```
+
+This works with **any** variable — a plain module variable, a custom variable, or a local variable populated by a value feedback. There is nothing image-specific about the variable itself; it is just a string that happens to be a data URI. If the variable is empty, `null`, or does not contain a valid image, the element simply draws nothing.
 
 ### Box
 
