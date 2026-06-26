@@ -1,0 +1,11 @@
+{
+	"label": "Surface Development",
+	"position": 4,
+	"link": {
+		"type": "doc",
+		"id": "index"
+	},
+	"customProps": {
+		"description": "Everything you need to develop a surface module for Companion."
+	}
+}

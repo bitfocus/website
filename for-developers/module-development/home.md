@@ -1,13 +1,19 @@
 ---
-title: Getting Started with Modules
-sidebar_label: Getting Started with Modules
+title: Getting Started with Connections
+sidebar_label: Getting Started with Connections
 sidebar_position: 1
-description: Developer environment setup specific to module development.
+description: Developer environment setup specific to connection module development.
 ---
 
-So, you want to develop a module for Companion? Welcome!
+So, you want to develop a connection module for Companion? Welcome!
 
 Companion uses plug-ins to expand its capabilities, we call these plug-ins "modules". For every device you can control with Companion there is a "module" that manages the connection. This page describes how to set up your computer for developing Companion modules. Subsequent pages will provide details on the contents of the module and its lifecycle.
+
+:::note
+This section covers **connection** modules. If you want to add support for a physical control
+surface instead, see the [Surface Development](../surface-development/home.md) section — it shares
+much of the same tooling and links back here for the common setup steps.
+:::
 
 ## Prerequisites
 

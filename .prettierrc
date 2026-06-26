@@ -13,7 +13,8 @@
 			"files": ["**/*.md", "**/*.mdx"],
 			"options": {
 				"useTabs": false,
-				"tabWidth": 2
+				"tabWidth": 2,
+				"parser": "mdx"
 			}
 		},
 		{
