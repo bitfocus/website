@@ -103,6 +103,18 @@ Waiting (not resolving the returned promise until the work is done) is mainly in
 For actions where there is an expected long duration (such as a fade with a user-supplied time), it is recommended to let the promise resolve early and let the fade run in the background. There is a max duration of 5s for any action execution, to allow for detecting stalls, after which Companion will continue execution as if the action threw an error.
 :::
 
+#### Cancelling work with the abort signal
+
+Since [API 2.1](../api-changes/v2.1.md) (Companion 5.0), the `context` object includes a `signal` — a standard [`AbortSignal`](https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal) that aborts when the result of this execution is no longer needed (for example, the user aborted the actions currently running on the button). You can pass it straight to any API that accepts one:
+
+```ts
+callback: async (action, context) => {
+  await myDevice.send(action.options.command, { signal: context.signal })
+},
+```
+
+Respecting the signal is **optional**. If you do honour it, stop your work and throw — the thrown error will be ignored. If your callback is short or synchronous, you can ignore `context.signal` entirely.
+
 #### Using variables
 
 :::note
@@ -166,18 +178,42 @@ Since [API v1.13](../api-changes/v1.13.md), it is possible to specify `skipUnsub
 
 Since [API v2.0](../api-changes/v2.0.md), as Companion is responsible for all variable and expression parsing, `optionsToMonitorForSubscribe` should be used instead when wanting to limit which fields trigger `subscribe` calls.
 
+:::note
+Since [API 2.1](../api-changes/v2.1.md), `optionsToMonitorForSubscribe` is **required** in the TypeScript types whenever an action defines a `subscribe` callback. This is a type-only change with no runtime impact — if you already set it on every action using `subscribe` (or don't use TypeScript), nothing changes.
+:::
+
 ### Learn option values
 
 Some actions have many options that users may wish to configure on the device and 'capture' into an action in Companion.
 Implementing the [learn option values](../connection-advanced/learn-action-feedback-values.md) flow will allow them to achieve that
 
-### Result to Custom variable
+Since [API 2.1](../api-changes/v2.1.md), the `learn` callback's `context` also includes a `signal` ([`AbortSignal`](https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal)) that aborts if the user cancels the learn before it finishes. As with the action callback, respecting it is optional; once aborted, the returned value (or any thrown error) is ignored.
 
-:::danger
-This is an experimental idea, that may be removed without notice
+### Returning a result
+
+Since [API 2.1](../api-changes/v2.1.md) (Companion 5.0), an action can declare that it produces a result. When it returns a value, Companion can store it into a local or custom variable of the user's choosing, making it available to later actions in the same sequence.
+
+Add `hasResult: true` to the action definition and return a [`JsonValue`](https://bitfocus.github.io/companion-module-base/types/JsonValue.html) (a number, string, boolean, null, array, or object) from the callback:
+
+```ts
+{
+  name: 'Read current value',
+  options: [
+    { id: 'channel', type: 'number', label: 'Channel', default: 1, min: 1, max: 64 },
+  ],
+  hasResult: true,
+  callback: async (action, context) => {
+    const level = await myDevice.getLevel(action.options.channel)
+    return level
+  },
+}
+```
+
+In Companion's UI, the user can then nominate a local or custom variable to receive the returned value after each execution.
+
+:::tip
+This pairs well with the [expression support](../api-changes/v2.0.md#automatic-expression-parsing) from API 2.0 — the stored result can be referenced in later action options via the variable the user chose.
 :::
-
-Some action executions return a value which may want to be used elsewhere in Companion. This could be written [to a custom variable](../connection-advanced/setting-custom-variables.md)
 
 ## TypeScript typings
 

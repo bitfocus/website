@@ -74,6 +74,10 @@ this.setVariableValues({
 
 Variables can have values of any type, the user can use expressions to manipulate the values you provide.
 
+:::tip
+A variable can even hold an **image**, by storing it as a data URI string (`data:image/png;base64,…`). The user can then display it with the [Image graphics element](./graphics-elements.md#driving-an-image-from-a-variable).
+:::
+
 :::warning
 
 Please try to batch variable updates whenever possible, as updating the values has a cost. If you are calling it multiple times in a short span of time, consider if it would be possible to batch the calls so it is only done once.
@@ -111,3 +115,4 @@ In your calls to `setVariableDefinitions`, you can then type your definitions as
 - [Actions](./actions.md)
 - [Feedbacks](./feedbacks.md)
 - [Presets](./presets.md)
+- [Graphics Elements](./graphics-elements.md)

@@ -1,0 +1,423 @@
+---
+title: Button Graphics Elements
+sidebar_label: Graphics Elements
+sidebar_position: 22
+description: Reference for the drawing elements used by layered presets and composite elements.
+---
+
+:::info
+This is a new feature in [API 2.1](../api-changes/v2.1.md) (Companion 5.0+), part of the graphics overhaul.
+:::
+
+Companion 5.0 introduces an element-based drawing system for buttons. Instead of describing a button with a single flat style, you can build it up from a stack of **graphics elements** — text, images, boxes, lines, circles, gauges, and groups — each positioned and styled independently.
+
+These elements are the building blocks for two things:
+
+- [**Layered presets**](./presets.md#layered-button-presets) — a new preset type that draws its button from a list of elements.
+- [**Composite elements**](./composite-elements.md) — reusable drawing components your module defines, which can be used in layered presets and added by users to their own buttons.
+
+This page is the reference for the element types themselves. The two pages above describe how to use them in context.
+
+:::tip
+You don't have to use any of this. The [simple preset](./presets.md#simple-button-preset-definitions) style is still fully supported and is the right choice whenever you don't need detailed custom drawing — it is simpler to write and is required for compatibility with Bitfocus Buttons. Reach for graphics elements only when a button genuinely needs richer graphics than a single style can express.
+:::
+
+## The coordinate model
+
+A few conventions apply across all elements:
+
+- **Positions and sizes** (`x`, `y`, `width`, `height`, and the line endpoints) are expressed as **percentages from 0 to 100** of the button, not pixels. This keeps your graphics resolution-independent, so they look right regardless of the button's pixel size.
+- **Colors** are packed RGB numbers, exactly as elsewhere in Companion — use `combineRgb(255, 255, 255)` or a hex literal like `0xffffff`.
+- **Rotation** and angles are in **degrees** (0–359).
+- **Opacity** is a percentage from 0 to 100.
+
+## Values and expressions
+
+Almost every property on an element is an _expression-or-value_. There are three ways to write one:
+
+```ts
+// A bare value — shorthand for a fixed value
+50
+
+// A fixed value (the explicit, wrapped form)
+{ isExpression: false, value: 50 }
+
+// An expression, evaluated live on the button
+{ isExpression: true, value: '$(my-module:level) * 2' }
+```
+
+A bare value is accepted as a shortcut for `{ isExpression: false, value: ... }`, exactly as with the options on actions and feedbacks. Reach for the wrapped form only when you need an expression, or when you want to be explicit.
+
+This is what lets a layered button react to module variables and local variables — any property can be driven by an expression, not just the text.
+
+```ts
+{
+  type: 'text',
+  text: { isExpression: true, value: `$(my-module:channel_1_name)` },
+  color: { isExpression: false, value: 0xffffff },
+}
+```
+
+## Properties common to all elements
+
+Every element shares this set of optional base properties:
+
+| Property  | Type      | Notes                                                                                                                                 |
+| --------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`      | `string`  | A stable id for the element. Required if a feedback needs to target it for a [style override](./presets.md#feedback-style-overrides). |
+| `name`    | `string`  | A friendly name shown in the Companion UI element list.                                                                               |
+| `enabled` | `boolean` | When `false`, the element is not drawn. Useful when driven by an expression.                                                          |
+| `opacity` | `number`  | 0–100. Defaults to fully opaque.                                                                                                      |
+
+Most elements (everything except `line`) also share a set of **bounds**, defining where the element is drawn:
+
+| Property | Type     | Notes            |
+| -------- | -------- | ---------------- |
+| `x`      | `number` | 0–100, left edge |
+| `y`      | `number` | 0–100, top edge  |
+| `width`  | `number` | 0–100            |
+| `height` | `number` | 0–100            |
+
+Each of these values is an [expression-or-value](#values-and-expressions): pass a bare value for a fixed setting, or the wrapped form to drive it from an expression.
+
+## Element types
+
+Each element is distinguished by its `type` field.
+
+### Text
+
+```ts
+{
+  type: 'text',
+  id: 'label',
+  x: { isExpression: false, value: 0 },
+  y: { isExpression: false, value: 0 },
+  width: { isExpression: false, value: 100 },
+  height: { isExpression: false, value: 100 },
+  text: { isExpression: true, value: `$(my-module:channel_name)` },
+  fontsize: { isExpression: false, value: 20 }, // 3-200, percentage of element height
+  fontsizeAllowShrink: { isExpression: false, value: true },
+  font: { isExpression: false, value: 'companion-sans' }, // 'companion-sans' | 'companion-mono'
+  color: { isExpression: false, value: 0xffffff },
+  halign: { isExpression: false, value: 'center' }, // 'left' | 'center' | 'right'
+  valign: { isExpression: false, value: 'center' }, // 'top' | 'center' | 'bottom'
+  outlineColor: { isExpression: false, value: 0x000000 },
+}
+```
+
+| Property              | Type        | Notes                                                      |
+| --------------------- | ----------- | ---------------------------------------------------------- |
+| `text`                | `string`    | The text to draw (required).                               |
+| `fontsize`            | `number`    | 3–200, as a percentage of the element height.              |
+| `fontsizeAllowShrink` | `boolean`   | Let the text shrink below `fontsize` when too long to fit. |
+| `font`                | font family | `'companion-sans'` \| `'companion-mono'`                   |
+| `color`               | `number`    | Text color.                                                |
+| `halign`              | alignment   | `'left'` \| `'center'` \| `'right'`                        |
+| `valign`              | alignment   | `'top'` \| `'center'` \| `'bottom'`                        |
+| `outlineColor`        | `number`    | Optional outline color.                                    |
+| `rotation`            | `number`    | Degrees 0–359.                                             |
+
+### Image
+
+```ts
+{
+  type: 'image',
+  base64Image: { isExpression: true, value: `$(my-module:thumbnail_base64)` },
+  fillMode: { isExpression: false, value: 'fit' }, // 'crop' | 'fill' | 'fit'
+  halign: { isExpression: false, value: 'center' },
+  valign: { isExpression: false, value: 'center' },
+}
+```
+
+| Property      | Type               | Notes                                                                                      |
+| ------------- | ------------------ | ------------------------------------------------------------------------------------------ |
+| `base64Image` | `string` \| `null` | A data URI containing a base64-encoded PNG/JPG, e.g. `data:image/png;base64,…` (required). |
+| `fillMode`    | fill mode          | `'crop'` \| `'fill'` \| `'fit'`                                                            |
+| `halign`      | alignment          | `'left'` \| `'center'` \| `'right'`                                                        |
+| `valign`      | alignment          | `'top'` \| `'center'` \| `'bottom'`                                                        |
+| `rotation`    | `number`           | Degrees 0–359.                                                                             |
+
+#### Driving an image from a variable
+
+The `base64Image` property can be useful as an expression that resolves to an image your module produces at runtime. The pattern has three parts:
+
+1. **Encode the image as a data URI.** Take your PNG/JPG bytes, base64-encode them, and prefix the result so the value is a full data URI like `data:image/png;base64,iVBORw0KGgo…`. A bare base64 string is _not_ accepted — the `data:` prefix is required.
+2. **Store the string somewhere the user can reference.** Put it in a [variable](./variables.md) with `setVariableValues()`, or return it as the result of a [value feedback](./feedbacks.md#value-feedbacks) (which the user binds to a local variable).
+3. **Reference it from the Image element** through the `base64Image` expression.
+
+```ts
+// 1 + 2: the module pushes a data URI into a variable
+const dataUri = `data:image/png;base64,${pngBuffer.toString('base64')}`
+this.setVariableValues({ thumbnail_base64: dataUri })
+```
+
+```ts
+// 3: the Image element renders whatever that variable currently holds
+{
+  type: 'image',
+  base64Image: { isExpression: true, value: `$(my-module:thumbnail_base64)` },
+  fillMode: { isExpression: false, value: 'fit' },
+}
+```
+
+This works with **any** variable — a plain module variable, a custom variable, or a local variable populated by a value feedback. There is nothing image-specific about the variable itself; it is just a string that happens to be a data URI. If the variable is empty, `null`, or does not contain a valid image, the element simply draws nothing.
+
+### Box
+
+A filled and/or stroked rectangle.
+
+```ts
+{
+  type: 'box',
+  x: { isExpression: false, value: 10 },
+  y: { isExpression: false, value: 10 },
+  width: { isExpression: false, value: 80 },
+  height: { isExpression: false, value: 80 },
+  color: { isExpression: false, value: 0x222222 }, // fill color
+  borderWidth: { isExpression: false, value: 2 },
+  borderColor: { isExpression: false, value: 0xff0000 },
+}
+```
+
+| Property   | Type     | Notes          |
+| ---------- | -------- | -------------- |
+| `color`    | `number` | Fill color.    |
+| `rotation` | `number` | Degrees 0–359. |
+
+Plus the shared [border properties](#border-properties).
+
+### Line
+
+A line segment between two points. The line is drawn using the [border properties](#border-properties) — `borderWidth` is its thickness and `borderColor` its color.
+
+```ts
+{
+  type: 'line',
+  fromX: { isExpression: false, value: 0 },
+  fromY: { isExpression: false, value: 0 },
+  toX: { isExpression: false, value: 100 },
+  toY: { isExpression: false, value: 100 },
+  borderWidth: { isExpression: false, value: 3 },
+  borderColor: { isExpression: false, value: 0xffffff },
+}
+```
+
+| Property | Type     | Notes              |
+| -------- | -------- | ------------------ |
+| `fromX`  | `number` | 0–100, start point |
+| `fromY`  | `number` | 0–100, start point |
+| `toX`    | `number` | 0–100, end point   |
+| `toY`    | `number` | 0–100, end point   |
+
+Note that a line uses its own endpoints rather than the shared `x`/`y`/`width`/`height` bounds.
+
+### Circle
+
+A filled circle, or an arc/pie slice.
+
+```ts
+{
+  type: 'circle',
+  x: { isExpression: false, value: 25 },
+  y: { isExpression: false, value: 25 },
+  width: { isExpression: false, value: 50 },
+  height: { isExpression: false, value: 50 },
+  color: { isExpression: false, value: 0x00cc00 },
+  startAngle: { isExpression: false, value: 0 },
+  endAngle: { isExpression: false, value: 270 },
+  drawSlice: { isExpression: false, value: true },
+}
+```
+
+| Property        | Type      | Notes                                         |
+| --------------- | --------- | --------------------------------------------- |
+| `color`         | `number`  | Fill color.                                   |
+| `startAngle`    | `number`  | Degrees 0–359, for drawing an arc.            |
+| `endAngle`      | `number`  | Degrees 0–359, for drawing an arc.            |
+| `drawSlice`     | `boolean` | When drawing an arc, close it as a pie slice. |
+| `borderOnlyArc` | `boolean` | Only stroke the arc portion of the border.    |
+
+Plus the shared [border properties](#border-properties).
+
+### Gauge
+
+A value-driven meter — a horizontal or vertical bar, or a circular ring — for showing a numeric value (a level, volume, percentage, temperature, and so on) directly on a button, without producing a custom image.
+
+```ts
+{
+  type: 'gauge',
+  x: 10,
+  y: 10,
+  width: 80,
+  height: 80,
+  orientation: 'ring', // 'horizontal' | 'vertical' | 'ring'
+  min: 0,
+  max: 100,
+  value: { isExpression: true, value: `$(my-module:level)` },
+  ringWidth: 20,
+  roundedEnds: true,
+  fillEnabled: true,
+  multiColour: true,
+  stops: [
+    { value: 0, color: 0x00ff00, gradient: true },
+    { value: 80, color: 0xffff00, gradient: true },
+    { value: 95, color: 0xff0000, gradient: false },
+  ],
+  trackStyle: 'dimmed',
+  trackAmount: 20,
+}
+```
+
+Like every other element, each property below is an [expression-or-value](#values-and-expressions) — pass a bare value, or the wrapped form to drive it from an expression. (The one exception is `stops`, which is a plain array; the fields _inside_ each stop are expression-or-values.) Colors are packed RGB numbers.
+
+**Value:**
+
+| Property    | Type      | Notes                                                  |
+| ----------- | --------- | ------------------------------------------------------ |
+| `value`     | `number`  | The current value, within the `min`–`max` range.       |
+| `min`       | `number`  | The value mapped to the start of the gauge.            |
+| `max`       | `number`  | The value mapped to the end of the gauge.              |
+| `origin`    | `number`  | The value the fill grows from (defaults to the start). |
+| `symmetric` | `boolean` | Grow the fill in both directions from `origin`.        |
+
+**Appearance:**
+
+| Property      | Type        | Notes                                      |
+| ------------- | ----------- | ------------------------------------------ |
+| `orientation` | orientation | `'horizontal'` \| `'vertical'` \| `'ring'` |
+| `reverse`     | `boolean`   | Fill from the opposite end.                |
+| `rotation`    | `number`    | Degrees 0–359.                             |
+
+**Circular (when `orientation` is `'ring'`):**
+
+| Property      | Type      | Notes                                 |
+| ------------- | --------- | ------------------------------------- |
+| `startAngle`  | `number`  | 0–360.                                |
+| `endAngle`    | `number`  | 0–360.                                |
+| `ringWidth`   | `number`  | Ring thickness as a percentage, 1–50. |
+| `roundedEnds` | `boolean` | Round the ends of the ring.           |
+
+**Fill:**
+
+| Property      | Type      | Notes                                                                            |
+| ------------- | --------- | -------------------------------------------------------------------------------- |
+| `fillEnabled` | `boolean` | Whether the fill is drawn.                                                       |
+| `multiColour` | `boolean` | Show every stop as a gradient, rather than the single colour of the active stop. |
+| `stops`       | stop[]    | Colour stops — see below.                                                        |
+
+Each entry in `stops` is `{ value, color, gradient }`:
+
+| Property   | Type      | Notes                                                 |
+| ---------- | --------- | ----------------------------------------------------- |
+| `value`    | `number`  | The value at which this stop applies, in `min`–`max`. |
+| `color`    | `number`  | The colour at this stop.                              |
+| `gradient` | `boolean` | Blend towards the next stop rather than stepping.     |
+
+**Marker:**
+
+| Property        | Type      | Notes                                                  |
+| --------------- | --------- | ------------------------------------------------------ |
+| `markerEnabled` | `boolean` | Draw a marker at the current value.                    |
+| `markerColor`   | `number`  | Marker colour.                                         |
+| `markerWidth`   | `number`  | Marker width as a percentage of the fill width, 1–100. |
+
+**Track** (the unfilled portion):
+
+| Property      | Type        | Notes                                             |
+| ------------- | ----------- | ------------------------------------------------- |
+| `trackStyle`  | track style | `'transparent'` \| `'dimmed'`                     |
+| `trackAmount` | `number`    | 0–100. 0 is black, 100 matches the active colour. |
+| `trackWidth`  | `number`    | 0–100, centred.                                   |
+
+:::tip
+A gauge is the recommended way to show a value as a bar or ring. Prefer it over producing a bitmap in an [advanced feedback](./feedbacks.md), which is harder to write and to maintain.
+:::
+
+### Group
+
+A group nests other elements together so you can position, rotate, enable/disable, or fade them as one unit. Groups can be nested inside groups.
+
+```ts
+{
+  type: 'group',
+  x: { isExpression: false, value: 0 },
+  y: { isExpression: false, value: 50 },
+  width: { isExpression: false, value: 100 },
+  height: { isExpression: false, value: 50 },
+  rotation: { isExpression: false, value: 0 },
+  squareCoords: { isExpression: false, value: false },
+  children: [
+    { type: 'box', /* ... */ },
+    { type: 'text', /* ... */ },
+  ],
+}
+```
+
+| Property       | Type      | Notes                                                                       |
+| -------------- | --------- | --------------------------------------------------------------------------- |
+| `children`     | element[] | The elements inside the group.                                              |
+| `rotation`     | `number`  | Degrees 0–359.                                                              |
+| `squareCoords` | `boolean` | Constrain children to a centred square (the shorter side) coordinate space. |
+
+### Composite
+
+References one of the reusable [composite elements](./composite-elements.md) your module defines. The `elementId` selects the definition, and `options` provides its input values.
+
+```ts
+{
+  type: 'composite',
+  elementId: 'signal-indicator',
+  options: {
+    level: { isExpression: true, value: `$(my-module:level)` },
+  },
+}
+```
+
+See [Composite Elements](./composite-elements.md) for how to define these.
+
+## Border properties
+
+The `box`, `line`, and `circle` elements share a common set of border properties:
+
+| Property         | Type     | Notes                                    |
+| ---------------- | -------- | ---------------------------------------- |
+| `borderWidth`    | `number` | Border thickness. Set to `0` to disable. |
+| `borderColor`    | `number` | Border color.                            |
+| `borderPosition` | position | `'inside'` \| `'center'` \| `'outside'`  |
+
+## The canvas
+
+A layered preset can optionally describe the base **canvas** the elements are drawn onto, via the `canvas` property. It controls the button's decoration (which replaces the old `show_topbar` toggle) and whether status icons are shown:
+
+```ts
+canvas: {
+  decoration: { isExpression: false, value: 'topbar' },
+  showStatusIcons: { isExpression: false, value: 'default' },
+}
+```
+
+`decoration` is a [`ButtonGraphicsDecorationType`](https://bitfocus.github.io/companion-module-base/enums/ButtonGraphicsDecorationType.html) and can be one of:
+
+| Value       | Meaning                           |
+| ----------- | --------------------------------- |
+| `'default'` | Follow the user's global default. |
+| `'topbar'`  | Show the top bar.                 |
+| `'border'`  | Show a border.                    |
+| `'none'`    | No decoration.                    |
+
+`showStatusIcons` is a [`ButtonGraphicsShowStatusIcons`](https://bitfocus.github.io/companion-module-base/enums/ButtonGraphicsShowStatusIcons.html) controlling the status icons drawn in the top-right corner of the button:
+
+| Value       | Meaning                           |
+| ----------- | --------------------------------- |
+| `'default'` | Follow the user's global default. |
+| `'all'`     | Show all status icons.            |
+| `'none'`    | Hide status icons.                |
+
+## Further Reading
+
+- [Layered presets](./presets.md#layered-button-presets)
+- [Composite Elements](./composite-elements.md)
+- [Presets (API 2.x)](./presets.md)
+- [Autogenerated docs for `SomeButtonGraphicsElement`](https://bitfocus.github.io/companion-module-base/types/SomeButtonGraphicsElement.html)
+- [Autogenerated docs for `ButtonGraphicsGaugeElement`](https://bitfocus.github.io/companion-module-base/interfaces/ButtonGraphicsGaugeElement.html)
+- [API 2.1 changes](../api-changes/v2.1.md)

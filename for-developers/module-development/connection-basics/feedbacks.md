@@ -47,6 +47,10 @@ The user can use this feedback to store a value into a local variable. This allo
 
 These can return any JSON object, array, or primitive value.
 
+:::tip
+Because the result is stored in a variable, a value feedback can also return an **image** — encode it as a data URI string (`data:image/png;base64,…`) and the user can display it with the [Image graphics element](./graphics-elements.md#driving-an-image-from-a-variable).
+:::
+
 ### Advanced feedbacks
 
 These are no longer recommended in most cases.
@@ -58,8 +62,32 @@ Commonly, you will have some options on the feedback to let the user choose the 
 They can also be used to return image pixel buffers, to show some custom content, although this is no longer recommended
 
 :::tip
-In older versions of Companion, these were the only available type of feedback. We recommend that older modules should [update their feedbacks to boolean feedbacks](../connection-advanced/migrating-legacy-to-boolean-feedbacks.md) whenever possible.
+In older versions of Companion, these were the only available type of feedback. We recommend that older modules should [update their feedbacks to boolean feedbacks](../connection-advanced/migrating-legacy-to-boolean-feedbacks.md) whenever possible. Where you previously returned an image buffer for custom drawing, consider [layered presets](./presets.md#layered-button-presets) and [composite elements](./composite-elements.md) instead — they let Companion draw the graphics declaratively.
 :::
+
+#### Declaring `affectedProperties`
+
+Since [API 2.1](../api-changes/v2.1.md) (Companion 5.0), advanced feedbacks should declare which button style properties they modify, via the `affectedProperties` field. Companion uses this to configure a more accurate set of style overrides for the button, sparing the user a wall of unnecessary override controls.
+
+```ts
+{
+  type: 'advanced',
+  name: 'Status Colour',
+  options: [
+    { id: 'active', type: 'checkbox', label: 'Active', default: false },
+  ],
+  affectedProperties: ['bgcolor', 'color'],
+  callback: async (event) => {
+    return event.options.active
+      ? { bgcolor: 0x00cc00, color: 0xffffff }
+      : { bgcolor: 0xcc0000, color: 0xffffff }
+  },
+}
+```
+
+The available properties are `'text'`, `'size'`, `'color'`, `'bgcolor'`, `'alignment'`, `'pngalignment'`, `'png64'`, and `'imageBuffer'`.
+
+From API 2.1 onwards, Companion emits a warning in the module debug log for any advanced feedback that does not declare `affectedProperties`. Boolean and value feedbacks are unaffected.
 
 ## Feedback definitions
 
@@ -123,6 +151,19 @@ You should not be performing any network requests here, but it can be necessary 
 :::tip
 You must make sure to use a sensible timeout on any async execution, or your feedback can get stuck showing a stale value.
 :::
+
+#### Cancelling work with the abort signal
+
+Since [API 2.1](../api-changes/v2.1.md) (Companion 5.0), the `context` object includes a `signal` — a standard [`AbortSignal`](https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal) that aborts when a recheck of this feedback is queued while it is still executing, meaning the in-progress result is about to be superseded. You can pass it to any API that accepts one:
+
+```ts
+callback: async (feedback, context) => {
+  const value = await myDevice.query(feedback.options.channel, { signal: context.signal })
+  return value > 0
+},
+```
+
+Respecting the signal is optional. If you honour it, stop your work and throw — the thrown error is ignored, and a fresh check is then performed.
 
 #### Using variables
 
@@ -279,6 +320,8 @@ When using these callbacks, it is common to call `this.subscribeFeedbacks()` onc
 
 Some feedbacks have many options that users may wish to configure on the device and 'capture' into a feedback in Companion.
 Implementing the [learn option values](../connection-advanced/learn-action-feedback-values.md) flow will allow them to achieve that
+
+Since [API 2.1](../api-changes/v2.1.md), the `learn` callback's `context` includes a `signal` ([`AbortSignal`](https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal)) that aborts if the user cancels the learn before it finishes. Respecting it is optional; once aborted, the returned value (or any thrown error) is ignored.
 
 ## TypeScript typings
 

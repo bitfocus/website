@@ -65,7 +65,7 @@ A full manifest definition is:
 
 The runtime block is defined as:
 
-- `type` This can be either `node18` or `node22`, depending on the required version of Node.js. In the future this may allow for other languages to be used.
+- `type` This can be `node18`, `node22` or `node26`, depending on the required version of Node.js. (`node26` was added in [API 2.1](../api-changes/v2.1.md).) In the future this may allow for other languages to be used.
 - `api` This must be `nodejs-ipc`. It defines the protocol used between your module and Companion. In the future more options will be possible, to allow for other languages.
 - `apiVersion` This should be left as `0.0.0`, the build process populates with the correct value
 - `entrypoint` The main JavaScript file for your module. This is what companion will execute to start your module.
