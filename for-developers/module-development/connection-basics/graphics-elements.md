@@ -9,7 +9,7 @@ description: Reference for the drawing elements used by layered presets and comp
 This is a new feature in [API 2.1](../api-changes/v2.1.md) (Companion 5.0+), part of the graphics overhaul.
 :::
 
-Companion 5.0 introduces an element-based drawing system for buttons. Instead of describing a button with a single flat style, you can build it up from a stack of **graphics elements** — text, images, boxes, lines, circles, and groups — each positioned and styled independently.
+Companion 5.0 introduces an element-based drawing system for buttons. Instead of describing a button with a single flat style, you can build it up from a stack of **graphics elements** — text, images, boxes, lines, circles, gauges, and groups — each positioned and styled independently.
 
 These elements are the building blocks for two things:
 
@@ -239,6 +239,100 @@ A filled circle, or an arc/pie slice.
 
 Plus the shared [border properties](#border-properties).
 
+### Gauge
+
+A value-driven meter — a horizontal or vertical bar, or a circular ring — for showing a numeric value (a level, volume, percentage, temperature, and so on) directly on a button, without producing a custom image.
+
+```ts
+{
+  type: 'gauge',
+  x: 10,
+  y: 10,
+  width: 80,
+  height: 80,
+  orientation: 'ring', // 'horizontal' | 'vertical' | 'ring'
+  min: 0,
+  max: 100,
+  value: { isExpression: true, value: `$(my-module:level)` },
+  ringWidth: 20,
+  roundedEnds: true,
+  fillEnabled: true,
+  multiColour: true,
+  stops: [
+    { value: 0, color: 0x00ff00, gradient: true },
+    { value: 80, color: 0xffff00, gradient: true },
+    { value: 95, color: 0xff0000, gradient: false },
+  ],
+  trackStyle: 'dimmed',
+  trackAmount: 20,
+}
+```
+
+Like every other element, each property below is an [expression-or-value](#values-and-expressions) — pass a bare value, or the wrapped form to drive it from an expression. (The one exception is `stops`, which is a plain array; the fields _inside_ each stop are expression-or-values.) Colors are packed RGB numbers.
+
+**Value:**
+
+| Property    | Type      | Notes                                                  |
+| ----------- | --------- | ------------------------------------------------------ |
+| `value`     | `number`  | The current value, within the `min`–`max` range.       |
+| `min`       | `number`  | The value mapped to the start of the gauge.            |
+| `max`       | `number`  | The value mapped to the end of the gauge.              |
+| `origin`    | `number`  | The value the fill grows from (defaults to the start). |
+| `symmetric` | `boolean` | Grow the fill in both directions from `origin`.        |
+
+**Appearance:**
+
+| Property      | Type        | Notes                                      |
+| ------------- | ----------- | ------------------------------------------ |
+| `orientation` | orientation | `'horizontal'` \| `'vertical'` \| `'ring'` |
+| `reverse`     | `boolean`   | Fill from the opposite end.                |
+| `rotation`    | `number`    | Degrees 0–359.                             |
+
+**Circular (when `orientation` is `'ring'`):**
+
+| Property      | Type      | Notes                                 |
+| ------------- | --------- | ------------------------------------- |
+| `startAngle`  | `number`  | 0–360.                                |
+| `endAngle`    | `number`  | 0–360.                                |
+| `ringWidth`   | `number`  | Ring thickness as a percentage, 1–50. |
+| `roundedEnds` | `boolean` | Round the ends of the ring.           |
+
+**Fill:**
+
+| Property      | Type      | Notes                                                                            |
+| ------------- | --------- | -------------------------------------------------------------------------------- |
+| `fillEnabled` | `boolean` | Whether the fill is drawn.                                                       |
+| `multiColour` | `boolean` | Show every stop as a gradient, rather than the single colour of the active stop. |
+| `stops`       | stop[]    | Colour stops — see below.                                                        |
+
+Each entry in `stops` is `{ value, color, gradient }`:
+
+| Property   | Type      | Notes                                                 |
+| ---------- | --------- | ----------------------------------------------------- |
+| `value`    | `number`  | The value at which this stop applies, in `min`–`max`. |
+| `color`    | `number`  | The colour at this stop.                              |
+| `gradient` | `boolean` | Blend towards the next stop rather than stepping.     |
+
+**Marker:**
+
+| Property        | Type      | Notes                                                  |
+| --------------- | --------- | ------------------------------------------------------ |
+| `markerEnabled` | `boolean` | Draw a marker at the current value.                    |
+| `markerColor`   | `number`  | Marker colour.                                         |
+| `markerWidth`   | `number`  | Marker width as a percentage of the fill width, 1–100. |
+
+**Track** (the unfilled portion):
+
+| Property      | Type        | Notes                                             |
+| ------------- | ----------- | ------------------------------------------------- |
+| `trackStyle`  | track style | `'transparent'` \| `'dimmed'`                     |
+| `trackAmount` | `number`    | 0–100. 0 is black, 100 matches the active colour. |
+| `trackWidth`  | `number`    | 0–100, centred.                                   |
+
+:::tip
+A gauge is the recommended way to show a value as a bar or ring. Prefer it over producing a bitmap in an [advanced feedback](./feedbacks.md), which is harder to write and to maintain.
+:::
+
 ### Group
 
 A group nests other elements together so you can position, rotate, enable/disable, or fade them as one unit. Groups can be nested inside groups.
@@ -325,4 +419,5 @@ canvas: {
 - [Composite Elements](./composite-elements.md)
 - [Presets (API 2.x)](./presets.md)
 - [Autogenerated docs for `SomeButtonGraphicsElement`](https://bitfocus.github.io/companion-module-base/types/SomeButtonGraphicsElement.html)
+- [Autogenerated docs for `ButtonGraphicsGaugeElement`](https://bitfocus.github.io/companion-module-base/interfaces/ButtonGraphicsGaugeElement.html)
 - [API 2.1 changes](../api-changes/v2.1.md)
