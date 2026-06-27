@@ -389,7 +389,7 @@ When overriding a property that is fed by an **advanced** feedback, set the `ove
 
 Since [API 2.1](../api-changes/v2.1.md), a single preset id can offer several **alternatives** — variants of the same logical preset — using `type: 'alternatives'`. The host application picks the best variant it supports, so the user only ever sees one copy of the preset.
 
-This is the recommended way to ship a rich [layered](#layered-button-presets) look while still providing a [simple](#simple-button-preset-definitions) fallback for hosts with a more restrictive drawing, or don't support all of the functionality of the module API (such as Bitfocus Buttons). List the variants **most-preferred first**:
+This is the recommended way to ship a rich [layered](#layered-button-presets) look while still providing a [simple](#simple-button-preset-definitions) fallback for hosts with a more restrictive drawing, or don't support all the functionality of the module API (such as Bitfocus Buttons). List the variants **most-preferred first**:
 
 ```js
 presets[`play`] = {
