@@ -77,6 +77,7 @@ Sent by the server immediately after `BEGIN`, before any other messages. Declare
 
 - `SUBSCRIPTIONS` true/false whether the [Button Subscription](#button-subscriptions-since-v1100) API (`ADD-SUB`, `REMOVE-SUB`, `SUB-PRESS`, `SUB-ROTATE`, `SUB-STATE`) is available
 - `NONSQUARE` (since v1.11.0) true/false whether Companion supports rendering non-square buttons. You may wish to use this to adjust how some controls are exposed so that behave sensibly. You can report use non-square control dimensions in complex layouts without this, which will get black borders when needed to make up non-square bitmaps
+- `BITMAP_FORMATS` (since v1.12.0) a comma-separated list of the bitmap encodings Companion can stream for button images, e.g. `rgb,png,webp`. `rgb` (raw 8-bit RGB pixel data) is always present as the universal fallback. A client opts into a compressed encoding by sending `BITMAP_FORMAT` in `ADD-DEVICE` or `ADD-SUB`; only formats listed here may be requested, and any other value falls back to `rgb`. See [Bitmap formats](#bitmap-formats-since-v1120).
 
 If the server changes the availability of an optional feature at runtime, it will close the connection. The client should reconnect and re-read the new `CAPS` message.
 
@@ -122,6 +123,7 @@ Optional parameters (all modes):
 - `PINCODE_LOCK` - (added in v1.8.0) you can set to indicate that you will handle display of the pincode locked state. set to `FULL` to indicate that you will handle display and input or to `PARTIAL` to indicate that you will handle display and the user will not be able to input a pincode. (Partial mode has no difference in behaviour currently, but we will utilise it in the future)
 - `CONFIG_FIELDS` - (added in v1.10.0) a base64-encoded JSON array of custom config field definitions to expose in the Companion UI for this device. See schema in [`assets/satellite-config-fields.schema.json`](https://github.com/bitfocus/companion/blob/main/assets/satellite-config-fields.schema.json). When provided, Companion will render these fields in the surface settings panel and push the stored values back to the device via `DEVICE-CONFIG` after the device is registered and again whenever the user changes them.
 - `CAN_CHANGE_PAGE` - (added in v1.10.0) a label string indicating that the device is capable of initiating page changes (e.g. via a swipe gesture or dedicated page-up/down button). When provided, Companion adds a checkbox with this label to the surface settings panel, letting the user control whether the device is allowed to change pages. The device can then send `CHANGE-PAGE` messages to navigate between pages.
+- `BITMAP_FORMAT` - (added in v1.12.0) the encoding Companion should use for streamed button bitmaps. Must be one of the values advertised in `BITMAP_FORMATS` in [`CAPS`](#capabilities) (`rgb`, `png` or `webp`). Defaults to `rgb` when omitted, or when set to a format that was not advertised. See [Bitmap formats](#bitmap-formats-since-v1120) for how this affects the `BITMAP` field in `KEY-STATE`.
 
 ##### Simple mode
 
@@ -270,7 +272,7 @@ Advanced mode (since v1.9.0): `KEY-STATE DEVICEID=00000 CONTROLID="0/0" BITMAP=a
 
 Optional parameters (sent based on the control's resolved style preset):
 
-- `BITMAP` base64 encoded pixel data. Sent when the control's style preset has `bitmap` set (simple mode: when `BITMAPS` was enabled). Resolution follows the size defined in the style preset. Currently encoded as 8-bit RGB (this may be configurable in the future).
+- `BITMAP` button image data. Sent when the control's style preset has `bitmap` set (simple mode: when `BITMAPS` was enabled). Resolution follows the size defined in the style preset. The encoding depends on the `BITMAP_FORMAT` negotiated in `ADD-DEVICE` (since v1.12.0): when `rgb` (the default) this is base64-encoded raw 8-bit RGB pixel data; when `png` or `webp` this is a self-describing data url (e.g. `data:image/webp;base64,...`). See [Bitmap formats](#bitmap-formats-since-v1120).
 - `COLOR` hex or css encoded 8-bit RGB color for the key background. Sent when the control's style preset has `colors` set (simple mode: when `COLORS` was set)
 - `TEXTCOLOR` hex or css encoded 8-bit RGB color for the key text. Sent when the control's style preset has `colors` set (simple mode: when `COLORS` was set) (added in v1.6)
 - `TEXT` base64 encoded text as should be displayed on the key. Sent when the control's style preset has `text` set (simple mode: when `TEXT` was true)
@@ -341,6 +343,7 @@ Subscribing to a location that does not contain a button is valid — Companion 
 
 - `SUBID` unique identifier for this subscription, chosen by the client
 - `LOCATION` the button location in `PAGE/ROW/COL` format
+- `BITMAP_FORMAT` (since v1.12.0) the encoding Companion should use for streamed bitmaps. Must be one of the values advertised in `BITMAP_FORMATS` in [`CAPS`](#capabilities) (`rgb`, `png` or `webp`). Defaults to `rgb` when omitted or set to a format that was not advertised. Applies whether simple or advanced style is used. See [Bitmap formats](#bitmap-formats-since-v1120).
 
 Two modes are available for specifying what should be streamed. At least one style option should be set for useful output.
 
@@ -414,10 +417,34 @@ Sent immediately after a successful `ADD-SUB` and again whenever the button's st
 
 Optional parameters (sent based on the style options specified in `ADD-SUB`):
 
-- `BITMAP` base64 encoded pixel data. Sent when `BITMAP` was set in `ADD-SUB`. Resolution matches the size requested. Currently encoded as 8-bit RGB (this may be configurable in the future).
+- `BITMAP` button image data. Sent when `BITMAP` (or `bitmap` in advanced style) was set in `ADD-SUB`. Resolution matches the size requested. The encoding depends on the `BITMAP_FORMAT` negotiated in `ADD-SUB` (since v1.12.0): when `rgb` (the default) this is base64-encoded raw 8-bit RGB pixel data; when `png` or `webp` this is a self-describing data url (e.g. `data:image/png;base64,...`). See [Bitmap formats](#bitmap-formats-since-v1120).
 - `COLOR` hex or css encoded 8-bit RGB color for the button background. Sent when `COLORS` was set in `ADD-SUB`.
 - `TEXTCOLOR` hex or css encoded 8-bit RGB color for the button text. Sent when `COLORS` was set in `ADD-SUB`.
 - `TEXT` base64 encoded text as should be displayed on the button. Sent when `TEXT=true` was set in `ADD-SUB`.
 - `FONT_SIZE` numeric size that should be used when displaying the text on the button. Sent when `TEXT_STYLE=true` was set in `ADD-SUB`.
 
 Note: expect more parameters to be added to this message over time. Some could increase the frequency of the message being received.
+
+## Bitmap formats (Since v1.12.0)
+
+By default, button bitmaps are streamed as raw 8-bit RGB pixel data, base64 encoded. From v1.12.0, a client can instead negotiate a compressed image encoding, which can significantly reduce the amount of data sent for each button update.
+
+### Negotiation
+
+1. On connection, Companion advertises the encodings it can produce in the `BITMAP_FORMATS` field of the [`CAPS`](#capabilities) message, e.g. `BITMAP_FORMATS=rgb,png,webp`. `rgb` is always present as the universal fallback.
+2. The client requests one of these encodings via the `BITMAP_FORMAT` parameter when registering a surface (`ADD-DEVICE`) or a subscription (`ADD-SUB`).
+3. Companion streams the `BITMAP` field of `KEY-STATE`/`SUB-STATE` using the negotiated encoding.
+
+If `BITMAP_FORMAT` is omitted, or set to a value that was not advertised in `BITMAP_FORMATS`, Companion falls back to `rgb`. This keeps older satellites — which never send `BITMAP_FORMAT` and have no image decoder — working unchanged. Servers older than v1.12.0 do not send `BITMAP_FORMATS` and ignore `BITMAP_FORMAT`; such clients always receive `rgb`.
+
+### Available formats
+
+- `rgb` — raw 8-bit RGB pixel data, base64 encoded. The `BITMAP` field is the bare base64 string.
+- `png` — PNG image, encoded losslessly.
+- `webp` — WebP image, encoded losslessly.
+
+`png` and `webp` are encoded losslessly, so the decoded image is pixel-identical to the equivalent `rgb` buffer.
+
+### Distinguishing the encoding on receipt
+
+When a compressed format is used, the `BITMAP` field is a self-describing [data url](https://developer.mozilla.org/en-US/docs/Web/URI/Schemes/data) (e.g. `data:image/webp;base64,...`), rather than a bare base64 string. A client can therefore tell raw rgb apart from a compressed image by checking for the `data:` prefix, which is useful if your client may receive either encoding (for example across reconnects).
