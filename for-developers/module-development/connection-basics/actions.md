@@ -193,23 +193,47 @@ Since [API 2.1](../api-changes/v2.1.md), the `learn` callback's `context` also i
 
 Since [API 2.1](../api-changes/v2.1.md) (Companion 5.0), an action can declare that it produces a result. When it returns a value, Companion can store it into a local or custom variable of the user's choosing, making it available to later actions in the same sequence.
 
-Add `hasResult: true` to the action definition and return a [`JsonValue`](https://bitfocus.github.io/companion-module-base/types/JsonValue.html) (a number, string, boolean, null, array, or object) from the callback:
+The action's callback may return (possibly asynchronously) any result value that can be represented in JSON. The action definition must also specify `hasResult: true` so that the returned result is not ignored. For example, assuming the `getLevel` function returns a number or null, an action definition exposing this value could look like:
 
 ```ts
-{
-  name: 'Read current value',
-  options: [
-    { id: 'channel', type: 'number', label: 'Channel', default: 1, min: 1, max: 64 },
-  ],
-  hasResult: true,
-  callback: async (action, context) => {
-    const level = await myDevice.getLevel(action.options.channel)
-    return level
+const actions = {
+  // ...other actions...
+  read_current_value: {
+    name: 'Read current value',
+    options: [
+      {
+        id: 'channel',
+        type: 'number',
+        label: 'Channel',
+        default: 1,
+        min: 1,
+        max: 64,
+      },
+    ],
+    hasResult: true,
+    callback: async (action, context) => {
+      const level = await myDevice.getLevel(action.options.channel)
+      return level
+    },
   },
 }
 ```
 
-In Companion's UI, the user can then nominate a local or custom variable to receive the returned value after each execution.
+You'll also need to update any TypeScript schema defined for the action by adding `result: <JsonValue subtype>`:
+
+```ts
+type ModuleActions = {
+  // ...other actions...
+  read_current_value: {
+    options: {
+      channel: number
+    }
+    result: number | null
+  }
+}
+```
+
+In Companion's UI for configuring the action, the user can then choose a local or custom variable to store the result in after each execution.
 
 :::tip
 This pairs well with the [expression support](../api-changes/v2.0.md#automatic-expression-parsing) from API 2.0 — the stored result can be referenced in later action options via the variable the user chose.
@@ -233,6 +257,7 @@ export type ActionsSchema = {
       source: number
       destination: number
     }
+    result: boolean
   }
 }
 
@@ -241,16 +266,18 @@ export interface MyTypes {
 }
 ```
 
-This will tell the InstanceBase that there should be one type of action which is called `route` with an options object as described.
+This will tell the InstanceBase that there should be one type of action which is called `route` with an options object as described (and that, because a `result` property has been included with value `boolean`, returns a `boolean` result that the user can store in a variable).
 
 ```ts
-const act: CompanionActionDefinition<ActionsSchema['route']['options']> = {
-  name: 'My First Action',
+declare function routeIsValid(source: number, destination: number): boolean
+
+const act: CompanionActionDefinition<ActionsSchema['route']> = {
+  name: 'Check Route Validity',
   options: [
     {
       id: 'source',
       type: 'number',
-      label: 'Test',
+      label: 'Source',
       default: 5,
       min: 0,
       max: 100,
@@ -258,14 +285,17 @@ const act: CompanionActionDefinition<ActionsSchema['route']['options']> = {
     {
       id: 'destination',
       type: 'number',
-      label: 'Test',
+      label: 'Destination',
       default: 5,
       min: 0,
       max: 100,
     },
   ],
-  callback: async (event) => {
-    console.log('Hello world!', event.options.source, event.options.destination)
+  hasResult: true,
+  callback: async (event): Promise<boolean> => {
+    const { source, destination } = event.options
+    console.log('Route source/destination:', source, destination)
+    return routeIsValid(source, destination)
   },
 }
 ```
