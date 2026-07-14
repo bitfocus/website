@@ -43,6 +43,21 @@ A preset describes what Companion should produce for a control:
   `rgb`, `rgba`, `bgr`, `bgra` (default `rgb`). This is what most button surfaces use.
 - **`colors: 'hex' | 'rgb'`** — request a background colour instead of (or alongside) a bitmap,
   for buttons with a plain RGB backlight.
+- **`leds: { segments, mode }`** — request colours for an addressable strip or ring of LEDs
+  attached to the control, such as the ring around a Stream Deck Studio encoder. A gauge on the
+  button drives these. `segments` is how many individually addressable LEDs there are, and `mode`
+  is how Companion maps the gauge onto them:
+  - `'full-ring'` — the LEDs form a complete circle, so the gauge is rendered faithfully (its
+    angles, deadzone and colours are respected 1:1). Segment 0 is at 6 o'clock and indices increase
+    clockwise.
+  - `'simple'` — any other shape, such as a straight strip. The value is swept across all the
+    segments, with segment 0 as the 0% end.
+
+  Both describe a logical ordering; if your hardware is wired differently, re-map the segments
+  locally. Check `supportsLeds` on the host capabilities first — when the host doesn't support
+  LEDs, omit `leds` from your presets and fall back to whatever you'd otherwise draw (e.g. a plain
+  backlight colour).
+
 - **`text` / `textStyle`** — request button text (and text styling) for text-only displays.
 
 Whatever you request here is what arrives in `draw()` — see [Rendering](./rendering.md). Get the

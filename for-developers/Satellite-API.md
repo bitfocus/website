@@ -21,6 +21,9 @@ This lists what versions of Companion introduced support for each API version.
 | 1.8         | v4.0+              |
 | 1.9         | v4.2+              |
 | 1.10        | v4.3+              |
+| 1.11        | v5.0+              |
+| 1.12        | v5.0+              |
+| 1.13        | v5.1+              |
 
 ## Connection
 
@@ -160,6 +163,7 @@ The manifest has two top-level properties:
   - `colors` — stream colour data; `"hex"` for hexadecimal notation or `"rgb"` for CSS rgb notation
   - `text` — `true` to stream button text
   - `textStyle` — `true` to stream text style properties (e.g. font size)
+  - `leds` — (since v1.13.0) if set, the control has an addressable strip or ring of LEDs (e.g. the ring around a Stream Deck Studio encoder) which a gauge on the button can drive. Takes `{ "segments": 24, "mode": "full-ring" }`, where `segments` is the number of individually addressable LEDs and `mode` is `"full-ring"` or `"simple"`. The colours are streamed in the `LEDS` field of `KEY-STATE`. See [LED strips and rings](#led-strips-and-rings-since-v1130).
 - `controls` — a map of control IDs to their definitions. The ID (alphanumeric, `-`, `/`) is what gets used as `CONTROLID` in subsequent messages. Each entry defines:
   - `row` — zero-based row index (required)
   - `column` — zero-based column index (required)
@@ -171,7 +175,7 @@ Example manifest (before base64 encoding):
 {
   "stylePresets": {
     "default": { "bitmap": { "w": 72, "h": 72 }, "colors": "hex" },
-    "encoder": { "colors": "hex" }
+    "encoder": { "colors": "hex", "leds": { "segments": 24, "mode": "full-ring" } }
   },
   "controls": {
     "0/0": { "row": 0, "column": 0 },
@@ -277,6 +281,7 @@ Optional parameters (sent based on the control's resolved style preset):
 - `TEXTCOLOR` hex or css encoded 8-bit RGB color for the key text. Sent when the control's style preset has `colors` set (simple mode: when `COLORS` was set) (added in v1.6)
 - `TEXT` base64 encoded text as should be displayed on the key. Sent when the control's style preset has `text` set (simple mode: when `TEXT` was true)
 - `FONT_SIZE` numeric size that should be used when displaying the text on the key. Sent when the control's style preset has `textStyle` set (simple mode: when `TEXT_STYLE` was true) (added in v1.4.0)
+- `LEDS` (added in v1.13.0) the colour of each LED segment, as base64 of a packed raw RGB buffer (3 bytes per segment, `segments * 3` bytes in total). Sent when the control's style preset has `leds` set and a gauge on the button is driving them; when it is absent, treat the LEDs as off. Unlike `BITMAP`, this is always raw RGB and is unaffected by `BITMAP_FORMAT`. See [LED strips and rings](#led-strips-and-rings-since-v1130).
 
 Note: expect more parameters to be added to this message over time. Some could increase the frequency of the message being received.
 
@@ -366,6 +371,7 @@ The object can define:
 - `colors` — stream colour data; `"hex"` for hexadecimal notation or `"rgb"` for CSS rgb notation
 - `text` — `true` to stream button text
 - `textStyle` — `true` to stream text style properties (e.g. font size)
+- `leds` — (since v1.13.0) if set, the colours for an addressable strip or ring of LEDs will be streamed in the `LEDS` field of `SUB-STATE`. Takes `{ "segments": 24, "mode": "full-ring" }`. There is no simple style equivalent of this. See [LED strips and rings](#led-strips-and-rings-since-v1130).
 
 Example `STYLE` value (before base64 encoding):
 
@@ -422,6 +428,7 @@ Optional parameters (sent based on the style options specified in `ADD-SUB`):
 - `TEXTCOLOR` hex or css encoded 8-bit RGB color for the button text. Sent when `COLORS` was set in `ADD-SUB`.
 - `TEXT` base64 encoded text as should be displayed on the button. Sent when `TEXT=true` was set in `ADD-SUB`.
 - `FONT_SIZE` numeric size that should be used when displaying the text on the button. Sent when `TEXT_STYLE=true` was set in `ADD-SUB`.
+- `LEDS` (added in v1.13.0) the colour of each LED segment, as base64 of a packed raw RGB buffer (3 bytes per segment). Sent when `leds` was set in the advanced style and a gauge on the button is driving them; when it is absent, treat the LEDs as off. Unlike `BITMAP`, this is always raw RGB and is unaffected by `BITMAP_FORMAT`. See [LED strips and rings](#led-strips-and-rings-since-v1130).
 
 Note: expect more parameters to be added to this message over time. Some could increase the frequency of the message being received.
 
@@ -448,3 +455,36 @@ If `BITMAP_FORMAT` is omitted, or set to a value that was not advertised in `BIT
 ### Distinguishing the encoding on receipt
 
 When a compressed format is used, the `BITMAP` field is a self-describing [data url](https://developer.mozilla.org/en-US/docs/Web/URI/Schemes/data) (e.g. `data:image/webp;base64,...`), rather than a bare base64 string. A client can therefore tell raw rgb apart from a compressed image by checking for the `data:` prefix, which is useful if your client may receive either encoding (for example across reconnects).
+
+## LED strips and rings (Since v1.13.0)
+
+Some surfaces have an addressable strip or ring of LEDs attached to a control, such as the ring around a Stream Deck Studio encoder. From v1.13.0, a gauge element on a button can drive these LEDs, with Companion sampling the gauge down to one colour per LED segment and streaming the result.
+
+There is no `CAPS` flag for this; a client can use it whenever the `ApiVersion` from `BEGIN` is 1.13.0 or newer.
+
+### Declaring the LEDs
+
+LEDs are declared on a style preset, so this is only available in the advanced modes — the `LAYOUT_MANIFEST` of `ADD-DEVICE` for a surface, or the `STYLE` of `ADD-SUB` for a subscription. There is no simple mode equivalent.
+
+```json
+{ "colors": "hex", "leds": { "segments": 24, "mode": "full-ring" } }
+```
+
+- `segments` — the number of individually addressable LED segments. Must be 1 or more.
+- `mode` — how Companion should map a gauge onto these LEDs:
+  - `full-ring` — the LEDs form a complete circle, so the gauge can be rendered faithfully: its angles, deadzone and colours are respected 1:1. Segment 0 is at 6 o'clock and indices increase clockwise. This is only honoured when the button's gauge is actually a ring; other gauge shapes fall back to `simple`.
+  - `simple` — any other shape, such as a straight strip. The gauge's value is swept across all of the segments, with segment 0 as the 0% end and the last segment as the 100% end. The gauge's angles are ignored.
+
+These describe the logical ordering that Companion streams. If your hardware is wired differently (a different starting LED, or the opposite direction), re-map the segments locally when applying them.
+
+### Applying the colours
+
+When a gauge on the button is driving the LEDs, `KEY-STATE`/`SUB-STATE` include a `LEDS` field. This is base64 of a packed raw RGB buffer, with 3 bytes per segment in the logical order described above, so it always decodes to exactly `segments * 3` bytes.
+
+Unlike `BITMAP`, this is always raw RGB — it is never a data url and is not affected by the [bitmap format](#bitmap-formats-since-v1120) negotiated in `ADD-DEVICE`/`ADD-SUB`.
+
+A few things to expect:
+
+- If the button has no gauge assigned to LED output, the `LEDS` field is not sent at all. Treat this as all segments being off.
+- In `full-ring` mode, segments which fall in the gauge's deadzone (outside its swept arc) are black.
+- If your LEDs are monochrome, you can flatten each colour to a single intensity, for example with the Rec.709 luma coefficients (`0.2126 * r + 0.7152 * g + 0.0722 * b`).

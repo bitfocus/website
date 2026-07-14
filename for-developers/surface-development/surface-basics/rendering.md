@@ -18,6 +18,9 @@ on what you asked for in that control's [style preset](./layout.md):
 - **`image`** — a `Uint8Array` of pixels, in the size and format you requested via `bitmap`.
 - **`color`** — a hex background colour, if you requested `colors`.
 - **`text`** — button text, if you requested `text`.
+- **`leds`** — a `Uint8Array` of packed RGB colours (3 bytes per segment, so `segments * 3` bytes
+  long) for the control's LED strip or ring, if you requested `leds`. See
+  [Indicator LEDs](#indicator-leds) below.
 - **`pageNumber`** — the Companion page the surface is on, where applicable.
 
 ```typescript
@@ -51,8 +54,25 @@ Two related methods round out output:
 
 ## Indicator LEDs
 
-LEDs that aren't part of the button grid (status lights, encoder rings, a T-bar's LEDs) are modelled
-as **output transfer variables** rather than draws — see [Input & variables](./input.md).
+An addressable strip or ring of LEDs belonging to a control — an encoder's ring, a T-bar's LEDs —
+is declared with `leds` on that control's [style preset](./layout.md), and arrives as the `leds`
+draw prop. A gauge on the button drives it, and Companion samples the gauge down to one colour per
+segment for you:
+
+```typescript
+if (drawProps.leds) {
+  for (let i = 0; i < segments; i++) {
+    const color = readLedColor(drawProps.leds, i)
+    await this.device.setEncoderColor(control.encoderIndex, i, color)
+  }
+}
+```
+
+`readLedColor(buffer, index)` is exported from `@companion-surface/base`. For monochrome LEDs,
+`colorToIntensity(color)` flattens a colour to a single `0`–`255` value.
+
+LEDs that aren't attached to a control at all — standalone status lights — are instead modelled as
+**output transfer variables** rather than draws; see [Input & variables](./input.md).
 
 See the [generated reference](https://bitfocus.github.io/companion-surface-api/) for the exact
 `SurfaceDrawProps` and pixel formats, and the
