@@ -24,6 +24,7 @@ This lists what versions of Companion introduced support for each API version.
 | 1.11        | v5.0+              |
 | 1.12        | v5.0+              |
 | 1.13        | v5.1+              |
+| 1.14        | v5.1+              |
 
 ## Connection
 
@@ -81,6 +82,7 @@ Sent by the server immediately after `BEGIN`, before any other messages. Declare
 - `SUBSCRIPTIONS` true/false whether the [Button Subscription](#button-subscriptions-since-v1100) API (`ADD-SUB`, `REMOVE-SUB`, `SUB-PRESS`, `SUB-ROTATE`, `SUB-STATE`) is available
 - `NONSQUARE` (since v1.11.0) true/false whether Companion supports rendering non-square buttons. You may wish to use this to adjust how some controls are exposed so that behave sensibly. You can report use non-square control dimensions in complex layouts without this, which will get black borders when needed to make up non-square bitmaps
 - `BITMAP_FORMATS` (since v1.12.0) a comma-separated list of the bitmap encodings Companion can stream for button images, e.g. `rgb,png,webp`. `rgb` (raw 8-bit RGB pixel data) is always present as the universal fallback. A client opts into a compressed encoding by sending `BITMAP_FORMAT` in `ADD-DEVICE` or `ADD-SUB`; only formats listed here may be requested, and any other value falls back to `rgb`. See [Bitmap formats](#bitmap-formats-since-v1120).
+- `ROTARY_AMOUNT` (since v1.14.0) true/false whether the server honours a signed magnitude in the `DIRECTION` field of `KEY-ROTATE`/`SUB-ROTATE` to carry a rotation amount (a step count). When absent or false, only the direction is used and each message counts as a single step. See [Rotating an encoder](#rotating-an-encoder-since-v130).
 
 If the server changes the availability of an optional feature at runtime, it will close the connection. The client should reconnect and re-read the new `CAPS` message.
 
@@ -211,7 +213,7 @@ Advanced mode (since v1.9.0): `KEY-ROTATE DEVICEID=00000 CONTROLID="enc/0" DIREC
 - `DEVICEID` the unique identifier used to add the device
 - `KEY` (simple mode) number of the key/encoder which is rotated. Since v1.6 this can be either a legacy key number or the local row/column starting at top left with `0/0` and counting up towards bottom/right
 - `CONTROLID` (advanced mode, since v1.9.0) the ID of the control as defined in the `LAYOUT_MANIFEST`
-- `DIRECTION` direction of the rotation. 1 for right, -1 for left
+- `DIRECTION` direction and number of steps, as a signed number: positive is right (clockwise), negative is left. `1`/`-1` are a single step, and `0` is a single step left (legacy). Magnitudes above 1 require `ROTARY_AMOUNT=1` in [`CAPS`](#capabilities) (since v1.14.0); older servers treat any non-zero value as a single step, so it degrades gracefully.
 
 #### Updating a variable (Since v1.7.0)
 
@@ -403,7 +405,7 @@ No further `SUB-STATE` messages will be sent for this `SUBID`.
 `SUB-ROTATE SUBID=myid DIRECTION=1`
 
 - `SUBID` the subscription identifier
-- `DIRECTION` direction of the rotation. 1 for right, -1 for left
+- `DIRECTION` direction and number of steps, as a signed number: positive is right (clockwise), negative is left. `1`/`-1` are a single step, and `0` is a single step left (legacy). Magnitudes above 1 require `ROTARY_AMOUNT=1` in [`CAPS`](#capabilities) (since v1.14.0); older servers treat any non-zero value as a single step, so it degrades gracefully.
 
 Note: there is a checkbox to enable rotation actions per button inside Companion, allowing users to define the actions to execute.
 
