@@ -399,9 +399,7 @@ presets[`play`] = {
       // Preferred: the richer layered version
       type: 'layered',
       name: `Play`,
-      elements: [
-        /* ... graphics elements ... */
-      ],
+      elements: [/* ... graphics elements ... */],
       steps: [{ down: [{ actionId: 'play', options: {} }], up: [] }],
       feedbacks: [],
     },
@@ -600,10 +598,10 @@ Some common ones are listed below (you can copy and paste the glyph directly int
 | ⏵     | 23F5     | 44        | Play,Start,Go, TAKE       |
 | ⏹     | 23F9     | 44        | Stop, Halt, Break, KILL   |
 | ⏸     | 23F8     | 44        | Pause, Hold, Wait         |
-| ⏯    | 23EF     | 44        | Toggle Play/Pause         |
+| ⏯     | 23EF     | 44        | Toggle Play/Pause         |
 | ⏺     | 23FA     | 44        | Rec, Save, Store          |
-| ⏭    | 23ED     | 44        | Next, Skip, FWD           |
-| ⏮    | 23EE     | 44        | Previous, Back, Rev       |
+| ⏭     | 23ED     | 44        | Next, Skip, FWD           |
+| ⏮     | 23EE     | 44        | Previous, Back, Rev       |
 | ⏩    | 23E9     | 44        | Fast FWD, Shuttle Fwd     |
 | ⏪    | 23EA     | 44        | Fast Rewind , Shuttle rev |
 | ⏏️    | 23CF     | 44        | Eject, Unload             |

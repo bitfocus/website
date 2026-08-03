@@ -58,9 +58,7 @@ class MyDetection extends EventEmitter<SurfacePluginDetectionEvents<MyDeviceInfo
         surfaceId: dev.serial,
         deviceHandle: dev.handle,
         description: 'My Surface',
-        pluginInfo: {
-          /* … */
-        },
+        pluginInfo: {/* … */},
       },
     ])
   }
