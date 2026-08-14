@@ -29,7 +29,7 @@ We expect every module to use the build script provided from this, the rest is o
 
 ### @companion-module/base
 
-The version of this library determines the versions of Companion your module can be run with. See the [version compatibility table](https://github.com/bitfocus/companion-module-base#readme).
+The version of this library determines the versions of Companion your module can be run with. See the [version compatibility table](https://github.com/bitfocus/companion-module-base/tree/main/packages/base#supported-versions-of-this-library).
 
 For example, modules targeting Companion 3.0 should use @companion-module/base v1.4.3 (or any 1.x release back to v1.0.0). Modules targeting Companion 3.1 should use v1.5. A module written for 3.0 will run on 3.1, but a module written for 3.1 may not be compatible with 3.0.
 
