@@ -27,7 +27,7 @@ Companion knows what version of nodejs your module is compatible with by looking
 `node26` was added in [API 2.1](../api-changes/v2.1.md) (Companion 5.0). Node 26 is an LTS release and is recommended for new modules, or modules that want to adopt the latest platform features. `node22` remains supported, but we encourage modules to update when they can.
 :::
 
-Make sure that your version of the `@companion-module/base` dependency is appropriate for the version of Companion too. A table of compatibility is listed in [the readme](https://github.com/bitfocus/companion-module-base#supported-versions-of-this-library)
+Make sure that your version of the `@companion-module/base` dependency is appropriate for the version of Companion too. A table of compatibility is listed in [the readme](https://github.com/bitfocus/companion-module-base/tree/main/packages/base#supported-versions-of-this-library)
 
 If you are using TypeScript, you should update your preset to have sensible `target` and `lib` values. The config presets in `@companion-module/tools`, have versions for each supported version of nodejs to make this easier for you.
 
