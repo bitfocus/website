@@ -49,7 +49,7 @@ However, starting with v4.0, note that **your new dev module will show up in the
 
 ## Clone or Copy a module from GitHub
 
-With over 700 published modules, you may find a module already written for you device. You can find the GitHub repository for each module by searching [Bitfocus in GitHub](https://github.com/bitfocus).
+With over 800 published modules, you may find a module already written for you device. You can find the GitHub repository for each module by searching [Bitfocus in GitHub](https://github.com/bitfocus).
 
 - If you want to **contribute to an existing module**, clone it to your development folder using your [preferred git tool](../git-workflows/installing-git.md). (See [Git Crash Course](../git-workflows/git-crashcourse.md) and [The GitHub Workflow](../git-workflows/github-workflow.md) for important details).
 - If you are **writing a new module**, then download and expand the zip file for the [TypeScript template module](https://github.com/bitfocus/companion-module-template-ts/archive/refs/heads/main.zip) into the module development folder (see the next section on naming your module). If you prefer, you can clone the [template repo](https://github.com/bitfocus/companion-module-template-ts), but remember to delete the remote link (`git remote remove origin`) before continuing. We encourage you to use TypeScript for all new modules but acknowledge that it isn't for everyone, so we fully support [Javascript](https://github.com/bitfocus/companion-module-template-js) too!
