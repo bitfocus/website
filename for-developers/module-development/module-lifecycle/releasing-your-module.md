@@ -1,7 +1,7 @@
 ---
 title: 'Releasing a Companion Module'
 sidebar_label: 'Release a module'
-sidebar_position: 3
+sidebar_position: 4
 description: How to release your module for delivery to others using Companion's "web store".
 ---
 

@@ -56,7 +56,7 @@ A full manifest definition is:
 - `products` An array of strings with the names of the products supported by your module. Often there is only a single product or sometimes the name of a series of products is better known than the products itself, then it is also good to give the series name. Your module will be listed with all associated product names.
 - `keywords` Keywords to allow users to more easily find your module by searching, please do not repeat the manufacturer or product names here.
 - `version` Version of your module. This should be left as `0.0.0`, the build process populates with the value in your `package.json`
-- `license` License of your module code. This needs to be something MIT compatible to be allowed to be distributed with the official builds
+- `license` License the packaged module is distributed under. Supported values are `MIT` (recommended), `GPL-2.0-only` and `GPL-3.0-only`. This is distinct from the `license` in your `package.json`, which is the license of your own source and must be `MIT`. See [Licensing a Companion Module](../module-lifecycle/licensing.md) for the full rules.
 - `repository` Git URL to the repository
 - `bugs` URL to the issue tracker. Users can follow this link to report bugs
 - `maintainers` List of maintainers of this module.

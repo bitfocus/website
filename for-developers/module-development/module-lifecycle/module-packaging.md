@@ -1,7 +1,7 @@
 ---
 title: 'Packaging a Companion Module'
 sidebar_label: 'Package a module'
-sidebar_position: 2
+sidebar_position: 3
 description: How to package your module for delivery to others.
 ---
 

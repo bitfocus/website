@@ -1,7 +1,7 @@
 ---
 title: 'Renaming a Companion Module'
 sidebar_label: 'Rename a module'
-sidebar_position: 4
+sidebar_position: 5
 description: How to rename your module after having released it.
 ---
 

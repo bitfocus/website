@@ -1,7 +1,7 @@
 ---
 title: 'Updating the Node.JS Version in your Module'
 sidebar_label: 'Updating Node.JS'
-sidebar_position: 5
+sidebar_position: 6
 description: How to update your module to use a newer version of Node.JS.
 ---
 
