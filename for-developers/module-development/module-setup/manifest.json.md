@@ -49,10 +49,10 @@ A full manifest definition is:
 ## Properties
 
 - `id` unique id of your module. This has to match the repository name excluding the `companion-module-`
-- `name` ???
-- `shortname` ???
-- `description` ???
-- `manufacturer` ???
+- `name` The display name shown for your module inside Companion when browsing and adding connections. Starting with API 2.0, Companion shows this field directly. For backwards compatibility, if `name` is left equal to `id`, Companion ignores it and instead generates a display name by combining the `manufacturer` and `products` fields. Setting a distinct `name` lets you control exactly how your module is labelled.
+- `shortname` A short name for your module. This is used as the basis for the default label Companion suggests when a user adds a connection using your module, so keep it concise.
+- `description` A short, human-readable description of your module, shown to users in the module list.
+- `manufacturer` The name of the manufacturer or brand of the product(s) your module controls. This is also used, together with `products`, to generate a display name when `name` matches `id` (see `name` above).
 - `products` An array of strings with the names of the products supported by your module. Often there is only a single product or sometimes the name of a series of products is better known than the products itself, then it is also good to give the series name. Your module will be listed with all associated product names.
 - `keywords` Keywords to allow users to more easily find your module by searching, please do not repeat the manufacturer or product names here.
 - `version` Version of your module. This should be left as `0.0.0`, the build process populates with the value in your `package.json`
