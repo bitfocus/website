@@ -56,7 +56,8 @@ A preset describes what Companion should produce for a control:
   Both describe a logical ordering; if your hardware is wired differently, re-map the segments
   locally. Check `supportsLeds` on the host capabilities first — when the host doesn't support
   LEDs, omit `leds` from your presets and fall back to whatever you'd otherwise draw (e.g. a plain
-  backlight colour).
+  backlight colour). Requires `@companion-surface/base` v1.4; see the
+  [changelog](../api-changes/v1.4.md#leds).
 
 - **`text` / `textStyle`** — request button text (and text styling) for text-only displays.
 
@@ -69,6 +70,12 @@ given.
 Each control has a `row` and `column` (zero-based) and an optional `stylePreset` naming one of your
 presets. The control id (the map key) should be unique and is typically `row/column`; it is the
 `controlId` you'll see in [draw](./rendering.md) and [input](./input.md) calls.
+
+`row`, `column` and the bitmap `w`/`h` must all be integers — if you compute them, make sure they're
+rounded. As of `@companion-surface/base` v1.4 the layout is
+[validated against the schema](../api-changes/v1.4.md#layout-validation) when the surface is opened,
+so a malformed layout fails there with an error naming the problem. `validateSurfaceLayout` is
+exported if you want to run the same check in a unit test.
 
 The full schema (including pixel formats and style options) is in the
 [generated reference](https://bitfocus.github.io/companion-surface-api/). For a device that

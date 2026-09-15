@@ -71,6 +71,46 @@ if (drawProps.leds) {
 `readLedColor(buffer, index)` is exported from `@companion-surface/base`. For monochrome LEDs,
 `colorToIntensity(color)` flattens a colour to a single `0`–`255` value.
 
+LEDs require `@companion-surface/base` v1.4 — see the [changelog](../api-changes/v1.4.md#leds), and
+check `supportsLeds` on the host capabilities before declaring them.
+
+### Gamma correction
+
+Don't send the colours to the hardware unchanged. Companion's colours are perceptually encoded
+(sRGB-ish), the same as any button graphic, while most LEDs are driven linearly — so a raw
+passthrough makes the top of the range look flat, with 70% and 100% nearly indistinguishable, and
+wastes the bottom of the range.
+
+Correct for this with a gamma curve. Build a lookup table once, rather than calling `Math.pow()` per
+segment on every draw:
+
+```typescript
+const LED_GAMMA = 2.5 // customise this
+const LED_GAMMA_LUT = new Uint8Array(256)
+for (let i = 0; i < 256; i++) {
+  LED_GAMMA_LUT[i] = Math.round(255 * Math.pow(i / 255, LED_GAMMA))
+}
+
+// then, per segment:
+const color = readLedColor(drawProps.leds, i)
+await this.device.setEncoderColor(control.encoderIndex, i, {
+  r: LED_GAMMA_LUT[color.r],
+  g: LED_GAMMA_LUT[color.g],
+  b: LED_GAMMA_LUT[color.b],
+})
+```
+
+The right exponent is a property of your hardware, not of Companion: it depends on whether the
+driver is PWM or current-controlled, whether it applies a curve of its own, and how the LEDs
+themselves behave. Start around `2.2` (the sRGB-ish value) and tune by eye — sweep a gauge slowly
+across the whole range and check that the steps look evenly spaced.
+
+:::tip
+If your LED driver has more than 8 bits of resolution, apply the curve into that wider range instead
+of back into 8 bits. An 8-bit result loses a lot of precision at the dark end, where many input
+values collapse onto the same output.
+:::
+
 LEDs that aren't attached to a control at all — standalone status lights — are instead modelled as
 **output transfer variables** rather than draws; see [Input & variables](./input.md).
 

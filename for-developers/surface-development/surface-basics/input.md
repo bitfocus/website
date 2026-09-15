@@ -29,6 +29,24 @@ this.context.rotateRightById('0/2')
 Report both down and up where the hardware distinguishes them — many user configurations rely on
 press-and-hold behaviour.
 
+### Reporting several steps at once
+
+If your hardware reports accumulated movement, or polling coalesces several detents into one report,
+you don't have to emit a call per step. `rotateLeftById` and `rotateRightById` take an optional
+`amount`, and `rotateById` takes a signed `delta`:
+
+```typescript
+// Three steps to the left, as one event
+this.context.rotateLeftById('0/2', 3)
+
+// Or as a signed delta: negative is leftward, positive is rightward
+this.context.rotateById('0/2', -3)
+```
+
+`amount` is treated as a magnitude — the direction comes from the method name, so a negative number
+won't reverse it. `delta` must be a non-zero finite number. Both require `@companion-surface/base`
+v1.4; see the [changelog](../api-changes/v1.4.md#rotate-delta).
+
 ## Page changing
 
 If your surface drives page changes itself (for example a swipe gesture), enable it by setting
