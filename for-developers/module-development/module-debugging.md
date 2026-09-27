@@ -14,7 +14,7 @@ There are three main routes to debugging: log through the API, console.log, inte
 
 Companion provides individual log pages for each module that are different from the main Companion log page.
 
-You can open the module-specific log view from the connections page by clicking the <span style={{background: "#f2f2f2", borderRadius: "5px", fontSize: "0.8em", padding: "0.25em 0.75em", border: "1px solid #cccccc"}}>⋮</span> button and selecting "View logs":
+You can open the module-specific log view from the connections page by clicking the <span className="companion-ui-button">⋮</span> button and selecting "View logs":
 
 ![Connection debug log](./images/connection-debug-log-button.png)
 
@@ -26,7 +26,7 @@ this.log('debug', 'My debug message.')
 
 These messages will show up in the module-specific log page and can be filtered by selecting/deselecting the "Debug" button (or whichever log-level you chose) in the top-left of the window:
 
-<p style={{background: "#f2f2f2", paddingTop: "1em", paddingBottom: "0.5em", marginLeft: "4em"}}>
+<p className="companion-log-sample">
 > 26.01.01 00:00:00 **Module**: My debug message.
 </p>
 
@@ -38,7 +38,7 @@ The simplest debugging method is to log to the console.
 
 These messages will still show up in the module-specific log page and can be filtered by selecting/deselecting the "Console" button in the top-left of the window:
 
-<p style={{background: "#f2f2f2", paddingTop: "1em", paddingBottom: "0.5em", marginLeft: "4em"}}>
+<p className="companion-log-sample">
 > 26.01.01 00:00:00 **Console**: your data/message
 </p>
 

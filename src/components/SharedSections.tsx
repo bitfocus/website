@@ -30,7 +30,7 @@ export function Benefit({ icon, title, children }: BenefitProps): ReactNode {
 			>
 				{title}
 			</h3>
-			<p style={{ fontSize: '0.875rem', color: '#6b7280' }}>{children}</p>
+			<p style={{ fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)' }}>{children}</p>
 		</div>
 	)
 }
