@@ -25,6 +25,7 @@ This lists what versions of Companion introduced support for each API version.
 | 1.12        | v5.0+              |
 | 1.13        | v5.1+              |
 | 1.14        | v5.1+              |
+| 1.15        | v5.1+              |
 
 ## Connection
 
@@ -128,6 +129,7 @@ Optional parameters (all modes):
 - `PINCODE_LOCK` - (added in v1.8.0) you can set to indicate that you will handle display of the pincode locked state. set to `FULL` to indicate that you will handle display and input or to `PARTIAL` to indicate that you will handle display and the user will not be able to input a pincode. (Partial mode has no difference in behaviour currently, but we will utilise it in the future)
 - `CONFIG_FIELDS` - (added in v1.10.0) a base64-encoded JSON array of custom config field definitions to expose in the Companion UI for this device. See schema in [`assets/satellite-config-fields.schema.json`](https://github.com/bitfocus/companion/blob/main/assets/satellite-config-fields.schema.json). When provided, Companion will render these fields in the surface settings panel and push the stored values back to the device via `DEVICE-CONFIG` after the device is registered and again whenever the user changes them.
 - `CAN_CHANGE_PAGE` - (added in v1.10.0) a label string indicating that the device is capable of initiating page changes (e.g. via a swipe gesture or dedicated page-up/down button). When provided, Companion adds a checkbox with this label to the surface settings panel, letting the user control whether the device is allowed to change pages. The device can then send `CHANGE-PAGE` messages to navigate between pages.
+- `APPEARANCE` - (added in v1.15.0) a base64-encoded JSON object describing how to draw the face of the surface in Companion: where each control sits, its shape, and the colour and artwork of the device. Optional; without it, Companion estimates the face from the rows and columns of the controls. See [Surface appearance](#surface-appearance-since-v1150).
 - `BITMAP_FORMAT` - (added in v1.12.0) the encoding Companion should use for streamed button bitmaps. Must be one of the values advertised in `BITMAP_FORMATS` in [`CAPS`](#capabilities) (`rgb`, `png` or `webp`). Defaults to `rgb` when omitted, or when set to a format that was not advertised. See [Bitmap formats](#bitmap-formats-since-v1120) for how this affects the `BITMAP` field in `KEY-STATE`.
 
 ##### Simple mode
@@ -183,6 +185,37 @@ Example manifest (before base64 encoding):
     "0/0": { "row": 0, "column": 0 },
     "0/1": { "row": 0, "column": 1 },
     "enc/0": { "row": 0, "column": 2, "stylePreset": "encoder" }
+  }
+}
+```
+
+#### Surface appearance (since v1.15.0)
+
+Companion can draw the buttons page as the face of one of your surfaces, with each control where the surface has it and at the shape it is drawn. A layout only gives each control a row and column, so without more to go on the face is an estimate. `APPEARANCE` describes the face exactly. The full schema is defined in [`assets/satellite-surface-appearance.schema.json`](https://github.com/bitfocus/companion/blob/main/assets/satellite-surface-appearance.schema.json).
+
+The appearance has these top-level properties:
+
+- `size` — the extent of the whole face, as `{ "width": 480, "height": 320 }`. Every other measurement is in these units, which are arbitrary: only the ratios within one face matter. The origin is top-left, with y down.
+- `bodyColor` — the colour of the device itself, as `#rrggbb`.
+- `bodyImage` — (optional) artwork for the face, drawn under the controls, as a base64 `data:` URI of an svg, png or webp image of at most 512KiB. SVG is preferred; it must use a `viewBox` of `0 0 <size.width> <size.height>` so that the art and the control positions share one coordinate system.
+- `controls` — a map of control IDs to where each sits, keyed by the same IDs as the controls of the device. In advanced mode these are the IDs in the `LAYOUT_MANIFEST`; in simple mode they are `row/column`, e.g. `0/2`. Each entry defines:
+  - `x`, `y`, `width`, `height` — the control's bounds on the face (required)
+  - `shape` — `{ "type": "rect", "cornerRadius": 12 }` or `{ "type": "circle" }` (optional, defaults to a square-cornered rectangle)
+  - `type` — what kind of control it is: `button`, `encoder`, `jog`, `fader` or `lcd-segment` (optional, defaults to `button`)
+  - `label` — the legend printed on the hardware, if it has one (optional)
+
+The appearance must place every control of the device, or it is ignored whole, rather than drawing a face with holes in it; entries for IDs the device does not have are ignored. An appearance which is invalid in any way is ignored, with the reason written to the Companion log, and the device is added without it; it is never the reason an `ADD-DEVICE` fails.
+
+Example appearance (before base64 encoding), for the manifest above:
+
+```json
+{
+  "size": { "width": 420, "height": 140 },
+  "bodyColor": "#1c1c1c",
+  "controls": {
+    "0/0": { "x": 20, "y": 34, "width": 72, "height": 72, "shape": { "type": "rect", "cornerRadius": 9 } },
+    "0/1": { "x": 112, "y": 34, "width": 72, "height": 72, "shape": { "type": "rect", "cornerRadius": 9 } },
+    "enc/0": { "x": 260, "y": 30, "width": 80, "height": 80, "shape": { "type": "circle" }, "type": "encoder" }
   }
 }
 ```
