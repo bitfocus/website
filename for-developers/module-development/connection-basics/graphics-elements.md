@@ -27,7 +27,7 @@ You don't have to use any of this. The [simple preset](./presets.md#simple-butto
 A few conventions apply across all elements:
 
 - **Positions and sizes** (`x`, `y`, `width`, `height`, and the line endpoints) are expressed as **percentages from 0 to 100** of the button, not pixels. This keeps your graphics resolution-independent, so they look right regardless of the button's pixel size.
-- **Colors** are packed RGB numbers, exactly as elsewhere in Companion — use `combineRgb(255, 255, 255)` or a hex literal like `0xffffff`.
+- **Colors** are packed RGB numbers, exactly as elsewhere in Companion — use `combineRgb(255, 255, 255)` or a hex literal like `0xffffff`. Since [API 2.2](../api-changes/v2.2.md), a CSS colour string such as `'#ffffff'` or `'rgb(255, 255, 255)'` can be used instead.
 - **Rotation** and angles are in **degrees** (0–359).
 - **Opacity** is a percentage from 0 to 100.
 
@@ -98,6 +98,8 @@ Each element is distinguished by its `type` field.
   fontsize: { isExpression: false, value: 20 }, // 3-200, percentage of element height
   fontsizeAllowShrink: { isExpression: false, value: true },
   font: { isExpression: false, value: 'companion-sans' }, // 'companion-sans' | 'companion-mono'
+  weight: { isExpression: false, value: 'bold' }, // 'normal' | 'bold'
+  styles: { isExpression: false, value: ['italic'] }, // any of 'italic' | 'underline' | 'strikethrough'
   color: { isExpression: false, value: 0xffffff },
   halign: { isExpression: false, value: 'center' }, // 'left' | 'center' | 'right'
   valign: { isExpression: false, value: 'center' }, // 'top' | 'center' | 'bottom'
@@ -111,10 +113,12 @@ Each element is distinguished by its `type` field.
 | `fontsize`            | `number`    | 3–200, as a percentage of the element height.              |
 | `fontsizeAllowShrink` | `boolean`   | Let the text shrink below `fontsize` when too long to fit. |
 | `font`                | font family | `'companion-sans'` \| `'companion-mono'`                   |
-| `color`               | `number`    | Text color.                                                |
+| `weight`              | font weight | `'normal'` \| `'bold'`                                     |
+| `styles`              | style[]     | Any of `'italic'`, `'underline'`, `'strikethrough'`.       |
+| `color`               | color       | Text color.                                                |
 | `halign`              | alignment   | `'left'` \| `'center'` \| `'right'`                        |
 | `valign`              | alignment   | `'top'` \| `'center'` \| `'bottom'`                        |
-| `outlineColor`        | `number`    | Optional outline color.                                    |
+| `outlineColor`        | color       | Optional outline color.                                    |
 | `rotation`            | `number`    | Degrees 0–359.                                             |
 
 ### Image
@@ -174,15 +178,17 @@ A filled and/or stroked rectangle.
   width: { isExpression: false, value: 80 },
   height: { isExpression: false, value: 80 },
   color: { isExpression: false, value: 0x222222 }, // fill color
+  cornerRadius: { isExpression: false, value: 10 },
   borderWidth: { isExpression: false, value: 2 },
   borderColor: { isExpression: false, value: 0xff0000 },
 }
 ```
 
-| Property   | Type     | Notes          |
-| ---------- | -------- | -------------- |
-| `color`    | `number` | Fill color.    |
-| `rotation` | `number` | Degrees 0–359. |
+| Property       | Type     | Notes                                                                |
+| -------------- | -------- | -------------------------------------------------------------------- |
+| `color`        | color    | Fill color.                                                          |
+| `rotation`     | `number` | Degrees 0–359.                                                       |
+| `cornerRadius` | `number` | Corner radius as a percentage of the shorter side, 0–50. 0 = square. |
 
 Plus the shared [border properties](#border-properties).
 
@@ -231,7 +237,7 @@ A filled circle, or an arc/pie slice.
 
 | Property        | Type      | Notes                                         |
 | --------------- | --------- | --------------------------------------------- |
-| `color`         | `number`  | Fill color.                                   |
+| `color`         | color     | Fill color.                                   |
 | `startAngle`    | `number`  | Degrees 0–359, for drawing an arc.            |
 | `endAngle`      | `number`  | Degrees 0–359, for drawing an arc.            |
 | `drawSlice`     | `boolean` | When drawing an arc, close it as a pie slice. |
@@ -268,7 +274,7 @@ A value-driven meter — a horizontal or vertical bar, or a circular ring — fo
 }
 ```
 
-Like every other element, each property below is an [expression-or-value](#values-and-expressions) — pass a bare value, or the wrapped form to drive it from an expression. (The one exception is `stops`, which is a plain array; the fields _inside_ each stop are expression-or-values.) Colors are packed RGB numbers.
+Like every other element, each property below is an [expression-or-value](#values-and-expressions) — pass a bare value, or the wrapped form to drive it from an expression. (The one exception is `stops`, which is a plain array; the fields _inside_ each stop are expression-or-values.) Colors follow the same rules as [everywhere else](#the-coordinate-model).
 
 **Value:**
 
@@ -303,6 +309,7 @@ Like every other element, each property below is an [expression-or-value](#value
 | ------------- | --------- | -------------------------------------------------------------------------------- |
 | `fillEnabled` | `boolean` | Whether the fill is drawn.                                                       |
 | `multiColour` | `boolean` | Show every stop as a gradient, rather than the single colour of the active stop. |
+| `fillWidth`   | `number`  | Width of the fill relative to the available space, 0–100, centred.               |
 | `stops`       | stop[]    | Colour stops — see below.                                                        |
 
 Each entry in `stops` is `{ value, color, gradient }`:
@@ -310,7 +317,7 @@ Each entry in `stops` is `{ value, color, gradient }`:
 | Property   | Type      | Notes                                                 |
 | ---------- | --------- | ----------------------------------------------------- |
 | `value`    | `number`  | The value at which this stop applies, in `min`–`max`. |
-| `color`    | `number`  | The colour at this stop.                              |
+| `color`    | color     | The colour at this stop.                              |
 | `gradient` | `boolean` | Blend towards the next stop rather than stepping.     |
 
 **Marker:**
@@ -318,7 +325,7 @@ Each entry in `stops` is `{ value, color, gradient }`:
 | Property        | Type      | Notes                                                  |
 | --------------- | --------- | ------------------------------------------------------ |
 | `markerEnabled` | `boolean` | Draw a marker at the current value.                    |
-| `markerColor`   | `number`  | Marker colour.                                         |
+| `markerColor`   | color     | Marker colour.                                         |
 | `markerWidth`   | `number`  | Marker width as a percentage of the fill width, 1–100. |
 
 **Track** (the unfilled portion):
@@ -382,7 +389,7 @@ The `box`, `line`, and `circle` elements share a common set of border properties
 | Property         | Type     | Notes                                    |
 | ---------------- | -------- | ---------------------------------------- |
 | `borderWidth`    | `number` | Border thickness. Set to `0` to disable. |
-| `borderColor`    | `number` | Border color.                            |
+| `borderColor`    | color    | Border color.                            |
 | `borderPosition` | position | `'inside'` \| `'center'` \| `'outside'`  |
 
 ## The canvas
@@ -421,3 +428,4 @@ canvas: {
 - [Autogenerated docs for `SomeButtonGraphicsElement`](https://bitfocus.github.io/companion-module-base/types/SomeButtonGraphicsElement.html)
 - [Autogenerated docs for `ButtonGraphicsGaugeElement`](https://bitfocus.github.io/companion-module-base/interfaces/ButtonGraphicsGaugeElement.html)
 - [API 2.1 changes](../api-changes/v2.1.md)
+- [API 2.2 changes](../api-changes/v2.2.md)

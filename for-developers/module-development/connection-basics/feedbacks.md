@@ -112,8 +112,8 @@ The minimum boolean feedback definition is as follows:
   defaultStyle: {
     // The default style change for a boolean feedback
     // The user will be able to customise these values as well as the fields that will be changed
-    bgcolor: 0xff0000, // or combineRgb(255, 0, 0)
-    color: 0x000000, // or combineRgb(0, 0, 0)
+    bgcolor: 0xff0000, // or combineRgb(255, 0, 0), or '#ff0000' (API 2.2+)
+    color: 0x000000, // or combineRgb(0, 0, 0), or '#000000' (API 2.2+)
   },
   // options is how the user can choose the condition the feedback activates for
   options: [{
@@ -351,6 +351,23 @@ export interface MyTypes {
 ```
 
 This will tell the InstanceBase that there should be one type of feedback which is called `route` with an options object as described.
+
+For `value` feedbacks, since [API 2.2](../api-changes/v2.2.md) the schema must also include a `result` property, describing the type of value the callback returns. The callback is then checked against it. Use `result: JsonValue` if you don't want to narrow the type.
+
+```ts
+export type FeedbacksSchema = {
+  route: {
+    // ...as above
+  }
+  channel_level: {
+    type: 'value'
+    options: {
+      channel: number
+    }
+    result: number | null
+  }
+}
+```
 
 ```ts
 const act: CompanionFeedbackDefinition<FeedbacksSchema['route']['options']> = {

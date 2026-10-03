@@ -50,12 +50,13 @@ const presets = {}
 presets[`my_first_preset`] = {
   type: 'simple',
   name: `My button`, // A name for the preset. Shown to the user when they hover over it, and used when using the searchbox
+  notes: `Shows the value of some-variable`, // Optional. Copied to the button's notes when the preset is placed (API 2.2+)
   style: {
     // This is the minimal set of style properties you must define
     text: `$(my-module:some-variable)`, // You can use variables from your module here
     size: 'auto',
-    color: 0xffffff, // or combineRgb(255, 255, 255),
-    bgcolor: 0x000000, // or combineRgb(0, 0, 0),
+    color: 0xffffff, // or combineRgb(255, 255, 255), or '#ffffff' (API 2.2+)
+    bgcolor: 0x000000, // or combineRgb(0, 0, 0), or '#000000' (API 2.2+)
   },
   steps: [
     {
@@ -83,6 +84,14 @@ const structure = [
 ]
 this.setPresetDefinitions(structure, presets)
 ```
+
+### Notes
+
+Since [API 2.2](../api-changes/v2.2.md), a preset can define `notes`. These are copied to the button when the user places the preset, so are a good place to describe the purpose of the button, or to give the user any setup information they need (for example, which local variables to change).
+
+### Colours
+
+Colours can be given as packed RGB numbers (`0xff0000` or `combineRgb(255, 0, 0)`). Since [API 2.2](../api-changes/v2.2.md), they can also be given as CSS colour strings, such as `'#ff0000'` or `'rgb(255, 0, 0)'`.
 
 ### Actions
 
@@ -143,6 +152,34 @@ This will cause it to execute _after_ the delay, and is converted internally to 
 
 :::
 
+#### Storing action results
+
+Since [API 2.2](../api-changes/v2.2.md), an action which [returns a result](./actions.md#returning-a-result) can have that result written into one of the button's [local variables](#local-variables), by adding a `storeResult` to the action:
+
+```ts
+steps: [
+  {
+    down: [
+      {
+        actionId: 'read_current_value', // an action with `hasResult: true`
+        options: { channel: 1 },
+        storeResult: { type: 'local-variable', variableName: 'level' },
+      },
+    ],
+    up: [],
+  },
+],
+localVariables: [
+  {
+    variableType: 'simple',
+    variableName: 'level',
+    startupValue: '',
+  },
+],
+```
+
+The `variableName` must match a `simple` local variable declared on the same preset.
+
 ### Feedbacks
 
 The `feedbacks` property allows you to define style changes using feedbacks from your module.
@@ -174,7 +211,7 @@ By doing this, it becomes much easier for the user to change it if needed. This 
 
 There are two kinds of local variable:
 
-- **`simple`** — a fixed value, set once at startup. Intended as a single place to define a value that is used in several places on the button.
+- **`simple`** — a fixed value, set once at startup. Intended as a single place to define a value that is used in several places on the button. Since [API 2.2](../api-changes/v2.2.md), actions can also [store their result](#storing-action-results) into one of these.
 - **`feedback`** — new in [API 2.1](../api-changes/v2.1.md), a value driven _live_ by the result of one of your module's feedbacks. The feedback's evaluated value is exposed under the variable name, so it can be referenced from expressions anywhere on the button — without the user having to wire it up themselves. This pairs especially well with [value feedbacks](./feedbacks.md#value-feedbacks).
 
 An example of each:
@@ -357,7 +394,7 @@ presets[`my_layered_preset`] = {
 }
 ```
 
-The `steps` and `localVariables` properties work exactly as they do for [simple presets](#simple-button-preset-definitions), including [internal actions](#internal-actions-and-feedbacks-in-presets) and [feedback-driven local variables](#local-variables). The drawing elements (and the `canvas`) are documented in full on the [Graphics Elements](./graphics-elements.md) page. The one part that differs is how feedbacks apply their styling.
+The `steps`, `localVariables` and `notes` properties work exactly as they do for [simple presets](#simple-button-preset-definitions), including [internal actions](#internal-actions-and-feedbacks-in-presets), [feedback-driven local variables](#local-variables) and [stored action results](#storing-action-results). The drawing elements (and the `canvas`) are documented in full on the [Graphics Elements](./graphics-elements.md) page. The one part that differs is how feedbacks apply their styling.
 
 ### Feedback style overrides
 
@@ -574,6 +611,8 @@ As a bonus, these variables also make it easier for users to adjust which input 
 When using typescript, if you strongly type your [actions](./actions.md#typescript-typings) and [feedbacks](./feedbacks.md#typescript-typings) as explained in their respective pages, then in your presets, the API will expect your presets to also be typed as `CompanionPresetDefinitions<MyTypes>`.
 
 These types get propagated through to the actions and feedback properties on the presets, ensuring that they are also strongly typed. This will help you ensure that your usage of the actions and feedbacks in your presets match the definitions you have created
+
+This also means that [`storeResult`](#storing-action-results) is only accepted on actions whose schema declares a `result`.
 
 ## Standard Colors
 
