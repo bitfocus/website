@@ -9,9 +9,11 @@ Since Companion 4.0, modules get installed on demand from our API. This allows n
 
 ## First Release
 
-If this is the first release of your module, you will need to request the repository on [Slack](https://bfoc.us/ke7e9dqgaz).
+If this is the first release of your module, you will need to request a repository in the [Bitfocus Developer Portal](https://developer.bitfocus.io/) (login with GitHub).
 
-Please post a message in the `#module-development` channel the includes your GitHub username and the desired name of your module in the `manufacturer-product` format.
+When requesting the repository, provide the desired name of your module in the `manufacturer-product` format. If you have any questions about the name, you can discuss them with the team through the request in the portal.
+
+For any other questions, reach out in the `#module-development` channel on [Slack](https://bfoc.us/ke7e9dqgaz).
 
 Once you have a repository, and have pushed your code, you can [release a new version](#releasing-a-new-version)
 
