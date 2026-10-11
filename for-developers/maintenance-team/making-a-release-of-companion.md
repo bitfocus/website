@@ -21,7 +21,7 @@ This is the release procedure for Companion, not for modules. You probably don't
 - Tag and push the new release from your `stable-x.x` branch.
 - Merge the result to main, ideally as a fast-forward merge
 - Push the updated main
-- Create the new github release https://github.com/bitfocus/companion/releases using the previous one as a template, replacing the changes with the contents of the changelog
+- Make sure a new github release was created: https://github.com/bitfocus/companion/releases
 - Make sure the builds complete successfully, retry the runs if they fail
 - Once the builds have completed, make sure the [CompanionPi](https://github.com/bitfocus/companion-pi/actions/workflows/companionpi.yml) workflow was auto-run from the git-tag that was pushed for the main repository
 - Ask the moderators to make a facebook post
