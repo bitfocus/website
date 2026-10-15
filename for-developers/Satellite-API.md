@@ -25,6 +25,7 @@ This lists what versions of Companion introduced support for each API version.
 | 1.12        | v5.0+              |
 | 1.13        | v5.1+              |
 | 1.14        | v5.1+              |
+| 1.15        | v5.2+              |
 
 ## Connection
 
@@ -126,7 +127,7 @@ Optional parameters (all modes):
   }
   ```
 - `PINCODE_LOCK` - (added in v1.8.0) you can set to indicate that you will handle display of the pincode locked state. set to `FULL` to indicate that you will handle display and input or to `PARTIAL` to indicate that you will handle display and the user will not be able to input a pincode. (Partial mode has no difference in behaviour currently, but we will utilise it in the future)
-- `CONFIG_FIELDS` - (added in v1.10.0) a base64-encoded JSON array of custom config field definitions to expose in the Companion UI for this device. See schema in [`assets/satellite-config-fields.schema.json`](https://github.com/bitfocus/companion/blob/main/assets/satellite-config-fields.schema.json). When provided, Companion will render these fields in the surface settings panel and push the stored values back to the device via `DEVICE-CONFIG` after the device is registered and again whenever the user changes them.
+- `CONFIG_FIELDS` - (added in v1.10.0) a base64-encoded JSON array of custom config field definitions to expose in the Companion UI for this device. See schema in [`satellite-protocol/assets/satellite-config-fields.schema.json`](https://github.com/bitfocus/companion/blob/main/satellite-protocol/assets/satellite-config-fields.schema.json). When provided, Companion will render these fields in the surface settings panel and push the stored values back to the device via `DEVICE-CONFIG` after the device is registered and again whenever the user changes them.
 - `CAN_CHANGE_PAGE` - (added in v1.10.0) a label string indicating that the device is capable of initiating page changes (e.g. via a swipe gesture or dedicated page-up/down button). When provided, Companion adds a checkbox with this label to the surface settings panel, letting the user control whether the device is allowed to change pages. The device can then send `CHANGE-PAGE` messages to navigate between pages.
 - `BITMAP_FORMAT` - (added in v1.12.0) the encoding Companion should use for streamed button bitmaps. Must be one of the values advertised in `BITMAP_FORMATS` in [`CAPS`](#capabilities) (`rgb`, `png` or `webp`). Defaults to `rgb` when omitted, or when set to a format that was not advertised. See [Bitmap formats](#bitmap-formats-since-v1120) for how this affects the `BITMAP` field in `KEY-STATE`.
 
@@ -156,7 +157,7 @@ In simple mode, `KEY-PRESS`, `KEY-ROTATE` and `KEY-STATE` use `KEY` to identify 
 
 Describe a surface with individually configurable controls, where each control can have its own rendering settings. When `LAYOUT_MANIFEST` is provided, the simple mode parameters (`KEYS_TOTAL`, `KEYS_PER_ROW`, `BITMAPS`, `COLORS`, `TEXT`, `TEXT_STYLE`) are ignored. `KEY-PRESS`, `KEY-ROTATE` and `KEY-STATE` use `CONTROLID` to identify controls by the ID defined in the manifest.
 
-- `LAYOUT_MANIFEST` - a base64-encoded JSON object describing the surface layout. The full schema is defined in [`assets/satellite-surface.schema.json`](https://github.com/bitfocus/companion/blob/main/assets/satellite-surface.schema.json).
+- `LAYOUT_MANIFEST` - a base64-encoded JSON object describing the surface layout. The full schema is defined in [`satellite-protocol/assets/satellite-surface.schema.json`](https://github.com/bitfocus/companion/blob/main/satellite-protocol/assets/satellite-surface.schema.json).
 
 The manifest has two top-level properties:
 
@@ -259,6 +260,17 @@ Notify Companion that a firmware update is available (or no longer available) fo
 
 - `DEVICEID` the unique identifier used to add the device
 - `UPDATE_URL` URL to the firmware update page or download; set to empty string to clear the update notification
+
+#### Describing the surface appearance (Since v1.15.0)
+
+Tell Companion how to draw the face of the device in its UI. Send this after `ADD-DEVICE` has replied `OK`, every time the device is added. Companion does not keep the appearance from a previous connection. You can send it again at any time to replace the appearance.
+
+`DEVICE-APPEARANCE DEVICEID=00000 APPEARANCE="eyJzaXplIjp7IndpZHRoIjo..."`
+
+- `DEVICEID` the unique identifier used to add the device
+- `APPEARANCE` a base64-encoded JSON object describing the face of the surface. The schema is defined in [`satellite-protocol/assets/satellite-surface-appearance.schema.json`](https://github.com/bitfocus/companion/blob/main/satellite-protocol/assets/satellite-surface-appearance.schema.json). See [Surface appearance](#surface-appearance-since-v1150).
+
+Companion replies `DEVICE-APPEARANCE OK DEVICEID=00000`. If the appearance is not valid, it replies `DEVICE-APPEARANCE ERROR DEVICEID=00000 MESSAGE="..."` with the reason, and keeps the appearance it had before. The device stays added either way.
 
 ### Messages to receive
 
@@ -365,7 +377,7 @@ Flat parameters, mirrors the simple surface mode:
 
 ##### Advanced style
 
-- `STYLE` a base64-encoded JSON object following the `SatelliteControlStylePreset` schema defined in [`assets/satellite-surface.schema.json`](https://github.com/bitfocus/companion/blob/main/assets/satellite-surface.schema.json). When `STYLE` is provided, the simple style parameters (`BITMAP`, `COLORS`, `TEXT`, `TEXT_STYLE`) are ignored.
+- `STYLE` a base64-encoded JSON object following the `SatelliteControlStylePreset` schema defined in [`satellite-protocol/assets/satellite-surface.schema.json`](https://github.com/bitfocus/companion/blob/main/satellite-protocol/assets/satellite-surface.schema.json). When `STYLE` is provided, the simple style parameters (`BITMAP`, `COLORS`, `TEXT`, `TEXT_STYLE`) are ignored.
 
 The object can define:
 
@@ -490,3 +502,50 @@ A few things to expect:
 - If the button has no gauge assigned to LED output, the `LEDS` field is not sent at all. Treat this as all segments being off.
 - In `full-ring` mode, segments which fall in the gauge's deadzone (outside its swept arc) are black.
 - If your LEDs are monochrome, you can flatten each colour to a single intensity, for example with the Rec.709 luma coefficients (`0.2126 * r + 0.7152 * g + 0.0722 * b`).
+
+## Surface appearance (Since v1.15.0)
+
+Companion can draw a picture of a surface in its UI. Without any extra information it works this out from the rows and columns of the layout, which gives a plain grid. From v1.15.0 a client can send [`DEVICE-APPEARANCE`](#describing-the-surface-appearance-since-v1150) to describe what the device actually looks like, so that it is drawn like the real hardware.
+
+This is a separate message rather than part of `ADD-DEVICE` so that a large `bodyImage` does not push `ADD-DEVICE` past the maximum line length. Companion closes the connection if a single line is longer than 2MB.
+
+There is no `CAPS` flag for this. A client can send it whenever the `ApiVersion` from `BEGIN` is 1.15.0 or newer.
+
+The appearance sits on top of the layout and uses the same control IDs. In advanced mode these are the IDs in `LAYOUT_MANIFEST`. In simple mode they are `row/column` for each key, for example `0/0`, `0/1`. The appearance only changes how the surface is drawn. It does not change which controls exist or what Companion streams to them.
+
+### The appearance object
+
+Positions are measured from the top left of the face, with y going down. All measurements are in arbitrary "face units" set by `size`, and only the proportions matter. Many clients use millimetres.
+
+- `size` (required) — `{ "width": 120, "height": 80 }`, the size of the whole face.
+- `bodyColor` (required) — the colour of the device itself, as `#rrggbb`. This should be the real colour of the case, not a colour picked to suit a theme. Without a `bodyImage` it fills the face. With one, it is still used to tell the face apart from whatever is behind it.
+- `bodyImage` (optional) — artwork for the face, as a base64 `data:` URI (`data:image/svg+xml;base64,...`, `data:image/png;base64,...` or `data:image/webp;base64,...`). It is drawn over `bodyColor` and under the controls. SVG is preferred. An SVG must use a `viewBox` of `0 0 <size.width> <size.height>` so the artwork lines up with the control positions. A raster image is stretched to fill `size`. The whole URI is limited to 512KiB.
+- `controls` (required) — a map of control IDs to where each control sits. **Every control in the layout must be listed here, or the whole appearance is refused.** IDs that are not in the layout are ignored. Each entry has:
+  - `x`, `y` (required) — the position of the control's top left corner on the face.
+  - `width`, `height` (required) — the size of the control.
+  - `kind` (optional) — what kind of control it is, so it can be drawn as one: `button` (default), `encoder`, `jog`, `shuttle` or `lcd-segment`.
+  - `shape` (optional) — how the control is drawn, either `{ "shape": "rect", "cornerRadius": 2 }` or `{ "shape": "ellipse" }`. An `ellipse` fits inside the control's bounds. The default is an ellipse for `jog` and `shuttle`, and a square-cornered rectangle for everything else. This is ignored for an `encoder`, which is always drawn as an ellipse. For a pill shape, such as a touch strip segment, use half the shorter side as the `cornerRadius`.
+  - `label` (optional) — the text printed on the hardware, if there is any, such as `CUT`. Up to 64 characters. It is drawn on the face where there is no artwork.
+
+Controls may go past the edges of `size`, and they may overlap. A later entry is drawn and hit-tested on top of an earlier one.
+
+Example appearance for the manifest shown in [Advanced mode](#advanced-mode-since-v190) (before base64 encoding):
+
+```json
+{
+  "size": { "width": 90, "height": 34 },
+  "bodyColor": "#202020",
+  "controls": {
+    "0/0": { "x": 4, "y": 6, "width": 22, "height": 22, "shape": { "shape": "rect", "cornerRadius": 3 } },
+    "0/1": {
+      "x": 32,
+      "y": 6,
+      "width": 22,
+      "height": 22,
+      "shape": { "shape": "rect", "cornerRadius": 3 },
+      "label": "CUT"
+    },
+    "enc/0": { "x": 62, "y": 5, "width": 24, "height": 24, "kind": "encoder" }
+  }
+}
+```
