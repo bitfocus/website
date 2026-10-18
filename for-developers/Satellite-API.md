@@ -595,7 +595,7 @@ To get its memory back quickly, a client can send `BYTES=0`. **The client must n
 
 This is optional. A client which stores bitmaps as RGBA, or is happy for Companion to count them that way, never needs to send it. It is useful when the client stores something smaller, such as the compressed data as received or a device-specific format, as more bitmaps can then fit in the same budget. It can be sent whenever the client knows the cost, and again if the cost changes later.
 
-If the new cost takes the total over budget, Companion evicts the least recently used bitmaps, which may include this one. A report for a bitmap which has already been evicted is ignored. There is no reply unless the message is invalid.
+Reporting a cost does not count as using the bitmap, so it doesn't change which bitmaps are evicted first. If the new cost takes the total over budget, Companion evicts the least recently used bitmaps, which may include this one. A report for a bitmap which has already been evicted is ignored. There is no reply unless the message is invalid.
 
 ### Messages to receive
 
