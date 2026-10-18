@@ -572,6 +572,15 @@ Companion advertises support with `BITMAP_CACHE` in [`CAPS`](#capabilities).
 - The client can change the budget at any time, and can purge the cache by setting the budget to 0.
 - The cache only lasts as long as the connection.
 
+### Rules for clients
+
+These rules are what make it safe for Companion to refer to a bitmap without checking first. A client that breaks any of them will be told to draw bitmaps it doesn't have.
+
+1. **Apply every message in the order it arrives.** In particular, apply a `BITMAP-EVICT` before storing the bitmap in the message that follows it. Companion sends the eviction first precisely so that there is room.
+2. **Store exactly what you are told to, and evict only what you are told to.** When a `KEY-STATE` or `SUB-STATE` has both `BITMAP` and `BITMAP_ID`, store it. When a `BITMAP-EVICT` arrives, drop those bitmaps. Never drop a bitmap for any other reason.
+3. **Never evict anything on your own, even when short of memory.** Send a smaller budget with `BITMAP-CACHE` instead, and let Companion choose what goes. Keep everything until the `BITMAP-EVICT` messages arrive. To free everything, send `BYTES=0` and wait for the `OK`.
+4. **Report the real cost if you store bitmaps as anything other than RGBA.** Otherwise Companion assumes `width × height × 4` bytes per bitmap, and your real memory use won't match the budget.
+
 ### Messages to send
 
 #### Setting the cache budget
@@ -612,7 +621,7 @@ Once caching is on, `KEY-STATE` and `SUB-STATE` may carry a `BITMAP_ID`:
 
 - `BITMAP_ID` with `BITMAP`: store the bitmap under this id, then draw it.
 - `BITMAP_ID` without `BITMAP`: draw the bitmap already stored under this id.
-- `BITMAP` without `BITMAP_ID`: draw it, and do not store it. Companion may do this for any bitmap, at any time and for any reason, for example for an image which is larger than the whole budget. Clients must always handle it.
+- `BITMAP` without `BITMAP_ID`: draw it, and do not store it. Companion may do this for any bitmap, at any time and for any reason, for example for an image which is larger than the whole budget, or for the frames of a long animation, which would be evicted before they came round again. Clients must always handle it.
 
 Messages are applied strictly in the order they arrive. Companion relies on this: an eviction is always sent before the bitmap that needs the room.
 
