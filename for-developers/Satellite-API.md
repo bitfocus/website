@@ -621,7 +621,7 @@ Once caching is on, `KEY-STATE` and `SUB-STATE` may carry a `BITMAP_ID`:
 
 - `BITMAP_ID` with `BITMAP`: store the bitmap under this id, then draw it.
 - `BITMAP_ID` without `BITMAP`: draw the bitmap already stored under this id.
-- `BITMAP` without `BITMAP_ID`: draw it, and do not store it. Companion may do this for any bitmap, at any time and for any reason, for example for an image which is larger than the whole budget, or for the frames of a long animation, which would be evicted before they came round again. Clients must always handle it.
+- `BITMAP` without `BITMAP_ID`: draw it, and do not store it. Companion may do this for any bitmap, at any time and for any reason, for example for an image which is larger than the whole budget, or for the frames of an animation with too many frames to keep in the cache together, which would be evicted before they came round again. Clients must always handle it.
 
 Messages are applied strictly in the order they arrive. Companion relies on this: an eviction is always sent before the bitmap that needs the room.
 
@@ -645,6 +645,6 @@ Messages are applied strictly in the order they arrive. Companion relies on this
 Only the client knows how much memory it can spare, so the budget is up to it.
 
 - Scale the budget with the number of devices on the connection and the size of their bitmaps. For example, a device with large LCD buttons needs far more room per frame than one with small keys. Send a new budget when devices are added or removed.
-- Leave room for at least a full loop of an animation on every key that might show one. Otherwise the oldest frames are evicted just before they are needed again, and each frame gets sent in full every loop.
+- Leave room for at least a full loop of an animation on every key that might show one. Otherwise the oldest frames are evicted just before they are needed again, and each frame gets sent in full every loop. Companion does not cache the frames of an animation which would take more than about half of the budget.
 - Cap the budget at a sensible share of the available memory, and send a smaller budget if memory becomes tight.
 - Give users a way to turn caching off, for low-memory machines or for troubleshooting. When it is off, simply don't send `BITMAP-CACHE`.
