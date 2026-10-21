@@ -26,6 +26,7 @@ This lists what versions of Companion introduced support for each API version.
 | 1.13        | v5.1+              |
 | 1.14        | v5.1+              |
 | 1.15        | v5.2+              |
+| 1.16        | v5.2+              |
 
 ## Connection
 
@@ -83,6 +84,7 @@ Sent by the server immediately after `BEGIN`, before any other messages. Declare
 - `SUBSCRIPTIONS` true/false whether the [Button Subscription](#button-subscriptions-since-v1100) API (`ADD-SUB`, `REMOVE-SUB`, `SUB-PRESS`, `SUB-ROTATE`, `SUB-STATE`) is available
 - `NONSQUARE` (since v1.11.0) true/false whether Companion supports rendering non-square buttons. You may wish to use this to adjust how some controls are exposed so that behave sensibly. You can report use non-square control dimensions in complex layouts without this, which will get black borders when needed to make up non-square bitmaps
 - `BITMAP_FORMATS` (since v1.12.0) a comma-separated list of the bitmap encodings Companion can stream for button images, e.g. `rgb,png,webp`. `rgb` (raw 8-bit RGB pixel data) is always present as the universal fallback. A client opts into a compressed encoding by sending `BITMAP_FORMAT` in `ADD-DEVICE` or `ADD-SUB`; only formats listed here may be requested, and any other value falls back to `rgb`. See [Bitmap formats](#bitmap-formats-since-v1120).
+- `BITMAP_CACHE` (since v1.16.0) true/false whether the client can cache bitmaps, so that Companion sends each one once and refers to it by id afterwards. This is optional, and a client which ignores it works as before. See [Bitmap caching](#bitmap-caching-since-v1160).
 - `ROTARY_AMOUNT` (since v1.14.0) true/false whether the server honours a signed magnitude in the `DIRECTION` field of `KEY-ROTATE`/`SUB-ROTATE` to carry a rotation amount (a step count). When absent or false, only the direction is used and each message counts as a single step. See [Rotating an encoder](#rotating-an-encoder-since-v130).
 
 If the server changes the availability of an optional feature at runtime, it will close the connection. The client should reconnect and re-read the new `CAPS` message.
@@ -291,6 +293,7 @@ Advanced mode (since v1.9.0): `KEY-STATE DEVICEID=00000 CONTROLID="0/0" BITMAP=a
 Optional parameters (sent based on the control's resolved style preset):
 
 - `BITMAP` button image data. Sent when the control's style preset has `bitmap` set (simple mode: when `BITMAPS` was enabled). Resolution follows the size defined in the style preset. The encoding depends on the `BITMAP_FORMAT` negotiated in `ADD-DEVICE` (since v1.12.0): when `rgb` (the default) this is base64-encoded raw 8-bit RGB pixel data; when `png` or `webp` this is a self-describing data url (e.g. `data:image/webp;base64,...`). See [Bitmap formats](#bitmap-formats-since-v1120).
+- `BITMAP_ID` (added in v1.16.0) only sent when the client has opted in to [Bitmap caching](#bitmap-caching-since-v1160), which also changes when `BITMAP` is sent.
 - `COLOR` hex or css encoded 8-bit RGB color for the key background. Sent when the control's style preset has `colors` set (simple mode: when `COLORS` was set)
 - `TEXTCOLOR` hex or css encoded 8-bit RGB color for the key text. Sent when the control's style preset has `colors` set (simple mode: when `COLORS` was set) (added in v1.6)
 - `TEXT` base64 encoded text as should be displayed on the key. Sent when the control's style preset has `text` set (simple mode: when `TEXT` was true)
@@ -438,6 +441,7 @@ Sent immediately after a successful `ADD-SUB` and again whenever the button's st
 Optional parameters (sent based on the style options specified in `ADD-SUB`):
 
 - `BITMAP` button image data. Sent when `BITMAP` (or `bitmap` in advanced style) was set in `ADD-SUB`. Resolution matches the size requested. The encoding depends on the `BITMAP_FORMAT` negotiated in `ADD-SUB` (since v1.12.0): when `rgb` (the default) this is base64-encoded raw 8-bit RGB pixel data; when `png` or `webp` this is a self-describing data url (e.g. `data:image/png;base64,...`). See [Bitmap formats](#bitmap-formats-since-v1120).
+- `BITMAP_ID` (added in v1.16.0) only sent when the client has opted in to [Bitmap caching](#bitmap-caching-since-v1160), which also changes when `BITMAP` is sent.
 - `COLOR` hex or css encoded 8-bit RGB color for the button background. Sent when `COLORS` was set in `ADD-SUB`.
 - `TEXTCOLOR` hex or css encoded 8-bit RGB color for the button text. Sent when `COLORS` was set in `ADD-SUB`.
 - `TEXT` base64 encoded text as should be displayed on the button. Sent when `TEXT=true` was set in `ADD-SUB`.
@@ -549,3 +553,98 @@ Example appearance for the manifest shown in [Advanced mode](#advanced-mode-sinc
   }
 }
 ```
+
+## Bitmap caching (Since v1.16.0)
+
+An animated button is redrawn on every tick of Companion's 10Hz render clock, and a button which flips between states shows the same few images over and over. Normally each of those is sent as a full `BITMAP`. From v1.16.0 a client can opt in to caching bitmaps, so that Companion sends each one once and afterwards refers to it by a short id. This saves bandwidth, and Companion also skips drawing and encoding a bitmap the client already has.
+
+Caching is optional. A client which never opts in receives exactly what it did before. It is a good idea to get a client working without caching first, then add it.
+
+Companion advertises support with `BITMAP_CACHE` in [`CAPS`](#capabilities).
+
+### How it works
+
+**Companion manages the cache, and the client follows its instructions.** Companion decides which bitmaps the client stores and which it evicts, and keeps an exact record of what the client holds. The client never evicts anything on its own. This means a reference to a bitmap never misses, and there are no round trips in normal operation.
+
+- The cache belongs to the connection, not to a device. All the devices and subscriptions on one connection share it. Bitmap ids depend on the image and its size, so the same frame at the same size is stored once.
+- The client sets a budget in bytes. Companion evicts the least recently used bitmaps to stay within it.
+- Each bitmap is assumed to cost its size as RGBA (`width × height × 4`), whatever format it was sent in. If the client stores bitmaps differently, it can report what each one really costs, and Companion uses that instead.
+- The client can change the budget at any time, and can purge the cache by setting the budget to 0.
+- The cache only lasts as long as the connection.
+
+### Rules for clients
+
+These rules are what make it safe for Companion to refer to a bitmap without checking first. A client that breaks any of them will be told to draw bitmaps it doesn't have.
+
+1. **Apply every message in the order it arrives.** In particular, apply a `BITMAP-EVICT` before storing the bitmap in the message that follows it. Companion sends the eviction first precisely so that there is room.
+2. **Store exactly what you are told to, and evict only what you are told to.** When a `KEY-STATE` or `SUB-STATE` has both `BITMAP` and `BITMAP_ID`, store it. When a `BITMAP-EVICT` arrives, drop those bitmaps. Never drop a bitmap for any other reason.
+3. **Never evict anything on your own, even when short of memory.** Send a smaller budget with `BITMAP-CACHE` instead, and let Companion choose what goes. Keep everything until the `BITMAP-EVICT` messages arrive. To free everything, send `BYTES=0` and wait for the `OK`.
+4. **Report the real cost if you store bitmaps as anything other than RGBA.** Otherwise Companion assumes `width × height × 4` bytes per bitmap, and your real memory use won't match the budget.
+
+### Messages to send
+
+#### Setting the cache budget
+
+`BITMAP-CACHE BYTES=4000000`
+
+- `BYTES` the budget in bytes. The first time this is sent with a non-zero value, caching is turned on. After that, sending it again resizes the cache. `0` purges the cache and turns caching off.
+
+Companion replies with `BITMAP-CACHE OK BYTES=4000000`. Before the reply it sends any `BITMAP-EVICT` messages needed to fit the new budget, so by the time the client receives the `OK` its cache already fits. Every message after the `OK` uses the new budget.
+
+This can be sent at any time, for example when a device is added or removed, or when the client is short of memory. Shrinking evicts the least recently used bitmaps. Growing evicts nothing.
+
+To get its memory back quickly, a client can send `BYTES=0`. **The client must not empty its cache itself until it receives the `OK`.** Messages that are already on their way may still refer to cached bitmaps. Companion sends `BITMAP-EVICT ALL=1` before the `OK`, and that is the point at which the client should drop everything. After the `OK`, Companion sends full bitmaps with no ids until caching is turned on again.
+
+#### Reporting the cost of a bitmap
+
+`BITMAP-COST BITMAP_ID=AbCdEf0123456789 BYTES=2048`
+
+- `BITMAP_ID` the id of a bitmap the client is holding
+- `BYTES` what the bitmap really costs the client to store
+
+This is optional. A client which stores bitmaps as RGBA, or is happy for Companion to count them that way, never needs to send it. It is useful when the client stores something smaller, such as the compressed data as received or a device-specific format, as more bitmaps can then fit in the same budget. It can be sent whenever the client knows the cost, and again if the cost changes later.
+
+Reporting a cost does not count as using the bitmap, so it doesn't change which bitmaps are evicted first. If the new cost takes the total over budget, Companion evicts the least recently used bitmaps, which may include this one. A report for a bitmap which has already been evicted is ignored. There is no reply unless the message is invalid.
+
+### Messages to receive
+
+#### Evicting bitmaps
+
+`BITMAP-EVICT BITMAP_IDS=AbCdEf0123456789,GhIjKl9876543210`  
+`BITMAP-EVICT ALL=1`
+
+The client must drop the listed bitmaps, or all of them for `ALL=1`. Companion sends this before a bitmap that needs the room, after a cost report that pushes the total over budget, or while shrinking the cache. A long list may be split over several messages.
+
+#### Bitmaps in state updates
+
+Once caching is on, `KEY-STATE` and `SUB-STATE` may carry a `BITMAP_ID`:
+
+- `BITMAP_ID` with `BITMAP`: store the bitmap under this id, then draw it.
+- `BITMAP_ID` without `BITMAP`: draw the bitmap already stored under this id.
+- `BITMAP` without `BITMAP_ID`: draw it, and do not store it. Companion may do this for any bitmap, at any time and for any reason, for example for an image which is larger than the whole budget, or for a button which cycles through too many different images to keep in the cache together (an animated image, or an expression which changes with time), which would be evicted before they came round again. Clients must always handle it.
+
+Messages are applied strictly in the order they arrive. Companion relies on this: an eviction is always sent before the bitmap that needs the room.
+
+### Example
+
+```
+> BITMAP-CACHE BYTES=4000000
+< BITMAP-CACHE OK BYTES=4000000
+< KEY-STATE DEVICEID=00000 KEY=0 BITMAP_ID=AbCdEf0123456789 BITMAP=... TYPE=BUTTON PRESSED=0
+< KEY-STATE DEVICEID=00000 KEY=0 BITMAP_ID=GhIjKl9876543210 BITMAP=... TYPE=BUTTON PRESSED=0
+< KEY-STATE DEVICEID=00000 KEY=0 BITMAP_ID=AbCdEf0123456789 TYPE=BUTTON PRESSED=0
+< KEY-STATE DEVICEID=00000 KEY=0 BITMAP_ID=GhIjKl9876543210 TYPE=BUTTON PRESSED=0
+> BITMAP-CACHE BYTES=0
+< BITMAP-EVICT ALL=1
+< BITMAP-CACHE OK BYTES=0
+< KEY-STATE DEVICEID=00000 KEY=0 BITMAP=... TYPE=BUTTON PRESSED=0
+```
+
+### Choosing a budget
+
+Only the client knows how much memory it can spare, so the budget is up to it.
+
+- Scale the budget with the number of devices on the connection and the size of their bitmaps. For example, a device with large LCD buttons needs far more room per frame than one with small keys. Send a new budget when devices are added or removed.
+- Leave room for at least a full loop of an animation on every key that might show one. Otherwise the oldest frames are evicted just before they are needed again, and each frame gets sent in full every loop. Companion does not cache the images of a button which cycles through more than would fit in about half of the budget.
+- Cap the budget at a sensible share of the available memory, and send a smaller budget if memory becomes tight.
+- Give users a way to turn caching off, for low-memory machines or for troubleshooting. When it is off, simply don't send `BITMAP-CACHE`.
