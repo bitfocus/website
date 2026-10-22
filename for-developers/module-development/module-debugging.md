@@ -26,9 +26,7 @@ this.log('debug', 'My debug message.')
 
 These messages will show up in the module-specific log page and can be filtered by selecting/deselecting the "Debug" button (or whichever log-level you chose) in the top-left of the window:
 
-<p className="companion-log-sample">
-> 26.01.01 00:00:00 **Module**: My debug message.
-</p>
+<blockquote className="companion-log-sample">26.01.01 00:00:00 **Module**: My debug message.</blockquote>
 
 ## Log to the console
 
@@ -38,9 +36,7 @@ The simplest debugging method is to log to the console.
 
 These messages will still show up in the module-specific log page and can be filtered by selecting/deselecting the "Console" button in the top-left of the window:
 
-<p className="companion-log-sample">
-> 26.01.01 00:00:00 **Console**: your data/message
-</p>
+<blockquote className="companion-log-sample">26.01.01 00:00:00 **Console**: your data/message</blockquote>
 
 :::note
 Depending on buffering, several `console.log()` messages may be grouped together, so only the first will appear to have a timestamp. Use the API `this.log()` function described above, if seeing things reported in exactly the call order is important.
