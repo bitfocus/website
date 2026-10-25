@@ -170,7 +170,31 @@ Returns all connections grouped into the complete collection hierarchy. Array or
 				"secrets": {}
 			}
 		],
-		"collections": [null]
+		"collections": [
+			{
+				"id": "string",
+				"label": "string",
+				"enabled": false,
+				"connections": [
+					{
+						"id": "KJA1isEECHRDBTFjx-7tf",
+						"label": "ATEM",
+						"moduleId": "bmd-atem",
+						"moduleVersionId": "1.2.0",
+						"updatePolicy": "stable",
+						"enabled": true,
+						"status": {
+							"category": "ok",
+							"level": "info",
+							"message": "Connected"
+						},
+						"config": {},
+						"secrets": {}
+					}
+				],
+				"children": [null]
+			}
+		]
 	}
 }
 ```
