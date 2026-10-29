@@ -132,6 +132,7 @@ Optional parameters (all modes):
 - `CONFIG_FIELDS` - (added in v1.10.0) a base64-encoded JSON array of custom config field definitions to expose in the Companion UI for this device. See schema in [`satellite-protocol/assets/satellite-config-fields.schema.json`](https://github.com/bitfocus/companion/blob/main/satellite-protocol/assets/satellite-config-fields.schema.json). When provided, Companion will render these fields in the surface settings panel and push the stored values back to the device via `DEVICE-CONFIG` after the device is registered and again whenever the user changes them.
 - `CAN_CHANGE_PAGE` - (added in v1.10.0) a label string indicating that the device is capable of initiating page changes (e.g. via a swipe gesture or dedicated page-up/down button). When provided, Companion adds a checkbox with this label to the surface settings panel, letting the user control whether the device is allowed to change pages. The device can then send `CHANGE-PAGE` messages to navigate between pages.
 - `BITMAP_FORMAT` - (added in v1.12.0) the encoding Companion should use for streamed button bitmaps. Must be one of the values advertised in `BITMAP_FORMATS` in [`CAPS`](#capabilities) (`rgb`, `png` or `webp`). Defaults to `rgb` when omitted, or when set to a format that was not advertised. See [Bitmap formats](#bitmap-formats-since-v1120) for how this affects the `BITMAP` field in `KEY-STATE`.
+- `VARIABLE_ENCODING` - (added in v1.16.0) set to `json` to receive the values of output variables as JSON, preserving their type, instead of as text. See [Update of a variable](#update-of-a-variable-since-v170). Defaults to `string` when omitted, or when set to an unknown value. Older servers ignore this, so only rely on it when the API version is at least v1.16.0.
 
 ##### Simple mode
 
@@ -227,6 +228,7 @@ This can be used when input variables are defined as part of `ADD-DEVICE`.
 - `DEVICEID` the unique identifier used to add the device
 - `VARIABLE` the id of the variable being updated
 - `VALUE` the value of the variable, base64 encoded. The encoding is so that special characters and newlines don't have to be escaped, avoiding a wide range of easy to trigger bugs.
+- `ENCODING` (added in v1.16.0) how to read `VALUE` once it has been base64 decoded. `string` (the default) uses the text as the value. `json` parses it as JSON, so that a number, boolean, object or array keeps its type. Any other value is rejected with `Invalid ENCODING`, and text which is not valid JSON is rejected with `Invalid VALUE`. Older servers ignore this and treat the JSON text as a string, so only send it when the API version is at least v1.16.0.
 
 The success response echoes the variable name: `SET-VARIABLE-VALUE OK VARIABLE="some-id"` (since v1.7.1)
 
@@ -324,6 +326,7 @@ This can be received when output variables are defined as part of `ADD-DEVICE`.
 - `DEVICEID` the unique identifier used to add the device
 - `VARIABLE` the id of the variable being updated
 - `VALUE` the value of the variable, base64 encoded. The encoding is so that special characters and newlines don't have to be escaped, avoiding a wide range of easy to trigger bugs.
+- `ENCODING` (added in v1.16.0) how to read `VALUE` once it has been base64 decoded. Only sent as `json`, when the device was added with `VARIABLE_ENCODING=json`, in which case the text is the value as JSON, keeping its type. A variable with no value is sent as `null`. When it is absent, the text is the value: a number or boolean is sent as its text, an object or array as JSON, and no value as an empty string.
 
 #### Locked state update (Since v1.8.0)
 
