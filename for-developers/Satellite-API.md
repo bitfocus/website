@@ -84,7 +84,7 @@ Sent by the server immediately after `BEGIN`, before any other messages. Declare
 - `SUBSCRIPTIONS` true/false whether the [Button Subscription](#button-subscriptions-since-v1100) API (`ADD-SUB`, `REMOVE-SUB`, `SUB-PRESS`, `SUB-ROTATE`, `SUB-STATE`) is available
 - `NONSQUARE` (since v1.11.0) true/false whether Companion supports rendering non-square buttons. You may wish to use this to adjust how some controls are exposed so that behave sensibly. You can report use non-square control dimensions in complex layouts without this, which will get black borders when needed to make up non-square bitmaps
 - `BITMAP_FORMATS` (since v1.12.0) a comma-separated list of the bitmap encodings Companion can stream for button images, e.g. `rgb,png,webp`. `rgb` (raw 8-bit RGB pixel data) is always present as the universal fallback. A client opts into a compressed encoding by sending `BITMAP_FORMAT` in `ADD-DEVICE` or `ADD-SUB`; only formats listed here may be requested, and any other value falls back to `rgb`. See [Bitmap formats](#bitmap-formats-since-v1120).
-- `BITMAP_CACHE` (since v1.16.0) true/false whether the client can cache bitmaps, so that Companion sends each one once and refers to it by id afterwards. This is optional, and a client which ignores it works as before. See [Bitmap caching](#bitmap-caching-since-v1160).
+- `BITMAP_CACHE` (since v1.16.0) true/false whether the client can cache bitmaps, so that Companion sends each one once and refers to it by id until it is evicted. This is optional, and a client which ignores it works as before. See [Bitmap caching](#bitmap-caching-since-v1160).
 - `ROTARY_AMOUNT` (since v1.14.0) true/false whether the server honours a signed magnitude in the `DIRECTION` field of `KEY-ROTATE`/`SUB-ROTATE` to carry a rotation amount (a step count). When absent or false, only the direction is used and each message counts as a single step. See [Rotating an encoder](#rotating-an-encoder-since-v130).
 
 If the server changes the availability of an optional feature at runtime, it will close the connection. The client should reconnect and re-read the new `CAPS` message.
@@ -556,7 +556,7 @@ Example appearance for the manifest shown in [Advanced mode](#advanced-mode-sinc
 
 ## Bitmap caching (Since v1.16.0)
 
-An animated button is redrawn on every tick of Companion's 10Hz render clock, and a button which flips between states shows the same few images over and over. Normally each of those is sent as a full `BITMAP`. From v1.16.0 a client can opt in to caching bitmaps, so that Companion sends each one once and afterwards refers to it by a short id. This saves bandwidth, and Companion also skips drawing and encoding a bitmap the client already has.
+An animated button is redrawn on every tick of Companion's 10Hz render clock, and a button which flips between states shows the same few images over and over. Normally each of those is sent as a full `BITMAP`. From v1.16.0 a client can opt in to caching bitmaps, so that Companion sends each one once and then refers to it by a short id, until Companion evicts it to make room. This saves bandwidth, and Companion also skips drawing and encoding a bitmap the client already has.
 
 Caching is optional. A client which never opts in receives exactly what it did before. It is a good idea to get a client working without caching first, then add it.
 
