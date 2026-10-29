@@ -566,7 +566,7 @@ Companion advertises support with `BITMAP_CACHE` in [`CAPS`](#capabilities).
 
 **Companion manages the cache, and the client follows its instructions.** Companion decides which bitmaps the client stores and which it evicts, and keeps an exact record of what the client holds. The client never evicts anything on its own. This means a reference to a bitmap never misses, and there are no round trips in normal operation.
 
-- The cache belongs to the connection, not to a device. All the devices and subscriptions on one connection share it. Bitmap ids depend on the image and its size, so the same frame at the same size is stored once.
+- The cache belongs to the connection, not to a device. All the devices and subscriptions on one connection share it. Bitmap ids depend on the image and on the size, rotation and format it is drawn in, so the same frame drawn the same way is stored once. Treat an id as an opaque string.
 - The client sets a budget in bytes. Companion evicts the least recently used bitmaps to stay within it.
 - Each bitmap is assumed to cost its size as RGBA (`width × height × 4`), whatever format it was sent in. If the client stores bitmaps differently, it can report what each one really costs, and Companion uses that instead.
 - The client can change the budget at any time, and can purge the cache by setting the budget to 0.
@@ -587,24 +587,24 @@ These rules are what make it safe for Companion to refer to a bitmap without che
 
 `BITMAP-CACHE BYTES=4000000`
 
-- `BYTES` the budget in bytes. The first time this is sent with a non-zero value, caching is turned on. After that, sending it again resizes the cache. `0` purges the cache and turns caching off.
+- `BYTES` the budget in bytes, as a whole number of plain digits. The first time this is sent with a non-zero value, caching is turned on. After that, sending it again resizes the cache. `0` purges the cache and turns caching off.
 
 Companion replies with `BITMAP-CACHE OK BYTES=4000000`. Before the reply it sends any `BITMAP-EVICT` messages needed to fit the new budget, so by the time the client receives the `OK` its cache already fits. Every message after the `OK` uses the new budget.
 
 This can be sent at any time, for example when a device is added or removed, or when the client is short of memory. Shrinking evicts the least recently used bitmaps. Growing evicts nothing.
 
-To get its memory back quickly, a client can send `BYTES=0`. **The client must not empty its cache itself until it receives the `OK`.** Messages that are already on their way may still refer to cached bitmaps. Companion sends `BITMAP-EVICT ALL=1` before the `OK`, and that is the point at which the client should drop everything. After the `OK`, Companion sends full bitmaps with no ids until caching is turned on again.
+To get its memory back quickly, a client can send `BYTES=0`. **The client must not empty its cache itself until it receives the `OK`.** Messages that are already on their way may still refer to cached bitmaps. If caching was on, Companion sends `BITMAP-EVICT ALL=1` before the `OK`, and that is the point at which the client should drop everything. After the `OK`, Companion sends full bitmaps with no ids until caching is turned on again.
 
 #### Reporting the cost of a bitmap
 
 `BITMAP-COST BITMAP_ID=AbCdEf0123456789 BYTES=2048`
 
 - `BITMAP_ID` the id of a bitmap the client is holding
-- `BYTES` what the bitmap really costs the client to store
+- `BYTES` what the bitmap really costs the client to store, as a whole number of plain digits
 
 This is optional. A client which stores bitmaps as RGBA, or is happy for Companion to count them that way, never needs to send it. It is useful when the client stores something smaller, such as the compressed data as received or a device-specific format, as more bitmaps can then fit in the same budget. It can be sent whenever the client knows the cost, and again if the cost changes later.
 
-Reporting a cost does not count as using the bitmap, so it doesn't change which bitmaps are evicted first. If the new cost takes the total over budget, Companion evicts the least recently used bitmaps, which may include this one. A report for a bitmap which has already been evicted is ignored. There is no reply unless the message is invalid.
+Reporting a cost does not count as using the bitmap, so it doesn't change which bitmaps are evicted first. If the new cost takes the total over budget, Companion evicts the least recently used bitmaps, which may include this one. A bitmap reported to cost more than the whole budget can never fit, so it alone is evicted. A report for a bitmap which has already been evicted is ignored. There is no reply unless the message is invalid.
 
 ### Messages to receive
 
@@ -613,7 +613,7 @@ Reporting a cost does not count as using the bitmap, so it doesn't change which 
 `BITMAP-EVICT BITMAP_IDS=AbCdEf0123456789,GhIjKl9876543210`  
 `BITMAP-EVICT ALL=1`
 
-The client must drop the listed bitmaps, or all of them for `ALL=1`. Companion sends this before a bitmap that needs the room, after a cost report that pushes the total over budget, or while shrinking the cache. A long list may be split over several messages.
+The client must drop the listed bitmaps, or all of them for `ALL=1`. Companion sends this before a bitmap that needs the room, after a cost report that pushes the total over budget, or while shrinking the cache. A long list may be split over several messages. When everything has to go, Companion may send `ALL=1` instead of listing every id.
 
 #### Bitmaps in state updates
 
