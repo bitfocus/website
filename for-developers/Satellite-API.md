@@ -559,11 +559,11 @@ Example appearance for the manifest shown in [Advanced mode](#advanced-mode-sinc
 
 ## Bitmap caching (Since v1.16.0)
 
-An animated button is redrawn on every tick of Companion's 10Hz render clock, and a button which flips between states shows the same few images over and over. Normally each of those is sent as a full `BITMAP`. From v1.16.0 a client can opt in to caching bitmaps, so that Companion sends each one once and then refers to it by a short id, until Companion evicts it to make room. This saves bandwidth, and Companion also skips drawing and encoding a bitmap the client already has.
+An animated button is redrawn on every tick of Companion's 10Hz render clock, and a button which flips between states shows the same few images over and over. Normally each of those is sent as a full `BITMAP`. From v1.16.0 a client can opt in to caching bitmaps, saving on bandwidth and making drawing faster.
 
-Caching is optional. A client which never opts in receives exactly what it did before. It is a good idea to get a client working without caching first, then add it.
+Caching is optional. A client which never opts in receives exactly what it did before. It is a good idea to get a client working without caching first, then add it if you believe it will be useful in your setup.
 
-Companion advertises support with `BITMAP_CACHE` in [`CAPS`](#capabilities).
+Companion advertises support with `BITMAP_CACHE` in [`CAPS`](#capabilities). It is reported here so that support can vary per installation, for now it is always enabled when Companion supports the new API messages.
 
 ### How it works
 
@@ -571,8 +571,8 @@ Companion advertises support with `BITMAP_CACHE` in [`CAPS`](#capabilities).
 
 - The cache belongs to the connection, not to a device. All the devices and subscriptions on one connection share it. Bitmap ids depend on the image and on the size, rotation and format it is drawn in, so the same frame drawn the same way is stored once. Treat an id as an opaque string.
 - The client sets a budget in bytes. Companion evicts the least recently used bitmaps to stay within it.
-- Each bitmap is assumed to cost its size as RGBA (`width × height × 4`), whatever format it was sent in. If the client stores bitmaps differently, it can report what each one really costs, and Companion uses that instead.
-- The client can change the budget at any time, and can purge the cache by setting the budget to 0.
+- Each bitmap is assumed to cost its size as RGBA (`width × height × 4`), whatever format it was sent in. If the client stores bitmaps differently, it can report what each one really costs, and Companion will update its tracking to that instead.
+- The client can change the budget at any time, and can trigger a purge of the cache by setting the budget to 0.
 - The cache only lasts as long as the connection.
 
 ### Rules for clients
@@ -648,6 +648,6 @@ Messages are applied strictly in the order they arrive. Companion relies on this
 Only the client knows how much memory it can spare, so the budget is up to it.
 
 - Scale the budget with the number of devices on the connection and the size of their bitmaps. For example, a device with large LCD buttons needs far more room per frame than one with small keys. Send a new budget when devices are added or removed.
-- Leave room for at least a full loop of an animation on every key that might show one. Otherwise the oldest frames are evicted just before they are needed again, and each frame gets sent in full every loop. Companion does not cache the images of a button which cycles through more than would fit in about half of the budget.
+- Try to leave room for at least a full loop of an animation on every key that might show one. Otherwise the oldest frames are evicted just before they are needed again, and each frame gets sent in full every loop. Companion does not cache the images of a button which cycles through more than would fit in about half of the budget.
 - Cap the budget at a sensible share of the available memory, and send a smaller budget if memory becomes tight.
-- Give users a way to turn caching off, for low-memory machines or for troubleshooting. When it is off, simply don't send `BITMAP-CACHE`.
+- Give users a way to turn caching off, for low-memory machines or for troubleshooting. When it is off, simply don't send `BITMAP-CACHE`. You may also wish to let them choose a cache level, so that they can opt into more memory use when they know it is lots of animations.
