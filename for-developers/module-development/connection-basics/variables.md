@@ -35,9 +35,24 @@ const definitions = {
 
 :::warning[Important]
 
-VariableId must only use letters [a-zA-Z], numbers, underscore, hyphen.
+VariableId must only use letters [a-zA-Z], numbers, underscore, hyphen, period and `!`.
 
 :::
+
+#### Invalid variable ids
+
+Since Companion 5.1, your variable ids are checked. Any definition with an invalid id, or with a reserved id such as `constructor`, is ignored and a warning is logged.
+
+If your variable ids are built from data provided by the device, such as channel names, use the `sanitizeVariable` helper (API 2.2+) to make them valid. It removes any characters which are not allowed. You can optionally provide replacements, which are applied first:
+
+```js
+import { sanitizeVariable } from '@companion-module/base'
+
+sanitizeVariable('Mic 1 (Left)') // 'Mic1Left'
+sanitizeVariable('Mic 1 (Left)', { ' ': '_' }) // 'Mic_1_Left'
+```
+
+Make sure the result is not empty, and that two different names can't produce the same id.
 
 ### API 1.x
 

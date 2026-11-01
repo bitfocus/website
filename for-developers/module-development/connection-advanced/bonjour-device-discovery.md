@@ -51,7 +51,6 @@ This can be achieved with further config fields such as:
 	label: 'Target IP',
 	isVisibleExpression: `!$(options:bonjour_host)`,
 	default: '',
-	regex: Regex.IP,
 },
 ```
 

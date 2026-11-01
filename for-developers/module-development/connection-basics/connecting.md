@@ -114,6 +114,7 @@ for [UDPHelper options](https://bitfocus.github.io/companion-module-base/interfa
 
 ```ts
 interface UDPHelperOptions {
+  family?: 'udp4' | 'udp6' // API 2.2+
   bind_ip?: string
   bind_port?: number
   broadcast?: boolean
@@ -122,6 +123,8 @@ interface UDPHelperOptions {
   ttl?: number
 }
 ```
+
+Since [API 2.2](../api-changes/v2.2.md), UDPHelper supports IPv6. If the host is an IPv6 address, it uses a `udp6` socket and binds to `::` by default. Otherwise it uses a `udp4` socket and binds to `0.0.0.0`. If the host is a hostname which only resolves to IPv6 addresses, set `family: 'udp6'`.
 
 ```ts
 interface UDPHelperEvents {

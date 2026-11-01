@@ -64,6 +64,28 @@ User-Config options also accept:
 - [Bonjour Device](https://bitfocus.github.io/companion-module-base/interfaces/CompanionInputFieldBonjourDevice.html) `type: 'bonjour-device'`
 - [Input Field Secret](https://bitfocus.github.io/companion-module-base/interfaces/CompanionInputFieldSecret.html) `type: 'secret-text'`
 
+## Validating text inputs
+
+A `textinput` field can have a `regex`, which is used to show the user whether the value they have entered is valid. Some common patterns are provided by the `Regex` export:
+
+```js
+import { Regex } from '@companion-module/base'
+
+{
+    type: 'textinput',
+    id: 'mac',
+    label: 'MAC Address',
+    default: '',
+    regex: Regex.MAC_ADDRESS,
+}
+```
+
+This only informs the user, so your module must still handle invalid values.
+
+Before reaching for a regex, check whether another field type fits better. For numbers use a `number` field, for true/false use a `checkbox`, and to require a value use `minLength: 1`. For a device address, it is best to allow any text, so that the user can enter a hostname or an IPv6 address. Only use `Regex.IPV4` or `Regex.IPV6` if the device requires that kind of address.
+
+Since [API 2.2](../api-changes/v2.2.md), `Regex.IP`, `HOSTNAME`, `PORT`, `PERCENT`, `BOOLEAN`, `SOMETHING`, and the `NUMBER` and `FLOAT` variants are deprecated, and log a warning when used. `Regex.MAC_ADDRESS` and `Regex.TIMECODE` are still fine to use.
+
 ## Controlling field visibility
 
 You can conditionally show or hide an input field based on the values of other fields in the same definition.

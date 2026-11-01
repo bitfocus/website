@@ -28,7 +28,7 @@ A few conventions apply across all elements:
 
 - **Positions and sizes** (`x`, `y`, `width`, `height`, and the line endpoints) are expressed as **percentages from 0 to 100** of the button, not pixels. This keeps your graphics resolution-independent, so they look right regardless of the button's pixel size.
 - **Colors** are packed RGB numbers, exactly as elsewhere in Companion — use `combineRgb(255, 255, 255)` or a hex literal like `0xffffff`. Since [API 2.2](../api-changes/v2.2.md), a CSS colour string such as `'#ffffff'` or `'rgb(255, 255, 255)'` can be used instead.
-- **Rotation** and angles are in **degrees** (0–359).
+- **Rotation** and angles are in **degrees**. Rotation can be from -360 to 360, and arc angles from 0 to 360.
 - **Opacity** is a percentage from 0 to 100.
 
 ## Values and expressions
@@ -119,7 +119,7 @@ Each element is distinguished by its `type` field.
 | `halign`              | alignment   | `'left'` \| `'center'` \| `'right'`                        |
 | `valign`              | alignment   | `'top'` \| `'center'` \| `'bottom'`                        |
 | `outlineColor`        | color       | Optional outline color.                                    |
-| `rotation`            | `number`    | Degrees 0–359.                                             |
+| `rotation`            | `number`    | Degrees, -360 to 360.                                      |
 
 ### Image
 
@@ -139,7 +139,7 @@ Each element is distinguished by its `type` field.
 | `fillMode`    | fill mode          | `'crop'` \| `'fill'` \| `'fit'`                                                            |
 | `halign`      | alignment          | `'left'` \| `'center'` \| `'right'`                                                        |
 | `valign`      | alignment          | `'top'` \| `'center'` \| `'bottom'`                                                        |
-| `rotation`    | `number`           | Degrees 0–359.                                                                             |
+| `rotation`    | `number`           | Degrees, -360 to 360.                                                                      |
 
 #### Driving an image from a variable
 
@@ -187,7 +187,7 @@ A filled and/or stroked rectangle.
 | Property       | Type     | Notes                                                                |
 | -------------- | -------- | -------------------------------------------------------------------- |
 | `color`        | color    | Fill color.                                                          |
-| `rotation`     | `number` | Degrees 0–359.                                                       |
+| `rotation`     | `number` | Degrees, -360 to 360.                                                |
 | `cornerRadius` | `number` | Corner radius as a percentage of the shorter side, 0–50. 0 = square. |
 
 Plus the shared [border properties](#border-properties).
@@ -238,8 +238,8 @@ A filled circle, or an arc/pie slice.
 | Property        | Type      | Notes                                         |
 | --------------- | --------- | --------------------------------------------- |
 | `color`         | color     | Fill color.                                   |
-| `startAngle`    | `number`  | Degrees 0–359, for drawing an arc.            |
-| `endAngle`      | `number`  | Degrees 0–359, for drawing an arc.            |
+| `startAngle`    | `number`  | Degrees 0–360, for drawing an arc.            |
+| `endAngle`      | `number`  | Degrees 0–360, for drawing an arc.            |
 | `drawSlice`     | `boolean` | When drawing an arc, close it as a pie slice. |
 | `borderOnlyArc` | `boolean` | Only stroke the arc portion of the border.    |
 
@@ -292,7 +292,7 @@ Like every other element, each property below is an [expression-or-value](#value
 | ------------- | ----------- | ------------------------------------------ |
 | `orientation` | orientation | `'horizontal'` \| `'vertical'` \| `'ring'` |
 | `reverse`     | `boolean`   | Fill from the opposite end.                |
-| `rotation`    | `number`    | Degrees 0–359.                             |
+| `rotation`    | `number`    | Degrees, -360 to 360.                      |
 
 **Circular (when `orientation` is `'ring'`):**
 
@@ -363,7 +363,7 @@ A group nests other elements together so you can position, rotate, enable/disabl
 | Property       | Type      | Notes                                                                       |
 | -------------- | --------- | --------------------------------------------------------------------------- |
 | `children`     | element[] | The elements inside the group.                                              |
-| `rotation`     | `number`  | Degrees 0–359.                                                              |
+| `rotation`     | `number`  | Degrees, -360 to 360.                                                       |
 | `squareCoords` | `boolean` | Constrain children to a centred square (the shorter side) coordinate space. |
 
 ### Composite
@@ -379,6 +379,12 @@ References one of the reusable [composite elements](./composite-elements.md) you
   },
 }
 ```
+
+| Property    | Type     | Notes                                                       |
+| ----------- | -------- | ----------------------------------------------------------- |
+| `elementId` | `string` | The id of the composite element definition (required).      |
+| `options`   | object   | Values for the composite element's options.                 |
+| `rotation`  | `number` | Degrees, -360 to 360. Rotates the whole element (API 2.2+). |
 
 See [Composite Elements](./composite-elements.md) for how to define these.
 
