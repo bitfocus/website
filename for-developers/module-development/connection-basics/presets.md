@@ -281,6 +281,25 @@ feedbacks: [
 
 When the action or feedback is executed, the expressions will have been precomputed, with the computed value provided directly to you.
 
+These use the same [expression syntax](/user-guide/beta/expressions/) that users write inside Companion, and are preserved as-is on the button, so that the user can view and edit them later.
+
+Values which are fixed at the time you generate the presets can be inserted by your module code, but anything which references a variable has to be done inside the expression. For example, to produce a value like `0_3`:
+
+```javascript
+// Using the concat function
+{ isExpression: true, value: `concat('0_', $(local:input))` }
+// Using an expression template string. This needs to be in a normal JavaScript string, or the backticks escaped
+{ isExpression: true, value: '`0_${$(local:input)}`' }
+// Mixing in values from your module code, and some arithmetic
+{ isExpression: true, value: `concat('${screenId}_', $(local:input) - 1)` }
+```
+
+See the user guide for the full list of [operators](/user-guide/beta/expressions/operators) and [functions](/user-guide/beta/expressions/functions), and for how [template strings](/user-guide/beta/expressions/#template-strings) work.
+
+:::tip
+Try to avoid exposing protocol values directly to users. If your device uses 0-based ids, but users think of them as starting at 1, consider making your actions accept the 1-based value and converting it internally, rather than doing `- 1` in every preset expression.
+:::
+
 ## Internal actions and feedbacks in presets
 
 Since [API 2.1](../api-changes/v2.1.md), your presets can reference a small, reserved set of Companion's built-in **internal** actions and feedbacks alongside your module's own, using `internal:*` ids. Companion translates each of these to the matching internal action/feedback when the preset is imported onto a control, resolving any references (such as the button location) to the control the preset is placed on.
@@ -605,6 +624,50 @@ presets[`route_output`] = {
 In this way, you can use one `route_output` preset as a template for hundreds of combinations inside the Companion UI, with a much much lower cost.
 
 As a bonus, these variables also make it easier for users to adjust which input or output is used later if they need to, without finding the correct preset again.
+
+To put this together, you would typically generate one template group per output, all reusing the same preset, and place them in a section of the structure:
+
+```javascript
+const outputCount = 4
+const inputCount = 20
+
+const routeGroups = []
+for (let output = 1; output <= outputCount; output++) {
+  const templateValues = []
+  for (let input = 1; input <= inputCount; input++) {
+    templateValues.push({ name: `Input ${input} to Output ${output}`, value: input })
+  }
+
+  routeGroups.push({
+    id: `route_to_${output}`,
+    name: `To Output ${output}`,
+    type: 'template',
+    presetId: 'route_output',
+    templateVariableName: 'input',
+    templateValues,
+    commonVariableValues: {
+      output: output,
+    },
+  })
+}
+
+const structure = [
+  {
+    id: 'routing',
+    name: 'Routing',
+    definitions: routeGroups,
+  },
+]
+
+this.setPresetDefinitions(structure, presets)
+```
+
+This produces 80 presets in the UI, while only defining one.
+
+#### Limitations
+
+- Only one local variable can be varied within a template group. If you need to vary more than one, create a group for each value of the other variables, setting them with `commonVariableValues`, as shown above.
+- The `style` of the preset is the same for every value. The style can reference the local variables (such as in the `text`), but if you need a different colour for each value you will need to define separate presets.
 
 ## TypeScript typings
 
