@@ -8,7 +8,7 @@ description: Prepare hardware and software before launching Companion.
 
 The easiest way to begin is to run Companion on your main Computer; probably the one you are reading this on. But often it can be beneficial to run it on another computer, perhaps one that never gets turned off, or a Raspberry Pi. As long as they are on the same network, anything is possible!
 
-The admin interface for Companion can be setup to be available from other machines on your network, and you can use [Companion Satellite](https://user.bitfocus.io/product/companion-satellite) to connect Stream Decks and similar surfaces to Companion over the network.
+The admin interface for Companion can be setup to be available from other machines on your network, and you can use [Companion Satellite](https://bitfocus.io/companion-satellite) to connect Stream Decks and similar surfaces to Companion over the network.
 
 If you are unsure, run it on your main Computer. It is easy to export and reimport your config if you decide to change it later on.
 

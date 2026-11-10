@@ -17,7 +17,7 @@ export default function SatelliteLandingPage(): ReactNode {
 					controlled from a single central Companion instance, without installing Companion at each workstation.
 				</p>
 				<HeroButtons>
-					<PrimaryHeroButton href="https://user.bitfocus.io/download" subtitle="Win / Mac / Linux / Pi">
+					<PrimaryHeroButton href="https://bitfocus.io/account/downloads" subtitle="Win / Mac / Linux / Pi">
 						Download
 					</PrimaryHeroButton>
 					{/* <SecondaryHeroButton to="./getting-started">Getting Started</SecondaryHeroButton> */}

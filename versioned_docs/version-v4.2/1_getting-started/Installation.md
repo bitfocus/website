@@ -7,7 +7,7 @@ description: Choosing and installing a Companion version.
 
 ## Downloading
 
-Companion can be downloaded from [the website](https://user.bitfocus.io/download).  
+Companion can be downloaded from [the website](https://bitfocus.io/account/downloads).  
 We offer 3 different variants of Companion here:
 
 ### Stable
