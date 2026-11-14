@@ -5,6 +5,7 @@ import type { Config } from '@docusaurus/types'
 import type * as Preset from '@docusaurus/preset-classic'
 import type { Options as DocsPluginOptions } from '@docusaurus/plugin-content-docs'
 import autoTocPlugin from './src/remark/autoTocPlugin.mjs'
+import remarkThemedImage from './src/remark/remark-themed-image'
 import remarkVideo from './src/remark/remark-video'
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
@@ -81,7 +82,7 @@ const config: Config = {
 
 						return `https://github.com/bitfocus/companion/tree/${branch}/docs/user-guide/${url.docPath}`
 					},
-					beforeDefaultRemarkPlugins: [remarkVideo],
+					beforeDefaultRemarkPlugins: [remarkVideo, remarkThemedImage],
 				},
 				blog: false, // Disable blog
 				theme: {
@@ -112,7 +113,7 @@ const config: Config = {
 					if (url.docPath === 'index.md') return null
 					return `https://github.com/bitfocus/companion/tree/main/docs/user-guide/9_whatsnew/${url.docPath}`
 				},
-				beforeDefaultRemarkPlugins: [remarkVideo],
+				beforeDefaultRemarkPlugins: [remarkVideo, remarkThemedImage],
 			} satisfies DocsPluginOptions,
 		],
 		[
