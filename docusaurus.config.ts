@@ -7,6 +7,7 @@ import type { Options as DocsPluginOptions } from '@docusaurus/plugin-content-do
 import autoTocPlugin from './src/remark/autoTocPlugin.mjs'
 import remarkThemedImage from './src/remark/remark-themed-image'
 import remarkVideo from './src/remark/remark-video'
+import webpImagesPlugin from './src/plugins/webp-images'
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -178,6 +179,7 @@ const config: Config = {
 				},
 			}
 		},
+		webpImagesPlugin,
 		() => {
 			// plugin-security-txt: emit a fresh RFC 9116 /.well-known/security.txt at build
 			// time so the mandatory `Expires` field never goes stale. Set ~11 months out

@@ -28,6 +28,12 @@ jobs:
 
       - name: Install dependencies
         run: yarn install
+      - name: Cache webp images
+        uses: actions/cache@v6
+        with:
+          path: node_modules/.cache/webp-images
+          key: webp-images-${{ github.run_id }}
+          restore-keys: webp-images-
       - name: Build website
         run: yarn build
 
