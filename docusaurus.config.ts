@@ -301,7 +301,7 @@ const config: Config = {
 			],
 		},
 		footer: {
-			style: 'dark',
+			style: 'light',
 			links: [
 				{
 					title: 'Documentation',
@@ -358,8 +358,9 @@ const config: Config = {
 			copyright: `Copyright © ${new Date().getFullYear()} Companion. Built with Docusaurus.`,
 		},
 		prism: {
-			theme: prismThemes.github,
-			darkTheme: prismThemes.dracula,
+			// Backgrounds match --companion-surface-muted (src/css/companion-tokens.css); Prism sets them inline, so CSS can't
+			theme: { ...prismThemes.github, plain: { ...prismThemes.github.plain, backgroundColor: '#f0f0f0' } },
+			darkTheme: { ...prismThemes.vsDark, plain: { ...prismThemes.vsDark.plain, backgroundColor: '#202020' } },
 		},
 	} satisfies Preset.ThemeConfig,
 }

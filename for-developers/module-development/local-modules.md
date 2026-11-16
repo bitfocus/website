@@ -1,6 +1,7 @@
 ---
 title: Setting up the Development Folder
-sidebar_label: '└─ Setting up a Dev Folder'
+sidebar_label: 'Setting up a Dev Folder'
+sidebar_class_name: sidebar-subitem
 sidebar_position: 2
 description: How to load modules in Companion during module development.
 ---

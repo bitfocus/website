@@ -13,7 +13,8 @@
 }
 
 .primaryButton {
-	background-color: #2563eb;
+	/* The light-theme brand red in both themes; the dark-theme red is too light for white text. */
+	background-color: #d50215;
 	color: white;
 	padding: 0.75rem 1.5rem;
 	/* stack label + subtitle vertically */
@@ -31,14 +32,14 @@
 }
 
 .primaryButton:hover {
-	background-color: #1d4ed8;
+	background-color: rgb(170, 2, 17);
 	color: white;
 	text-decoration: none;
 }
 
 .secondaryButton {
-	background-color: #f3f4f6;
-	color: #374151;
+	background-color: var(--companion-surface);
+	color: var(--companion-body-text);
 	padding: 0.75rem 1.5rem;
 	display: inline-flex;
 	align-items: center;
@@ -47,27 +48,15 @@
 	border-radius: 0.375rem;
 	text-decoration: none;
 	font-weight: 500;
-	border: 1px solid #d1d5db;
+	border: 1px solid var(--companion-border-medium);
 	transition: all 0.2s;
 }
 
 .secondaryButton:hover {
-	background-color: #e5e7eb;
-	color: #374151;
+	background-color: var(--companion-action-hover);
+	color: var(--companion-text-strong);
 	text-decoration: none;
-	border-color: #9ca3af;
-}
-
-[data-theme='dark'] .secondaryButton {
-	background-color: #374151;
-	color: #f9fafb;
-	border-color: #4b5563;
-}
-
-[data-theme='dark'] .secondaryButton:hover {
-	background-color: #4b5563;
-	color: #f9fafb;
-	border-color: #6b7280;
+	border-color: var(--companion-action-focus);
 }
 
 /* Small subtitle text inside a button (e.g. "Win / Mac / Linux") */
