@@ -46,6 +46,7 @@
 }
 
 .githubSection {
+	--ifm-heading-color: white;
 	padding: 4rem 2rem;
 	background-color: #181818;
 	color: white;

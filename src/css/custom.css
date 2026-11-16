@@ -353,8 +353,9 @@
 	}
 }
 
+/* Light-mode accents also colour the small admonition headings, so keep them at 4.5:1 or better on white */
 .alert--success {
-	--companion-alert-accent: #1f8a3e;
+	--companion-alert-accent: #1a7d37;
 }
 
 .alert--info {
@@ -362,7 +363,7 @@
 }
 
 .alert--warning {
-	--companion-alert-accent: #b77900;
+	--companion-alert-accent: #966300;
 }
 
 .alert--danger {
