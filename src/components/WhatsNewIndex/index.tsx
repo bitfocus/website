@@ -7,36 +7,31 @@ import { HtmlClassNameProvider, ThemeClassNames } from '@docusaurus/theme-common
 import DocRootLayout from '@theme/DocRoot/Layout'
 import Heading from '@theme/Heading'
 import Layout from '@theme/Layout'
+import { formatReleaseDate } from '../../lib/release-notes'
 import type { WhatsNewRelease } from '../../plugins/whats-new-index'
 
 import styles from './styles.module.css'
 
-const dateFormat = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
-
-function formatDate(date: string): string {
-	const parsed = new Date(date)
-	return isNaN(parsed.getTime()) ? date : dateFormat.format(parsed)
-}
-
+// Styled by src/css/release-list.css, shared with the API changelogs
 function Release({ release, latest }: { release: WhatsNewRelease; latest: boolean }): ReactNode {
 	return (
-		<article className={styles.release}>
-			<header className={styles.releaseHeader}>
-				<Heading as="h2" className={styles.releaseTitle}>
+		<article className="release-entry">
+			<header className="release-entry__header">
+				<Heading as="h2">
 					<Link to={release.permalink}>{release.title}</Link>
 				</Heading>
-				<div className={styles.releaseMeta}>
+				<div className="release-entry__meta">
 					{latest && <span className="badge badge--primary">Latest</span>}
-					{release.date && <time dateTime={release.date}>{formatDate(release.date)}</time>}
+					{release.date && <time dateTime={release.date}>{formatReleaseDate(release.date)}</time>}
 				</div>
 			</header>
 
 			{release.summaryHtml && (
-				<div className={styles.summary} dangerouslySetInnerHTML={{ __html: release.summaryHtml }} />
+				<div className="release-entry__summary" dangerouslySetInnerHTML={{ __html: release.summaryHtml }} />
 			)}
 
 			{release.highlights.length > 0 && (
-				<ul className={styles.highlights}>
+				<ul className="release-entry__highlights">
 					{release.highlights.map((highlight) => (
 						<li key={highlight.anchor}>
 							<Link to={`${release.permalink}#${highlight.anchor}`}>{highlight.title}</Link>
@@ -45,9 +40,11 @@ function Release({ release, latest }: { release: WhatsNewRelease; latest: boolea
 				</ul>
 			)}
 
-			<Link to={release.permalink} className={styles.readMore}>
-				Read the full release notes <span aria-hidden="true">→</span>
-			</Link>
+			<p className="release-entry__more">
+				<Link to={release.permalink}>
+					Read the full release notes <span aria-hidden="true">→</span>
+				</Link>
+			</p>
 		</article>
 	)
 }

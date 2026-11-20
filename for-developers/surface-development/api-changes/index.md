@@ -1,7 +1,7 @@
 ---
 title: Surface API Changelog
 description: Outline of all changes
-auto_toc: true
+release_list: true
 ---
 
 This section describes the changes made in each new release of `@companion-surface/base` (the

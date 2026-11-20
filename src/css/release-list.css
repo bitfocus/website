@@ -1,0 +1,95 @@
+/*
+ * Entries in a list of releases: the What's New index (src/components/WhatsNewIndex) and the API changelogs
+ * (src/remark/remark-release-list.ts)
+ */
+
+.release-entry {
+	padding: 2rem 0;
+	border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.release-entry__header {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 0.25rem 1rem;
+	margin-bottom: 0.75rem;
+}
+
+.release-entry__header h2 {
+	margin: 0;
+	font-size: 1.75rem;
+}
+
+.release-entry__header h2 a {
+	color: var(--ifm-heading-color);
+}
+
+.release-entry__meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	color: var(--ifm-color-content-secondary);
+	font-size: 0.9rem;
+}
+
+.release-entry__companion {
+	padding: 0.05rem 0.5rem;
+	border: 1px solid var(--ifm-color-emphasis-300);
+	border-radius: var(--ifm-badge-border-radius);
+	color: var(--ifm-color-content);
+	font-size: 0.8rem;
+	font-weight: 600;
+}
+
+.release-entry__summary > :last-child {
+	margin-bottom: 0;
+}
+
+/* Headline features, as chips (What's New) */
+.release-entry__highlights {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	list-style: none;
+	padding: 0;
+	margin: 1rem 0 1.25rem;
+}
+
+.release-entry__highlights a {
+	display: inline-block;
+	padding: 0.2rem 0.75rem;
+	border: 1px solid var(--ifm-color-emphasis-300);
+	border-radius: 999px;
+	color: var(--ifm-color-content);
+	font-size: 0.875rem;
+	transition: border-color var(--ifm-transition-fast);
+}
+
+.release-entry__highlights a:hover {
+	border-color: var(--ifm-color-primary);
+	text-decoration: none;
+}
+
+/* Every change, as a compact list (API changelogs, where the headings are longer and more numerous) */
+.release-entry__changes {
+	margin: 1rem 0 1.25rem;
+	font-size: 0.95rem;
+}
+
+.release-entry__changes li + li {
+	margin-top: 0.15rem;
+}
+
+.release-entry__more {
+	margin: 0;
+	font-weight: 600;
+}
+
+/* Undo the indentation docs give everything after a h2 (in custom.css), for entries placed after other sections */
+.markdown .release-entry,
+.markdown .release-entry__header > * {
+	margin-left: 0;
+}

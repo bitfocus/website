@@ -5,6 +5,7 @@ import type { Config } from '@docusaurus/types'
 import type * as Preset from '@docusaurus/preset-classic'
 import type { Options as DocsPluginOptions } from '@docusaurus/plugin-content-docs'
 import autoTocPlugin from './src/remark/autoTocPlugin.mjs'
+import remarkReleaseList from './src/remark/remark-release-list'
 import remarkThemedImage, { remarkScreenshotSize } from './src/remark/remark-themed-image'
 import remarkVideo from './src/remark/remark-video'
 import webpImagesPlugin from './src/plugins/webp-images'
@@ -89,7 +90,7 @@ const config: Config = {
 				},
 				blog: false, // Disable blog
 				theme: {
-					customCss: './src/css/custom.css',
+					customCss: ['./src/css/custom.css', './src/css/release-list.css'],
 				},
 			} satisfies Preset.Options,
 		],
@@ -134,7 +135,7 @@ const config: Config = {
 				path: 'for-developers',
 				routeBasePath: 'for-developers',
 				sidebarPath: './sidebars/for-developers.ts',
-				beforeDefaultRemarkPlugins: [autoTocPlugin],
+				beforeDefaultRemarkPlugins: [autoTocPlugin, remarkReleaseList],
 				// disableVersioning: true,
 				editUrl: 'https://github.com/bitfocus/website/tree/main/',
 			} satisfies DocsPluginOptions,
