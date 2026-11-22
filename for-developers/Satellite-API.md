@@ -27,6 +27,7 @@ This lists what versions of Companion introduced support for each API version.
 | 1.14        | v5.1+              |
 | 1.15        | v5.2+              |
 | 1.16        | v5.2+              |
+| 1.17        | Unreleased         |
 
 ## Connection
 
@@ -133,6 +134,7 @@ Optional parameters (all modes):
 - `CAN_CHANGE_PAGE` - (added in v1.10.0) a label string indicating that the device is capable of initiating page changes (e.g. via a swipe gesture or dedicated page-up/down button). When provided, Companion adds a checkbox with this label to the surface settings panel, letting the user control whether the device is allowed to change pages. The device can then send `CHANGE-PAGE` messages to navigate between pages.
 - `BITMAP_FORMAT` - (added in v1.12.0) the encoding Companion should use for streamed button bitmaps. Must be one of the values advertised in `BITMAP_FORMATS` in [`CAPS`](#capabilities) (`rgb`, `png` or `webp`). Defaults to `rgb` when omitted, or when set to a format that was not advertised. See [Bitmap formats](#bitmap-formats-since-v1120) for how this affects the `BITMAP` field in `KEY-STATE`.
 - `VARIABLE_ENCODING` - (added in v1.16.0) set to `json` to receive the values of output variables as JSON, preserving their type, instead of as text. See [Update of a variable](#update-of-a-variable-since-v170). Defaults to `string` when omitted, or when set to an unknown value. Older servers ignore this, so only rely on it when the API version is at least v1.16.0.
+- `CONTROL_EVENTS` - (added in v1.17.0) a comma-separated list of event names to receive for this device, for example `CONTROL_EVENTS="press,hold"`. Companion sends [`CONTROL-EVENT`](#control-event-since-v1170) messages for the recognized names in the list. Omit the parameter to leave control events off. Check `ApiVersion` in [`BEGIN`](#connection) for v1.17.0 or later.
 
 ##### Simple mode
 
@@ -340,6 +342,26 @@ This can be received when `PINCODE_LOCK` was specified when adding the device
 - `ROTATION` (optional) the current rotation of the surface in degrees (0, 90, -90, 180) (added in v1.10.1)
 
 Between this reporting `LOCKED=true` and `LOCKED=false`, you will not receive any other drawing messages, and any input messages you send will be ignored.
+
+#### Control event (Since v1.17.0)
+
+Companion sends this message when a physical press on the device runs an eligible action group and the device requested the corresponding event in `ADD-DEVICE`.
+
+- Simple mode: `CONTROL-EVENT DEVICEID=00000 KEY=0 EVENT=press`
+- Advanced mode: `CONTROL-EVENT DEVICEID=00000 CONTROLID="0/0" EVENT=hold`
+
+The device can use the event to give the user a cue, such as a haptic click or a flash of the key.
+
+- `DEVICEID` the unique identifier used to add the device
+- `KEY` (simple mode) number of the key the event is for
+- `CONTROLID` (advanced mode) the ID of the control as defined in the `LAYOUT_MANIFEST`
+- `EVENT` the event name
+  - `press` a press action group or an ordinary release action group ran. The release group only requests a cue if no earlier group for the same physical press requested one.
+  - `hold` an action group set to run while held fired. Each eligible held group can send its own event.
+
+A group can request a cue while the surface is unlocked if its **Surface cue** setting is on and it runs at least one enabled action.
+
+Clients should ignore unrecognized `EVENT` values so they can handle future versions.
 
 #### Device config update (Since v1.10.0)
 
